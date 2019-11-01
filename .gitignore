@@ -23,9 +23,11 @@
 hs_err_pid*
 
 #eclipse
+/.metadata/
 /MentorMan/.classpath
 /MentorMan/.settings/
 /MentorMan/.project
 /MentorMan/.springBeans
 /MentorMan/target/
+/MentorMan/bin
 
