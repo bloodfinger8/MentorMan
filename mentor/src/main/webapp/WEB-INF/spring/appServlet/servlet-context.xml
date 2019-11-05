@@ -12,8 +12,9 @@
 
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
-	<context:component-scan base-package="main.controller"/>
-	<!-- 모임 게시판 관련 부분 -->
+	<context:component-scan base-package="main.controll
+	<context:component-scan base-package="member.contller"/>
+<!-- 모임 게시판 관련 부분 -->
 	<context:component-scan base-package="meetingboard.controller"/>
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
@@ -32,6 +33,10 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 	
+
+
+
+
 	<!-- fileUpload -->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<property name="maxUploadSize" value="5000000"/>
