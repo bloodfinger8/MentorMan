@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div class="navbar">
@@ -18,7 +18,6 @@ pageEncoding="UTF-8"%>
 				</div> -->
 			</div>
 		</form>
-		
 		<div class="right">
 			<a class="button button-big" type="external" href="/mentors">멘토찾기</a> 
 			<a class="button button-big" type="external" href="/open_mentorings">콘텐츠</a> 
