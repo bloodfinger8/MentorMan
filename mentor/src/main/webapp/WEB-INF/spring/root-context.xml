@@ -21,6 +21,5 @@
 	<context:component-scan base-package="meetingboard.bean"/>
 	<context:component-scan base-package="meetingboard.dao"/>
 	<context:component-scan base-package="meetingboard.service"/>
-	
 
 </beans>
