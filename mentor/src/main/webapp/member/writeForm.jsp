@@ -13,7 +13,7 @@
 
 			<div class="block inset login-block">
 				<form class="simple_form new_user" name="writeForm" id="writeForm"
-					method="post" action="/bitcampmentor/member/write">
+					method="post" action="/mentor/member/write">
 					<input type="hidden" name="member_flag" value="0">
 					<div class="signup-or-separator">
 						<span class="signup-or-separator-text">또는</span><hr>
@@ -101,7 +101,7 @@
 
 
 			<div class="block inset text-align-center">
-				<a class="color-gray" type="external" href="../member/loginForm"> 이미 계정이 있나요? 로그인 </a>
+				<a class="color-gray" type="external" href="/mentor/member/loginForm"> 이미 계정이 있나요? 로그인 </a>
 			</div>
 		</div>
 	</div>

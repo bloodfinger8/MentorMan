@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
+<script src="../js/member.js"></script>
+
 <div class="page navbar-fixed devise sessions new"
 	data-name="sessions-new">
 	<div class="page-content">
