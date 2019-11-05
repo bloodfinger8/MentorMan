@@ -8,11 +8,12 @@
 	
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
-	<context:component-scan base-package="member.conf"/>
+	
 	<context:component-scan base-package="member.service"/>
 	<context:component-scan base-package="member.dao"/>
 	<context:component-scan base-package="member.bean"/>
-  
+
+	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<context:component-scan base-package="spring.conf"/>
 	
