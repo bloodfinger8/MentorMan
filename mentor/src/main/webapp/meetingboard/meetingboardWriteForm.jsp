@@ -20,6 +20,7 @@
 						<div class="label-title">
 							<label class="string required" for="title">멘토링 분야</label>
 						</div>
+						
 						<li class="item-content item-input">
 							<div class="item-inner">
 								<div class="item-input-wrap input-dropdown-wrap">
@@ -103,18 +104,22 @@
 							</div>
 							<div id="hostDiv"></div>
 						</li>
+						
 						<div class="label-title">
 							<label class="string required" for="title">참가비</label>
 						</div>
+						
 						<li class="item-content item-input">
 							<div class="item-inner">
 								<input type="text" name="price" id="price" placeholder="참가비를 입력하세요">
 							</div>
 							<div id="priceDiv"></div>
 						</li>
+						
 						<div class="label-title">
 							<label class="string required" for="title">장소</label>
 						</div>
+						
 						<li class="item-content item-input">
 							<div class="item-inner">
 								<input type="text" name="address" id="address" placeholder="장소를 검색하세요" readonly="readonly">
@@ -132,13 +137,17 @@
 						</li>
 					</ul>
 				</div>
+				
 				<div style="margin-top: 50px; margin-bottom: 100px;">
 					<input type="submit" id="meetingboardWriteBtn" value="작성 완료" class="btn button button-big button-fill" style="line-height: 0px;">
 				</div>
+			
 			</form>
 		</div>
 	</div>
 </div>
+
+
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=89c3afe322de0763fb20750b2bf6b62a&libraries=services"></script>
 <script>
