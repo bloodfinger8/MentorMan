@@ -21,22 +21,22 @@
 </head>
 
 <body class="color-theme-pink">
-		<div id="app" class="framework7-root">
-
-			<div class="head">
-				<jsp:include page="../template/head.jsp" />
-			</div>
-			
-			<!-- display -->
-			<div class="container" id="container">
-				<jsp:include page="${display}" />
-			</div>
-
-
-			<!-- footer  -->
-			<div id="foot" id="foot">
-				<jsp:include page="../template/footer.jsp" />
-			</div>
-		</div>
+   <div id="app" class="framework7-root">
+      <div class="view view-main">
+         <!-- head -->
+         <div class="head">
+            <jsp:include page="../template/head.jsp" />
+         </div>
+         
+         <!-- display -->
+         <div class="container" id="container">
+            <jsp:include page="${display}" />
+         </div>
+        </div>
+   </div>
+   <!-- footer  -->
+   <div id="foot" id="foot">
+      <jsp:include page="../template/footer.jsp" />
+   </div>
 </body>
 </html>
