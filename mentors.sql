@@ -49,11 +49,11 @@ select * from mentoring;
 commit;
 
 ---yangJaewoo-----------------------------------------------------------------------------------------------------
+
 CREATE TABLE menteeboard(
      seq NUMBER NOT NULL,               -- 글번호
-     id VARCHAR2(20) NOT NULL,           -- 아이디
-     name VARCHAR2(40) NOT NULL,       -- 이름
-     email VARCHAR2(40),                  -- 이메일
+     nickname VARCHAR2(40) NOT NULL,       -- 이름
+     email VARCHAR2(40) primary key,   -- 이메일
      subject VARCHAR2(255) NOT NULL,    -- 제목
      content VARCHAR2(4000) NOT NULL,   -- 내용
      job_code VARCHAR2(40),                  -- 직무유형 
