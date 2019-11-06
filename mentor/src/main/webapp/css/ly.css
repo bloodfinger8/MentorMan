@@ -5095,11 +5095,10 @@ button {
 input[type="submit"].button,input[type="button"].button {
     width: 100%
 }
-/* 
 button {
-    width: 100%
+    /* width: 100% */
 }
- */
+
 .segmented {
     -ms-flex-item-align: center;
     align-self: center;
