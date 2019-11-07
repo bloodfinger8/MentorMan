@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<div class="view view-main">
+<div>
 	<div class="navbar">
 		<div class="navbar-inner">
 			<div class="left">
@@ -23,8 +23,8 @@
 
 			<div class="right">
 				<a class="button button-big" type="external" href="/mentors">
-					멘토찾기 </a> <a class="button button-big" type="external" href="/open_mentorings"> 콘텐츠 </a> 
-					<a class="button button-big" type="external" href="/mentor_posts?featured_mentor_post=true">에세이 </a>
+					멘토찾기 </a> <a class="button button-big" type="external" href="/mentor/essayboard/essayboardList"> 콘텐츠 </a> 
+					<a class="button button-big" type="external" href="/mentor_posts?featured_mentor_post=true">공지사항 </a>
 				<div class="beta-div">
 					<a class="button button-big program-button" type="external" href="/mentee_programs"> 모임 <span class='beta-text'>beta</span>
 					</a>
