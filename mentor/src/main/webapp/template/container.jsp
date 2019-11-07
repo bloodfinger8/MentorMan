@@ -1180,8 +1180,7 @@
 
 				<div class="card-footer">
 					<a class="color-gray js-bookmark" type="external"
-						data-remote="true" rel="nofollow" data-method="post"
-						href="/mentor_posts/6618/bookmarks"> 
+						data-remote="true" rel="nofollow" data-method="post"href="/mentor_posts/6618/bookmarks"> 
 						<i class="far fa-bookmark" aria-hidden="true"></i> 1
 					</a>
 					<div class="created-at"></div>
