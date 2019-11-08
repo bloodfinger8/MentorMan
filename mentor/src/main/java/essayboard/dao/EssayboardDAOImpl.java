@@ -14,12 +14,6 @@ public class EssayboardDAOImpl implements EssayboardDAO {
 	@Autowired
 	private SqlSession sqlSession;
 	
-//	//에세이 멘토 리스트 출력
-//	@Override
-//	public List<EssayboardDTO> essayboardList() {
-//		return sqlSession.selectList("essaySQL.essayboardList");
-//	}
-	
 	//에세이 멘토 리스트 출력
 	@Override
 	public List<EssayboardDTO> essayboardList(Map<String, Integer> map) {
@@ -42,5 +36,23 @@ public class EssayboardDAOImpl implements EssayboardDAO {
 	@Override
 	public int getTotalA(Map<String, Integer> map) {
 		return sqlSession.selectOne("essaySQL.getTotalA", map);
+	}
+	
+	// 에세이 글 수정
+	@Override
+	public EssayboardDTO essayboardModifyForm(int seq) {
+		return sqlSession.selectOne("essaySQL.essayboardModifyForm", seq);
+	}
+	
+	// 에세이 멘토 바디 뷰
+	@Override
+	public EssayboardDTO essaymentorBodyView(int seq) {
+		return sqlSession.selectOne("essaySQL.essaymentorBodyView", seq);
+	}
+	
+	// 에세이 정보 수정 처리
+	@Override
+	public void essayboardModify(Map<String, Object> map) {
+		sqlSession.update("essaySQL.essayboardModify", map);
 	}
 }

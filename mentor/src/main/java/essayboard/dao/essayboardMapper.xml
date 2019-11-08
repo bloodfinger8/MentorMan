@@ -65,4 +65,41 @@
 		FROM
 			dumy
 	</select>
+	
+	<!-- 에세이 멘토 바디 뷰 -->
+	<select id="essaymentorBodyView" parameterType="Int" resultType="essay">
+		SELECT
+			*
+		FROM
+			dumy
+		WHERE
+			seq = #{seq}
+	</select>
+	
+	<!-- 에세이 수정 -->
+	<select id="essayboardModifyForm" parameterType="Int" resultType="essay">
+		SELECT
+			*
+		FROM 
+		    dumy d, job j
+		WHERE
+		    d.job_code = j.job_code
+		AND
+		    seq = #{seq} 
+	</select>
+	
+	<!-- 에세이 수정 처리 -->
+	<update id="essayboardModify" parameterType="Map">
+		UPDATE
+			dumy
+		SET
+		  	title = #{title, jdbcType=VARCHAR}
+		  , company = #{company, jdbcType=VARCHAR}
+		  , content = #{content, jdbcType=VARCHAR}
+		  , job_code = #{job_code, jdbcType=VARCHAR}
+		  , logtime = sysdate
+		WHERE
+		 seq = #{seq, jdbcType=INTEGER}
+	</update>
+	
 </mapper>

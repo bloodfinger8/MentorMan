@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -124,8 +126,11 @@ public class EssayboardController {
 	public ModelAndView essaymentorBodyView(@RequestParam String seq,
 									  		@RequestParam String pg) {
 		
-		ModelAndView modelAndView = new ModelAndView();
+		EssayboardDTO essayboardDTO = essayboardService.essaymentorBodyView(Integer.parseInt(seq));
 		
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject("essayboardDTO", essayboardDTO);
+		modelAndView.addObject("seq", seq);
 		modelAndView.addObject("pg", pg);
 		modelAndView.addObject("display", "/essayboard/essaymentorBodyView.jsp");
 		modelAndView.setViewName("/main/index");
@@ -147,4 +152,48 @@ public class EssayboardController {
 		modelAndView.setViewName("/main/index");
 		return modelAndView;
 	}
+	
+	/**
+	 * 
+	 * @Title : 에세이 정보 수정
+	 * @Author : TR, @Date : 2019. 11. 7.
+	 */
+	@RequestMapping(value = "essayboardModifyForm", method = RequestMethod.GET)
+	public ModelAndView essayboardModifyForm(String seq, String pg) {
+		EssayboardDTO essayboardDTO = essayboardService.essayboardModifyForm(Integer.parseInt(seq));
+		System.out.println("오 안나온다 나온다 " +  essayboardDTO);
+		System.out.println("페이지 " + pg + " 시퀀스 " + seq);
+		ModelAndView modelAndView = new ModelAndView();
+		
+		modelAndView.addObject("pg", pg);
+		modelAndView.addObject("seq", seq);
+		modelAndView.addObject("essayboardDTO", essayboardDTO);
+		modelAndView.addObject("display", "/essayboard/essayboardModifyForm.jsp");
+		modelAndView.setViewName("/main/index");
+		
+		return modelAndView;
+	}
+	
+	/**
+	 * 
+	 * @Title : 에세이 정보 수정 처리
+	 * @Author : TR, @Date : 2019. 11. 8.
+	 */
+	@RequestMapping(value = "essayboardModify", method = RequestMethod.POST)
+	public ModelAndView essayboardModify(@RequestParam Map<String, Object> map) {
+		map.put("name", "김태형");
+		System.out.println("모디파이" + map);
+		
+		essayboardService.essayboardModify(map);
+		
+		
+		ModelAndView modelAndView = new ModelAndView();
+		
+		modelAndView.addObject("display", "/essayboard/essayboardList.jsp");
+		modelAndView.setViewName("/main/index");
+		
+		return modelAndView;
+	}
+	
+	
 }

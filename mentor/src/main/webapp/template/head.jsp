@@ -22,7 +22,7 @@
 			</form>
 			<div class="right">
 				<a class="button button-big" type="external" href="/mentors">
-					멘토찾기 </a> <a class="button button-big" type="external" href="/mentor/essayboard/essayboardList"> 콘텐츠 </a> 
+					멘토찾기 </a> <a class="button button-big" type="external" href="/mentor/essayboard/essayboardList"> 에세이 </a> 
 					<a class="button button-big" type="external" href="/mentor_posts?featured_mentor_post=true">공지사항 </a>
 				<a class="button button-big" type="external" href="/mentors">멘토찾기</a>
 				<a class="button button-big" type="external" href="/open_mentorings"> 콘텐츠 </a> 

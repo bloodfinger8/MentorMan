@@ -37,4 +37,22 @@ public class EssayboardServiceImpl implements EssayboardService {
 	public int getTotalA(Map<String, Integer> map) {
 		return essayboardDAO.getTotalA(map);
 	}
+	
+	// 에세이 글 수정
+	@Override
+	public EssayboardDTO essayboardModifyForm(int seq) {
+		return essayboardDAO.essayboardModifyForm(seq);
+	}
+	
+	// 에세이 멘토 바디 뷰
+	@Override
+	public EssayboardDTO essaymentorBodyView(int seq) {
+		return essayboardDAO.essaymentorBodyView(seq);
+	}
+	
+	// 에세이 정보 수정 처리
+	@Override
+	public void essayboardModify(Map<String, Object> map) {
+		essayboardDAO.essayboardModify(map);
+	}
 }

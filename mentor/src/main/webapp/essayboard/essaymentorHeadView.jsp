@@ -228,6 +228,9 @@
 						<div class="text-align-center load-more-container">
 							<button class="button load-more" id="loadMorePost">더 보기</button>
 						</div>
+						<div style="margin-top: 50px; margin-bottom: 100px;">
+               				<input type="button" onclick="location.href='/mentor/essayboard/essayboardList'" value="목록" class="btn button button-big button-fill" style="line-height: 0px;">
+           				</div>
 					</div>
 				</div>
 			</div>

@@ -8,9 +8,6 @@
 	<typeAliases>
 		<typeAlias type="essayboard.bean.EssayboardDTO" alias="essay"/>
 		<typeAlias type="essayboard.bean.EssayboardPaging" alias="paging"/>
-		
+		<typeAlias type="member.bean.MemberDTO" alias="member"/>
 	</typeAliases>
-   	
-   	
-
 </configuration>

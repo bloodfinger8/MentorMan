@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <link  rel="stylesheet" href="../css/essayboard.css">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-lite.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-lite.js"></script>
 <div class="page navbar-fixed mentee_programs index">
    <div class="page-content">
-      <div class="block-title strong-title">에세이 작성</div>
+      <div class="block-title strong-title">에세이 수정</div>
       <div class="block inset">
          <form method="post" id="essayboardModifyForm" action="/mentor/essayboard/essayboardModify">
             <div class="list form-list no-hairlines">
@@ -17,7 +19,7 @@
                      <div class="item-inner">
                         <div class="item-input-wrap input-dropdown-wrap">
                            <select class="select optional" name="job_code" id="job_code">
-                              <option value="0">직무를 선택하세요</option>
+                              <option value="${essayboardDTO.job_code }">${essayboardDTO.job_type }</option>
                               <option value="job_code_0">인사/총무/노무</option>
                               <option value="job_code_1">마케팅/MD</option>
                               <option value="job_code_2">홍보/csr</option>
@@ -47,7 +49,7 @@
                   </div>
                   <li class="item-content item-input">
                      <div class="item-inner">
-                        <input type="text" name="title" id="title" placeholder="제목을 입력하세요">
+                        <input type="text" name="title" id="title" value="${essayboardDTO.title }">
                      </div>
                   </li>
                         <div class="title_error_div"></div>
@@ -56,16 +58,16 @@
                   </div>
                   <li class="item-content item-input">
                      <div class="item-inner">
-                        <input type="text" name="company" id="company" placeholder="회사 및 부서를 입력하세요">
+                        <input type="text" name="company" id="company" placeholder="회사 및 부서를 입력하세요" value="${essayboardDTO.company }">
                      </div>
                   </li>
                      	 <div class="company_error_div"></div>
                   
                   <div class="label-title">
-                     <label class="string required" for="title">내용</label>
+                     <label class="string required" for="title"></label>
                   </div>
                   <li>
-                     <textarea id="summernote" name="content"></textarea>
+                     <textarea id="summernote" name="content">${essayboardDTO.content }</textarea>
                      <br>
                   </li>
                      <div class="summernote_error_div"></div>
@@ -74,7 +76,7 @@
                </ul>
             </div>
             <div style="margin-top: 50px; margin-bottom: 100px;">
-               <input type="button" id="essayboardWriteBtn" value="작성 완료" class="btn button button-big button-fill" style="line-height: 0px;">
+               <input type="button" id="essayboardModifyBtn" value="작성 완료" class="btn button button-big button-fill" style="line-height: 0px;">
             </div>
          </form>
       </div>

@@ -18,11 +18,24 @@
 			<div class="page navbar-fixed mentor_posts show" data-name="mentor_posts-show">
 				<div class="page-content">
 					<div class="post-block-container">
+					<div>
+						<a id="essay_write_btn" style="width: 100px; float: right;" class="button" type="external" href="/mentor/essayboard/essayboardModifyForm?seq=${seq }&pg=${pg}">
+		            		<i class="fas fa-pencil-alt"></i>
+		            			글삭제
+						</a>
+					</div>
+					<div>	
+						<a id="essay_write_btn" style="width: 100px; float: right;" class="button" type="external" href="/mentor/essayboard/essayboardModifyForm?seq=${seq }&pg=${pg}">
+		            		<i class="fas fa-pencil-alt"></i>
+		            			글수정
+						</a>
+					</div>
+					
 						<div class="mentor-post-detail-block">
 							<h1 class="mentor-post-title">
-							[취업 멘탈 살롱] 취준 중 멘붕, 나는 이렇게 극복했다 </h1>
+								${essayboardDTO.title} </h1>
 							<div class="trix-content">
-								 썸머노트
+								${essayboardDTO.content }
 							</div>
 							<div class="block button-wrap">
 								<div class="action-block text-align-center mentor_post_6618">
@@ -48,7 +61,7 @@
 								<div class="block mentor-info">
 									<div class="name">
 										<span class="mentor-name">
-										강승훈 <small>멘토</small>
+										${essayboardDTO.name } <small>멘토</small>
 										</span>
 										<a class="button col js-bookmark user_14134" data-params="followed_id=14134" data-disable-with="..." type="external" data-remote="true" rel="nofollow" data-method="post" href="/relationships">
 										팔로우 </a>
@@ -85,6 +98,9 @@
 								</div>
 							</div>
 						</div>
+						<div style="margin-top: 50px; margin-bottom: 100px;">
+               				<input type="button" onclick="location.href='/mentor/essayboard/essayboardList'" value="목록" class="btn button button-big button-fill" style="line-height: 0px;">
+           				</div>
 					</div>
 				</div>
 				<script type='text/javascript'>

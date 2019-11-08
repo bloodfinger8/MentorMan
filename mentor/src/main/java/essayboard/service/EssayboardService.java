@@ -18,5 +18,14 @@ public interface EssayboardService {
 	
 	// 에세이 총 글 수
 	public int getTotalA(Map<String, Integer> map);
+	
+	// 에세이 글 수정
+	public EssayboardDTO essayboardModifyForm(int seq);
+	
+	// 에세이 멘토 바디 뷰
+	public EssayboardDTO essaymentorBodyView(int seq);
+	
+	// 에세이 정보 수정 처리
+	public void essayboardModify(Map<String, Object> map);
 
 }
