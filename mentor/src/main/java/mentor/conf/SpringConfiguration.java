@@ -1,4 +1,4 @@
-package spring.conf;
+package mentor.conf;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -34,7 +34,7 @@ public class SpringConfiguration {
 		PathMatchingResourcePatternResolver path = new PathMatchingResourcePatternResolver();
 
 		factoryBean.setDataSource(dataSource());
-		factoryBean.setConfigLocation(path.getResource("classpath:mybatis-config.xml"));
+		factoryBean.setConfigLocation(path.getResource("classpath:spring/mybatis-config.xml"));
 		factoryBean.setMapperLocations(path.getResources("classpath:*/dao/*Mapper.xml"));
 		return factoryBean.getObject();
 	}
