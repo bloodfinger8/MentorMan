@@ -4,24 +4,20 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
-
 import member.bean.MemberDTO;
 import member.service.MemberService;
 
@@ -117,12 +113,19 @@ public class MemberController {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("member_email", member_email);
 		map.put("member_pwd", member_pwd);
+
 		memberDTO = memberService.login(map);
 		memberDTO.setMember_pwd("");
 		if (memberDTO != null) {	
 			session.setAttribute("memDTO", memberDTO);
 			return "login_ok";
 		} else { 
+		MemberDTO memberDTO = memberService.login(map);
+		memberDTO.setMember_pwd("");
+		if (memberDTO != null) {
+			session.setAttribute("memDTO", memberDTO);
+			return "login_ok";	
+		} else {
 			return "login_fail";
 		}
 	}
@@ -134,5 +137,4 @@ public class MemberController {
 		session.invalidate();
 		return new ModelAndView("redirect:/main/index");
 	}
-}
-
+ }
