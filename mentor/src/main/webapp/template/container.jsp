@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!-- container 경계선 -->
+<div class="page navbar-fixed intros index" data-name="intros-index">
+<div class="page-content">
 <div class="open-mentoring-block">
 	<div class="block-title strong-title">
 		콘텐츠 <a type="external" href="">더 보기</a>
@@ -11,7 +13,7 @@
 			<div class="card open-mentoring-card open_mentoring_1917">
 				<div class="thumbnail">
 					<a type="external" href="/open_mentorings/1917"> 
-					<img src="../images/1572315340435.png" /></a>
+					<img src="../image/1572315340435.png" /></a>
 				</div>
 				<div class="card-content card-content-padding">
 					<a class="text-decoration-underline" type="external" href="">
@@ -57,7 +59,7 @@
 			<div class="card open-mentoring-card open_mentoring_1914">
 				<div class="thumbnail">
 					<a type="external" href="/open_mentorings/1914"> 
-					<img src="../images/1572314380896.png" />
+					<img src="../image/1572314380896.png" />
 					</a>
 				</div>
 
@@ -108,7 +110,7 @@
 			<div class="card open-mentoring-card open_mentoring_1913">
 				<div class="thumbnail">
 					<a type="external" href="/open_mentorings/1913"> 
-					<img src="../images/1572403554651.png" />
+					<img src="../image/1572403554651.png" />
 					</a>
 				</div>
 
@@ -157,7 +159,7 @@
 			<div class="card open-mentoring-card open_mentoring_1907">
 				<div class="thumbnail">
 					<a type="external" href="/open_mentorings/1907"> 
-					<img src="../images/1572406016147.png" />
+					<img src="../image/1572406016147.png" />
 					</a>
 				</div>
 
@@ -206,7 +208,7 @@
 			<div class="card open-mentoring-card open_mentoring_1906">
 				<div class="thumbnail">
 					<a type="external" href="/open_mentorings/1906"> 
-					<img src="../images/1572314822221.png" />
+					<img src="../image/1572314822221.png" />
 					</a>
 				</div>
 
@@ -256,7 +258,7 @@
 			<div class="card open-mentoring-card open_mentoring_1905">
 				<div class="thumbnail">
 					<a type="external" href="/open_mentorings/1905"> 
-					<img src="../images/1572404609672.png" />
+					<img src="../image/1572404609672.png" />
 					</a>
 				</div>
 
@@ -781,7 +783,7 @@
 
 					<div class="mentor-image img-circle">
 						<img width="50" height="50"
-							src="=" />
+							src="" />
 					</div>
 
 					<div class="mentor-info">
@@ -848,7 +850,7 @@
 <div class="row no-gutter new-mentor-block-wrapper text-align-center">
 	<div class="col-100 tablet-50">
 		<div class="img-gradient">
-			<img src="../images/mentor_hero-fb0fabb03ac9a924cc639d018d7f1520d49c3f0f1bef7ef871a6c5141658a781.jpg"/>
+			<img src="../image/mentor_hero-fb0fabb03ac9a924cc639d018d7f1520d49c3f0f1bef7ef871a6c5141658a781.jpg"/>
 		</div>
 	</div>
 
@@ -1192,16 +1194,10 @@
 
 	</div>
 </div>
-
-
+</div>
+</div>
 <script>
-	$('.owl-carousel').owlCarousel({
-		items : 1,
-		loop : true,
-		autoplay : true,
-		autoplayTimeout : 5000,
-		autoplayHoverPause : true,
-	});
+	
 
 	$(document)
 			.on(
@@ -1306,7 +1302,3 @@
 		});
 	});
 </script>
-
-
-
-
