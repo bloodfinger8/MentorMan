@@ -12,13 +12,12 @@ import lombok.Data;
 @Data
 public class MenteeboardDTO {
 	private int seq;
-    private String id; 
-    private String name;
+    private String nickname;
     private String email;
     private String subject;
     private String content;
     private String job_code; //직무유형
-    private String job_type; //조인할때만 사용한다
+    private String job_type; //조인할때만 사용
     private int good;
     private int ref; //원글의 seq그룹번호, 답글의 답글도 존재
     private int lev; //답글의 단계

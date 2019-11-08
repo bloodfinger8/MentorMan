@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
-   
+    pageEncoding="UTF-8"%>
+    
 <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-lite.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-lite.js"></script>
-<script src="../js/summernote-ko-KR.js"></script>
+<script src="../js/summernote-ko-KR.js"></script>    
 <style>
 #noticboardWriteForm_div{
    margin: 0;
@@ -68,17 +68,17 @@ table.noticeboardWriteForm_table td {
 
 <div class="page navbar-fixed mentee_programs index">
 <div class="page-content" >
-   <div class="block-title strong-title">멘티 글쓰기</div>
+   <div class="block-title strong-title">멘티 글 수정</div>
    <div calss="block inset">
-         <form method="post" id="noticeboardWriteForm" name="noticeboardWriteForm">
+         <form method="post" id="menteeboardModifyForm" name="noticeboardWriteForm">
             <table id="noticeboardWriteForm_table" class="noticeboardWriteForm_table">
                <thead>
                </thead>
                <tbody>
                <tr>
-                  <th scope="cols"><input type="text" id="menteeWriteFormSubject" name="menteeWriteFormSubject" placeholder="제목을 입력하세요"><span id="noticeboardWriteNonTitle_error_span"></span></th>
+                  <th scope="cols"><input type="text" id="menteeModifyFormSubject" name="menteeModifyFormSubject" value="${menteeboardDTO.subject}"><span id="noticeboardWriteNonTitle_error_span"></span></th>
                	  <th>
-               	  	<select id="job_code_writeForm" name="job_code_writeForm">
+               	  	<select id="job_code_ModifyForm" name="job_code_ModifyForm">
 		        		<option value="">직무 선택</option>
 		            	<option value="job_code_0">인사/총무/노무</option>
 		                <option value="job_code_1">마케팅/MD</option>
@@ -105,7 +105,7 @@ table.noticeboardWriteForm_table td {
                 <tr>
                    <td colspan="2">
                       <div id="summernoteDiv">
-                              <textarea id="summernote" name="summernote"></textarea>
+                              <textarea id="summernote" name="summernote">${menteeboardDTO.content}</textarea>
                       </div>
                       <div id="summernote_error_div"></div>
                    </td>
@@ -113,11 +113,13 @@ table.noticeboardWriteForm_table td {
                 </tbody>
                 <tr align="center">
                    <td colspan="2">
-                      <div class="noticeboardFloat_right_div"><input type="reset" id="resetBtn" class="button color-gray" value="취소"></div>
-                      <div class="noticeboardFloat_right_div"><input type="button"  id="noticeboardWriteForm_Btn" class="button color-gray" value="작성하기"></div>
+                      <div class="noticeboardFloat_right_div"><input type="reset" id="" class="button color-gray" value="취소"></div>
+                      <div class="noticeboardFloat_right_div"><input type="button"  id="menteeboardModifyBtn" class="button color-gray" value="수정"></div>
                    </td>
                 </tr>
             </table>
+            <input type="hidden" name="pg" value="${pg}">
+			<input type="hidden" name="seq" value="${seq}">
          </form>
    </div>
 </div>
@@ -127,7 +129,6 @@ table.noticeboardWriteForm_table td {
 <script>
 	$(document).ready(function() {
 	    $("#summernote").summernote({
-	       placeholder: '여기를 눌러서 글을 작성 할 수 있습니다.<br>[정보통신망법에 의한 홍보 게시물 작성 금지]<br><br>1.회사/단체와 관련된 공모전,대외활동,구인,펀딩 홍보.<br>2.커뮤니티,어플,쇼핑몰,카페,블로그 홍보 및 방문유도.<br>3.토익,한자 등 어학원 홍보.<br>4.연극,영화 티켓 할인 서비스 홍보',
 	       height: 300,                 // set editor height
 	       minHeight: null,             // set minimum height of editor
 	       maxHeight: null,             // set maximum height of editor
@@ -141,6 +142,8 @@ table.noticeboardWriteForm_table td {
 	           }
 	         }
 	    });
+	    
+	    $('#job_code_ModifyForm option[value=${menteeboardDTO.job_code}]').attr('selected','selected');
     });
     
     function sendFile(file, el) {
@@ -164,3 +167,4 @@ table.noticeboardWriteForm_table td {
         });
       }
 </script>
+

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import menteeboard.bean.MenteeboardDTO;
+import menteeboard.bean.MenteeboardLikeDTO;
 
 @Transactional
 @Repository(value="menteeboardDAO")
@@ -45,6 +46,39 @@ public class MenteeboardDAOMybatis implements MenteeboardDAO {
 	@Override
 	public MenteeboardDTO getMenteeboard(int seq) {
 		return sqlSession.selectOne("menteeboardSQL.getMenteeboard" , seq);
+	}
+
+	@Override
+	public void menteeboardHit(int seq) {
+		sqlSession.update("menteeboardSQL.menteeboardHit" , seq);
+	}
+
+	@Override
+	public void menteeboardDelete(int seq) {
+		sqlSession.delete("menteeboardSQL.menteeboardDelete" , seq);
+	}
+
+	@Override
+	public void menteeboardModify(Map<String, String> map) {
+		sqlSession.update("menteeboardSQL.menteeboardModify" , map);
+	}
+
+	@Override
+	public void menteeboardLikeDelete(MenteeboardLikeDTO menteeboardLikeDTO) {
+		sqlSession.delete("menteeboardSQL.menteeboardLikeDelete", menteeboardLikeDTO);
+	}
+	@Override
+	public void menteeboardLikeInsert(MenteeboardLikeDTO menteeboardLikeDTO) {
+		sqlSession.insert("menteeboardSQL.menteeboardLikeInsert" , menteeboardLikeDTO);
+	}
+	@Override
+	public void menteeboardLikeUpdate(int seq) {
+		sqlSession.update("menteeboardSQL.menteeboardLikeUpdate" , seq);
+	}
+
+	@Override
+	public int menteeboardSelect(MenteeboardLikeDTO menteeboardLikeDTO) {
+		return sqlSession.selectOne("menteeboardSQL.menteeboardSelect" , menteeboardLikeDTO );
 	}
 
 }

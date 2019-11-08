@@ -163,6 +163,7 @@
          </div>
          <div id="menteeboardPagingDiv"></div>
          <input type="hidden" id="pgInput" name="pgInput" value="${pg}">
+         <input type="hidden" id="heart2" name="heart2" value="">
       </div>
 </div>
 </div>
@@ -193,7 +194,7 @@ $(document).ready(function(){
 							class : value.seq+""
 				}))).append($('<td/>',{
 					align: 'center',
-					text : value.id
+					text : value.nickname
 				})).append($('<td/>',{
 					align: 'center',
 					text : value.logtime

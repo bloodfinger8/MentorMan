@@ -11,6 +11,8 @@ $('#menteeboardWriteformBtn').on('click' , function(){
 $('#noticeboardWriteForm_Btn').on('click' , function(){
 	if($('#menteeWriteFormSubject').val() == ''){
 	}else if($('#summernote').val() == ''){
+	}else if($('#job_code_writeForm option:selected').val() == ''){
+		alert('직무를 선택하세요');
 	}else{
 		$.ajax({
 			type : 'post',
@@ -96,3 +98,25 @@ function boardSearch(pg){
 	$('input[name=pgInput]').val(pg);
 	$('#job_code').trigger('change','trigger');
 }
+
+$('#menteeboardModifyBtn').on("click" , function(){
+	if($('#menteeModifyFormSubject').val() == '' ){
+	}else if($('#summernote').val() == ''){
+	}else if($('#job_code_ModifyForm option:selected').val() == ''){
+		alert('직무를 선택하세요');
+	}
+	else{
+		$.ajax({
+			type : 'post',
+			url : '/mentor/menteeboard/menteeboardModify',
+			data : $('#menteeboardModifyForm').serialize(),
+			success : function(){
+				alert('수정완료');
+				$(location).attr("href", "http://localhost:8080/mentor/menteeboard/menteeboardList?pg=1");
+			},
+			error : function(err){
+				console.log(err);
+			}
+		});
+	}
+});

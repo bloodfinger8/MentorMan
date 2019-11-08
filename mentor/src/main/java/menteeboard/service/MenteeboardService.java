@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import menteeboard.bean.MenteeboardDTO;
+import menteeboard.bean.MenteeboardLikeDTO;
 
 public interface MenteeboardService {
 
@@ -18,5 +19,18 @@ public interface MenteeboardService {
 	public int getTotalAJob(String job_code);
 
 	public MenteeboardDTO getMenteeboard(int seq);
+
+	public void menteeboardHit(int seq);
+
+	public void menteeboardDelete(int seq);
+
+	public void menteeboardModify(Map<String, String> map);
+
+	public void menteeboardLikeDelete(MenteeboardLikeDTO menteeboardLikeDTO);
+
+	public void menteeboardLikeInsert(MenteeboardLikeDTO menteeboardLikeDTO);
+
+	public int menteeboardSelect(MenteeboardLikeDTO menteeboardLikeDTO);
+	
 	
 }
