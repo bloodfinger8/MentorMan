@@ -80,7 +80,6 @@ create table guide(
 );
 
 -- 안내사항 테이블 insert 문
-insert into guide(guide_content) values ('확정된 분들에게는 참여 확정 안내 메일이 발송됩니다.');
 insert into guide(guide_content) values ('사전 취소는 2일 전까지 가능합니다.');
 insert into guide(guide_content) values ('무단 No-Show 시에는 참여 신청이 제한됩니다.');
 insert into guide(guide_content) values ('주차지원은 불가능하니 대중교통을 이용해 주세요.');
