@@ -48,30 +48,30 @@ insert into mentoring values ('mentoring_code_8','기타');
 
 -- meetingboard 테이블 create문
 create table meetingboard (
-    meeting_seq     number,         -- 모임번호(PK)
-    job_code        varchar2(20),   -- 직무분야(FK)
-    title           varchar2(500),  -- 제목
-    subtitle        varchar2(1000),  -- 부제목
-    content         varchar2(4000), -- 내용
-    day             varchar2(50),   -- 일시
-    starthour       varchar2(30),   -- 시작시간
-    endhour         varchar2(30),   -- 종료시간
-    address         varchar2(50),   -- 장소
-    buildingname    varchar2(50),   -- 건물이름
-    address_x       varchar2(50),   -- 위도
-    address_y       varchar2(50),   -- 경도
-    count           number,         -- 모집인원
-    host            varchar2(50),   -- 주최
-    price           number,         -- 참가비
-    email           varchar2(100),   -- 멘토이메일(FK)
-    state           number  default 0, -- 상태
-    constraint PK_MEETINGBOARD primary key(meeting_seq),
-    constraint FK_MEETINGBOARD foreign key(job_code) references job(job_code),
-    constraint FK_MEETINGBOARD2 foreign key(email) references mentors_member(member_email)
+    meetingboard_seq            number,         -- 모임번호(PK)
+    job_code                    varchar2(20),   -- 직무분야(FK)
+    meetingboard_title          varchar2(500),  -- 제목
+    meetingboard_subtitle       varchar2(1000), -- 부제목
+    meetingboard_content        varchar2(4000), -- 내용
+    meetingboard_day            varchar2(50),   -- 일시
+    meetingboard_starthour      varchar2(30),   -- 시작시간
+    meetingboard_endhour        varchar2(30),   -- 종료시간
+    meetingboard_address        varchar2(50),   -- 장소
+    meetingboard_buildingname   varchar2(50),   -- 건물이름
+    meetingboard_address_x      varchar2(50),   -- 위도
+    meetingboard_address_y      varchar2(50),   -- 경도
+    meetingboard_count          number,         -- 모집인원
+    meetingboard_host           varchar2(50),   -- 주최
+    meetingboard_price          number,         -- 참가비
+    mentor_email                varchar2(100),   -- 멘토이메일(FK)
+    meetingboard_state          number  default 0, -- 상태
+    constraint PK_MEETINGBOARD  primary key(meetingboard_seq),
+    constraint FK_MEETINGBOARD1 foreign key(job_code) references job(job_code),
+    constraint FK_MEETINGBOARD2 foreign key(mentor_email) references mentors_member(member_email)
 );
 
 -- meetingboard 시퀀스
-create sequence seq_meetingboard nocache nocycle;
+create sequence meetingboard_seq nocache nocycle;
 
 -- 안내사항 테이블
 create table guide(
