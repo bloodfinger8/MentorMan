@@ -1,57 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="page navbar-fixed mentee_programs index">
 	<div class="page-content">
 		<div class="view view-main">
-			<div class="navbar">
-				<div class="navbar-inner">
-					<div class="left">
-						<a class="logo" type="external" href="/">
-						<img src="https://d2ljmlcsal6xzo.cloudfront.net/assets/icons/logo-c99a7cbe11906a7c7a8084fbb47e605c16d0586f068ea095c19efc48f6d087e6.png"/>
-						</a>
-					</div>
-					<form class="searchbar" id="searchbar-autocomplete" action="/searchs">
-						<div class="searchbar-inner">
-							<div class="searchbar-input-wrap">
-								<input type="search" name="q" value="" placeholder="직무, 회사, 멘토, 제목" autocomplete="off">
-								<!-- jot_type, mentoring_type, hall_of_fame 별 검색
-      -->
-								<i class="searchbar-icon"></i>
-								<span class="input-clear-button"></span>
-							</div>
-						</div>
-					</form>
-					<div class="right">
-						<a class="button button-big" type="external" href="/mentors">
-						멘토 찾기 </a>
-						<a class="button button-big" type="external" href="/open_mentorings">
-						콘텐츠 </a>
-						<a class="button button-big" type="external" href="/mentor_posts?featured_mentor_post=true">
-						에세이 </a>
-						<div class="beta-div">
-							<a class="button button-big program-button" type="external" href="/mentee_programs">
-							모임 <span class='beta-text'>beta</span>
-							</a>
-						</div>
-						<a class="button button-big beta-div" type="external" href="/mentor_requests/new">
-						멘토 지원하기 </a>
-						<a type="internal" class="button button-big popover-open me-profile" data-popover=".js-me-popover" href="#">
-						<img width="28" height="28" src="https://www.itdaa.net/rails/active_storage/representations/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBeVFFQWc9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--bea6cc7ebceaaee3ca5cdf29013fea0d340aced3/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MY21WemFYcGxTU0lOTVRBd2VERXdNQ0VHT2daRlZEb1FZWFYwYjE5dmNtbGxiblJVIiwiZXhwIjpudWxsLCJwdXIiOiJ2YXJpYXRpb24ifX0=--80976855d44dd57bc27b6da84ad9dae42a7e7a2d/profile.jpg"/>
-						</a>
-					</div>
-				</div>
-				<div class="progress-container">
-					<div class="progress-bar" id="progressBar">
-					</div>
-				</div>
-			</div>
 			<div class="page navbar-fixed mentors show" data-name="mentors-show">
 				<div class="page-content">
 					<div class="block mentor-info-block">
@@ -61,11 +14,11 @@
 						<div class="block mentor-info mentor-info-box">
 							<div class="name">
 								<span class="mentor-name profile-name">
-								강승훈 <small>멘토</small>
+								${essayboardDTO.name } <small>멘토</small>
 								</span>
 							</div>
 							<div class="job">
-								 현대홈쇼핑 · 고객보호팀
+								${essayboardDTO.company }
 							</div>
 							<div class="detail-block">
 								<div class="mentoring-info">
@@ -197,34 +150,37 @@
 								 에세이
 							</div>
 							<div class="count">
-								 (19)
+								 (${essayTotal })
 							</div>
 						</div>
 						<div class="row no-gap">
+						<c:forEach var="list" items="${list }">
 							<div class="col-100 tablet-100 desktop-100">
-								<div class="card mentor-post-card mentor_post_6385 shadow-card">
-									<div class="card-content card-content-padding profile-card">
-										<a class="content-body" type="external" href="/mentor_posts/6385">
-										<div class="mentor-post-title">
-											 [직무탐험대] 직무를 배우는 4가지 방법
+									<div class="card mentor-post-card mentor_post_6385 shadow-card">
+										<div class="card-content card-content-padding profile-card">
+											<a class="content-body" type="external" href="/mentor/essayboard/essaymentorBodyView?seq=${list.seq }&pg=${pg}">
+											<div class="mentor-post-title">
+												 ${list.title }
+											</div>
+											<div class="mentor-post-detail">
+												 ${list.content }
+											</div>
+											</a>
 										</div>
-										<div class="mentor-post-detail">
-											 취업준비에 앞서 가장 어려움을 겪는 부분이 바로 직무 이해인데요, 취준생들이 주로 사용하는 4가지 접근 채널에 대해 효과적인 활용 방법을 소개하고자 합니다. 1. 서적 : 최소 관련 서적 5권은 읽자 - 현업에 있는 사람들 조차 자신의 업무와 관련된 책 3권 이상 읽어본 사람을 찾기가 어렵습니다. 때문에 여러분들께서 관심 있는 직무, 산업, ...
-										</div>
-										</a>
-									</div>
-									<div class="card-footer">
-										<a class="color-gray js-bookmark" type="external" data-remote="true" rel="nofollow" data-method="post" href="/mentor_posts/6385/bookmarks">
-										<i class="far fa-bookmark" aria-hidden="true"></i>
-										10 </a>
-										<div class="created-at">
-											<small>
-											2019년 3월 12일 </small>
+										<div class="card-footer">
+											<a class="color-gray js-bookmark" type="external" data-remote="true" rel="nofollow" data-method="post" href="/mentor_posts/6385/bookmarks">
+											<i class="far fa-bookmark" aria-hidden="true"></i>
+											10 </a>
+											<div class="created-at">
+												<small>
+												${list.logtime } </small>
+											</div>
 										</div>
 									</div>
 								</div>
+							</c:forEach>
 							</div>
-						</div>
+							
 						<div class="text-align-center load-more-container">
 							<button class="button load-more" id="loadMorePost">더 보기</button>
 						</div>
@@ -234,6 +190,7 @@
 					</div>
 				</div>
 			</div>
+			<input type="hidden" id="seq" name="seq" value="${essayboardDTO.seq }">
 			<script>
 			  let currentPage = 1;
 			  const lastPage = 2
@@ -304,5 +261,3 @@
 		</div>
 	</div>
 </div>
-</body>
-</html>

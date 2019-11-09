@@ -8,7 +8,6 @@
 		<h1 align="center">회원가입</h1>
 			<div class="block inset login-block">
 				<form class="simple_form new_user" name="writeForm" id="writeForm" method="post" action="/mentor/member/write">
-					<input type="hidden" name="member_flag" value="0">
 					<div class="signup-or-separator">
 						
 					</div>

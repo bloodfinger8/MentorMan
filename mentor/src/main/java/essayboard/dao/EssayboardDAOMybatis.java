@@ -6,11 +6,13 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import essayboard.bean.EssayboardDTO;
 
 @Repository
-public class EssayboardDAOImpl implements EssayboardDAO {
+@Transactional
+public class EssayboardDAOMybatis implements EssayboardDAO {
 	@Autowired
 	private SqlSession sqlSession;
 	
@@ -54,5 +56,24 @@ public class EssayboardDAOImpl implements EssayboardDAO {
 	@Override
 	public void essayboardModify(Map<String, Object> map) {
 		sqlSession.update("essaySQL.essayboardModify", map);
+	}
+	
+	// 에세이 글 삭제
+	@Override
+	public void essayboardDelete(int seq) {
+		sqlSession.delete("essaySQL.essayboardDelete", seq);
+	}
+	
+	// 해당 멘토가 작성한 에세이 리스트 출력
+	@Override
+	public List<EssayboardDTO> getessayList(String name) {
+		System.out.println("으룸" + name);
+		return sqlSession.selectList("essaySQL.getessayList", name);
+	}
+	
+	// 해당 멘토가 작성한 에세이 수 
+	@Override
+	public int getessayMentorTotal(String name) {
+		return sqlSession.selectOne("essaySQL.getessayMentorTotal", name);
 	}
 }

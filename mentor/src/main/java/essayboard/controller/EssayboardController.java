@@ -144,9 +144,19 @@ public class EssayboardController {
 	 * @Author : TR, @Date : 2019. 11. 6.
 	 */
 	@RequestMapping(value = "essaymentorHeadView", method = RequestMethod.GET)
-	public ModelAndView essaymentorHeadView(@RequestParam String pg) {
+	public ModelAndView essaymentorHeadView(@RequestParam String pg, String seq) {
+		String name = "김태형";
+		// 해당 멘토가 작성한 에세이 리스트 출력
+		List<EssayboardDTO> list = essayboardService.getessayList(name);
+		// 해당 멘토가 작성한 에세이 수 
+		int essayTotal = essayboardService.getessayMentorTotal(name);
 		
+		EssayboardDTO essayboardDTO = essayboardService.essaymentorBodyView(Integer.parseInt(seq));
+		System.out.println("헤드" + essayboardDTO);
 		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject("essayTotal", essayTotal);
+		modelAndView.addObject("list", list);
+		modelAndView.addObject("essayboardDTO", essayboardDTO);
 		modelAndView.addObject("pg", pg);
 		modelAndView.addObject("display", "/essayboard/essaymentorHeadView.jsp");
 		modelAndView.setViewName("/main/index");
@@ -189,11 +199,38 @@ public class EssayboardController {
 		
 		ModelAndView modelAndView = new ModelAndView();
 		
-		modelAndView.addObject("display", "/essayboard/essayboardList.jsp");
+		modelAndView.addObject("display", "/essayboard/essayboardList?.jsp");
 		modelAndView.setViewName("/main/index");
 		
 		return modelAndView;
 	}
 	
+	/**
+	 * 
+	 * @Title : 에세이 보드 삭제
+	 * @Author : TR, @Date : 2019. 11. 8.
+	 */
+	@RequestMapping(value = "essayboardDelete", method = RequestMethod.GET)
+	public String essayboardDelete(@RequestParam String seq, Model model) {
+		essayboardService.essayboardDelete(Integer.parseInt(seq));
+		
+		model.addAttribute("display", "/essayboard/essayboardList?pg=1.jsp");
+		return "/main/index";
+	}
 	
+//	/**
+//	 * 
+//	 * @Title : 해당 멘토가 작성한 에세이 리스트 출력
+//	 * @Author : TR, @Date : 2019. 11. 8.
+//	 */
+//	@RequestMapping(value = "getessayList", method = RequestMethod.POST)
+//	public ModelAndView getessayList(@RequestParam String seq) {
+//		String name = "김태형";
+//		List<EssayboardDTO> list = essayboardService.getessayList(name);
+//		System.out.println("뤼스트" + list);
+//		ModelAndView modelAndView = new ModelAndView();
+//		modelAndView.addObject("list", list);
+//		modelAndView.setViewName("jsonView");
+//		return modelAndView;
+//	}
 }
