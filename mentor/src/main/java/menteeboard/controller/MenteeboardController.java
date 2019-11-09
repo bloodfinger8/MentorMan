@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-
+import member.bean.MemberDTO;
 import menteeboard.bean.MenteeboardDTO;
 import menteeboard.bean.MenteeboardLikeDTO;
 import menteeboard.bean.MenteeboardPaging;
@@ -49,6 +49,8 @@ public class MenteeboardController {
 	private MenteeboardPaging menteeboardPaging;
 	@Autowired
 	private MenteeboardLikeDTO menteeboardLikeDTO;
+	@Autowired
+	private MemberDTO memberDTO;
 
 	@RequestMapping(value = "menteeboardList",method=RequestMethod.GET)
 	public String menteeboardList(@RequestParam(required = false, defaultValue = "1") String pg, Model model) {
@@ -85,8 +87,8 @@ public class MenteeboardController {
 		menteeboardPaging.setTotalA(totalA);
 		menteeboardPaging.makePagingHTML();
 		
-		
-		String nickname = (String)session.getAttribute("memNickname");
+		memberDTO = (MemberDTO)session.getAttribute("memDTO"); 
+		String nickname = memberDTO.getMember_nickname();
 		
 		//조회수(쿠키 생성) 
 		if(nickname != null) {
@@ -120,11 +122,10 @@ public class MenteeboardController {
 	public void boardWrite(@RequestParam Map<String, String> map,
 							HttpSession session) {
 		
-		String nickname = (String)session.getAttribute("memNickname");
-		String email = (String)session.getAttribute("memEmail");
+		memberDTO = (MemberDTO)session.getAttribute("memDTO"); 
 		
-		map.put("nickname", nickname);
-		map.put("email", email);
+		map.put("nickname", memberDTO.getMember_nickname());
+		map.put("email", memberDTO.getMember_email());
 		System.out.println("map = " + map);
 		menteeboardService.menteeboardWrite(map);
 	}
@@ -193,7 +194,6 @@ public class MenteeboardController {
 										 HttpServletRequest request,
 										 HttpServletResponse response
 										 ){
-		System.out.println("sdsdsdsdsdsdsdsasdasdasdasddsd");
 		//쿠키조회
 		Cookie[] getCookie = request.getCookies();
 		if(getCookie != null) {
@@ -210,13 +210,12 @@ public class MenteeboardController {
 		}
 		MenteeboardDTO menteeboardDTO= menteeboardService.getMenteeboard(Integer.parseInt(seq));
 		
-		String memEmail = (String)session.getAttribute("memEmail");
-		System.out.println("memEmail : " + memEmail);
+		memberDTO = (MemberDTO)session.getAttribute("memDTO");
+		
 		//좋아요테이블에 값이 있는지 조사
 		menteeboardLikeDTO.setMenteeboard_seq(Integer.parseInt(seq));
-		menteeboardLikeDTO.setEmail(memEmail);
+		menteeboardLikeDTO.setEmail(memberDTO.getMember_email());
 		int heart = menteeboardService.menteeboardSelect(menteeboardLikeDTO);
-		System.out.println("heart : " + heart);
 		
 		//게시글 댓글 리스트
 		int endNum = Integer.parseInt(pg) * 15; //한페이지당 5개
@@ -241,7 +240,7 @@ public class MenteeboardController {
 		mav.addObject("cnt" , cnt);
 		mav.addObject("menteeboardPaging" , menteeboardPaging);
 		mav.addObject("list" , list);
-		mav.addObject("memEmail" , memEmail);
+		mav.addObject("memEmail" , memberDTO.getMember_email());
 		mav.addObject("heart" , heart);
 		mav.addObject("seq" , Integer.parseInt(seq));
 		mav.addObject("pg" , Integer.parseInt(pg));
@@ -298,13 +297,13 @@ public class MenteeboardController {
 	public int menteeboardLike(HttpServletRequest httpRequest, HttpSession session) throws Exception {
         int heart = Integer.parseInt(httpRequest.getParameter("heart"));
         int menteeboard_seq = Integer.parseInt(httpRequest.getParameter("menteeboard_seq"));
-        String email = (String)session.getAttribute("memEmail");
+        
+        memberDTO = (MemberDTO)session.getAttribute("memDTO");
         
         
         menteeboardLikeDTO.setMenteeboard_seq(menteeboard_seq);
-        menteeboardLikeDTO.setEmail(email);
+        menteeboardLikeDTO.setEmail(memberDTO.getMember_email());
 
-        System.out.println("heart : "+ heart);
         
         if(heart >= 1) {
             menteeboardService.menteeboardLikeDelete(menteeboardLikeDTO);
