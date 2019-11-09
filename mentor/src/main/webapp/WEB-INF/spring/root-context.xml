@@ -22,5 +22,15 @@
 	<context:component-scan base-package="meetingboard.bean"/>
 	<context:component-scan base-package="meetingboard.dao"/>
 	<context:component-scan base-package="meetingboard.service"/>
+	
+	<!-- 게시판 -->
+	<context:component-scan base-package="menteeboard.service"/>
+	<context:component-scan base-package="menteeboard.dao"/>
+	<context:component-scan base-package="menteeboard.bean"/>
+	
+	<!-- 게시판 댓글 -->
+	<context:component-scan base-package="menteeboardReply.service"/>
+	<context:component-scan base-package="menteeboardReply.dao"/>
+	<context:component-scan base-package="menteeboardReply.bean"/>
 
 </beans>

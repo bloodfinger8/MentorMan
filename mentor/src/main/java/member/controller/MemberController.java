@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+
 import member.bean.MemberDTO;
 import member.service.MemberService;
 
@@ -119,16 +121,18 @@ public class MemberController {
 		if (memberDTO != null) {	
 			session.setAttribute("memDTO", memberDTO);
 			return "login_ok";
-		} else { 
+		}else { 
 		MemberDTO memberDTO = memberService.login(map);
 		memberDTO.setMember_pwd("");
-		if (memberDTO != null) {
-			session.setAttribute("memDTO", memberDTO);
-			return "login_ok";	
-		} else {
-			return "login_fail";
+			if (memberDTO != null) {
+				session.setAttribute("memDTO", memberDTO);
+				return "login_ok";	
+			} else {
+				return "login_fail";
+			}
 		}
 	}
+	
 	
 	// 로그아웃 처리
 	@RequestMapping(value = "logout", method = RequestMethod.GET)

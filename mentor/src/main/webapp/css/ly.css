@@ -5096,9 +5096,9 @@ input[type="submit"].button,input[type="button"].button {
     width: 100%
 }
 
-/* button {
-    width: 100%
-} */
+button {
+    /* width: 100% */
+}
 
 .segmented {
     -ms-flex-item-align: center;
@@ -34640,7 +34640,7 @@ table {
 }
 
 th,td {
-    border: 1px solid #ddd
+   /*  border: 1px solid #ddd */
 }
 
 .fr-video {

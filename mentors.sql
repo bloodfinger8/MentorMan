@@ -93,9 +93,9 @@ CREATE TABLE menteeboard(
      email VARCHAR2(40),   -- 이메일
      subject VARCHAR2(255) NOT NULL,    -- 제목
      content VARCHAR2(4000) NOT NULL,   -- 내용
-     job_code VARCHAR2(40),                  -- 직무유형 
+     job_code VARCHAR2(40),                  -- 직무유형
      good NUMBER DEFAULT 0,
-    
+
      ref NUMBER NOT NULL,               -- 그룹번호
      lev NUMBER DEFAULT 0 NOT NULL,     -- 단계
      step NUMBER DEFAULT 0 NOT NULL,    -- 글순서
@@ -106,6 +106,46 @@ CREATE TABLE menteeboard(
      logtime DATE DEFAULT SYSDATE
  );
  create SEQUENCE menteeboard_seq nocache nocycle;
- 
- 
- 
+
+
+ -- 좋아요 테이블
+ CREATE TABLE menteeboard_like(
+     menteeboard_seq VARCHAR2(40) NOT NULL,
+     email VARCHAR2(40) NOT NULL
+);
+    select * from menteeboard_like;
+
+
+ -- 게시글 댓글 테이블
+ CREATE TABLE menteeboardReply(
+      seq NUMBER PRIMARY KEY,               -- 댓글 번호
+      menteeboard_seq NUMBER NOT NULL,
+      nickname VARCHAR2(40) NOT NULL,
+      email VARCHAR2(40) NOT NULL,
+      content VARCHAR(1000) NOT NULL,       -- 댓글내용
+
+      ref NUMBER NOT NULL,               -- 그룹번호
+      lev NUMBER DEFAULT 0 NOT NULL,     -- 단계
+      step NUMBER DEFAULT 0 NOT NULL,    -- 글순서
+      pseq NUMBER DEFAULT 0 NOT NULL,    -- 원글번호
+      logtime DATE DEFAULT SYSDATE
+);
+create SEQUENCE menteeboardReply_seq nocache nocycle;
+
+select * from menteeboardReply order by logtime;
+
+select * from
+	(select rownum rn, tt.* from
+	(select *
+	from menteeboardReply where menteeboard_seq = 5 order by ref desc, step asc)tt)
+	where >= 1 and rn <= 5;
+
+
+
+ --송현--------------------------------------------------------------------------------------------------------
+ create table mentors_member(
+member_name varchar2(50) not null,
+member_nickname varchar2(50) not null,
+member_email varchar2(100)  primary key,
+member_pwd varchar2(100) not null,
+member_flag number DEFAULT 0);
