@@ -148,3 +148,26 @@ member_nickname varchar2(50) not null,
 member_email varchar2(100)  primary key,
 member_pwd varchar2(100) not null,
 member_flag number DEFAULT 0);
+
+---junhyeok----------------------------------------------------------------------------------------------------
+create table mentor(
+ mentor_seq number primary key,			-- 멘토 번호
+ mentor_company varchar2(100) not null,		-- 회사
+ mentor_department varchar2(100) not null,	-- 부서
+ mentor_position varchar2(100) not null,	-- 직급
+ job_code varchar2(100) not null,		-- 직무유형
+ mentor_school varchar2(100) DEFAULT null,	-- 학교
+ mentor_career varchar2(2000) not null,		-- 경력
+ mentoring_code varchar2(2000) not null,	--멘토링 코드
+ mentor_represent varchar2(1000) not null,	-- 대표적인 분야
+ mentor_info varchar2(4000) not null,		-- 멘토 소개
+ mentor_etc varchar2(4000) DEFAULT null,	-- 기타사항
+ mentor_email varchar2(200) not null,		-- 이메일
+ mentor_selectNaming varchar2(200) not null,	-- 실명 공개여부 선택
+ mentor_businesscard varchar2(2000) not null,	-- 명함.img
+ mentor_badeg number DEFAULT 0,			-- 뱃지
+ mentor_flag number DEFAULT 0,			-- 상태
+ mentor_logtime date default sysdate		-- 날짜
+);
+
+create sequence mentor_seq nocache nocycle;	-- 멘토 sequence
