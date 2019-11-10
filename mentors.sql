@@ -84,6 +84,20 @@ insert into guide(guide_content) values ('사전 취소는 2일 전까지 가능
 insert into guide(guide_content) values ('무단 No-Show 시에는 참여 신청이 제한됩니다.');
 insert into guide(guide_content) values ('주차지원은 불가능하니 대중교통을 이용해 주세요.');
 
+-- 모임신청 테이블
+create table participation(
+    meetingboard_seq        number,         -- 모임 seq
+    mentee_email            varchar2(100),  -- 멘티 email
+    mentee_name             varchar2(50),   -- 멘티 이름
+    mentor_email            varchar2(100),  -- 멘토 email
+    mentor_name             varchar2(50),   -- 멘토 이름
+    participation_address   varchar2(50),   -- 거주지
+    participation_question  varchar2(2000), -- 사전질문
+    constraint FK_MEETINGBOARD_SEQ foreign key(meetingboard_seq) references meetingboard(meetingboard_seq),
+    constraint FK_MENTEE_EMAIL foreign key(mentee_email) references mentors_member(member_email),
+    constraint FK_MENTOR_EMAIL foreign key(mentor_email) references mentors_member(member_email)
+);
+
 ---yangJaewoo-----------------------------------------------------------------------------------------------------
 
 CREATE TABLE menteeboard(
