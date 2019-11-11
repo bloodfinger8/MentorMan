@@ -161,12 +161,12 @@ create table mentor(
  mentor_department varchar2(100) not null,   -- 부서
  mentor_position varchar2(100) not null,   -- 직급
  job_code varchar2(100) not null,      -- 직무유형
- mentor_school varchar2(100) DEFAULT null,   -- 학교
+ mentor_school varchar2(100),   -- 학교
  mentor_career varchar2(4000) not null,      -- 경력
  mentoring_code varchar2(4000) not null,   --멘토링 코드
  mentor_represent varchar2(1000) not null,   -- 대표적인 분야
  mentor_info varchar2(4000) not null,      -- 멘토 소개
- mentor_etc varchar2(4000) DEFAULT null,   -- 기타사항
+ mentor_etc varchar2(4000),   -- 기타사항
  mentor_email varchar2(200) not null,      -- 이메일
  mentor_selectNaming varchar2(200) not null,   -- 실명 공개여부 선택
  mentor_businesscard varchar2(2000) not null,   -- 명함.img
