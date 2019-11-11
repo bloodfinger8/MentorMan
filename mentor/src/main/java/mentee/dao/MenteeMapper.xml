@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="menteeSQL">
+	<update id="mentorUserModify" parameterType="Map">
+		<if test="member_profile==''">
+			update mentors_member set member_name = #{member_name}, member_nickname = #{member_nickname} where member_email = #{member_email}
+		</if>
+		<if test="member_profile!=''">
+			update mentors_member set member_name = #{member_name}, member_nickname = #{member_nickname}, member_profile = #{member_profile} where member_email = #{member_email}
+		</if>
+	</update>
+
+</mapper>

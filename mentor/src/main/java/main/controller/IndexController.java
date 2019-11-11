@@ -15,5 +15,4 @@ public class IndexController {
 		mav.setViewName("/main/index");
 		return mav;
 	}
-
 }
