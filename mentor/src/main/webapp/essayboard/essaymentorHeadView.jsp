@@ -14,11 +14,11 @@
 						<div class="block mentor-info mentor-info-box">
 							<div class="name">
 								<span class="mentor-name profile-name">
-								${essayboardDTO.name } <small>멘토</small>
+								${essayboardDTO.member_name } <small>멘토</small>
 								</span>
 							</div>
 							<div class="job">
-								${essayboardDTO.company }
+								${essayboardDTO.mentor_company }
 							</div>
 							<div class="detail-block">
 								<div class="mentoring-info">
@@ -46,36 +46,36 @@
 									</div>
 								</div>
 								<div class="mentoring-info">
-									<div class="title text-decoration-underline">
+									<div class="title text-decoration-underline" style="height: 15px;">
 										 대표 멘토링 분야
 									</div>
 									<div class="mentoring-type-block">
-										 핀테크/이커머스/창업/취업/자소서/면접/대외활동/스타트업/외국계/마케팅/전략기획/인하우스/에이전시/
+										 ${essayboardDTO.mentor_represent }
 									</div>
 								</div>
 								<div class="mentoring-info">
-									<div class="title">
+									<div class="title" style="height: 15px;">
 										 직무 유형
 									</div>
 									<div class="mentoring-type-block">
 										<a type="external" href="/mentors?job_type%5B%5D=7">
 										<div class="chip chip-outline no-border-radius job-tags">
 											<div class="chip-label">
-												 서비스 기획/UI, UX등
+												 ${essayboardDTO.job_type }
 											</div>
 										</div>
 										</a>
 									</div>
 								</div>
 								<div class="mentoring-info">
-									<div class="title">
+									<div class="title" style="height: 15px;">
 										 멘토링 분야
 									</div>
 									<div class="mentoring-type-block">
 										<a type="external" href="/mentors?mentoring_type%5B%5D=1">
 										<div class="chip chip-outline no-border-radius job-tags">
 											<div class="chip-label">
-												 직무
+												  ${essayboardDTO.mentoring_type }
 											</div>
 										</div>
 										</a>
@@ -99,17 +99,22 @@
 							 멘토 소개
 						</div>
 						<div class="block">
+							${essayboardDTO.mentor_info }
 						</div>
 						<div class="block-title">
 							 주요 경력
 						</div>
 						<div class="block">
+							${essayboardDTO.mentor_career }
 						</div>
+						<c:if test="${essayboardDTO.mentor_etc != null }">
 						<div class="block-title">
 							 기타 사항
 						</div>
 						<div class="block">
+							${essayboardDTO.mentor_etc}
 						</div>
+						</c:if>
 					</div>
 					<div class="block section thanks-block">
 						<div class="title-wrap">
@@ -117,10 +122,11 @@
 								 고맙습니다
 							</div>
 							<div class="count">
-								 (18)
+								 (${reTotal })
 							</div>
 						</div>
 						<div class="row no-gap">
+						<c:forEach var="relist" items="${relist }">
 							<div id='thanks-notes'>
 								<div class="block mentee-detail-block thanks-note-card">
 									<div class="mentee-info">
@@ -128,17 +134,18 @@
 											<img src="https://d2ljmlcsal6xzo.cloudfront.net/assets/fallback/temporary_profile-65c08fd0b2bb95434e40fa62b682df18417765c3b0ac165dcb5b3e9035f01b98.png"/>
 										</div>
 										<div class="mentee-name">
-											 김경은
+											 ${relist.meeting_review_name }
 										</div>
 										<div class="sent-date">
-											 2019년 5월 2일
+											 ${relist.meeting_review_logtime }
 										</div>
 									</div>
 									<div class="thanks-note-body">
-										 감사합니다!! 참고해서 제것도 만들어보려고 합니다 감사합니다!
+										 ${relist.meeting_review_content }
 									</div>
 								</div>
 							</div>
+						</c:forEach>
 						</div>
 						<div class="text-align-center">
 							<button class="button load-more" id="loadMoreThanks">더 보기</button>
@@ -157,20 +164,20 @@
 						<c:forEach var="list" items="${list }">
 							<div class="col-100 tablet-100 desktop-100">
 									<div class="card mentor-post-card mentor_post_6385 shadow-card">
-										<div class="card-content card-content-padding profile-card">
-											<a class="content-body" type="external" href="/mentor/essayboard/essaymentorBodyView?seq=${list.seq }&pg=${pg}">
+										<div class="card-content card-content-padding profile-card" style="overflow: hidden; text-overflow: ellipsis; height: 200px;">
+											<a class="content-body" type="external" href="/mentor/essayboard/essaymentorBodyView?seq=${list.essayboard_seq }&pg=${pg}">
 											<div class="mentor-post-title">
-												 ${list.title }
+												 ${list.essayboard_title }
 											</div>
 											<div class="mentor-post-detail">
-												 ${list.content }
+												 ${list.essayboard_content }
 											</div>
 											</a>
 										</div>
 										<div class="card-footer">
 											<a class="color-gray js-bookmark" type="external" data-remote="true" rel="nofollow" data-method="post" href="/mentor_posts/6385/bookmarks">
 											<i class="far fa-bookmark" aria-hidden="true"></i>
-											10 </a>
+											${list.essayboard_scrap } </a>
 											<div class="created-at">
 												<small>
 												${list.logtime } </small>
@@ -190,7 +197,7 @@
 					</div>
 				</div>
 			</div>
-			<input type="hidden" id="seq" name="seq" value="${essayboardDTO.seq }">
+			<input type="hidden" id="seq" name="seq" value="${essayboardDTO.essayboard_seq }">
 			<script>
 			  let currentPage = 1;
 			  const lastPage = 2
@@ -226,7 +233,7 @@
 			    }
 			  }
 			  $(function () {
-			    $('.thanks-note-card').prop('hidden', true).slice(0, 3).show();
+			    $('.thanks-note-card').prop('hidden', true).slice(0, 5).show();
 			    $("#loadMoreThanks").on('click', function (e) {
 			        e.preventDefault();
 			        if ($(".thanks-note-card:hidden").length == 0) {       
@@ -242,11 +249,11 @@
 			              });
 			              final.on('click', '.thanks-note-body > a.elipsis', toggleThanksNotesText);
 			              final.prop('hidden', true).appendTo('#thanks-notes');
-			              $(".thanks-note-card:hidden").slice(0, 3).slideDown();
+			              $(".thanks-note-card:hidden").slice(0, 5).slideDown();
 			            }
 			          });
 			        } else {
-			          $(".thanks-note-card:hidden").slice(0, 3).slideDown();
+			          $(".thanks-note-card:hidden").slice(0, 5).slideDown();
 			          if($(".thanks-note-card:hidden").length == 0 && lastPage <= currentPage){
 			            $("#loadMoreThanks").fadeOut('slow');
 			          }

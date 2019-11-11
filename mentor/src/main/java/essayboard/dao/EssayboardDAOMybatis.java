@@ -67,7 +67,6 @@ public class EssayboardDAOMybatis implements EssayboardDAO {
 	// 해당 멘토가 작성한 에세이 리스트 출력
 	@Override
 	public List<EssayboardDTO> getessayList(String name) {
-		System.out.println("으룸" + name);
 		return sqlSession.selectList("essaySQL.getessayList", name);
 	}
 	
@@ -75,5 +74,23 @@ public class EssayboardDAOMybatis implements EssayboardDAO {
 	@Override
 	public int getessayMentorTotal(String name) {
 		return sqlSession.selectOne("essaySQL.getessayMentorTotal", name);
+	}
+	
+	// 에세이 멘토 헤드 뷰
+	@Override
+	public EssayboardDTO essaymentorHeadView(String name) {
+		return sqlSession.selectOne("essaySQL.essaymentorHeadView", name);
+	}
+	
+	// 모임 후기 (고맙습니다)
+	@Override
+	public List<EssayboardDTO> getessayReview() {
+		return sqlSession.selectList("essaySQL.getessayReview");
+	}
+	
+	// 모임 후기 글 수
+	@Override
+	public int getreTotal() {
+		return sqlSession.selectOne("essaySQL.getreTotal");
 	}
 }

@@ -10,32 +10,34 @@
 		<div class="view view-main">
 			<div class="page navbar-fixed mentor_posts show" data-name="mentor_posts-show">
 				<div class="page-content">
-					<div class="post-block-container" style="border: 1px solid blue;">
-					
-		
-							<a id="essay_write_btn" style="width: 100px; float: right;" class="button" type="external" href="/mentor/essayboard/essayboardDelete?seq=${seq }">
-		            		<i class="fas fa-pencil-alt"></i>
-		            			글삭제</a>
-					
 						
-						<a id="essay_write_btn" style="width: 100px; float: right;" class="button" type="external" href="/mentor/essayboard/essayboardModifyForm?seq=${seq }&pg=${pg}">
-		            		<i class="fas fa-pencil-alt"></i>
-		            			글수정
-						</a>
+					<div class="post-block-container" style="border: 1px solid blue;">
+						
+						
 						<div class="mentor-post-detail-block">
 							<h1 class="mentor-post-title" style="display : flex">
-								${essayboardDTO.title} 
+								${essayboardDTO.essayboard_title} 
 								</h1>
 							<div class="trix-content">
-								${essayboardDTO.content }
+								${essayboardDTO.essayboard_content }
 							</div>
 							
 							<div class="block button-wrap">
+							<div style="display: inline-block;">
+							<a id="essay_write_btn" style="width: 100px; float: right;" class="button" type="external" href="/mentor/essayboard/essayboardDelete?seq=${seq }">
+		            			<i class="fas fa-pencil-alt"></i>
+		            			글삭제
+		            		</a>
+							<a id="essay_write_btn" style="width: 100px; float: right;" class="button" type="external" href="/mentor/essayboard/essayboardModifyForm?seq=${seq }&pg=${pg}">
+			            		<i class="fas fa-pencil-alt"></i>
+			            			글수정
+							</a>
+						</div>
 								<div class="action-block text-align-center mentor_post_6618">
 									<a class="color-gray" type="external" data-remote="true" rel="nofollow" data-method="post" href="/mentor_posts/6618/bookmarks">
 									<div class="block button button-big button-inline color-gray js-bookmark">
 										<i class="far fa-bookmark" aria-hidden="true"></i>
-										4
+										${essayboardDTO.essayboard_scrap }
 									</div>
 									</a>
 								</div>
@@ -54,7 +56,7 @@
 								<div class="block mentor-info">
 									<div class="name">
 										<span class="mentor-name">
-										${essayboardDTO.name } <small>멘토</small>
+										${essayboardDTO.member_name } <small>멘토</small>
 										</span>
 										<a class="button col js-bookmark user_14134" data-params="followed_id=14134" data-disable-with="..." type="external" data-remote="true" rel="nofollow" data-method="post" href="/relationships">
 										팔로우 </a>
@@ -70,7 +72,7 @@
 												 대표 멘토링 분야
 											</div>
 											<div class="mentoring-type-block">
-												 핀테크/이커머스/창업/취업/자소서/면접/대외활동/스타트업/외국계/마케팅/전략기획/인하우스/에이전시/
+												 ${essayboardDTO.mentor_represent }
 											</div>
 										</div>
 										<div class="mentoring-info">
@@ -81,7 +83,7 @@
 												<a type="external" href="/mentors?job_type%5B%5D=7">
 												<div class="chip chip-outline no-border-radius">
 													<div class="chip-label">
-														 서비스 기획/UI, UX등
+														 ${essayboardDTO.job_type }
 													</div>
 												</div>
 												</a>

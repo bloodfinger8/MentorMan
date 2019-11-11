@@ -92,6 +92,7 @@ public class MemberController {
 			return "login_fail";
 		}
 	}
+	
 	// 로그아웃 처리
 	@RequestMapping(value = "logout", method = RequestMethod.GET)
 	public ModelAndView logout(HttpSession session) {

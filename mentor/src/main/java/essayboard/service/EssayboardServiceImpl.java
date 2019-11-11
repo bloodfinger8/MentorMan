@@ -73,4 +73,22 @@ public class EssayboardServiceImpl implements EssayboardService {
 	public int getessayMentorTotal(String name) {
 		return essayboardDAO.getessayMentorTotal(name);
 	}
+	
+	// 에세이 멘토 헤드 뷰
+	@Override
+	public EssayboardDTO essaymentorHeadView(String name) {
+		return essayboardDAO.essaymentorHeadView(name);
+	}
+	
+	// 모임 후기 (고맙습니다)
+	@Override
+	public List<EssayboardDTO> getessayReview() {
+		return essayboardDAO.getessayReview();
+	}
+	
+	// 모임 후기 글 수
+	@Override
+	public int getreTotal() {
+		return essayboardDAO.getreTotal();
+	}
 }

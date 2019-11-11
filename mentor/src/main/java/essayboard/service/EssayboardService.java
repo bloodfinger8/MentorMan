@@ -36,5 +36,14 @@ public interface EssayboardService {
 	
 	// 해당 멘토가 작성한 에세이 수 
 	public int getessayMentorTotal(String name);
+	
+	// 에세이 멘토 헤드 뷰
+	public EssayboardDTO essaymentorHeadView(String name);
+	
+	// 모임 후기 (고맙습니다)
+	public List<EssayboardDTO> getessayReview();
+	
+	// 모임 후기 글 수
+	public int getreTotal();
 
 }
