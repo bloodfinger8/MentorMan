@@ -13,6 +13,7 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 public class SpringConfiguration {
 	
 // DataSource
+
 	@Bean
 	public BasicDataSource dataSource() {
 		BasicDataSource basicDataSource = new BasicDataSource();
