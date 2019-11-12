@@ -74,7 +74,6 @@ create table meeting_order (
     mentee_tel        varchar2(50),         -- 멘티 전화번호
     meetingboard_seq  number,               -- 모임 seq
     participation_seq number,               -- 신청 seq
-    constraint PK_MEETING_ORDER primary key(order_id),
     constraint FK_MEETING_ORDER1 foreign key(meetingboard_seq) references meetingboard(meetingboard_seq),
     constraint FK_MEETING_ORDER2 foreign key(mentee_email) references mentors_member(member_email)
 );
