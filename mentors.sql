@@ -173,6 +173,7 @@ member_pwd varchar2(100) not null,
 member_flag number DEFAULT 0);
 
 ---junhyeok----------------------------------------------------------------------------------------------------
+-- 멘토
 create table mentor(
  mentor_seq number primary key,         -- 멘토 번호
  mentor_company varchar2(100) not null,      -- 회사
@@ -188,7 +189,7 @@ create table mentor(
  mentor_email varchar2(200) not null,      -- 이메일
  mentor_selectNaming varchar2(200) not null,   -- 실명 공개여부 선택
  mentor_businesscard varchar2(2000) not null,   -- 명함.img
- mentor_badeg number DEFAULT 0,         -- 뱃지
+ mentor_badge number DEFAULT 0,         -- 뱃지
  mentor_flag number DEFAULT 0,         -- 상태
  mentor_logtime date default sysdate,      -- 날짜
  foreign key(job_code)
@@ -199,6 +200,29 @@ create table mentor(
 
 create sequence mentor_seq nocache nocycle;	-- 멘토 sequence
 
+-- 멘티 학생
+create table menteestudent_profile(
+    menteestudent_school varchar2(1000),            -- 학교
+    menteestudent_major varchar2(500) not null,     -- 전공
+    menteestudent_state varchar2(100) not null,     -- 재학/졸업
+    menteestudent_grade varchar2(100),              -- 학년
+    menteestudent_spec varchar2(4000) not null,     -- 스펙
+    menteestudent_etc varchar2(4000),               -- 기타사항
+    menteestudent_email varchar2(200) not null,     -- 이메일
+    foreign key(menteestudent_email)
+    references mentors_member(member_email));
+
+-- 멘티 직장인
+create table menteeemployee_profile(
+    menteeemployee_year number not null,            -- 년차
+    menteeemployee_final varchar2(100) not null,    -- 최종학력
+    menteeemployee_school varchar2(1000),           -- 출신학교
+    menteeemployee_career varchar2(4000) not null,  -- 경력
+    menteeemployee_etc varchar2(4000),              -- 기타사항
+    menteeemployee_email varchar2(200) not null,    -- 이메일
+    foreign key(menteeemployee_email)
+    references mentors_member(member_email));
+                              
 ----taehyeong--------------------------------------------------------------------------------------------------------------------
 -- 에세이 보드 생성
 create table essayboard(
