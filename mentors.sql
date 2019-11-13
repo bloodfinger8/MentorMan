@@ -193,8 +193,6 @@ create table mentor(
  mentor_logtime date default sysdate,      -- 날짜
  foreign key(job_code)
  references job(job_code),
- foreign key(mentoring_code)
- references mentoring(mentoring_code),
  foreign key(mentor_email)
  references mentors_member(member_email)
 );
