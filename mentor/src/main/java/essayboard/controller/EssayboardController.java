@@ -1,9 +1,13 @@
 package essayboard.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +33,18 @@ public class EssayboardController {
 
 	/*
 	 * 
-	 * @Title : 에세이 리스트 출력
+	 * @Title : (추천)에세이 리스트 출력
 	 * @Author : 김태형, @Date : 2019. 11. 6.
 	 */
 	@RequestMapping(value = "essayboardList", method = RequestMethod.GET)
-	public ModelAndView essayboardForm(@RequestParam(required = false, defaultValue = "1") String pg) {
-		//List<EssayboardDTO> genogem = essayboardService.essayboardList();
+	public ModelAndView essayboardForm(@RequestParam(required = false, defaultValue = "1") String pg,
+									   @RequestParam String flag,
+									   HttpSession session,
+									   HttpServletResponse response) {
+		MemberDTO memberDTO = (MemberDTO)session.getAttribute("memDTO");
+		List<EssayboardDTO> list = null;
+		
+		
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		// 페이지 당 9개씩
 		int endNum = Integer.parseInt(pg) * 9;
@@ -48,17 +58,39 @@ public class EssayboardController {
 		
 		map.put("totalA", totalA);
 		
-		//  멘토 리스트 가져오기
-		List<EssayboardDTO> list = essayboardService.essayboardList(map);
-		System.out.println("밤 늦게 뻘짓의 성과 " + list);
+		
+		
+		System.out.println("널 일까 아닐 까?" + memberDTO);
 		ModelAndView modelAndView = new ModelAndView();
+		if(flag.equals("1")) {
+			//  추천 에세이 리스트 가져오기
+			list = essayboardService.essayboardList(map);			
+		} else if (flag.equals("0")) {
+			//  신규 에세이 리스트
+			list = essayboardService.getNewEssay(map);			
+		}
+		//로그인 여부에 따라
+		System.out.println("플래그 " + flag);
+		System.out.println("멘토 리스트 " + list);
+		if(memberDTO != null) {
+			String nickname = memberDTO.getMember_nickname();
+			modelAndView.addObject("memNickname" , nickname);
+			
+			//조회수(쿠키 생성) 
+			if(nickname != null) {
+				Cookie cookie = new Cookie("memHit","0");
+				cookie.setMaxAge(60*60*24);
+				response.addCookie(cookie);
+			}
+		}
+
 		
 		essayboardPaging.setCurrentPage(Integer.parseInt(pg));
 		essayboardPaging.setPageBlock(3);
 		essayboardPaging.setPageSize(9);
 		essayboardPaging.setTotalA(totalA);
 		essayboardPaging.makePagingHTML();
-		
+		modelAndView.addObject("flag", flag);
 		modelAndView.addObject("pg", pg);
 		modelAndView.addObject("boardpaging", essayboardPaging);
 		modelAndView.addObject("map", map);
@@ -69,6 +101,36 @@ public class EssayboardController {
 		return modelAndView;
 	}
 	
+//	/**
+//	 * 
+//	 * @Title : (최신순) 에세이 리스트 
+//	 * @Author : TR, @Date : 2019. 11. 12.
+//	 */
+//	@RequestMapping(value = "essayboardNewEssayList", method = RequestMethod.GET)
+//	public ModelAndView essayboardNewEssayList() {
+//		
+//		// 최신 에세이 리스트
+//		List<EssayboardDTO> list = essayboardService.getNewEssay();
+//		
+//		Map<String, Integer> map = new HashMap<String, Integer>();
+//		// 페이지 당 9개씩
+//		int endNum = Integer.parseInt(pg) * 9;
+//		int startNum = endNum - 8;
+//		
+//		map.put("endNum", endNum);
+//		map.put("startNum", startNum);
+//		
+//		// 총 글 수
+//		int totalA = essayboardService.getTotalA(map);
+//		
+//		ModelAndView modelAndView = new ModelAndView();
+//		
+//		modelAndView.addObject("list", list);
+//		modelAndView.addObject("display", "/essayboard/essayboardNewEssayList.jsp");
+//		modelAndView.setViewName("/main/index");
+//		
+//		return modelAndView;
+//	}
 	
 	/*
 	 * 
@@ -89,6 +151,7 @@ public class EssayboardController {
 	@RequestMapping(value = "essayboardWrite", method = RequestMethod.POST)
 	public ModelAndView essayboardWrite(@RequestParam Map<String, Object> map, HttpSession session, Model model) {
 		MemberDTO memberDTO = (MemberDTO)session.getAttribute("memDTO");
+			
 		String email = memberDTO.getMember_email();
 		System.out.println("나오라요 이메일 " + email);
 		map.put("mentor_email", email);
@@ -108,9 +171,13 @@ public class EssayboardController {
 	 * @Author : 김태형, @Date : 2019. 11. 6.
 	 */
 	@RequestMapping(value = "essayjobType", method = RequestMethod.GET)
-	public ModelAndView essayjobType(@RequestParam String jobType, Model model) {
+	public ModelAndView essayjobType(@RequestParam String[] job_code, Model model) {
 		
-		List<EssayboardDTO> list = essayboardService.essayjobType(jobType);
+		
+		Map<String, String[]> map = new HashMap<String, String[]>();
+		map.put("job_code", job_code);
+		
+		List<EssayboardDTO> list = essayboardService.essayjobType(map);
 //		model.addAttribute("list", list);
 //		model.addAttribute("display", "/essayboard/essayboardList.jsp");
 		ModelAndView modelAndView = new ModelAndView();
@@ -129,11 +196,35 @@ public class EssayboardController {
 	@RequestMapping(value = "essaymentorBodyView", method = RequestMethod.GET)
 	public ModelAndView essaymentorBodyView(@RequestParam String seq,
 									  		@RequestParam String pg,
-									  		@RequestParam String name) {
+									  		HttpSession session,
+									  		HttpServletRequest request,
+									  		HttpServletResponse response) {
+		
+		MemberDTO memberDTO = (MemberDTO)session.getAttribute("memDTO");
+		
+		Cookie[] getCookie = request.getCookies();
+		if(getCookie != null) {
+			for(int i =0; i<getCookie.length; i++){
+				if(getCookie[i].getName().equals("memHit")){
+					//hit + 1
+					essayboardService.essayboardHit(Integer.parseInt(seq));
+					
+					getCookie[i].setMaxAge(0);
+					response.addCookie(getCookie[i]);
+				}
+			}
+		}
+		
+		// 에세이 보드 조회수 출력
+		int essayHit = essayboardService.getessayboardHit(Integer.parseInt(seq));
+		
 		System.out.println("ㄴeq " + seq);
 		EssayboardDTO essayboardDTO = essayboardService.essaymentorBodyView(Integer.parseInt(seq));
+
 		
 		ModelAndView modelAndView = new ModelAndView();
+		
+		modelAndView.addObject("essayHit", essayHit);
 		modelAndView.addObject("essayboardDTO", essayboardDTO);
 		modelAndView.addObject("seq", seq);
 		modelAndView.addObject("pg", pg);
@@ -151,17 +242,18 @@ public class EssayboardController {
 	@RequestMapping(value = "essaymentorHeadView", method = RequestMethod.GET)
 	public ModelAndView essaymentorHeadView(@RequestParam String pg, 
 											@RequestParam String seq,
-											@RequestParam String name) {
+											@RequestParam String memtors) {
 		
-		System.out.println("나오냐? " + name);
+		System.out.println("나오냐? " + memtors);
 		// 해당 멘토가 작성한 에세이 리스트 출력
-		List<EssayboardDTO> list = essayboardService.getessayList(name);
+		List<EssayboardDTO> list = essayboardService.getessayList(Integer.parseInt(memtors));
 		// 해당 멘토가 작성한 에세이 수 
-		int essayTotal = essayboardService.getessayMentorTotal(name);
+		int essayTotal = essayboardService.getessayMentorTotal(Integer.parseInt(memtors));
 		// 모임 후기 (고맙습니다)
 		List<EssayboardDTO> relist = essayboardService.getessayReview();
 		System.out.println("고맙습니더 " + relist);
-		EssayboardDTO essayboardDTO = essayboardService.essaymentorHeadView(name);
+		// 에세이 멘토 헤드 뷰
+		EssayboardDTO essayboardDTO = essayboardService.essaymentorHeadView(Integer.parseInt(memtors));
 		// 모임 후기 글 수
 		int reTotal = essayboardService.getreTotal();
 		
@@ -233,6 +325,14 @@ public class EssayboardController {
 		model.addAttribute("display", "/essayboard/essayboardList?pg=1.jsp");
 		return "/main/index";
 	}
+	
+//	@RequestMapping(value = "essayboardHit", method = RequestMethod.POST)
+//	public void essayboardHit(@RequestParam(required = false, defaultValue = "0")String essay_hit) {
+//		System.out.println("조회수 " + essay_hit);
+//		if(essay_hit == "1") {
+//			essayboardService.essayboardViewHit(Integer.parseInt(seq));
+//		}
+//	}
 	
 //	/**
 //	 * 
