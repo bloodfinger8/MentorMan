@@ -3,6 +3,9 @@
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
+		<typeAlias type="mentee.bean.MenteeDTO" alias="mentee"/>
+		<typeAlias type="mentorapply.bean.MentorapplyDTO" alias="mentor"/>
+		<typeAlias type="noticeboard.bean.NoticeboardDTO" alias="notice"/>
 		<typeAlias type="adminboard.bean.AdminnoticeboardDTO" alias="adminnoticeboard"/>
 		<typeAlias type="member.bean.MemberDTO" alias="member"/>
 		<typeAlias type="meetingboard.bean.MeetingboardDTO" alias="meetingboard"/>

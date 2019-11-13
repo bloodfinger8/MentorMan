@@ -9,6 +9,7 @@
 				<a class="logo" type="external" href="../main/index">
 				<img src="../image/mentorlogo.jpg" /></a>
 			</div>
+
 		</form>
 		<div class="right">
 			<a class="button button-big" type="external" href="">멘토찾기</a>
