@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @Title : 관리자페이지 모든 List controller
@@ -24,7 +25,7 @@ public class AdminController {
 	}
 	/* description : 관리자페이지 회원관리화면*/
 	@RequestMapping(value="adminMemberList",method = RequestMethod.GET)
-	public String adminMemberList(Model model) {
+	public String adminMemberList( Model model) {
 		model.addAttribute("display", "/admin/adminMemberList.jsp");
 		return "/admin/adminMain";
 	}

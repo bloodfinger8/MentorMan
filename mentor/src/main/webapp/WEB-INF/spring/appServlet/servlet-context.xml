@@ -13,12 +13,14 @@
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	<context:component-scan base-package="main.controller"/>
+	
 	<context:component-scan base-package="adminmain.controller"/>
 	<context:component-scan base-package="adminboard.controller"/>
 	<context:component-scan base-package="adminmember.controller"/>
 	
-	<!-- 용제 -->
+	<!-- 송현 -->
 	<context:component-scan base-package="member.controller"/>
+	<!-- 용제 -->
 	<context:component-scan base-package="meetingboard.controller"/>
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<mvc:annotation-driven />
@@ -36,7 +38,15 @@
 		<!-- <beans:property name="prefix" value="/WEB-INF/views/" /> -->
 		<property name="suffix" value=".jsp" />
 	</bean>
+	<!-- json -->
+	<bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
+		<property name="contentType" value="text/html;charset=UTF-8"/>
+	</bean>
 	
+	<!-- 위의 json 매칭 시켜주는  -->
+	<bean id="beanNameViewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<property name="order" value="0"/><!-- 우선순위 -->
+	</bean>
 	
 	
 </beans>
