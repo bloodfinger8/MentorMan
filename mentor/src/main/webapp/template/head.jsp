@@ -22,7 +22,7 @@
 			<div class="right">
 				<a class="button button-big" type="external" href="/mentors">멘토찾기</a>
 				<a class="button button-big" type="external" href="/open_mentorings"> 콘텐츠 </a> 
-				<a class="button button-big" type="external" href="/mentor_posts?featured_mentor_post=true">에세이</a>
+				<a class="button button-big" type="external" href="/mentor/essayboard/essayboardList?flag=0">에세이</a>
 				<div class="beta-div">
 				<a class="button button-big program-button" type="external" href="/mentee_programs"> 모임 <span class='beta-text'>beta</span></a>
 				</div>
@@ -47,7 +47,7 @@
 									<ul>
 										<li><a type="external" href="">멘토찾기</a></li>
 										<li><a type="external" href="">콘텐츠</a></li>
-										<li><a type="external" href="">에세이</a></li>
+										<li><a type="external" href="/mentor/essayboard/essayboardList?flag=1">에세이</a></li>
 										<li><a type="external" href=""><span>모임</span><span class="beta-text">beta</span><span class="badge color-red alim">18</span></a></li>
 										<li><a type="external" href="">멘토지원하기</a></li>
 									</ul>
