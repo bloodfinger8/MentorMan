@@ -219,3 +219,25 @@ create table essayboard(
 create sequence essayboard_seq
 nocache
 nocycle;
+
+
+
+---sanggu--------------------------------------------------------------------------------------------------------------------------
+-- 공지사항 테이블     
+create table noticeboard(
+noticeboard_seq number not null,
+noticeboard_adminEmail varchar2(200) not null,
+noticeboard_title varchar2(2000) not null,
+noticeboard_content varchar2(4000) not null,
+noticeboard_hit number default 0,
+noticeboard_logtime date default sysdate
+);
+
+--공지사항 sequence생성
+create SEQUENCE noticeboard_seq nocache nocycle;
+
+
+
+
+
+
