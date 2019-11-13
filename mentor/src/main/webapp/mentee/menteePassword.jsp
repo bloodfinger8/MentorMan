@@ -7,40 +7,44 @@
         </div>
 
         <div class="block inset mentor-request-block">
-  <form class="simple_form edit_user" id="edit_user_51907" novalidate="novalidate" action="/settings/password" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="✓"><input type="hidden" name="_method" value="patch"><input type="hidden" name="authenticity_token" value="t/jZnRBKhs74ObZc77cZeIK7R/6lJc6SBaFUwxKWR51XgG/vjzqUNQTAdA3sZY5ZXfQu7NuE68kmarxvc199iA==">
+  <form class="simple_form edit_user" id="menteePassword" novalidate="novalidate" action="/settings/password" accept-charset="UTF-8" method="post">
     <div class="list form-list no-hairlines">
       <ul>
         <li class="item-content item-input">
           <div class="item-inner">
             <div class="item-input-wrap">
-              <input autocomplete="current-password" class="password optional" placeholder="현재 비밀번호" type="password" name="user[current_password]" id="user_current_password">
+              <input autocomplete="current-password" class="password optional" placeholder="현재 비밀번호" type="password" name="currentPassword" id="currentPassword">
             </div>
+            <div id="currentPassword_error"></div>
           </div>
         </li>
 
         <li class="item-content item-input">
           <div class="item-inner">
             <div class="item-input-wrap">
-              <input autocomplete="new-password" class="password optional" placeholder="새 비밀번호" type="password" name="user[password]" id="user_password">
+              <input autocomplete="new-password" class="password optional" placeholder="새 비밀번호" type="password" name="member_pwd" id="member_pwd">
             </div>
+            <div id="member_pwd_error"></div>
           </div>
         </li>
 
         <li class="item-content item-input">
           <div class="item-inner">
             <div class="item-input-wrap">
-              <input autocomplete="new-password" class="password optional" placeholder="새 비밀번호 확인" type="password" name="user[password_confirmation]" id="user_password_confirmation">
+              <input autocomplete="new-password" class="password optional" placeholder="새 비밀번호 확인" type="password" name="member_pwd_check" id="member_pwd_check">
             </div>
+            <div id="member_pwd_check_error"></div>
           </div>
         </li>
       </ul>
     </div>
 
-    <input type="submit" name="commit" value="비밀번호 변경" class="btn button button-big button-fill" style="height: 100%;">
+    <input type="button" name="commit" id="menteePassword_btn" value="비밀번호 변경" class="btn button button-big button-fill" style="height: 100%;">
 	
 </form>
 </div>
-
+<script type="text/javascript" src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="../js/mentee.js"></script>
 <script>
 $(function(){
 	$('#menteePassword').attr('class', 'list-button color-gray item-link active');

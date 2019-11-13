@@ -56,8 +56,8 @@
                 </li>
               </ul>
             </div>
-
               <input type="button" name="commit" id="mentorapplyForm_btn" value="지원하기" class="btn button button-big button-fill" style=" width: 100%; height: 100%;">
+			<input type="hidden" id="email" value="${mentorapplyDTO.mentor_email}">
 		</form>        
 		</div>
       </div>

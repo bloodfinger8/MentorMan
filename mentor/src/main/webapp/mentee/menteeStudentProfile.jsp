@@ -1,13 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
         <div class="block block-strong inset">
           <div class="segmented">
             <a class="button button-active" type="external" href="/mentor/mentee/menteeStudentProfile">
               대학생/취준생
-</a>
+		</a>
             <a class="button " type="external" href="/mentor/mentee/menteeEmployeeProfile">
               직장인
-</a>          </div>
+		</a>          
+		</div>
         </div>
 
         <div class="block inset top-block text-align-center">
@@ -21,7 +23,7 @@
         </div>
 
         <div class="block inset">
-  <form class="simple_form new_student_profile" id="new_student_profile" novalidate="novalidate" action="/settings/student_profile" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="✓"><input type="hidden" name="_method" value="put"><input type="hidden" name="authenticity_token" value="8xtsxEE1pzLq+WTV7bVDBO4p0dZwuWdZKP/U219oiYETY9q23kW1yRYApoTuZ9QlMWa4xA4YQgILNDx3PqGzlA==">
+  <form class="simple_form new_student_profile" id="menteeStudentProfile" novalidate="novalidate" action="/mentor/mentee/menteeStudentInput" accept-charset="UTF-8" method="post">
     <div class="list form-list no-hairlines">
       <ul>
         <div class="label-title">
@@ -31,7 +33,7 @@
         <li class="item-content item-input">
           <div class="item-inner">
             <div class="item-input-wrap">
-              <input class="string optional" type="text" name="student_profile[school_name]" id="student_profile_school_name">
+              <input class="string optional" type="text" value="${menteeDTO.menteeStudent_school}" name="menteeStudent_school" id="menteeStudent_school">
             </div>
           </div>
         </li>
@@ -42,8 +44,9 @@
         <li class="item-content item-input">
           <div class="item-inner">
             <div class="item-input-wrap">
-              <input class="string required" type="text" name="student_profile[major_name]" id="student_profile_major_name">
+              <input class="string required" type="text" value="${menteeDTO.menteeStudent_major}" name="menteeStudent_major" id="menteeStudent_major">
             </div>
+            <div id="menteeStudent_major_error"></div>
           </div>
         </li>
 
@@ -55,11 +58,12 @@
             <li class="item-content item-input">
               <div class="item-inner">
                 <div class="item-input-wrap input-dropdown-wrap">
-                  <select class="select required" name="student_profile[study_status]" id="student_profile_study_status"><option value="">선택해주세요</option>
-<option value="재학">재학</option>
-<option value="졸업">졸업</option>
-<option value="기타">기타</option></select>
+                  <select class="select required" name="menteeStudent_state" id="menteeStudent_state"><option value="">선택해주세요</option>
+					<option value="재학">재학</option>
+					<option value="졸업">졸업</option>
+					<option value="기타">기타</option></select>
                 </div>
+                <div id="menteeStudent_state_error"></div>
               </div>
             </li>
           </div>
@@ -72,11 +76,11 @@
             <li class="item-content item-input">
               <div class="item-inner">
                 <div class="item-input-wrap input-dropdown-wrap">
-                  <select include_blank="translate" class="select optional" name="student_profile[grade]" id="student_profile_grade"><option value=""></option>
-<option value="1학년">1학년</option>
-<option value="2학년">2학년</option>
-<option value="3학년">3학년</option>
-<option value="4학년">4학년</option></select>
+                  <select include_blank="translate" class="select optional" name="menteeStudent_grade" id="menteeStudent_grade"><option value=""></option>
+					<option value="1학년">1학년</option>
+					<option value="2학년">2학년</option>
+					<option value="3학년">3학년</option>
+					<option value="4학년">4학년</option></select>
                 </div>
               </div>
             </li>
@@ -89,8 +93,9 @@
         <li class="item-content item-input">
           <div class="item-inner">
             <div class="item-input-wrap">
-              <textarea class="text required" placeholder="현재 스펙을 자세히 적어주세요. 멘토님의 상세한 답변을 받을 수 있습니다." name="student_profile[spec]" id="student_profile_spec"></textarea>
+              <textarea class="text required" placeholder="현재 스펙을 자세히 적어주세요. 멘토님의 상세한 답변을 받을 수 있습니다." name="menteeStudent_spec" id="menteeStudent_spec">${menteeDTO.menteeStudent_spec}</textarea>
             </div>
+            <div id="menteeStudent_spec_error"></div>
           </div>
         </li>
 
@@ -100,20 +105,31 @@
         <li class="item-content item-input">
           <div class="item-inner">
             <div class="item-input-wrap">
-              <textarea class="text optional" placeholder="관심 분야 등 멘토님이 답변에 참고할 만한 사항을 적어주세요. Ex. 금융권 취업을 준비하고 있습니다." name="student_profile[etc]" id="student_profile_etc"></textarea>
+              <textarea class="text optional" placeholder="관심 분야 등 멘토님이 답변에 참고할 만한 사항을 적어주세요. Ex. 금융권 취업을 준비하고 있습니다." name="menteeStudent_etc" id="menteeStudent_etc">${menteeDTO.menteeStudent_etc}</textarea>
             </div>
           </div>
         </li>
       </ul>
     </div>
-
-    <input type="submit" name="commit" value="수정하기" class="btn button button-big button-fill" style="height: 100%;">
+	
+	<c:if test="${menteeDTO==null}">
+   		<input type="button" name="commit" value="입력하기" id="menteeStudentInsert_btn" class="btn button button-big button-fill" style="height: 100%;">
+   		<input type="hidden" id="member_email" name="member_email" value="${memberDTO.member_email}">
+    </c:if>
+    <c:if test="${menteeDTO!=null}">
+   		<input type="button" name="commit" value="수정하기" id="menteeStudentModify_btn" class="btn button button-big button-fill" style="height: 100%;">
+    	<input type="hidden" id="menteeStudent_email" name="menteeStudent_email" value="${menteeDTO.menteeStudent_email}">
+    </c:if>
     <br><br><br><br>
 </form>
 </div>
+<script type="text/javascript" src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="../js/mentee.js"></script>
 <script>
 $(function(){
 	$('#menteeProfile').attr('class', 'list-button color-gray item-link active');
+	$('#menteeStudent_state').val('${menteeDTO.menteeStudent_state}').prop('selected', true);
+	$('#menteeStudent_grade').val('${menteeDTO.menteeStudent_grade}').prop('selected', true);
 });
 </script>
 

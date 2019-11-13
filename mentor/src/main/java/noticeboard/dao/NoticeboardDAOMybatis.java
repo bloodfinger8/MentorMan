@@ -57,5 +57,10 @@ public class NoticeboardDAOMybatis implements NoticeboardDAO {
 	public void noticeboardUpdate(Map<String, String> map) {
 		sqlSession.update("noticeSQL.noticeboardUpdate", map);
 	}
+
+	@Override
+	public void noticeboardViewHit(int seq) {
+		sqlSession.update("noticeSQL.noticeboardViewHit", seq);
+	}
 	
 }

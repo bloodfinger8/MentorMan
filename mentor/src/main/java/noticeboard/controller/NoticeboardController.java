@@ -7,6 +7,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -21,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import member.bean.MemberDTO;
 import noticeboard.bean.BoardPaging;
 import noticeboard.bean.NoticeboardDTO;
 import noticeboard.service.NoticeboardService;
@@ -80,7 +86,21 @@ public class NoticeboardController {
 	 * @Author : kujun95, @Date : 2019. 11. 2.
 	 */
 	@RequestMapping(value = "noticeboardList", method = RequestMethod.GET)
-	public String boardList(@RequestParam(required = false, defaultValue = "1") String pg, Model model) {
+	public String boardList(@RequestParam(required = false, defaultValue = "1") String pg, Model model, HttpSession session, HttpServletResponse response) {
+		MemberDTO memberDTO = (MemberDTO)session.getAttribute("memDTO"); 
+	      
+	      //로그인 여부에 따라
+	      if(memberDTO != null) {
+	         String nickname = memberDTO.getMember_nickname();
+	         model.addAttribute("memNickname" , nickname);
+	         
+	         //조회수(쿠키 생성) 
+	         if(nickname != null) {
+	            Cookie cookie = new Cookie("memHit","0");
+	            cookie.setMaxAge(60*60*24);
+	            response.addCookie(cookie);
+	         }
+	      }
 		model.addAttribute("pg", pg);
 		model.addAttribute("display","/noticeboard/noticeboardList.jsp");
 		return "/main/index";
@@ -135,8 +155,20 @@ public class NoticeboardController {
 	 * @Author : kujun95, @Date : 2019. 11. 5.
 	 */
 	@RequestMapping(value = "noticeboardView", method = RequestMethod.GET)
-	public String noticeboardView(@RequestParam String seq, @RequestParam String pg, Model model) {
+	public String noticeboardView(@RequestParam String seq, @RequestParam String pg, Model model, HttpServletResponse response, HttpServletRequest request) {
 		NoticeboardDTO noticeboardDTO = noticeboardService.getNoticeboardView(Integer.parseInt(seq));
+		Cookie[] getCookie = request.getCookies();
+	      if(getCookie != null) {
+	         for(int i =0; i<getCookie.length; i++){
+	            if(getCookie[i].getName().equals("memHit")){
+	               //hit + 1
+	               noticeboardService.noticeboardViewHit(Integer.parseInt(seq));
+	               
+	               getCookie[i].setMaxAge(0);
+	               response.addCookie(getCookie[i]);
+	            }
+	         }
+	      }
 		System.out.println(noticeboardDTO);
 		model.addAttribute("pg", pg);
 		model.addAttribute("noticeboardDTO", noticeboardDTO);

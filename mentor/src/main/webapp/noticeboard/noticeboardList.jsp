@@ -37,7 +37,12 @@
 <script src="../js/noticeboard.js">
 </script>
 <script type="text/javascript">
-
+/* 엔터 x */
+/* $(document).ready(function(){
+	  $(document).keypress(function(e){
+	    if(e.keyCode==13) return false;
+	  });
+	}); */
 //찾은 후 페이징
 function boardSearch(pg){
 	$('input[name=pg]').val(pg);
@@ -72,7 +77,7 @@ function noticeList(){
 				}))).append($('<td/>',{
 					/* class: 'noticeboardList_td', */
 					align:'center',
-					text: '[관리자] '+value.noticeboard_adminEmail
+					text: '[관리자]'
 				})).append($('<td/>',{
 				/* class: 'noticeboardList_td', */
 					align:'center',
@@ -116,7 +121,5 @@ function noticeList(){
 		}
 	});
 }
-
-
 
 </script>

@@ -55,4 +55,10 @@ public class NoticeboardServiceImpl implements NoticeboardService {
 		noticeboardDAO.noticeboardUpdate(map);
 	}
 
+	@Override
+	public void noticeboardViewHit(int seq) {
+		noticeboardDAO.noticeboardViewHit(seq);
+		
+	}
+
 }

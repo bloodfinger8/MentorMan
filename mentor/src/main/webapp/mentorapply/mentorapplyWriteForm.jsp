@@ -21,7 +21,7 @@
               <li class="item-content item-input">
                 <div class="item-inner">
                   <div class="item-input-wrap">
-                    <input class=" is-valid string required" placeholder="이름" type="text" name="mentor_name" id="mentor_name">
+                    <input class=" is-valid string required" placeholder="이름" type="text" value="${memberDTO.member_name}" name="mentor_name" id="mentor_name">
                   </div>
                     <div id="mentor_name_error"></div>
                 </div>
@@ -346,7 +346,7 @@
             <li class="item-content item-input">
               <div class="item-inner">
                 <div class="item-input-wrap">
-                  <input class=" is-valid string email optional" value="kujun95@naver.com" type="email" name="mentor_email" id="mentor_email">
+                  <input class=" is-valid string email optional" readonly="readonly" value="${memberDTO.member_email}" type="email" name="mentor_email" id="mentor_email">
                 </div>
                   <div id="mentor_email_error"></div>
               </div>

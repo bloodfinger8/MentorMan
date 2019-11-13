@@ -507,7 +507,6 @@ html.with-statusbar.device-iphone-x .framework7-root {
 /* 2019-11-06 구준혁 */
 .views,.view {
     /* position: relative; */
-    /* position: relative; */
     height: 100%;
     z-index: 5000;
     overflow: hidden;
@@ -34647,7 +34646,6 @@ table {
 
 /* 2019-11-02 구준혁 */
 th,td {
-    /* border: 1px solid #ddd */
     /* border: 1px solid #ddd */
 }
 

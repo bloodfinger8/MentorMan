@@ -2,14 +2,14 @@
     pageEncoding="UTF-8"%>
 <div class="page navbar-fixed mentee_programs index">
 <div class="page-content" style="margin: 165px;">
-	 <br>
+	 <br> 
       <h1 style="text-align: center;">
         지원이 완료되었습니다.<br>관리자의 승인을 기다려주세요.
       </h1>
 		<br>
-      <div class="block">
+      <div class="block" style="margin: 35px 250px;">
 		<input type="button" name="mentorapply_btn" id="mentorapply_btn" value="홈페이지로 돌아가기" class="btn button button-big button-fill" 
-			style="height: 100%; width: 40%; margin-right: 30.5%;" onclick="location.href='/mentor/main/index'">
+			onclick="location.href='/mentor/main/index'">
 	   </div>
 </div>
 </div>

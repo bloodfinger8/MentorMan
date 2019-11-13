@@ -24,4 +24,6 @@ public interface NoticeboardDAO {
 
 	public void noticeboardUpdate(Map<String, String> map);
 
+	public void noticeboardViewHit(int seq);
+
 }

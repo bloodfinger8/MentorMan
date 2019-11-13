@@ -32,4 +32,7 @@
 	<select id="noticeboardUpdate" parameterType="Map">
 		update noticeboard set noticeboard_title=#{noticeboard_title}, noticeboard_content=#{noticeboard_content}, noticeboard_logtime=sysdate where noticeboard_seq=#{noticeboard_seq}
 	</select>
+	<update id="noticeboardViewHit" parameterType="int">
+		update noticeboard set noticeboard_hit = noticeboard_hit + 1 where noticeboard_seq = #{seq}
+	</update>
 </mapper>

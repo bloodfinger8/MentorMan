@@ -1,5 +1,14 @@
 //List에서 검색 이미지 눌렀을때
 $('#search_image').click(function(event, str){
+	search(event, str);
+});
+$('#searchText').keypress(function(event){
+    if ( event.which == 13 ) {
+        $('#search_image').click();
+        return false;
+    }
+});
+function search(event, str){
 	if(str!='trigger'){
 		$('input[name=pg]').val(1);
 	}
@@ -32,7 +41,7 @@ $('#search_image').click(function(event, str){
 					}))).append($('<td/>',{
 						/* class: 'noticeboardList_td', */
 						align:'center',
-						text: '[관리자] '+value.noticeboard_adminEmail
+						text: '[관리자]'
 					})).append($('<td/>',{
 					/* class: 'noticeboardList_td', */
 						align:'center',
@@ -54,7 +63,10 @@ $('#search_image').click(function(event, str){
 	         }			
 		});
 	}
-});
+}
+
+
+
 
 //List에서 글쓰기로 넘어갈때 버튼
 $('#noticeboardWriteButton').on('click', function(){

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
           <div class="block block-strong inset">
             <div class="segmented">
               <a class="button " type="external" href="/mentor/mentee/menteeStudentProfile">
@@ -21,7 +22,7 @@
         </div>
 
         <div class="block inset">
-  <form class="simple_form new_employee_profile" id="new_employee_profile" novalidate="novalidate" action="/settings/employee_profile" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="✓"><input type="hidden" name="_method" value="put"><input type="hidden" name="authenticity_token" value="hhreOZYSsXmks4jLEywdLukLJQIgpOXMlQwoVWSPqqhmYmhLCWKjglhKSpoQ/ooPNkRMEF4FwJe2x8D5BUaQvQ==">
+  <form class="simple_form new_employee_profile" id="menteeEmployee_profile" novalidate="novalidate" action="/settings/employee_profile" accept-charset="UTF-8" method="post">
     <div class="list form-list no-hairlines">
       <ul>
         <div class="label-title">
@@ -30,8 +31,9 @@
         <li class="item-content item-input">
           <div class="item-inner">
             <div class="item-input-wrap">
-              <input class="numeric integer required" type="number" step="1" name="employee_profile[career]" id="employee_profile_career">
+              <input class="numeric integer required" type="number" step="1" name="menteeEmployee_year" id="menteeEmployee_year" value="${menteeDTO.menteeEmployee_year}">
             </div>
+            <div id="menteeEmployee_year_error"></div>
           </div>
         </li>
 
@@ -41,12 +43,13 @@
         <li class="item-content item-input">
           <div class="item-inner">
             <div class="item-input-wrap input-dropdown-wrap">
-              <select class="select required" name="employee_profile[education]" id="employee_profile_education"><option value="">선택해주세요</option>
-<option value="대학원 졸업">대학원 졸업</option>
-<option value="대학교 졸업">대학교 졸업</option>
-<option value="전문대학교 졸업">전문대학교 졸업</option>
-<option value="고등학교 졸업 이하">고등학교 졸업 이하</option></select>
+              <select class="select required" name="menteeEmployee_final" id="menteeEmployee_final"><option value="">선택해주세요</option>
+				<option value="대학원 졸업">대학원 졸업</option>
+				<option value="대학교 졸업">대학교 졸업</option>
+				<option value="전문대학교 졸업">전문대학교 졸업</option>
+				<option value="고등학교 졸업 이하">고등학교 졸업 이하</option></select>
             </div>
+            <div id="menteeEmployee_final_error"></div>
           </div>
         </li>
 
@@ -56,8 +59,9 @@
         <li class="item-content item-input">
           <div class="item-inner">
             <div class="item-input-wrap">
-              <input class="string optional" type="text" name="employee_profile[school_name]" id="employee_profile_school_name">
+              <input class="string optional" type="text" name="menteeEmployee_school" id="menteeEmployee_school" value="${menteeDTO.menteeEmployee_school}">
             </div>
+            <div id="menteeEmployee_school_error"></div>
           </div>
         </li>
 
@@ -67,8 +71,9 @@
         <li class="item-content item-input">
           <div class="item-inner">
             <div class="item-input-wrap">
-              <textarea class="text required" placeholder="경력 사항을 자세히 적어주세요. 멘토님의 상세한 답변을 받을 수 있습니다." name="employee_profile[major_career]" id="employee_profile_major_career"></textarea>
+              <textarea class="text required" placeholder="경력 사항을 자세히 적어주세요. 멘토님의 상세한 답변을 받을 수 있습니다." name="menteeEmployee_career" id="menteeEmployee_career">${menteeDTO.menteeEmployee_career}</textarea>
             </div>
+            <div id="menteeEmployee_career_error"></div>
           </div>
         </li>
 
@@ -78,19 +83,30 @@
         <li class="item-content item-input">
           <div class="item-inner">
             <div class="item-input-wrap">
-              <textarea class="text optional" placeholder="관심 분야 등 멘토님이 답변에 참고할 만한 사항을 적어주세요. Ex. 외국계로 이직하는 것을 고민중입니다" name="employee_profile[etc]" id="employee_profile_etc"></textarea>
+              <textarea class="text optional" placeholder="관심 분야 등 멘토님이 답변에 참고할 만한 사항을 적어주세요. Ex. 외국계로 이직하는 것을 고민중입니다" name="menteeEmployee_etc" id="menteeEmployee_etc">${menteeDTO.menteeEmployee_etc}</textarea>
             </div>
+            <div id="menteeEmployee_etc_error"></div>
           </div>
         </li>
       </ul>
     </div>
 
-    <input type="submit" name="commit" value="수정하기" class="btn button button-big button-fill" style="height: 100%;">
+    <c:if test="${menteeDTO==null}">
+   		<input type="button" name="commit" value="입력하기" id="menteeEmployeeInsert_btn" class="btn button button-big button-fill" style="height: 100%;">
+   		<input type="hidden" id="member_email" name="member_email" value="${memberDTO.member_email}">
+    </c:if>
+    <c:if test="${menteeDTO!=null}">
+   		<input type="button" name="commit" value="수정하기" id="menteeEmployeeModify_btn" class="btn button button-big button-fill" style="height: 100%;">
+    	<input type="hidden" id="menteeEmployee_email" name="menteeEmployee_email" value="${menteeDTO.menteeEmployee_email}">
+    </c:if>
     <br><br><br><br>
 </form>
 </div>
+<script type="text/javascript" src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="../js/mentee.js"></script>
 <script>
 $(function(){
 	$('#menteeProfile').attr('class', 'list-button color-gray item-link active');
+	$('#menteeEmployee_final').val('${menteeDTO.menteeEmployee_final}').prop('selected', true);
 });
 </script>
