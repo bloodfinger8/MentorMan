@@ -25,6 +25,7 @@ import meetingboard.bean.GuideDTO;
 import meetingboard.bean.MeetingboardDTO;
 import meetingboard.bean.MeetingboardPaging;
 import meetingboard.service.MeetingboardService;
+import member.bean.MemberDTO;
 
 /**
  * 모임 게시판 관련 컨트롤러
@@ -46,7 +47,7 @@ public class MeetingboardController {
 	 * @Method Name : meetingboardList 11. 6 페이징처리 추가
 	 */
 	@RequestMapping(value = "meetingboardList", method = RequestMethod.GET)
-	public ModelAndView meetingboardList(@RequestParam(required = false, defaultValue = "1") String pg, HttpSession session) {
+	public ModelAndView meetingboardList(@RequestParam(required = false, defaultValue = "1") String pg, HttpSession session) {	
 		// 1페이지당 9개
 		int endNum = Integer.parseInt(pg) * 9;
 		int startNum = endNum - 8;
@@ -118,8 +119,8 @@ public class MeetingboardController {
 	@RequestMapping(value = "meetingboardWrite", method = RequestMethod.POST)
 	@ResponseBody
 	public void meetingboardWrite(@ModelAttribute MeetingboardDTO meetingboardDTO, HttpSession session) {
-		// meetingboardDTO.setEmail((String)session.getAttribute("memEmail"));
-		meetingboardDTO.setEmail("zx00136@naver.com"); // 나중에 바꿔야됨!!
+		MemberDTO memDTO = (MemberDTO) session.getAttribute("memDTO");
+		meetingboardDTO.setMentor_email(memDTO.getMember_email());
 		meetingboardService.meetingboardWrite(meetingboardDTO);
 	}
 
@@ -130,9 +131,9 @@ public class MeetingboardController {
 	 * @Method Name : meetingboardView
 	 */
 	@RequestMapping(value = "meetingboardView", method = RequestMethod.GET)
-	public ModelAndView meetingboardView(@RequestParam String pg, @RequestParam String seq) {
-		int meeting_seq = Integer.parseInt(seq);
-		MeetingboardDTO meetingboardDTO = meetingboardService.getMeetingboard(meeting_seq);
+	public ModelAndView meetingboardView(@RequestParam(required = false, defaultValue = "1") String pg, @RequestParam String seq) {
+		int meetingboard_seq = Integer.parseInt(seq);
+		MeetingboardDTO meetingboardDTO = meetingboardService.getMeetingboard(meetingboard_seq);
 		// 안내사항
 		List<GuideDTO> guideList = meetingboardService.getGuideList();
 		ModelAndView mav = new ModelAndView();
@@ -152,8 +153,8 @@ public class MeetingboardController {
 	 */
 	@RequestMapping(value = "meetingboardModifyForm", method = RequestMethod.POST)
 	public ModelAndView meetingboardModifyForm(@RequestParam String pg, @RequestParam String seq) {
-		int meeting_seq = Integer.parseInt(seq);
-		MeetingboardDTO meetingboardDTO = meetingboardService.getMeetingboard(meeting_seq);
+		int meetingboard_seq = Integer.parseInt(seq);
+		MeetingboardDTO meetingboardDTO = meetingboardService.getMeetingboard(meetingboard_seq);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("meetingboardDTO", meetingboardDTO);
 		mav.addObject("seq", seq);
@@ -184,7 +185,8 @@ public class MeetingboardController {
 	@RequestMapping(value = "meetingboardDelete", method = RequestMethod.POST)
 	@ResponseBody
 	public void meetingboardDelete(@RequestParam String seq) {
-		int meeting_seq = Integer.parseInt(seq);
-		meetingboardService.meetingboardDelete(meeting_seq);
+		int meetingboard_seq = Integer.parseInt(seq);
+		meetingboardService.meetingboardDelete(meetingboard_seq);
 	}
+	
 }

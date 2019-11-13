@@ -13,39 +13,6 @@ create table mentoring (
     mentoring_type varchar2(30) not null        -- 멘토링유형
 );
 
--- job 테이블 insert문
-insert into job values ('job_code_0', '인사/총무/노무');
-insert into job values ('job_code_1', '마케팅/MD');
-insert into job values ('job_code_2', '홍보/CSR');
-insert into job values ('job_code_3', '영업/영업관리');
-insert into job values ('job_code_4', '회계/재무/금융');
-insert into job values ('job_code_5', '해외/기술영업');
-insert into job values ('job_code_6', '유통/무역/구매');
-insert into job values ('job_code_7', '전략/기획');
-insert into job values ('job_code_8', 'IT개발');
-insert into job values ('job_code_9', '서비스 기획/UI/UX');
-insert into job values ('job_code_10', '디자인/예술');
-insert into job values ('job_code_11', '미디어');
-insert into job values ('job_code_12', '서비스');
-insert into job values ('job_code_13', '연구/설계');
-insert into job values ('job_code_14', '전문/특수');
-insert into job values ('job_code_15', '교육/상담/컨설팅');
-insert into job values ('job_code_16', '공무원/공공/비영리');
-insert into job values ('job_code_17', '생산/품질/제조');
-insert into job values ('job_code_18', '기타 사무');
-
-
--- mentoring 테이블 insert문
-insert into mentoring values ('mentoring_code_0','직무');
-insert into mentoring values ('mentoring_code_1','진로');
-insert into mentoring values ('mentoring_code_2','스펙');
-insert into mentoring values ('mentoring_code_3','외국어');
-insert into mentoring values ('mentoring_code_4','면접/자소서');
-insert into mentoring values ('mentoring_code_5','회사생활');
-insert into mentoring values ('mentoring_code_6','창업');
-insert into mentoring values ('mentoring_code_7','이직');
-insert into mentoring values ('mentoring_code_8','기타');
-
 -- meetingboard 테이블 create문
 create table meetingboard (
     meetingboard_seq            number,         -- 모임번호(PK)
@@ -78,14 +45,10 @@ create table guide(
     guide_content   varchar2(1000),
     logtime date default sysdate
 );
-
--- 안내사항 테이블 insert 문
-insert into guide(guide_content) values ('사전 취소는 2일 전까지 가능합니다.');
-insert into guide(guide_content) values ('무단 No-Show 시에는 참여 신청이 제한됩니다.');
-insert into guide(guide_content) values ('주차지원은 불가능하니 대중교통을 이용해 주세요.');
-
+drop table meeting_order;
 -- 모임신청 테이블
-create table participation(
+create table meeting_participation(
+    participation_seq       number,         -- 신청 seq
     meetingboard_seq        number,         -- 모임 seq
     mentee_email            varchar2(100),  -- 멘티 email
     mentee_name             varchar2(50),   -- 멘티 이름
@@ -93,10 +56,65 @@ create table participation(
     mentor_name             varchar2(50),   -- 멘토 이름
     participation_address   varchar2(50),   -- 거주지
     participation_question  varchar2(2000), -- 사전질문
-    constraint FK_MEETINGBOARD_SEQ foreign key(meetingboard_seq) references meetingboard(meetingboard_seq),
-    constraint FK_MENTEE_EMAIL foreign key(mentee_email) references mentors_member(member_email),
-    constraint FK_MENTOR_EMAIL foreign key(mentor_email) references mentors_member(member_email)
+    participation_state     number default 0, -- 결제상태
+    constraint FK_MEETING_PARTICIPATION1 foreign key(meetingboard_seq) references meetingboard(meetingboard_seq),
+    constraint FK_MEETING_PARTICIPATION2 foreign key(mentee_email) references mentors_member(member_email),
+    constraint FK_MEETING_PARTICIPATION3 foreign key(mentor_email) references mentors_member(member_email)
 );
+-- 모임신청 시퀀스
+create sequence participation_seq nocache nocycle;
+
+-- 모임 주문
+create table meeting_order (
+    order_id          varchar2(100),        -- 주문ID
+    order_date        date default sysdate, -- 주문일자
+    order_price       number,               -- 총 가격
+    mentee_email      varchar2(100),        -- 멘티 email
+    mentee_name       varchar2(50),         -- 멘티 이름
+    mentee_tel        varchar2(50),         -- 멘티 전화번호
+    meetingboard_seq  number,               -- 모임 seq
+    participation_seq number,               -- 신청 seq
+    constraint FK_MEETING_ORDER1 foreign key(meetingboard_seq) references meetingboard(meetingboard_seq),
+    constraint FK_MEETING_ORDER2 foreign key(mentee_email) references mentors_member(member_email)
+);
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- job 테이블 insert문
+insert into job values ('job_code_0', '인사/총무/노무');
+insert into job values ('job_code_1', '마케팅/MD');
+insert into job values ('job_code_2', '홍보/CSR');
+insert into job values ('job_code_3', '영업/영업관리');
+insert into job values ('job_code_4', '회계/재무/금융');
+insert into job values ('job_code_5', '해외/기술영업');
+insert into job values ('job_code_6', '유통/무역/구매');
+insert into job values ('job_code_7', '전략/기획');
+insert into job values ('job_code_8', 'IT개발');
+insert into job values ('job_code_9', '서비스 기획/UI/UX');
+insert into job values ('job_code_10', '디자인/예술');
+insert into job values ('job_code_11', '미디어');
+insert into job values ('job_code_12', '서비스');
+insert into job values ('job_code_13', '연구/설계');
+insert into job values ('job_code_14', '전문/특수');
+insert into job values ('job_code_15', '교육/상담/컨설팅');
+insert into job values ('job_code_16', '공무원/공공/비영리');
+insert into job values ('job_code_17', '생산/품질/제조');
+insert into job values ('job_code_18', '기타 사무');
+
+-- mentoring 테이블 insert문
+insert into mentoring values ('mentoring_code_0','직무');
+insert into mentoring values ('mentoring_code_1','진로');
+insert into mentoring values ('mentoring_code_2','스펙');
+insert into mentoring values ('mentoring_code_3','외국어');
+insert into mentoring values ('mentoring_code_4','면접/자소서');
+insert into mentoring values ('mentoring_code_5','회사생활');
+insert into mentoring values ('mentoring_code_6','창업');
+insert into mentoring values ('mentoring_code_7','이직');
+insert into mentoring values ('mentoring_code_8','기타');
+
+-- 안내사항 insert 문
+insert into guide(guide_content) values ('사전 취소는 2일 전까지 가능합니다.');
+insert into guide(guide_content) values ('무단 No-Show 시에는 참여 신청이 제한됩니다.');
+insert into guide(guide_content) values ('주차지원은 불가능하니 대중교통을 이용해 주세요.');
+
 
 ---yangJaewoo-----------------------------------------------------------------------------------------------------
 --멘티게시판 테이블
@@ -182,3 +200,44 @@ create table mentor(
 );
 
 create sequence mentor_seq nocache nocycle;	-- 멘토 sequence
+
+----taehyeong--------------------------------------------------------------------------------------------------------------------
+-- 에세이 보드 생성
+create table essayboard(
+    essayboard_seq number, -- 에세이 시퀀스
+    mentor_email varchar2(100) primary key, -- 멘토 이메일 PK
+    job_code varchar2(1000),
+    essayboard_title varchar2(100) not null, -- 에세이 제목
+    essayboard_content varchar2(4000) not null, -- 에세이 내용
+    essayboard_hit number default 0 , -- 에세이 조회수
+    essayboard_scrap number default 0,  -- 에세이 즐겨찾기
+    constraint essay_job foreign key(job_code) references job(job_code), -- 에세이 잡 코드 FK
+    logtime date default sysdate
+);
+
+-- 에세이 보드 시퀀스 생성
+create sequence essayboard_seq
+nocache
+nocycle;
+
+
+
+---sanggu--------------------------------------------------------------------------------------------------------------------------
+-- 공지사항 테이블     
+create table noticeboard(
+noticeboard_seq number not null,
+noticeboard_adminEmail varchar2(200) not null,
+noticeboard_title varchar2(2000) not null,
+noticeboard_content varchar2(4000) not null,
+noticeboard_hit number default 0,
+noticeboard_logtime date default sysdate
+);
+
+--공지사항 sequence생성
+create SEQUENCE noticeboard_seq nocache nocycle;
+
+
+
+
+
+
