@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE configuration  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"  
+<!DOCTYPE configuration  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
@@ -11,7 +11,8 @@
 		<typeAlias type="essayboard.bean.EssayboardPaging" alias="paging"/>
 		<typeAlias type="menteeboard.bean.MenteeboardDTO" alias="menteeboard"/>
 		<typeAlias type="menteeboard.bean.MenteeboardLikeDTO" alias="menteeboardLike"/>
-  		<typeAlias type="menteeboardReply.bean.MenteeboardReplyDTO" alias="menteeboardReply"/>
-
+  	<typeAlias type="menteeboardReply.bean.MenteeboardReplyDTO" alias="menteeboardReply"/>
+		<typeAlias type="participation.bean.ParticipationDTO" alias="participation"/>
+		<typeAlias type="participation.bean.OrderDTO" alias="order"/>
 	</typeAliases>
 </configuration>

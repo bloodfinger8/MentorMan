@@ -2891,7 +2891,7 @@ html.with-statusbar.device-iphone-x .framework7-root {
 
 .ios .block {
     margin: 35px 0;
-    padding: 0 15px;
+    /* padding: 0 15px; */
     color: #6d6d72
 }
 
