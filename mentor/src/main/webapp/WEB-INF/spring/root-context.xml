@@ -38,11 +38,16 @@
 	<context:component-scan base-package="adminboard.service"/>
 	<context:component-scan base-package="adminboard.bean"/>
 
-	<!-- 모임 게시판 관련 부분 -->
+	<!-- 모임 게시판  -->
 	<context:component-scan base-package="meetingboard.bean"/>
 	<context:component-scan base-package="meetingboard.dao"/>
 	<context:component-scan base-package="meetingboard.service"/>
 
+	<!-- 모임 신청 -->
+	<context:component-scan base-package="participation.bean"/>
+	<context:component-scan base-package="participation.dao"/>
+	<context:component-scan base-package="participation.service"/>
+	
 	<!-- 게시판 -->
 	<context:component-scan base-package="menteeboard.service"/>
 	<context:component-scan base-package="menteeboard.dao"/>

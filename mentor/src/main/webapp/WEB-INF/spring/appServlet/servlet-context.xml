@@ -24,12 +24,11 @@
 	<context:component-scan base-package="adminmain.controller"/>
 	<context:component-scan base-package="adminboard.controller"/>
 	<context:component-scan base-package="adminmember.controller"/>
-
 	<!-- 송현 -->
 	<context:component-scan base-package="member.controller"/>
 	<!-- 모임 -->
 	<context:component-scan base-package="meetingboard.controller"/>
-  <!-- 에세이 보드 -->
+  	<!-- 에세이 보드 -->
 	<context:component-scan base-package="essayboard.controller"/>
 	<!-- 모임신청 -->
 	<context:component-scan base-package="participation.controller"/>
@@ -38,7 +37,6 @@
 	<mvc:annotation-driven />
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
-
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 	<mvc:resources location="/image/" mapping="/image/**"/>
 	<mvc:resources location="/js/" mapping="/js/**"/>
