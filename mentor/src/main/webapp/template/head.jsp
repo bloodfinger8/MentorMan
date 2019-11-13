@@ -1,29 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
 
-<div class="navbar">
-	<div class="navbar-inner">
-		<div class="left">
-			<a class="logo" type="external" href="/mentor/main/index"> 
-				<img src="../image/mentorlogo.jpg" />
-			</a>
-		</div>
-		<form class="searchbar" id="searchbar-autocomplete" action="/searchs">
-			<div class="searchbar-inner">
-				<!-- <div class="searchbar-input-wrap">
-					<input type="search" name="q" value=""
-						placeholder="직무, 회사, 멘토, 제목" autocomplete="off"> 
-						<i class="searchbar-icon"></i> <span class="input-clear-button"></span>
-				</div> -->
+<div class="">
+	<div class="navbar">
+		<div class="navbar-inner">
+			<div class="left">
+				<a class="logo" type="external" href="../main/index">
+				<img src="../image/mentorlogo.jpg" /></a>
 			</div>
 		</form>
 		<div class="right">
-			<a class="button button-big" type="external" href="">멘토찾기</a> 
-			<a class="button button-big" type="external" href="/mentor/noticeboard/noticeboardList">공지사항</a> 
-			<a class="button button-big" type="external" href="/mentor/essayboard/essayboardList">에세이</a> 
-			<a class="button button-big" type="external" href="/mentor/meetingboard/meetingboardList">모임</a> 
-			<a class="button button-big" type="external" href="/mentor/menteeboard/menteeboardList">멘티 게시판</a> 
+			<a class="button button-big" type="external" href="">멘토찾기</a>
+			<a class="button button-big" type="external" href="/mentor/noticeboard/noticeboardList">공지사항</a>
+			<a class="button button-big" type="external" href="/mentor/essayboard/essayboardList">에세이</a>
+			<a class="button button-big" type="external" href="/mentor/meetingboard/meetingboardList">모임</a>
+			<a class="button button-big" type="external" href="/mentor/menteeboard/menteeboardList">멘티 게시판</a>
 			<a class="button button-big" type="external" href="">멘토 지원하기</a>
 			<c:if test="${memDTO.member_email == null}">
 			<a class="button button-big" type="external" href="/mentor/member/writeForm">회원가입</a>
@@ -31,7 +23,7 @@
 			</c:if>
 
 			<c:if test="${memDTO.member_email != null}">
-			<a type="internal" class="button button-big popover-open me-profile" data-popover=".js-me-popover" href=""> 
+			<a type="internal" class="button button-big popover-open me-profile" data-popover=".js-me-popover" href="">
 				<img src="../image/profile.jpg" width="28" height="28">
 			</a>
 			<div class="popover popover-flat me-popover js-me-popover">
@@ -65,8 +57,7 @@
 						</div>
 						</div>
 					</div>
-				</div>
-			</c:if>
-		</div>
+				</c:if>
+      </div>
 	</div>
 </div>
