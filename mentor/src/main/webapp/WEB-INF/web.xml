@@ -29,8 +29,6 @@
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-
-
 	<!-- 한글깨짐 방지 -->
 	<filter>
 		<filter-name>encodingFilter</filter-name>

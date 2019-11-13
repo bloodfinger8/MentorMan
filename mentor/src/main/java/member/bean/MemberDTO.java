@@ -18,5 +18,5 @@ public class MemberDTO {
 	private String member_pwd;
 	private String member_email;
 	private String member_repwd;
-	private String member_prople;
+	private String member_profile;
 }
