@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="meetingboardSQL">
+	<!-- 모임 게시판 글쓰기 -->
+	<insert id="meetingboardWrite" parameterType="meetingboard">
+		insert into meetingboard(meeting_seq,job_code,title,subtitle,content,day,starthour,endhour,address,buildingname,address_x,address_y,count,host,price,email)
+		values (seq_meetingboard.nextval,#{job_code},#{title},#{subtitle},#{content},#{day},#{starthour},#{endhour},#{address},#{buildingname},#{address_x},#{address_y},#{count},#{host},#{price},#{email})
+	</insert>
+	
+	<!-- 모임 게시글 목록 -->
+	<select id="getMeetingboardList" parameterType="java.util.Map" resultType="meetingboard">
+		<![CDATA[
+			select * from
+			(select rownum rn, tt.* from 
+			(select * from meetingboard order by meeting_seq desc)tt) 
+			where rn >= #{startNum} and rn <= #{endNum}	
+		]]>
+	</select>
+	
+	<!-- 모임 게시판 보기 -->
+	<select id="getMeetingboard" parameterType="int" resultType="meetingboard">
+		select * from meetingboard where meeting_seq = #{meeting_seq}
+	</select>
+	
+	<!-- 전체 모임 게시글 수 -->
+  	<select id="getTotalA" resultType="int">
+  		select count(*) from meetingboard
+  	</select>
+  	
+  	<!-- 모임 게시글 수정 -->
+  	<update id="meetingboardModify" parameterType="meetingboard">
+  		update meetingboard set job_code=#{job_code},title=#{title},subtitle=#{subtitle},content=#{content},day=#{day},starthour=#{starthour},endhour=#{endhour},
+  								address=#{address},buildingname=#{buildingname},address_x=#{address_x},address_y=#{address_y},count=#{count},host=#{host},price=#{price}
+  		where meeting_seq=#{meeting_seq}
+  	</update>
+  	
+  	<!-- 모임 게시글 삭제 -->
+  	<delete id="meetingboardDelete" parameterType="int">
+  		delete from meetingboard where meeting_seq=#{meeting_seq}
+  	</delete>
+  	
+  	<!-- 안내사항 가져오기 -->
+  	<select id="getGuideList" resultType="meetingboard.bean.GuideDTO">
+  		select * from guide
+  	</select>
+</mapper>

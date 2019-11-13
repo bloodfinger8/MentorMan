@@ -4,7 +4,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @Title : 관리자페이지 모든 List controller
@@ -30,3 +29,4 @@ public class AdminController {
 		return "/admin/adminMain";
 	}
 }
+

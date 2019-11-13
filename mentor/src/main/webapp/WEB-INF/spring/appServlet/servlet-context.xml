@@ -13,7 +13,6 @@
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	<context:component-scan base-package="main.controller"/>
-	
 	<context:component-scan base-package="adminmain.controller"/>
 	<context:component-scan base-package="adminboard.controller"/>
 	<context:component-scan base-package="adminmember.controller"/>
@@ -22,6 +21,13 @@
 	<context:component-scan base-package="member.controller"/>
 	<!-- 용제 -->
 	<context:component-scan base-package="meetingboard.controller"/>
+	
+	<!-- 재우 -->
+	<context:component-scan base-package="menteeboard.controller"/>
+	<context:component-scan base-package="menteeboardReply.controller"/>
+	<!-- 태형 -->
+	<context:component-scan base-package="essayboard.controller"/>
+	
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<mvc:annotation-driven />
 
@@ -48,6 +54,10 @@
 		<property name="order" value="0"/><!-- 우선순위 -->
 	</bean>
 	
+	<!-- fileUpload -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="5000000"/>
+		<property name="maxInMemorySize" value="5000000"/>
+	</bean>
 	
 </beans>
-
