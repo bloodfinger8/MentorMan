@@ -226,8 +226,8 @@ create table menteeemployee_profile(
 ----taehyeong--------------------------------------------------------------------------------------------------------------------
 -- 에세이 보드 생성
 create table essayboard(
-    essayboard_seq number, -- 에세이 시퀀스
-    mentor_email varchar2(100) primary key, -- 멘토 이메일 PK
+    essayboard_seq number primary key, -- 에세이 시퀀스 PK
+    mentor_email varchar2(100) , -- 멘토 이메일 
     job_code varchar2(1000),
     essayboard_title varchar2(100) not null, -- 에세이 제목
     essayboard_content varchar2(4000) not null, -- 에세이 내용
