@@ -15,12 +15,15 @@
 	<context:component-scan base-package="main.controller"/>
 	<context:component-scan base-package="menteeboard.controller"/>
 	<context:component-scan base-package="menteeboardReply.controller"/>
+	<context:component-scan base-package="intern.controller"/>
+	
 	<context:component-scan base-package="adminmain.controller"/>
 	<context:component-scan base-package="adminboard.controller"/>
 	<context:component-scan base-package="adminmember.controller"/>
 	
 	<context:component-scan base-package="member.controller"/>
 	<context:component-scan base-package="meetingboard.controller"/>
+	
 
   	<!-- 에세이 보드 -->
 	<context:component-scan base-package="essayboard.controller"/>
@@ -51,6 +54,9 @@
 	<bean id="beanNameViewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver">
 		<property name="order" value="0"/>
 	</bean>
+	
+	<!-- XML -->
+	
 	
 	<!-- fileUpload -->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

@@ -26,6 +26,7 @@
 				<div class="beta-div">
 				<a class="button button-big program-button" type="external" href="/mentee_programs"> 모임 <span class='beta-text'>beta</span></a>
 				</div>
+				<a class="button button-big" type="external" href="/mentor/intern/internMain">공채 속보</a>
 				<a class="button button-big" type="external" href="/mentor/menteeboard/menteeboardList">멘티 게시판</a>
 				<a class="button button-big beta-div" type="external" href="/mentor_requests/new"> 멘토 지원하기 </a>
 				<c:if test= "${memDTO==null}">

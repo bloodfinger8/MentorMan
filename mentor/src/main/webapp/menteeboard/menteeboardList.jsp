@@ -182,7 +182,7 @@ $(document).ready(function(){
 			$.each(data['list'], function(key, value){
 				$('<tr/>').append($('<td/>',{
 					align: 'center',
-					text : value.seq
+					text : value.menteeboard_seq
 				})).append($('<td/>',{
 					align: 'center',
 					text : value.job_type
@@ -190,20 +190,20 @@ $(document).ready(function(){
 					}).append($('<a/>',{
 							href : 'javascript:void(0)',
 							id : 'subjectA',
-							text : value.subject,
+							text : value.menteeboard_title,
 							class : value.seq+""
 				}))).append($('<td/>',{
 					align: 'center',
-					text : value.nickname
+					text : value.menteeboard_nickname
 				})).append($('<td/>',{
 					align: 'center',
-					text : value.logtime
+					text : value.menteeboard_logtime
 				})).append($('<td/>',{
 					align: 'center',
-					text : value.hit
+					text : value.menteeboard_hit
 				})).append($('<td/>',{
 					align: 'center',
-					text : value.good
+					text : value.menteeboard_good
 				})).appendTo($('#inputBody2'));
 			});
 			
@@ -212,8 +212,12 @@ $(document).ready(function(){
 			
 			//클릭시 뷰로 이동
 			$('#boardTable').on('click' ,'#subjectA' , function(){
-				var seq = $(this).parent().prev().prev().text();
-				$(location).attr("href", "http://localhost:8080/mentor/menteeboard/menteeboardView?seq="+seq+"&pg="+$('#pgInput').val());
+				if(data.memNickname == null){
+					alert('로그인시 이용가능');
+				}else{
+					var seq = $(this).parent().prev().prev().text();
+					$(location).attr("href", "http://localhost:8080/mentor/menteeboard/menteeboardView?seq="+seq+"&pg="+$('#pgInput').val());
+				}
 			});	
 		},
 		error : function(err){

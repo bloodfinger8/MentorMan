@@ -88,59 +88,48 @@ insert into guide(guide_content) values ('주차지원은 불가능하니 대중
 ---yangJaewoo-----------------------------------------------------------------------------------------------------
 
 CREATE TABLE menteeboard(
-     seq NUMBER NOT NULL,               -- 글번호
-     nickname VARCHAR2(40) NOT NULL,       -- 이름
-     email VARCHAR2(40),   -- 이메일
-     subject VARCHAR2(255) NOT NULL,    -- 제목
-     content VARCHAR2(4000) NOT NULL,   -- 내용
-     job_code VARCHAR2(40),                  -- 직무유형
-     good NUMBER DEFAULT 0,
+     menteeboard_seq NUMBER primary key,            -- 글번호
+     menteeboard_profile varchar2(200),             -- 프로필 사진
+     menteeboard_nickname VARCHAR2(40) NOT NULL,    -- 이름
+     menteeboard_email VARCHAR2(40),                -- 이메일
+     menteeboard_title VARCHAR2(255) NOT NULL,      -- 제목
+     menteeboard_content VARCHAR2(4000) NOT NULL,   -- 내용
+     job_code VARCHAR2(40),                         -- 직무유형
+     menteeboard_good NUMBER DEFAULT 0,             -- 좋아요
 
-     ref NUMBER NOT NULL,               -- 그룹번호
-     lev NUMBER DEFAULT 0 NOT NULL,     -- 단계
-     step NUMBER DEFAULT 0 NOT NULL,    -- 글순서
-     pseq NUMBER DEFAULT 0 NOT NULL,    -- 원글번호
-     reply NUMBER DEFAULT 0 NOT NULL,   -- 답변수
+     menteeboard_ref NUMBER NOT NULL,               -- 그룹번호
+     menteeboard_lev NUMBER DEFAULT 0 NOT NULL,     -- 단계
+     menteeboard_step NUMBER DEFAULT 0 NOT NULL,    -- 글순서
+     menteeboard_pseq NUMBER DEFAULT 0 NOT NULL,    -- 원글번호
+     menteeboard_reply NUMBER DEFAULT 0 NOT NULL,   -- 답변수
 
-     hit NUMBER DEFAULT 0,              -- 조회수
-     logtime DATE DEFAULT SYSDATE
+     menteeboard_hit NUMBER DEFAULT 0,              -- 조회수
+     menteeboard_logtime DATE DEFAULT SYSDATE
  );
  create SEQUENCE menteeboard_seq nocache nocycle;
-
-
+select * from menteeboard;
  -- 좋아요 테이블
- CREATE TABLE menteeboard_like(
-     menteeboard_seq VARCHAR2(40) NOT NULL,
-     email VARCHAR2(40) NOT NULL
+ CREATE TABLE menteeboardLike(
+     menteeboardLike_mb_seq NUMBER NOT NULL,         --좋아요 누른 menteeboard_seq값 저장
+     menteeboardLike_mb_email VARCHAR2(40) NOT NULL  --좋아요 누른 menteeboard_email값 저장
 );
-    select * from menteeboard_like;
-
 
  -- 게시글 댓글 테이블
  CREATE TABLE menteeboardReply(
-      seq NUMBER PRIMARY KEY,               -- 댓글 번호
-      menteeboard_seq NUMBER NOT NULL,
-      nickname VARCHAR2(40) NOT NULL,
-      email VARCHAR2(40) NOT NULL,
-      content VARCHAR(1000) NOT NULL,       -- 댓글내용
+      menteeboardReply_seq NUMBER PRIMARY KEY,            -- 댓글 번호
+      menteeboardReply_mb_seq NUMBER NOT NULL,            -- 댓글 쓴 게시물 seq 저장
+      menteeboardReply_profile varchar2(200),             -- 댓글 쓴 프로필 사진
+      menteeboardReply_nickname VARCHAR2(40) NOT NULL,    -- 댓글 쓴 닉네임
+      menteeboardReply_email VARCHAR2(40) NOT NULL,       -- 댓글 쓴 이메일
+      menteeboardReply_content VARCHAR(1000) NOT NULL,    -- 댓글내용
 
-      ref NUMBER NOT NULL,               -- 그룹번호
-      lev NUMBER DEFAULT 0 NOT NULL,     -- 단계
-      step NUMBER DEFAULT 0 NOT NULL,    -- 글순서
-      pseq NUMBER DEFAULT 0 NOT NULL,    -- 원글번호
-      logtime DATE DEFAULT SYSDATE
+      menteeboardReply_ref NUMBER NOT NULL,               -- 그룹번호
+      menteeboardReply_lev NUMBER DEFAULT 0 NOT NULL,     -- 단계
+      menteeboardReply_step NUMBER DEFAULT 0 NOT NULL,    -- 글순서
+      menteeboardReply_pseq NUMBER DEFAULT 0 NOT NULL,    -- 원글번호
+      menteeboardReply_logtime DATE DEFAULT SYSDATE
 );
 create SEQUENCE menteeboardReply_seq nocache nocycle;
-
-select * from menteeboardReply order by logtime;
-
-select * from
-	(select rownum rn, tt.* from
-	(select *
-	from menteeboardReply where menteeboard_seq = 5 order by ref desc, step asc)tt)
-	where >= 1 and rn <= 5;
-
-
 
  --송현--------------------------------------------------------------------------------------------------------
  create table mentors_member(
