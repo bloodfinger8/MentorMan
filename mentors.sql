@@ -226,15 +226,15 @@ create table menteeemployee_profile(
 ----taehyeong--------------------------------------------------------------------------------------------------------------------
 -- 에세이 보드 생성
 create table essayboard(
-    essayboard_seq number primary key, -- 에세이 시퀀스 PK
-    mentor_email varchar2(100) , -- 멘토 이메일 
-    job_code varchar2(1000),
+    essayboard_seq number, -- 에세이 시퀀스
+    mentor_email varchar2(100) primary key, -- 멘토 이메일 PK
+    job_code varchar2(100),
     essayboard_title varchar2(100) not null, -- 에세이 제목
     essayboard_content varchar2(4000) not null, -- 에세이 내용
     essayboard_hit number default 0 , -- 에세이 조회수
     essayboard_scrap number default 0,  -- 에세이 즐겨찾기
-    constraint essay_job foreign key(job_code) references job(job_code), -- 에세이 잡 코드 FK
-    logtime date default sysdate
+    foreign key(job_code) references job(job_code), -- 에세이 잡 코드 FK
+    essayboard_logtime date default sysdate
 );
 
 -- 에세이 보드 시퀀스 생성
