@@ -28,8 +28,8 @@ public class EssayboardServiceImpl implements EssayboardService {
 	
 	// 에세이 직무 유형
 	@Override
-	public List<EssayboardDTO> essayjobType(String jobType) {
-		return essayboardDAO.essayjobType(jobType);
+	public List<EssayboardDTO> essayjobType(Map<String, String[]> map) {
+		return essayboardDAO.essayjobType(map);
 	}
 	
 	// 에세이 총 글 수
@@ -54,5 +54,59 @@ public class EssayboardServiceImpl implements EssayboardService {
 	@Override
 	public void essayboardModify(Map<String, Object> map) {
 		essayboardDAO.essayboardModify(map);
+	}
+	
+	// 에세이 글 삭제
+	@Override
+	public void essayboardDelete(int seq) {
+		essayboardDAO.essayboardDelete(seq);
+	}
+	
+	// 해당 멘토가 작성한 에세이 리스트 출력
+	@Override
+	public List<EssayboardDTO> getessayList(int member_seq) {
+		return essayboardDAO.getessayList(member_seq);
+	}
+	
+	// 해당 멘토가 작성한 에세이 수 
+	@Override
+	public int getessayMentorTotal(int member_seq) {
+		return essayboardDAO.getessayMentorTotal(member_seq);
+	}
+	
+	// 에세이 멘토 헤드 뷰
+	@Override
+	public EssayboardDTO essaymentorHeadView(int member_seq) {
+		return essayboardDAO.essaymentorHeadView(member_seq);
+	}
+	
+	// 모임 후기 (고맙습니다)
+	@Override
+	public List<EssayboardDTO> getessayReview() {
+		return essayboardDAO.getessayReview();
+	}
+	
+	// 모임 후기 글 수
+	@Override
+	public int getreTotal() {
+		return essayboardDAO.getreTotal();
+	}
+	
+	// 에세이 보드 조회수
+	@Override
+	public void essayboardHit(int seq) {
+		essayboardDAO.essayboardHit(seq);
+	}
+	
+	// 에세이 보드 조회수 출력
+	@Override
+	public int getessayboardHit(int seq) {
+		return essayboardDAO.getessayboardHit(seq);
+	}
+	
+	// 최신 에세이 리스트
+	@Override
+	public List<EssayboardDTO> getNewEssay(Map<String, Integer> map) {
+		return essayboardDAO.getNewEssay(map);
 	}
 }

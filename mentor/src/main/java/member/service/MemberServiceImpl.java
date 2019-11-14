@@ -36,6 +36,10 @@ public class MemberServiceImpl implements MemberService {
 	public MemberDTO login(Map<String, String> map) {
 		return memberDAO.login(map);
 	}
+	
+	
+	
+	
 
 
 }

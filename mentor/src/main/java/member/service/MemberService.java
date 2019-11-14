@@ -19,7 +19,11 @@ public interface MemberService {
 	
 	
 	
-
 	
-
+	
+	
+	
+	
+	
+	
 }

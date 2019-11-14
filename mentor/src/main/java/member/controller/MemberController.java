@@ -116,24 +116,16 @@ public class MemberController {
 		map.put("member_email", member_email);
 		map.put("member_pwd", member_pwd);
 
-		memberDTO = memberService.login(map);
-		memberDTO.setMember_pwd("");
-		if (memberDTO != null) {	
-			session.setAttribute("memDTO", memberDTO);
-			return "login_ok";
-		}else { 
 		MemberDTO memberDTO = memberService.login(map);
 		memberDTO.setMember_pwd("");
 			if (memberDTO != null) {
 				session.setAttribute("memDTO", memberDTO);
-				return "login_ok";	
+				session.setMaxInactiveInterval(60*60*24); // 세션 1일 유지
+				return "login_ok";
 			} else {
 				return "login_fail";
 			}
-		}
 	}
-	
-	
 	// 로그아웃 처리
 	@RequestMapping(value = "logout", method = RequestMethod.GET)
 	public ModelAndView logout(HttpSession session) {

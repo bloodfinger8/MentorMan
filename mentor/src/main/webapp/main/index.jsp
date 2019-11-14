@@ -29,8 +29,8 @@
          <div class="container" id="container">
             <jsp:include page="${display}" />
          </div>
-        </div>
       </div>
+   </div>
    <!-- footer  -->
    <div id="foot" id="foot">
       <jsp:include page="../template/footer.jsp" />

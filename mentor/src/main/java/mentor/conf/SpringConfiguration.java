@@ -12,9 +12,8 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 @Configuration
 public class SpringConfiguration {
 
-	// DataSource
-	@Bean
-	public BasicDataSource dataSource() {
+	@Bean(name="dataSource")
+	public BasicDataSource getDataSource() {
 		BasicDataSource basicDataSource = new BasicDataSource();
 		basicDataSource.setDriverClassName("oracle.jdbc.driver.OracleDriver");
 		basicDataSource.setUrl("jdbc:oracle:thin:@localhost:1521:xe");
@@ -25,29 +24,28 @@ public class SpringConfiguration {
 
 		return basicDataSource;
 	}
-
-	// SqlSessionFactory
-	@Bean
-	public SqlSessionFactory sqlSessionFactory() throws Exception {
-		SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
-
-		PathMatchingResourcePatternResolver path = new PathMatchingResourcePatternResolver();
-
-		factoryBean.setDataSource(dataSource());
-		factoryBean.setConfigLocation(path.getResource("classpath:spring/mybatis-config.xml"));
-		factoryBean.setMapperLocations(path.getResources("classpath:*/dao/*Mapper.xml"));
-		return factoryBean.getObject();
+	
+	@Bean(name="sqlSessionFactory")
+	public SqlSessionFactory getSqlSessionFactoryBean() throws Exception {
+		SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
+		PathMatchingResourcePatternResolver pmrpr = new PathMatchingResourcePatternResolver();
+		sqlSessionFactoryBean.setDataSource(getDataSource());
+		sqlSessionFactoryBean.setConfigLocation(pmrpr.getResource("classpath:spring/mybatis-config.xml"));
+		sqlSessionFactoryBean.setMapperLocations(pmrpr.getResources("classpath:*/dao/*Mapper.xml"));
+		
+		return sqlSessionFactoryBean.getObject();
 	}
-
-	// SqlSession
-	@Bean
-	public SqlSessionTemplate sqlSession() throws Exception {
-		return new SqlSessionTemplate(sqlSessionFactory());
+	
+	@Bean(name="sqlSession")
+	public SqlSessionTemplate getSqlSessionTemplate() throws Exception {
+		return new SqlSessionTemplate(getSqlSessionFactoryBean());
 	}
-
-	// Transaction
-	@Bean
-	public DataSourceTransactionManager transactionManager() {
-		return new DataSourceTransactionManager(dataSource());
+	
+	@Bean(name="transactionManager")
+	public DataSourceTransactionManager getDataSourceTransactionManager() {
+		DataSourceTransactionManager dstm = new DataSourceTransactionManager();
+		dstm.setDataSource(getDataSource());
+		
+		return dstm;
 	}
 }

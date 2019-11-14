@@ -1,15 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>	
+<%@taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
 
 <div class="">
 	<div class="navbar">
 		<div class="navbar-inner">
 			<div class="left">
-				<a class="logo" type="external" href="../main/index"> 
+				<a class="logo" type="external" href="../main/index">
 				<img src="../image/mentorlogo.jpg" /></a>
 			</div>
-	
 			<form class="searchbar" id="searchbar-autocomplete" action="/searchs">
 				<div class="searchbar-inner">
 					<!-- <div class="searchbar-input-wrap">
@@ -20,9 +19,8 @@
 				</div>
 			</form>
 			<div class="right">
-				<a class="button button-big" type="external" href="/mentors">멘토찾기</a>
-				<a class="button button-big" type="external" href="/open_mentorings"> 콘텐츠 </a> 
-				<a class="button button-big" type="external" href="/mentor_posts?featured_mentor_post=true">에세이</a>
+				<a class="button button-big" type="external" href="">멘토찾기</a>
+				<a class="button button-big" type="external" href="/mentor/essayboard/essayboardList?flag=0">에세이</a>
 				<div class="beta-div">
 				<a class="button button-big program-button" type="external" href="/mentee_programs"> 모임 <span class='beta-text'>beta</span></a>
 				</div>
@@ -47,10 +45,10 @@
 								<div class="list links-list no-hairlines-between">
 									<ul>
 										<li><a type="external" href="">멘토찾기</a></li>
-										<li><a type="external" href="">콘텐츠</a></li>
-										<li><a type="external" href="">에세이</a></li>
-										<li><a type="external" href=""><span>모임</span><span class="beta-text">beta</span><span class="badge color-red alim">18</span></a></li>
-										<li><a type="external" href="">멘토지원하기</a></li>
+                    <li><a type="external" href="/mentor/noticeboard/noticeboardList">공지게시판</a></li>
+										<li><a type="external" href="/mentor/essayboard/essayboardList?flag=1">에세이</a></li>
+										<li><a type="external" href="/mentor/meetingboard/meetingboardList"><span>모임</span><span class="beta-text">beta</span><span class="badge color-red alim">18</span></a></li>
+										<li><a type="external" href="/mentor/mentorapply/mentorapplyForm">멘토지원하기</a></li>
 									</ul>
 								</div>
 								
@@ -65,14 +63,14 @@
 								
 								<div class="list links-list no-hairlines-between">
 									<ul>
-										<li><a type="external" href="">계정설정</a></li>
+										<li><a type="external" href="/mentor/mentee/menteeUserForm">계정설정</a></li>
 										<li><a type="external" href="/mentor/member/logout">로그아웃</a></li>
 									</ul>
 								</div>
 							</div>
 						</div>
 					</div>
-				</c:if>	
-      </div>	
+				</c:if>
+      </div>
 	</div>
 </div>

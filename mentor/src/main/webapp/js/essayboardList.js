@@ -40,6 +40,33 @@
 //	});
 //});
 
+//$('.content-body').on('click', function(){
+//	var pg = $('#pg').val();
+//	var seq = $('#seq').val();
+//	if($('#memNick').val() != ''){
+//		location.href="/mentor/essayboard/essaymentorBodyView?pg="+pg+"&seq="+seq;
+//	} else {
+//		location.href="/mentor/member/loginForm";
+//	}
+//});
+
 $('#essayWriteBtn').on('click', function(){
 	location.href="/mentor/essayboard/essayboardWriteForm";
+});
+
+var flag = $('#flag').val();
+$('#listflag').on('click', function(){
+	
+	if(flag == '0'){
+		location.href="/mentor/essayboard/essayboardList?flag=1";
+		console.log("??");
+		$('#flag').val('1');
+		$(this).addClass('color-gray');
+	} else if(flag == '1'){
+		location.href="/mentor/essayboard/essayboardList?flag=0";		
+		$('#flag').val('0');
+		$(this).addClass('button');
+	}
+	
+	
 });
