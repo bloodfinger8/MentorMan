@@ -171,12 +171,17 @@ CREATE TABLE essayboardScrap(
 );
 
  --송현--------------------------------------------------------------------------------------------------------
- create table mentors_member(
-member_name varchar2(50) not null,
-member_nickname varchar2(50) not null,
-member_email varchar2(100)  primary key,
-member_pwd varchar2(100) not null,
-member_flag number DEFAULT 0);
+create table mentors_member(
+member_seq number,                                 --회원 시퀀스
+member_name varchar2(50) not null,                 --회원 이름
+member_nickname varchar2(50) not null,             --회원 닉네임
+member_email varchar2(100)  primary key,           --회원 이메일
+member_pwd varchar2(100) not null,                 --회원 패스워드
+member_profile varchar2(200),                      --회원 프로필 사진                                                  
+member_flag number default 0,                      --멘토 멘티 구분
+logtime DATE DEFAULT SYSDATE);                     --회원가입 logtime
+
+create sequence member_seq start with 1000 increment by 1 nocycle nocache; --회원 seq
 
 ---junhyeok----------------------------------------------------------------------------------------------------
 -- 멘토
