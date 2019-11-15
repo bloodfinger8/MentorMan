@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
 <mapper namespace="essaySQL">
 	
 	<!-- 에세이 멘토 리스트 출력 -->
@@ -137,7 +136,6 @@
                   ORDER BY
                       e.logtime DESC)tt
                       where job_code IN 'job_code_9')
-                      where rn >= 1 and rn<= 5
 		
 			<!-- <foreach collection="job_code" item="job_code" open="(" separator="," close=")">
 				#{job_code}

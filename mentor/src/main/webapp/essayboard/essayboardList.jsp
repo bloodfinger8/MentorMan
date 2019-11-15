@@ -3,8 +3,7 @@
     
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-    <link rel="shortcut icon" type="image/x-icon" href="https://d2ljmlcsal6xzo.cloudfront.net/assets/icons/favicon-8c7fcbb073779bccf8697e126166360bfa96419c0e6f3fb90b53da7fac142625.ico" />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
 <div class="page navbar-fixed mentee_programs index">
    <div class="page-content">     
@@ -155,6 +154,4 @@
     </div>
 
   </div>
-	
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="../js/essayboardList.js"></script>
