@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import essayboard.bean.EssayboardDTO;
+import essayboard.bean.EssayboardScrapDTO;
 
 public interface EssayboardService {
 	
@@ -14,7 +15,7 @@ public interface EssayboardService {
 	public void essayboardWrite(Map<String, Object> map);
 	
 	// 에세이 직무 유형
-	public List<EssayboardDTO> essayjobType(Map<String, String[]> map);
+	public List<EssayboardDTO> essayjobType(Map<String, List<String>> map);
 	
 	// 에세이 총 글 수
 	public int getTotalA(Map<String, Integer> map);
@@ -54,5 +55,17 @@ public interface EssayboardService {
 	
 	// 최신 에세이 리스트
 	public List<EssayboardDTO> getNewEssay(Map<String, Integer> map);
+	
+	//스크랩 정보를 가져온다
+	public int getEssayboardScrap(Map<String, Object> scrapMap);
 
+	public void essayboardScrapInsert(EssayboardScrapDTO essayboardScrapDTO);
+
+	public void essayboardScrapDelete(EssayboardScrapDTO essayboardScrapDTO);
+
+	public int getTotalScrap(int essayboardScrap_es_seq);
+
+	public List<EssayboardDTO> getEssayboardAttention(String memEmail);
+	
+	
 }

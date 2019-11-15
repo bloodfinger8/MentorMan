@@ -56,7 +56,7 @@
 									<ul>
 										<li><a type="external" href="">에세이 쓰기</a></li>
 										<li><a type="external" href="">나의 질문/답변</a></li>
-										<li><a type="external" href="">관심콘텐츠</a></li>
+										<li><a type="external" href="/mentor/essayboard/essayboardAttention">관심에세이</a></li>
 										<li><a type="external" href="">관심멘토</a></li>
 									</ul>
 								</div>

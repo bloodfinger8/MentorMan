@@ -9,7 +9,7 @@
 
 	<!-- servlet에서 보듯이 요청과 관련된 객체를 정의합니다.
 	url과 관련된 controller나, @(어노테이션), ViewResolver, Interceptor, MultipartResolver 등의 설정을 해줍니다. -->
-	
+	<context:component-scan base-package="main.controller"/>
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	<!-- 공지게시판 -->

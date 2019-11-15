@@ -70,3 +70,43 @@ $('#listflag').on('click', function(){
 	
 	
 });
+
+//스크랩 버튼을 누를시
+$(document).ready(function() {
+	$('a[type="externalScrap"]').on('click' , function(){
+		var seq = $(this).closest('div').prev().children().first().val();
+		//var scrapFlag =$(this).children().last().val();
+		if($(this).children().last().val() == 0){
+			$("#"+seq).prop("src", "../image/scrapOkImg.png");
+			$(this).children().last().val(1);
+			
+		}else{
+			$("#"+seq).prop("src", "../image/scrapNoImg.png");
+			$(this).children().last().val(0);
+		}
+		var scrapFlag = $(this).children().last().val()
+		
+		
+		// seq , scrap_flag 
+		var sendData = {
+				'essayboardScrap_es_seq' : seq,
+				'scrapFlag' : scrapFlag
+			};
+		alert(seq +',' + scrapFlag);
+		
+		$.ajax({
+			url : '/mentor/essayboard/essayboardScrap',
+			type : 'POST',
+			data : sendData,
+			dataType : 'text',
+			success : function(data) {
+				$('#ScrapDiv_'+seq).empty();
+				$('#ScrapDiv_'+seq).html(data);
+			},
+			error : function(err){
+				alert('에러');
+			}
+		});
+		
+	});
+});

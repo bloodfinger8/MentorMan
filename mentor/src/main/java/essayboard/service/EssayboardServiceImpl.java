@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import essayboard.bean.EssayboardDTO;
+import essayboard.bean.EssayboardScrapDTO;
 import essayboard.dao.EssayboardDAO;
 
 @Service
@@ -28,7 +29,7 @@ public class EssayboardServiceImpl implements EssayboardService {
 	
 	// 에세이 직무 유형
 	@Override
-	public List<EssayboardDTO> essayjobType(Map<String, String[]> map) {
+	public List<EssayboardDTO> essayjobType(Map<String, List<String>> map) {
 		return essayboardDAO.essayjobType(map);
 	}
 	
@@ -109,4 +110,33 @@ public class EssayboardServiceImpl implements EssayboardService {
 	public List<EssayboardDTO> getNewEssay(Map<String, Integer> map) {
 		return essayboardDAO.getNewEssay(map);
 	}
+
+	@Override
+	public int getEssayboardScrap(Map<String, Object> scrapMap) {
+		return essayboardDAO.getEssayboardScrap(scrapMap);
+	}
+
+	@Override
+	public void essayboardScrapInsert(EssayboardScrapDTO essayboardScrapDTO) {
+		essayboardDAO.essayboardScrapInsert(essayboardScrapDTO);
+		essayboardDAO.essayboardScrapUpdate(essayboardScrapDTO.getEssayboardScrap_es_seq());
+	}
+
+	@Override
+	public void essayboardScrapDelete(EssayboardScrapDTO essayboardScrapDTO) {
+		essayboardDAO.essayboardScrapDelete(essayboardScrapDTO);
+		System.out.println("essayboardScrapDTO.getEssayScrap_es_seq() : " + essayboardScrapDTO.getEssayboardScrap_es_seq());
+		essayboardDAO.essayboardScrapUpdate(essayboardScrapDTO.getEssayboardScrap_es_seq());
+	}
+
+	@Override
+	public int getTotalScrap(int essayboardScrap_es_seq) {
+		return essayboardDAO.getTotalScrap(essayboardScrap_es_seq);
+	}
+
+	@Override
+	public List<EssayboardDTO> getEssayboardAttention(String memEmail) {
+		return essayboardDAO.getEssayboardAttention(memEmail);
+	}
+
 }

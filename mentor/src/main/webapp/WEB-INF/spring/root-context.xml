@@ -60,6 +60,5 @@
 	<context:component-scan base-package="menteeboardReply.dao"/>
 	<context:component-scan base-package="menteeboardReply.bean"/>
 	
-	<context:component-scan base-package="intern.bean"/>
 
 </beans>

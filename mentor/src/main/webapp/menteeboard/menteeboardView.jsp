@@ -93,8 +93,7 @@
 			</div>
 			<div class="row no-gap">
 				<div id="thanks-notes">
-					<div class="block mentee-detail-block thanks-note-card" hidden=""
-						style="display: block;">
+					<div class="block mentee-detail-block thanks-note-card" hidden="" style="display: block;">
 						<div class="mentee-info">
 							<div class="mentee-image img-circle">
 							</div>

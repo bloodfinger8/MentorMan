@@ -82,12 +82,13 @@
       					</div>
 							</a>
 				      <div class="created-at">
-				        <small>${list.logtime }</small>
+				        <small>${list.essayboard_logtime }</small>
 				      </div>
   				</div>
 
   <div class="card-content card-content-padding"style="overflow: hidden; text-overflow: ellipsis; height: 200px; ">
-   <a class="text-decoration-underline" type="external" href="/mentor/essayboard/essayjobType?jobType=${list.job_code }">
+   <input type="hidden" id="seq" name="seq" value="${list.essayboard_seq }">
+   <a class="text-decoration-underline" type="externalScrap" href="/mentor/essayboard/essayjobType?jobType=${list.job_code }">
       ${list.job_type }
 </a>
 	<!-- 로그인 했을 경우 View로 넘김 -->
@@ -98,9 +99,9 @@
 	<c:if test="${memNickname == null }">
 		<a class="content-body" type="external" href="/mentor/member/loginForm" >
 	</c:if>
-      <input type="hidden" id="seq" name="seq" value="${list.essayboard_seq }">
+      
       <div class="mentor-post-title">
-        ${list.essayboard_title }
+        ${list.essayboard_title } 
       </div>
 
       <div class="mentor-post-detail">
@@ -109,14 +110,22 @@
 </a>  </div>
 
   <div class="card-footer" style="">
-    <a class="color-gray js-bookmark" type="external" data-remote="true" rel="nofollow" data-method="post" href="/mentor_posts/6589/bookmarks" style="right: 0px;
+    <a class="color-gray js-bookmark" id="scrap" type="externalScrap" data-remote="true" rel="nofollow" data-method="post" href="/mentor_posts/6589/bookmarks" style="right: 0px;
     position: unset;
     margin: 0px 0px;">
-    <i class="far fa-bookmark" aria-hidden="true"></i>
-	${list.essayboard_scrap }
+    <!-- <i class="far fa-bookmark" aria-hidden="false"></i> -->
+    <c:if test="${list.essayboard_scrapFlag == 1}">
+    <img id="${list.essayboard_seq}" src="../image/scrapOkImg.png" width="13">
+    </c:if>
+    <c:if test="${list.essayboard_scrapFlag == 0}">
+    <img id="${list.essayboard_seq}" src="../image/scrapNoImg.png" width="13">
+    </c:if>
+	<span id="ScrapDiv_${list.essayboard_seq}">${list.essayboard_scrap}</span>
   	<!-- 스크랩 끌고와야 함 -->
-</a>
-
+  	<input type="hidden" id="scrapFlag" name="scrapFlag" value="${list.essayboard_scrapFlag}">
+  	
+	</a>
+	
     <div class="created-at">
       <!-- <small> -->
       <!--   읽음 -->
