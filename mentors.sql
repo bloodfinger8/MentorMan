@@ -14,27 +14,27 @@ create table mentoring (
 );
 
 -- meetingboard 테이블 create문
-create table meetingboard (
-    meetingboard_seq            number,         -- 모임번호(PK)
-    job_code                    varchar2(20),   -- 직무분야(FK)
-    meetingboard_title          varchar2(500),  -- 제목
-    meetingboard_subtitle       varchar2(1000), -- 부제목
-    meetingboard_content        varchar2(4000), -- 내용
-    meetingboard_day            varchar2(50),   -- 일시
-    meetingboard_starthour      varchar2(30),   -- 시작시간
-    meetingboard_endhour        varchar2(30),   -- 종료시간
-    meetingboard_address        varchar2(50),   -- 장소
-    meetingboard_buildingname   varchar2(50),   -- 건물이름
-    meetingboard_address_x      varchar2(50),   -- 위도
-    meetingboard_address_y      varchar2(50),   -- 경도
-    meetingboard_count          number,         -- 모집인원
-    meetingboard_host           varchar2(50),   -- 주최
-    meetingboard_price          number,         -- 참가비
-    mentor_email                varchar2(100),   -- 멘토이메일(FK)
-    meetingboard_state          number  default 0, -- 상태
-    constraint PK_MEETINGBOARD  primary key(meetingboard_seq),
-    constraint FK_MEETINGBOARD1 foreign key(job_code) references job(job_code),
-    constraint FK_MEETINGBOARD2 foreign key(mentor_email) references mentors_member(member_email)
+CREATE TABLE meetingboard (
+    meetingboard_seq            NUMBER,         -- 모임번호(PK)
+    job_code                    VARCHAR2(20),   -- 직무분야(FK)
+    meetingboard_title          VARCHAR2(500),  -- 제목
+    meetingboard_subtitle       VARCHAR2(1000), -- 부제목
+    meetingboard_content        VARCHAR2(4000), -- 내용
+    meetingboard_day            VARCHAR2(50),   -- 일시
+    meetingboard_starthour      VARCHAR2(30),   -- 시작시간
+    meetingboard_endhour        VARCHAR2(30),   -- 종료시간
+    meetingboard_address        VARCHAR2(50),   -- 장소
+    meetingboard_buildingname   VARCHAR2(50),   -- 건물이름
+    meetingboard_address_x      VARCHAR2(50),   -- 위도
+    meetingboard_address_y      VARCHAR2(50),   -- 경도
+    meetingboard_count          NUMBER,         -- 모집인원
+    meetingboard_host           VARCHAR2(50),   -- 주최
+    meetingboard_price          NUMBER,         -- 참가비
+    mentor_email                VARCHAR2(100),   -- 멘토이메일(FK)
+    meetingboard_state          NUMBER  DEFAULT 0, -- 상태
+    CONSTRAINT PK_MEETINGBOARD  PRIMARY KEY(meetingboard_seq),
+    CONSTRAINT FK_MEETINGBOARD1 FOREIGN KEY(job_code) REFERENCES job(job_code),
+    CONSTRAINT FK_MEETINGBOARD2 FOREIGN KEY(mentor_email) REFERENCES mentors_member(member_email)
 );
 
 -- meetingboard 시퀀스
@@ -45,37 +45,37 @@ create table guide(
     guide_content   varchar2(1000),
     logtime date default sysdate
 );
-drop table meeting_order;
--- 모임신청 테이블
-create table meeting_participation(
-    participation_seq       number,         -- 신청 seq
-    meetingboard_seq        number,         -- 모임 seq
-    mentee_email            varchar2(100),  -- 멘티 email
-    mentee_name             varchar2(50),   -- 멘티 이름
-    mentor_email            varchar2(100),  -- 멘토 email
-    mentor_name             varchar2(50),   -- 멘토 이름
-    participation_address   varchar2(50),   -- 거주지
-    participation_question  varchar2(2000), -- 사전질문
-    participation_state     number default 0, -- 결제상태
-    constraint FK_MEETING_PARTICIPATION1 foreign key(meetingboard_seq) references meetingboard(meetingboard_seq),
-    constraint FK_MEETING_PARTICIPATION2 foreign key(mentee_email) references mentors_member(member_email),
-    constraint FK_MEETING_PARTICIPATION3 foreign key(mentor_email) references mentors_member(member_email)
+
+-- 모임신청 create문
+CREATE TABLE meeting_participation(
+    participation_seq       NUMBER,         -- 신청 seq
+    meetingboard_seq        NUMBER,         -- 모임 seq
+    mentee_email            VARCHAR2(100),  -- 멘티 email
+    mentee_name             VARCHAR2(50),   -- 멘티 이름
+    mentor_email            VARCHAR2(100),  -- 멘토 email
+    mentor_name             VARCHAR2(50),   -- 멘토 이름
+    participation_address   VARCHAR2(50),   -- 거주지
+    participation_question  VARCHAR2(2000), -- 사전질문
+    participation_state     NUMBER DEFAULT 0, -- 결제상태
+    CONSTRAINT FK_MEETING_PARTICIPATION1 FOREIGN KEY(meetingboard_seq) REFERENCES meetingboard(meetingboard_seq),
+    CONSTRAINT FK_MEETING_PARTICIPATION2 FOREIGN KEY(mentee_email) REFERENCES mentors_member(member_email),
+    CONSTRAINT FK_MEETING_PARTICIPATION3 FOREIGN KEY(mentor_email) REFERENCES mentors_member(member_email)
 );
 -- 모임신청 시퀀스
 create sequence participation_seq nocache nocycle;
 
 -- 모임 주문
-create table meeting_order (
-    order_id          varchar2(100),        -- 주문ID
-    order_date        date default sysdate, -- 주문일자
-    order_price       number,               -- 총 가격
-    mentee_email      varchar2(100),        -- 멘티 email
-    mentee_name       varchar2(50),         -- 멘티 이름
-    mentee_tel        varchar2(50),         -- 멘티 전화번호
-    meetingboard_seq  number,               -- 모임 seq
-    participation_seq number,               -- 신청 seq
-    constraint FK_MEETING_ORDER1 foreign key(meetingboard_seq) references meetingboard(meetingboard_seq),
-    constraint FK_MEETING_ORDER2 foreign key(mentee_email) references mentors_member(member_email)
+CREATE TABLE meeting_order (
+    order_id          VARCHAR2(100),        -- 주문ID
+    order_date        DATE DEFAULT SYSDATE, -- 주문일자
+    order_price       NUMBER,               -- 총 가격
+    mentee_email      VARCHAR2(100),        -- 멘티 email
+    mentee_name       VARCHAR2(50),         -- 멘티 이름
+    mentee_tel        VARCHAR2(50),         -- 멘티 전화번호
+    meetingboard_seq  NUMBER,               -- 모임 seq
+    participation_seq NUMBER,               -- 신청 seq
+    CONSTRAINT FK_MEETING_ORDER1 FOREIGN KEY(meetingboard_seq) REFERENCES meetingboard(meetingboard_seq),
+    CONSTRAINT FK_MEETING_ORDER2 FOREIGN KEY(mentee_email) REFERENCES mentors_member(member_email)
 );
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- job 테이블 insert문
