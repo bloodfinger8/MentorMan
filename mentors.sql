@@ -117,6 +117,7 @@ insert into guide(guide_content) values ('주차지원은 불가능하니 대중
 
 
 ---yangJaewoo-----------------------------------------------------------------------------------------------------
+
 --멘티게시판 테이블
 CREATE TABLE menteeboard(
      menteeboard_seq NUMBER primary key,            -- 글번호
@@ -162,7 +163,12 @@ CREATE TABLE menteeboard(
 );
 create SEQUENCE menteeboardReply_seq nocache nocycle;
 
-
+--essayboard 의 스크랩 기능
+CREATE TABLE essayboardScrap(
+    essayboardScrap_es_seq NUMBER NOT NULL,           -- 에세이 seq
+    essayboardScrap_mem_email VARCHAR2(40) NOT NULL,   -- 로그인 이메일
+    essatboardScrap_logtime DATE DEFAULT SYSDATE
+);
 
  --송현--------------------------------------------------------------------------------------------------------
  create table mentors_member(
