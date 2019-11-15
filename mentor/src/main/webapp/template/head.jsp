@@ -22,10 +22,10 @@
 				<a class="button button-big" type="external" href="">멘토찾기</a>
 				<a class="button button-big" type="external" href="/mentor/essayboard/essayboardList?flag=0">에세이</a>
 				<div class="beta-div">
-				<a class="button button-big program-button" type="external" href="/mentee_programs"> 모임 <span class='beta-text'>beta</span></a>
+				<a class="button button-big program-button" type="external" href="../meetingboard/meetingboardList"> 모임 <span class='beta-text'>beta</span></a>
 				</div>
 				<a class="button button-big" type="external" href="/mentor/menteeboard/menteeboardList">멘티 게시판</a>
-				<a class="button button-big beta-div" type="external" href="/mentor_requests/new"> 멘토 지원하기 </a>
+				<a class="button button-big beta-div" type="external" href="/mentor/mentor_requests/new"> 멘토 지원하기 </a>
 				<c:if test= "${memDTO==null}">
 				<a class="button button-big" type="external" href="../member/writeForm">회원가입</a>
 				<a class="button button-big" type="external" href="../member/loginForm">로그인</a>
@@ -44,9 +44,9 @@
 								<div class="list links-list no-hairlines-between">
 									<ul>
 										<li><a type="external" href="">멘토찾기</a></li>
-                    <li><a type="external" href="/mentor/noticeboard/noticeboardList">공지게시판</a></li>
+                    <li><a type="external" href="../noticeboard/noticeboardList">공지게시판</a></li>
 										<li><a type="external" href="/mentor/essayboard/essayboardList?flag=1">에세이</a></li>
-										<li><a type="external" href="/mentor/meetingboard/meetingboardList"><span>모임</span><span class="beta-text">beta</span><span class="badge color-red alim">18</span></a></li>
+										<li><a type="external" href="../meetingboard/meetingboardList"><span>모임</span><span class="beta-text">beta</span><span class="badge color-red alim">18</span></a></li>
 										<li><a type="external" href="/mentor/mentorapply/mentorapplyForm">멘토지원하기</a></li>
 									</ul>
 								</div>

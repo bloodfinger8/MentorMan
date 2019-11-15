@@ -12,6 +12,8 @@
 	
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+	<!-- 메인 컨트롤 -->
+	<context:component-scan base-package="main.controller"/>
 	<!-- 공지게시판 -->
 	<context:component-scan base-package="noticeboard.controller"/>
 	<!-- 멘토지원하기 -->
@@ -26,6 +28,26 @@
 	<context:component-scan base-package="adminmember.controller"/>
 	<!-- 송현 -->
 	<context:component-scan base-package="member.controller"/>
+	
+	<!-- ginkgo 1928, member_Email(Gmail) 발송 --> 	
+	<bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com" />
+		<property name="port" value="587" />
+		<property name="username" value="ginkgo1928@gmail.com"/>
+		<property name="password" value="newall1013!"/>
+		<property name="javaMailProperties">
+		<props>
+			<prop key="mail.smtp.ssl.trust">smtp.gmail.com</prop>
+			<prop key="mail.smtp.starttls.enable">true</prop>
+			<prop key="mail.smtp.auth">true</prop>
+		</props>
+		</property>
+	</bean>
+	
+	<bean id="mailService" class="member.service.MemberMailService">
+		<property name="javaMailSender"  ref="javaMailSender" />
+	</bean>
+	
 	<!-- 모임 -->
 	<context:component-scan base-package="meetingboard.controller"/>
   	<!-- 에세이 보드 -->
