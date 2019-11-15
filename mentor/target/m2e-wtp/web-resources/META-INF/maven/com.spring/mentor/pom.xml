@@ -163,7 +163,20 @@
 		    <artifactId>scribejava-core</artifactId>
 		    <version>2.8.1</version>
 		</dependency>
-		
+		<!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+		<!-- Spring Email 설정 19.11.12 ginkgo1928 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+		<!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+		<!-- Spring Email 설정 19.11.12 ginkgo1928 -->
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.7</version>
+		</dependency>
 		<!-- 제이슨 파싱 -->
 		<dependency>
 			<groupId>com.googlecode.json-simple</groupId>
