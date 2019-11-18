@@ -183,7 +183,6 @@ public class MemberController {
 		return "/main/index";
 	}
 	
- }
 	/** @Title : 계정설정 화면.
 	 * @author : ginkgo1928  @date : 2019. 11. 10.*/
 	@RequestMapping(value = "modifyForm", method = RequestMethod.GET)
