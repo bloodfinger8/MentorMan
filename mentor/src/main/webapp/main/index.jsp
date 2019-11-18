@@ -17,6 +17,7 @@
 <link rel="stylesheet" href="../css/famil.css"  type="text/css"/>
 
 <body class="color-theme-pink">
+
    <div id="app" class="framework7-root">
       <div class="view view-main">
          <!-- head -->
