@@ -6,6 +6,7 @@
 
 	<!-- 회원가입 처리 -->
 	<insert id="write" parameterType="java.util.Map">
+
 		<if test="member_profile == ''">
 			insert into mentors_member(member_seq,member_name,member_nickname,member_email,member_pwd)
 			values(member_seq.nextval, #{member_name},#{member_nickname},#{member_email},#{member_pwd})
@@ -29,6 +30,17 @@
 	<!-- 로그인 처리  -->
 	<select id="login" parameterType="java.util.Map" resultType="member">
 		select * from mentors_member where member_email=#{member_email} and member_pwd=#{member_pwd}
+	</select>
+
+	<!-- 나의 질문 답변 -->
+	<select id="getQandA" parameterType="String" resultType="mentor">
+		select mb.member_name, mb.member_profile,
+		mt.job_code, mt.mentoring_code, mt.mentor_seq, mt.mentor_email, 
+		mt.mentor_company, mt.mentor_department, mt.mentor_represent, 
+		mt.mentoring_code , qs.mentor_seq, qs.member_email, 
+		qs.question_title, qs.question_content, qs.question_flag
+		from mentors_member mb ,question qs, mentor mt 
+		where mt.mentor_email = mb.member_email and qs.mentor_seq = mt.mentor_seq and qs.member_email = #{member_email}
 	</select>
 	
 	<!-- 비밀번호 설정 -->

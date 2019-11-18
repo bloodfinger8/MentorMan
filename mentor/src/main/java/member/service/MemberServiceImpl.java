@@ -1,9 +1,12 @@
 package member.service;
+
+import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import member.bean.MemberDTO;
 import member.dao.MemberDAO;
+import mentor.bean.MentorDTO;
 /**
  * @Title : 회원가입 Service.
  * @author : ginkgo1928
@@ -38,6 +41,11 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public MemberDTO login(Map<String, String> map) {
 		return memberDAO.login(map);
+	}
+	/* 나의 질문 답변 */
+	@Override
+	public List<MentorDTO> getQandA(String member_email) {
+		return memberDAO.getQandA(member_email);
 	}
 	
 	/* 비밀번호 찾기 */

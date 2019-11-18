@@ -4,7 +4,7 @@
 <configuration>
 	<typeAliases>
 		<typeAlias type="mentee.bean.MenteeDTO" alias="mentee"/>
-		<typeAlias type="mentorapply.bean.MentorapplyDTO" alias="mentor"/>
+		<typeAlias type="mentor.bean.MentorDTO" alias="mentor"/>
 		<typeAlias type="noticeboard.bean.NoticeboardDTO" alias="notice"/>
 		<typeAlias type="adminboard.bean.AdminnoticeboardDTO" alias="adminnoticeboard"/>
 		<typeAlias type="member.bean.MemberDTO" alias="member"/>
