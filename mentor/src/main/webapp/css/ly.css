@@ -176,7 +176,9 @@ body {
     -webkit-font-smoothing: antialiased
 }
 
+/* 2019-11-06 구준혁 */
 .framework7-root {
+	height: auto;/* <--- 추가 */
     overflow: hidden;
     -webkit-box-sizing: border-box;
     box-sizing: border-box
@@ -502,7 +504,7 @@ html.with-statusbar.device-iphone-x .framework7-root {
 .md .color-theme-black .statusbar {
     background: #000000
 }
-
+/* 2019-11-06 구준혁 */
 .views,.view {
     /* position: relative; */
     height: 100%;
@@ -2891,7 +2893,7 @@ html.with-statusbar.device-iphone-x .framework7-root {
 
 .ios .block {
     margin: 35px 0;
-    padding: 0 15px;
+   	padding: 0 15px;
     color: #6d6d72
 }
 
@@ -5096,6 +5098,9 @@ input[type="submit"].button,input[type="button"].button {
     width: 100%
 }
 
+/* button {
+    width: 100%
+} */
 button {
     /* width: 100% */
 }
@@ -34639,8 +34644,9 @@ table {
     border-collapse: collapse
 }
 
+/* 2019-11-02 구준혁 */
 th,td {
-   /*  border: 1px solid #ddd */
+    /* border: 1px solid #ddd */
 }
 
 .fr-video {
@@ -35181,7 +35187,7 @@ th,td {
 
 .mentee_programs.show .page-content {
     margin: 0px 8px;
-    word-break: keep-all
+    /* word-break: keep-all */
 }
 
 .mentee_programs.show .cover-image {
