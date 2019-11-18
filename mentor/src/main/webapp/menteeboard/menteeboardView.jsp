@@ -6,9 +6,7 @@
 .noticeboardFloat_right_div{/* 공통 */
    float: left;
 }
-.right_div{
 
-}
 </style> 
 <form id="menteeboardViewForm" name="menteeboardViewForm">
 <div class="page navbar-fixed mentors show" data-name="mentors-show">

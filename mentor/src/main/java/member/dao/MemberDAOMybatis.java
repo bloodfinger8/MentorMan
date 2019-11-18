@@ -41,6 +41,7 @@ public class MemberDAOMybatis implements MemberDAO {
 	 * @author : ginkgo1928 @date : 2019. 11. 5.*/
 	@Override
 	public void write(Map<String, String> map) {
+		System.out.println("map:::: " + map);
 		 sqlSession.insert("memberSQL.write",map);
 	}
 	

@@ -140,7 +140,8 @@
 
 <!-- 멘토 리스트 생성 끝 -->
 <input type="hidden" id="pg" name="pg" value="${pg }">
-
+<!-- 스크랩버튼 클릭 방지에 사용 -->
+<input type="hidden" id="memNickname" name="memNickname" value="${memNickname }">
 
 
 

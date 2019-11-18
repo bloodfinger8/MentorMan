@@ -56,15 +56,20 @@ public interface EssayboardService {
 	// 최신 에세이 리스트
 	public List<EssayboardDTO> getNewEssay(Map<String, Integer> map);
 	
+    /**
+     * 
+     * @Title : 스크랩 기능 구현
+     * @Author : yangjaewoo, @Date : 2019. 11. 15.
+     */
 	//스크랩 정보를 가져온다
 	public int getEssayboardScrap(Map<String, Object> scrapMap);
-
+    // 에세이 스크랩시 데이터 저장
 	public void essayboardScrapInsert(EssayboardScrapDTO essayboardScrapDTO);
-
+	// 에세이 스크랩 취소시 데이터 삭제
 	public void essayboardScrapDelete(EssayboardScrapDTO essayboardScrapDTO);
-
+	// 에세이보드의 총 스크랩 수
 	public int getTotalScrap(int essayboardScrap_es_seq);
-
+	// 내가 스크랩했던 내용 전부 가져오기
 	public List<EssayboardDTO> getEssayboardAttention(String memEmail);
 	
 	

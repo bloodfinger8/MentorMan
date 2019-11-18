@@ -74,39 +74,46 @@ $('#listflag').on('click', function(){
 //스크랩 버튼을 누를시
 $(document).ready(function() {
 	$('a[type="externalScrap"]').on('click' , function(){
-		var seq = $(this).closest('div').prev().children().first().val();
-		//var scrapFlag =$(this).children().last().val();
-		if($(this).children().last().val() == 0){
-			$("#"+seq).prop("src", "../image/scrapOkImg.png");
-			$(this).children().last().val(1);
-			
+		if($('#memNickname').val()== ''){
+			 var toastTop = app.toast.create({
+		            text: '로그인 후 이용 가능 합니다.',
+		            position: 'top',
+		            closeButton: true,
+		          });
+		          toastTop.open();
 		}else{
-			$("#"+seq).prop("src", "../image/scrapNoImg.png");
-			$(this).children().last().val(0);
-		}
-		var scrapFlag = $(this).children().last().val()
-		
-		
-		// seq , scrap_flag 
-		var sendData = {
-				'essayboardScrap_es_seq' : seq,
-				'scrapFlag' : scrapFlag
-			};
-		alert(seq +',' + scrapFlag);
-		
-		$.ajax({
-			url : '/mentor/essayboard/essayboardScrap',
-			type : 'POST',
-			data : sendData,
-			dataType : 'text',
-			success : function(data) {
-				$('#ScrapDiv_'+seq).empty();
-				$('#ScrapDiv_'+seq).html(data);
-			},
-			error : function(err){
-				alert('에러');
+			var seq = $(this).closest('div').prev().children().first().val();
+			
+			if($(this).children().last().val() == 0){
+				$("#"+seq).prop("src", "../image/scrapOkImg.png");
+				$(this).children().last().val(1);
+				
+			}else{
+				$("#"+seq).prop("src", "../image/scrapNoImg.png");
+				$(this).children().last().val(0);
 			}
-		});
-		
+			var scrapFlag = $(this).children().last().val()
+			
+			
+			// seq , scrap_flag 
+			var sendData = {
+					'essayboardScrap_es_seq' : seq,
+					'scrapFlag' : scrapFlag
+				};
+			$.ajax({
+				url : '/mentor/essayboard/essayboardScrap',
+				type : 'POST',
+				data : sendData,
+				dataType : 'text',
+				success : function(data) {
+					$('#ScrapDiv_'+seq).empty();
+					$('#ScrapDiv_'+seq).html(data);
+				},
+				error : function(err){
+					console.log('에러');
+				}
+			});
+		}
 	});
+	
 });

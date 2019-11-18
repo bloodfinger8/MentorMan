@@ -115,7 +115,6 @@ public class EssayboardDAOMybatis implements EssayboardDAO {
 	}
 	
 	
-	// 스크랩 했는지 체크
 	@Override
 	public int getEssayboardScrap(Map<String, Object> scrapMap) {
 		return sqlSession.selectOne("essaySQL.getEssayboardScrap" , scrapMap);

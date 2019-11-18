@@ -18,7 +18,9 @@ public class MenteeboardDTO {
     private String menteeboard_title;
     private String menteeboard_content;
     private String job_code; //직무유형
+    
     private String job_type; //조인할때만 사용
+    
     private int menteeboard_good;
     private int menteeboard_ref; 
     private int menteeboard_lev;

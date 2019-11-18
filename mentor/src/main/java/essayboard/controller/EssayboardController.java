@@ -82,7 +82,6 @@ public class EssayboardController {
          String nickname = memberDTO.getMember_nickname();
          modelAndView.addObject("memNickname" , nickname);
          
-         
          //양재우 scrap 기능 구현
          for (EssayboardDTO essayboardDTO : list) {
         	 int seq = essayboardDTO.getEssayboard_seq();
@@ -95,7 +94,8 @@ public class EssayboardController {
         	 if(cnt == 1) {
         		 //flag 1 저장
         		 essayboardDTO.setEssayboard_scrapFlag(cnt);
-       	  	 }
+        	 }
+        	 
          }
          
          
@@ -437,7 +437,7 @@ public class EssayboardController {
 	   
 	   List<EssayboardDTO> list = essayboardService.getEssayboardAttention(memEmail);
 	   
-	   
+	   System.out.println("email : "+memEmail+" , list :::::: " + list);
 	   for (EssayboardDTO essayboardDTO : list) {
       	 int seq = essayboardDTO.getEssayboard_seq();
       	 Map<String, Object> scrapMap = new HashMap<String, Object>();

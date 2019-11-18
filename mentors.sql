@@ -162,7 +162,7 @@ CREATE TABLE menteeboard(
 );
 create SEQUENCE menteeboardReply_seq nocache nocycle;
 
-
+--스크랩
 CREATE TABLE essayboardScrap(
     essayboardScrap_es_seq NUMBER NOT NULL,           -- 에세이 seq
     essayboardScrap_mem_email VARCHAR2(40) NOT NULL,   -- 로그인 이메일
