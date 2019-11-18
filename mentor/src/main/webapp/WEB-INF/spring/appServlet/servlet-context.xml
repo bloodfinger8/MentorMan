@@ -10,14 +10,17 @@
 	<!-- servlet에서 보듯이 요청과 관련된 객체를 정의합니다.
 	url과 관련된 controller나, @(어노테이션), ViewResolver, Interceptor, MultipartResolver 등의 설정을 해줍니다. -->
 	
-
+	
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+	<!-- 메인 -->
+	<context:component-scan base-package="main.controller"/>
 	<!-- 공지게시판 -->
 	<context:component-scan base-package="noticeboard.controller"/>
 	<!-- 멘토지원하기 -->
-	<context:component-scan base-package="mentorapply.controller"/>
+	<context:component-scan base-package="mentor.controller"/>
 	<!-- 멘티 구분 -->
 	<context:component-scan base-package="mentee.controller"/>
+
 	
 	<context:component-scan base-package="menteeboard.controller"/>
 	<context:component-scan base-package="menteeboardReply.controller"/>
@@ -29,7 +32,7 @@
 	<context:component-scan base-package="member.controller"/>
 	<!-- 모임 -->
 	<context:component-scan base-package="meetingboard.controller"/>
-  <!-- 에세이 보드 -->
+    <!-- 에세이 보드 -->
 	<context:component-scan base-package="essayboard.controller"/>
 	<!-- 모임신청 -->
 	<context:component-scan base-package="participation.controller"/>

@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import member.bean.MemberDTO;
 import member.service.MemberService;
+import mentor.bean.MentorDTO;
 
 /**
  * @Title : 회원가입 컨트롤.
@@ -133,4 +135,18 @@ public class MemberController {
 		session.invalidate();
 		return new ModelAndView("redirect:/main/index");
 	}
+	/**
+	 * @Title : 메소드 간단히 설명
+	 * @Author : kujun95, @Date : 2019. 11. 18.
+	 */
+	@RequestMapping(value = "myQandA", method = RequestMethod.GET)
+	public String myQandA(Model model, HttpSession session){
+		MemberDTO memberDTO = (MemberDTO) session.getAttribute("memDTO");
+		List<MentorDTO> list = memberService.getQandA(memberDTO.getMember_email());
+		model.addAttribute("list", list);
+		model.addAttribute("memberDTO", memberDTO);
+		model.addAttribute("display", "/member/myQandA.jsp");
+		return "/main/index";
+	}
+	
  }

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
         <div class="block block-strong no-hairlines hero-title">
           <h1 class="title">
             계정 설정
@@ -56,7 +57,12 @@
             </label>
             <input class=" is-valid file optional" accept=".jpg, .jpeg, .png" type="file" name="member_profile" id="user_profile_image"> <!-- 이미지 받아서 value에 넣기 -->
           </div>
-          <p><img id="user_profile_image_img" src="../storage/${memberDTO.member_email}/${memberDTO.member_profile}" style="width: 100px; height: 100px;"></p>
+          <c:if test="${memberDTO.member_profile == 'profile.jpg'}">
+          	<p><img id="user_profile_image_img" src="../image/defaultuser.png" style="width: 100px; height: 100px;"></p>
+          </c:if>
+          <c:if test="${memberDTO.member_profile != 'profile.jpg'}">
+          	<p><img id="user_profile_image_img" src="../storage/${memberDTO.member_email}/${memberDTO.member_profile}" style="width: 100px; height: 100px;"></p>
+		  </c:if>
 			<div id="member_profile_error"></div><!-- member에서 가져온 이메일 + 이미지 -->
           <div class="block-footer">
             - 얼굴이 포함된 사진을 등록해주세요.<br>
@@ -69,6 +75,24 @@
 
     
 </form>  
+</div>
+
+<div class="block block-strong inset">
+  <div class="block-footer">
+
+    <div>
+      <a id="menteeUser_Save" class="button button-inline color-gray delete-account-button" type="external" style="border-color:#ff2d55; color: #ff2d55;">
+   		설정 저장하기
+	  </a>
+	
+	  <a id="menteeUser_Withdrawal" class="button button-inline color-gray delete-account-button" type="external">
+	            회원 탈퇴
+	  </a>
+     </div>
+   </div>
+</div>
+
+<script src="../js/mentee.js"></script>
 <script>
 $(document).ready(function(){
     function readURL(input) {
@@ -94,22 +118,4 @@ $(document).ready(function(){
     $('#menteeUserSetting').attr('class', 'list-button color-gray item-link active');
  });
 </script>
-</div>
-
-<div class="block block-strong inset">
-  <div class="block-footer">
-
-    <div>
-      <a id="menteeUser_Save" class="button button-inline color-gray delete-account-button" type="external" style="border-color:#ff2d55; color: #ff2d55;">
-   		설정 저장하기
-	  </a>
-	
-	  <a id="menteeUser_Withdrawal" class="button button-inline color-gray delete-account-button" type="external">
-	            회원 탈퇴
-	  </a>
-     </div>
-   </div>
-</div>
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="../js/mentee.js"></script> 
         
