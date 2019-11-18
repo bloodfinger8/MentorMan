@@ -13,9 +13,17 @@
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	<context:component-scan base-package="main.controller"/>
+	<!-- 상구 -->
+	<!-- 메인화면 -->
 	<context:component-scan base-package="adminmain.controller"/>
+	<!-- 게시판관리 -->
 	<context:component-scan base-package="adminboard.controller"/>
+	<!-- 회원관리 -->
 	<context:component-scan base-package="adminmember.controller"/>
+	<!-- 매출 -->
+	<context:component-scan base-package="adminsales.controller"/>
+	
+	
 	
 	<!-- 송현 -->
 	<context:component-scan base-package="member.controller"/>
