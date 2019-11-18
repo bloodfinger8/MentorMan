@@ -22,7 +22,8 @@
 			<a class="button button-big" type="external" href="">멘토찾기</a> 
 			<a class="button button-big" type="external" href="/mentor/noticeboard/noticeboardList">공지사항</a> 
 			<a class="button button-big" type="external" href="/mentor/essayboard/essayboardList">에세이</a> 
-			<a class="button button-big" type="external" href="/mentor/meetingboard/meetingboardList">모임</a> 
+			<a class="button button-big" type="external" href="/mentor/meetingboard/meetingboardList">모임</a>
+			<a class="button button-big" type="external" href="/mentor/intern/internMain">공채 속보</a> 
 			<a class="button button-big" type="external" href="/mentor/menteeboard/menteeboardList">멘티 게시판</a> 
 			<c:if test="${memDTO!=null}">
 			<a class="button button-big" type="external" href="/mentor/mentorapply/mentorapplyForm">멘토 지원하기</a>
