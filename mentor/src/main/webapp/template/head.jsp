@@ -24,6 +24,7 @@
 				<div class="beta-div">
 				<a class="button button-big program-button" type="external" href="../meetingboard/meetingboardList"> 모임 <span class='beta-text'>beta</span></a>
 				</div>
+				<a class="button button-big" type="external" href="/mentor/intern/internMain">공채 속보</a>
 				<a class="button button-big" type="external" href="/mentor/menteeboard/menteeboardList">멘티 게시판</a>
 				<a class="button button-big beta-div" type="external" href="/mentor/mentor_requests/new"> 멘토 지원하기 </a>
 				<c:if test= "${memDTO==null}">
@@ -55,7 +56,7 @@
 									<ul>
 										<li><a type="external" href="">에세이 쓰기</a></li>
 										<li><a type="external" href="">나의 질문/답변</a></li>
-										<li><a type="external" href="">관심콘텐츠</a></li>
+										<li><a type="external" href="/mentor/essayboard/essayboardAttention">관심에세이</a></li>
 										<li><a type="external" href="">관심멘토</a></li>
 									</ul>
 								</div>

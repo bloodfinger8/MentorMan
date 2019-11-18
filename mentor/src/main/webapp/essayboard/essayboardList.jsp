@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
 <div class="page navbar-fixed mentee_programs index">
-   <div class="page-content">     
+   <div class="page-content">
 		<div class="page navbar-fixed open_mentorings index" data-name="open_mentorings-index">
     		<div class="block job-type-block">
       			<div class="block-title">
@@ -81,12 +81,13 @@
       					</div>
 							</a>
 				      <div class="created-at">
-				        <small>${list.logtime }</small>
+				        <small>${list.essayboard_logtime }</small>
 				      </div>
   				</div>
 
   <div class="card-content card-content-padding"style="overflow: hidden; text-overflow: ellipsis; height: 200px; ">
-   <a class="text-decoration-underline" type="external" href="/mentor/essayboard/essayjobType?jobType=${list.job_code }">
+   <input type="hidden" id="seq" name="seq" value="${list.essayboard_seq }">
+   <a class="text-decoration-underline" type="externalScrap" href="/mentor/essayboard/essayjobType?jobType=${list.job_code }">
       ${list.job_type }
 </a>
 	<!-- 로그인 했을 경우 View로 넘김 -->
@@ -97,7 +98,7 @@
 	<c:if test="${memNickname == null }">
 		<a class="content-body" type="external" href="/mentor/member/loginForm" >
 	</c:if>
-      <input type="hidden" id="seq" name="seq" value="${list.essayboard_seq }">
+
       <div class="mentor-post-title">
         ${list.essayboard_title }
       </div>
@@ -108,13 +109,21 @@
 </a>  </div>
 
   <div class="card-footer" style="">
-    <a class="color-gray js-bookmark" type="external" data-remote="true" rel="nofollow" data-method="post" href="/mentor_posts/6589/bookmarks" style="right: 0px;
+    <a class="color-gray js-bookmark" id="scrap" type="externalScrap" data-remote="true" rel="nofollow" data-method="post" href="/mentor_posts/6589/bookmarks" style="right: 0px;
     position: unset;
     margin: 0px 0px;">
-    <i class="far fa-bookmark" aria-hidden="true"></i>
-	${list.essayboard_scrap }
+    <!-- <i class="far fa-bookmark" aria-hidden="false"></i> -->
+    <c:if test="${list.essayboard_scrapFlag == 1}">
+    <img id="${list.essayboard_seq}" src="../image/scrapOkImg.png" width="13">
+    </c:if>
+    <c:if test="${list.essayboard_scrapFlag == 0}">
+    <img id="${list.essayboard_seq}" src="../image/scrapNoImg.png" width="13">
+    </c:if>
+	<span id="ScrapDiv_${list.essayboard_seq}">${list.essayboard_scrap}</span>
   	<!-- 스크랩 끌고와야 함 -->
-</a>
+  	<input type="hidden" id="scrapFlag" name="scrapFlag" value="${list.essayboard_scrapFlag}">
+
+	</a>
 
     <div class="created-at">
       <!-- <small> -->
@@ -131,7 +140,8 @@
 
 <!-- 멘토 리스트 생성 끝 -->
 <input type="hidden" id="pg" name="pg" value="${pg }">
-
+<!-- 스크랩버튼 클릭 방지에 사용 -->
+<input type="hidden" id="memNickname" name="memNickname" value="${memNickname }">
 
 
 

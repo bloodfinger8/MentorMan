@@ -36,6 +36,8 @@ CREATE TABLE meetingboard (
     CONSTRAINT FK_MEETINGBOARD1 FOREIGN KEY(job_code) REFERENCES job(job_code),
     CONSTRAINT FK_MEETINGBOARD2 FOREIGN KEY(mentor_email) REFERENCES mentors_member(member_email)
 );
+select * from mentor;
+
 
 -- meetingboard 시퀀스
 create sequence meetingboard_seq nocache nocycle;
@@ -139,9 +141,6 @@ CREATE TABLE menteeboard(
      menteeboard_logtime DATE DEFAULT SYSDATE
  );
  create SEQUENCE menteeboard_seq nocache nocycle;
-
- -- 좋아요 테이블
- CREATE TABLE menteeboardLike(
      menteeboardLike_mb_seq NUMBER NOT NULL,         --좋아요 누른 menteeboard_seq값 저장
      menteeboardLike_mb_email VARCHAR2(40) NOT NULL  --좋아요 누른 menteeboard_email값 저장
 );
@@ -163,7 +162,7 @@ CREATE TABLE menteeboard(
 );
 create SEQUENCE menteeboardReply_seq nocache nocycle;
 
---essayboard 의 스크랩 기능
+--스크랩
 CREATE TABLE essayboardScrap(
     essayboardScrap_es_seq NUMBER NOT NULL,           -- 에세이 seq
     essayboardScrap_mem_email VARCHAR2(40) NOT NULL,   -- 로그인 이메일
@@ -177,10 +176,10 @@ create table mentors_member(
     member_nickname varchar2(50) not null,             --회원 닉네임
     member_email varchar2(100)  primary key,           --회원 이메일
     member_pwd varchar2(100) not null,                 --회원 패스워드
-    member_profile varchar2(200),                      --회원 프로필 사진                                                  
+    member_profile varchar2(200),                      --회원 프로필 사진
     member_flag number default 0,                      --멘토 멘티 구분
     logtime DATE DEFAULT SYSDATE                       --회원가입 logtime
-);                     
+);
 
 create sequence member_seq start with 1000 increment by 1 nocycle nocache; --회원 seq
 
@@ -234,30 +233,28 @@ create table menteeemployee_profile(
     menteeemployee_email varchar2(200) not null,    -- 이메일
     foreign key(menteeemployee_email)
     references mentors_member(member_email));
-                              
+
 ----taehyeong--------------------------------------------------------------------------------------------------------------------
 -- 에세이 보드 생성
 create table essayboard(
-    essayboard_seq number, -- 에세이 시퀀스
-    mentor_email varchar2(100) primary key, -- 멘토 이메일 PK
+    essayboard_seq number primary key, -- 에세이 시퀀스 PK
+    mentor_email varchar2(100) , -- 멘토 이메일
     job_code varchar2(100),
-    essayboard_title varchar2(100) not null, -- 에세이 제목
+    essayboard_title varchar2(1000) not null, -- 에세이 제목
     essayboard_content varchar2(4000) not null, -- 에세이 내용
     essayboard_hit number default 0 , -- 에세이 조회수
     essayboard_scrap number default 0,  -- 에세이 즐겨찾기
-    foreign key(job_code) references job(job_code), -- 에세이 잡 코드 FK
+    essayboard_scrapFlag number default 0,
+    constraint essay_job foreign key(job_code) references job(job_code), -- 에세이 잡 코드 FK
     essayboard_logtime date default sysdate
 );
 
 -- 에세이 보드 시퀀스 생성
-create sequence essayboard_seq
-nocache
-nocycle;
-
+create sequence essayboard_seq nocache nocycle;
 
 
 ---sanggu--------------------------------------------------------------------------------------------------------------------------
--- 공지사항 테이블     
+-- 공지사항 테이블
 create table noticeboard(
 noticeboard_seq number not null,
 noticeboard_adminEmail varchar2(200) not null,
@@ -269,9 +266,3 @@ noticeboard_logtime date default sysdate
 
 --공지사항 sequence생성
 create SEQUENCE noticeboard_seq nocache nocycle;
-
-
-
-
-
-

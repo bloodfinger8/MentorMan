@@ -9,7 +9,7 @@
 
 	<!-- servlet에서 보듯이 요청과 관련된 객체를 정의합니다.
 	url과 관련된 controller나, @(어노테이션), ViewResolver, Interceptor, MultipartResolver 등의 설정을 해줍니다. -->
-	
+	<context:component-scan base-package="main.controller"/>
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	<!-- 메인 컨트롤 -->
@@ -23,6 +23,8 @@
 	
 	<context:component-scan base-package="menteeboard.controller"/>
 	<context:component-scan base-package="menteeboardReply.controller"/>
+	<context:component-scan base-package="intern.controller"/>
+	
 	<context:component-scan base-package="adminmain.controller"/>
 	<context:component-scan base-package="adminboard.controller"/>
 	<context:component-scan base-package="adminmember.controller"/>
@@ -73,7 +75,7 @@
 		<!-- <beans:property name="prefix" value="/WEB-INF/views/" /> -->
 		<property name="suffix" value=".jsp" />
 	</bean>
-
+	
   	<!-- fileUpload -->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<property name="maxUploadSize" value="5000000"/>

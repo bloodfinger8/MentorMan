@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import essayboard.bean.EssayboardDTO;
+import essayboard.bean.EssayboardScrapDTO;
 
 @Repository
 @Transactional
@@ -30,7 +31,7 @@ public class EssayboardDAOMybatis implements EssayboardDAO {
 
 	// 에세이 직무 유형
 	@Override
-	public List<EssayboardDTO> essayjobType(Map<String, String[]> map) {
+	public List<EssayboardDTO> essayjobType(Map<String, List<String>> map) {
 		System.out.println("매앱 " + map.toString());
 		return sqlSession.selectList("essaySQL.essayjobType", map);
 	}
@@ -111,5 +112,34 @@ public class EssayboardDAOMybatis implements EssayboardDAO {
 	@Override
 	public List<EssayboardDTO> getNewEssay(Map<String, Integer> map) {
 		return sqlSession.selectList("essaySQL.getNewEssay", map);
+	}
+	
+	
+	@Override
+	public int getEssayboardScrap(Map<String, Object> scrapMap) {
+		return sqlSession.selectOne("essaySQL.getEssayboardScrap" , scrapMap);
+	}
+
+	@Override
+	public void essayboardScrapUpdate(int essayboardScrap_es_seq) {
+		sqlSession.update("essaySQL.essayboardScrapUpdate" , essayboardScrap_es_seq);
+	}
+	@Override
+	public void essayboardScrapInsert(EssayboardScrapDTO essayboardScrapDTO) {
+		sqlSession.insert("essaySQL.essayboardScrapInsert" , essayboardScrapDTO);
+	}
+	@Override
+	public void essayboardScrapDelete(EssayboardScrapDTO essayboardScrapDTO) {
+		sqlSession.delete("essaySQL.essayboardScrapDelete" , essayboardScrapDTO);
+	}
+
+	@Override
+	public int getTotalScrap(int essayboardScrap_es_seq) {
+		return sqlSession.selectOne("essaySQL.getTotalScrap" , essayboardScrap_es_seq);
+	}
+
+	@Override
+	public List<EssayboardDTO> getEssayboardAttention(String memEmail) {
+		return sqlSession.selectList("essaySQL.getEssayboardAttention" , memEmail);
 	}
 }
