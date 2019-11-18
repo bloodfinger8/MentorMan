@@ -16,6 +16,10 @@
   		<typeAlias type="menteeboardReply.bean.MenteeboardReplyDTO" alias="menteeboardReply"/>
 		<typeAlias type="participation.bean.ParticipationDTO" alias="participation"/>
 		<typeAlias type="participation.bean.OrderDTO" alias="order"/>
+
 		<typeAlias type="meetingboard.bean.ReviewDTO" alias="review"/>
+
+		<typeAlias type="essayboard.bean.EssayboardScrapDTO" alias="essayboardScrap"/>
+
 	</typeAliases>
 </configuration>
