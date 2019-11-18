@@ -10,11 +10,10 @@
 	<!-- 메인 컨트롤 -->
 	<context:component-scan base-package="main.controller"/>
 	<!-- 공지게시판 -->
-
 	<context:component-scan base-package="noticeboard.controller"/>
-	<!-- 멘토 지원 -->
-	<context:component-scan base-package="mentorapply.controller"/>
-	<!-- 멘티 -->
+	<!-- 멘토지원하기 -->
+	<context:component-scan base-package="mentor.controller"/>
+	<!-- 멘티 구분 -->
 	<context:component-scan base-package="mentee.controller"/>
 	<!-- 멘티 게시판 -->
 	<context:component-scan base-package="menteeboard.controller"/>
