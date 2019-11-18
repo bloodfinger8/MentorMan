@@ -13,15 +13,17 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
+import kakao.controller.KakaoApi;
 import member.bean.MemberDTO;
 import member.service.MemberService;
+import naver.controller.NaverLoginBO;
 
 /**
  * @Title : 회원가입 컨트롤.
@@ -31,6 +33,11 @@ import member.service.MemberService;
 @Controller
 @RequestMapping(value = "member")
 public class MemberController {
+	private NaverLoginBO naverLoginBO;
+	@Autowired
+	private void setNaverLoginBO(NaverLoginBO naverLoginBO) {
+		this.naverLoginBO = naverLoginBO;
+	}
 	@Autowired
 	private MemberService memberService;
 	@Autowired
@@ -77,30 +84,53 @@ public class MemberController {
 	 * @Title : 회원가입 완료 & 프로필 이미지 storage 연결.
 	 * @author : ginkgo1928
 	 * @date : 2019. 11. 7.
+	 * 2019. 11. 13 용제 수정
 	 */
 	@RequestMapping(value = "write", method = RequestMethod.POST)
-	public String write(@RequestParam Map<String, String> map, @RequestParam MultipartFile member_prople, Model model) {
+	public String write(@RequestParam Map<String, String> map, @RequestParam MultipartFile member_profile, Model model) {
 		//회원 이메일 폴더가 자동생성으로 생성된게 아니라 회원이메일 폴더 만들어주고 넣어야 한다.
-		String filePath="C:\\MentorMan\\mentor\\src\\main\\webapp\\storage\\"+map.get("member_email");
-		String fileName=member_prople.getOriginalFilename();
-		File file = new File(filePath, fileName);
-		map.put("member_prople", fileName);
-		memberService.write(map);
-		try {
-			FileCopyUtils.copy(member_prople.getInputStream(), new FileOutputStream(file));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+		String filePath="C:/Users/yong/Documents/GitHub/MentorMan/mentor/src/main/webapp/storage/"+map.get("member_email");
+		String fileName = member_profile.getOriginalFilename();
+		System.out.println("프로필 이미지 파일명: " + fileName);
+		// 폴더만들기
+		File filemake = new File(filePath);
+		if(!filemake.exists()) {
+			filemake.mkdirs();
 		}
+		// 파일명이 있을때 이미지 저장
+		if(fileName != "") {
+			File file = new File(filePath, fileName);
+			try {
+				FileCopyUtils.copy(member_profile.getInputStream(), new FileOutputStream(file));
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		map.put("member_profile", fileName);
+		memberService.write(map);
 		model.addAttribute("member_email", map.get("member_email"));
 		model.addAttribute("display", "/member/write.jsp");
-		return "/main/index";
+		return "/main/index";	
 	}
 
 	// LoginForm
+	/**
+	 * @Title : 카카오 로그인 + 네이버 로그인  url 추가
+	 * @Author : yong
+	 * @Date : 2019. 11. 16.
+	 * @Method Name : loginForm
+	 */
 	@RequestMapping(value = "loginForm", method = RequestMethod.GET)
-	public String loginForm(Model model) {
+	public String loginForm(Model model, HttpSession session) {
+		// 카카오 url
+		String kakaoUrl = KakaoApi.getAuthorizationUrl(session);
+		// 네이버 url
+		String naverUrl = naverLoginBO.getAuthorizationUrl(session);
+		
+		model.addAttribute("kakaoUrl", kakaoUrl);
+		model.addAttribute("naverUrl", naverUrl);
 		model.addAttribute("display", "/member/loginForm.jsp");
 		return "/main/index";
 	}
@@ -108,28 +138,31 @@ public class MemberController {
 	 * @Title : 로그인 처리.
 	 * @author : ginkgo1928
 	 * @date : 2019. 11. 1.
+	 * 2019. 11. 13 용제 수정
 	 */
 	@RequestMapping(value = "login", method = RequestMethod.POST)
 	@ResponseBody
-	public String login(@RequestParam String member_email, String member_pwd, HttpSession session) {
+	public String login(@RequestParam String member_email, @RequestParam String member_pwd, HttpSession session) {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("member_email", member_email);
 		map.put("member_pwd", member_pwd);
 
 		MemberDTO memberDTO = memberService.login(map);
-		memberDTO.setMember_pwd("");
-			if (memberDTO != null) {
-				session.setAttribute("memDTO", memberDTO);
-				session.setMaxInactiveInterval(60*60*24); // 세션 1일 유지
-				return "login_ok";
-			} else {
-				return "login_fail";
-			}
+		
+		if (memberDTO != null) {
+			session.setAttribute("memDTO", memberDTO);
+			session.setMaxInactiveInterval(60*60*24); // 세션 1일 유지
+			return "login_ok";
+		} else {
+			return "login_fail";
+		}
 	}
-	// 로그아웃 처리
-	@RequestMapping(value = "logout", method = RequestMethod.GET)
+	// 로그아웃 처리 
+	// 카카오 로그아웃 추가
+	@RequestMapping(value = "logout", method = RequestMethod.GET, produces="application/json")
 	public ModelAndView logout(HttpSession session) {
-		System.out.println("로그아웃");
+	    JsonNode node =  KakaoApi.kakaoLogout((JsonNode) session.getAttribute("access_token"));
+	    System.out.println("로그아웃 후 반환되는 아이디 : " + node.get("id"));
 		session.invalidate();
 		return new ModelAndView("redirect:/main/index");
 	}

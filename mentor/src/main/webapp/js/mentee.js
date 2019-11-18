@@ -31,7 +31,7 @@ function menteeStudent(){
 	$('#menteeStudent_spec_error').empty();
 	
 	if($('#menteeStudent_major').val()==''){
-		$('#menteeStudent_major_error').text('당신의 정공은 무엇인가요?').css('color','red');
+		$('#menteeStudent_major_error').text('당신의 전공은 무엇인가요?').css('color','red');
 		$('#menteeStudent_major_error').css('font-size','8pt');
 		$('#menteeStudent_major').focus();
 	}else if($('#menteeStudent_state').val()==''){
@@ -114,7 +114,11 @@ $('#menteePassword_btn').on('click', function(){
 		$('#member_pwd_check_error').text('비밀번호가 일치하지 않습니다.').css('color','red');
 		$('#member_pwd_check_error').css('font-size','8pt');
 		$('#member_pwd_check').focus();
-	}else {
+	} else if($('#member_pwd').val().length < 8 || $('#member_pwd').val().length > 15){
+	    $('#member_pwd_error').text('비밀번호는 8자~15자리 이하입니다.').css('color','red');
+	    $('#member_pwd_error').css('font-size','8pt');
+	    $('#member_pwd').focus();
+	} else {
 		$.ajax({
 			type: 'post',
 			url:'/mentor/mentee/menteePasswordCheck',
@@ -135,7 +139,7 @@ $('#menteePassword_btn').on('click', function(){
 					});
 				}else if(data=="no"){
 					$('#currentPassword_error').text('현재 패스워드가 일치하지 않습니다.').css('color','red');
-					$('#currentPassword_error').css('font-size','8pt');
+					$('#currentPas6	sword_error').css('font-size','8pt');
 					$('#currentPassword').focus();
 				}
 			},
@@ -146,3 +150,13 @@ $('#menteePassword_btn').on('click', function(){
 
 	}
 });
+
+// 모임 작성 후기
+$('#reviewWriteBtn').click(function(){
+	if($('#review_content').val() == '') {
+		$('#review_content').focus();
+	} else {
+		$('#reviewWriteForm').submit();
+	}
+});
+

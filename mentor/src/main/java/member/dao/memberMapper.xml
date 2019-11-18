@@ -5,8 +5,15 @@
 <mapper namespace="memberSQL">
 	<!-- 회원가입 처리 -->
 	<insert id="write" parameterType="java.util.Map">
-		insert into mentors_member(member_name,member_nickname,member_email,member_pwd,member_profile)
-		values(#{member_name},#{member_nickname},#{member_email},#{member_pwd},#{member_profile})
+		<if test="member_profile == ''">
+			insert into mentors_member(member_seq,member_name,member_nickname,member_email,member_pwd)
+			values(member_seq.nextval, #{member_name},#{member_nickname},#{member_email},#{member_pwd})
+		</if>
+		<if test="member_profile != ''">
+			insert into mentors_member(member_seq,member_name,member_nickname,member_email,member_pwd,member_profile)
+			values(member_seq.nextval, #{member_name},#{member_nickname},#{member_email},#{member_pwd},#{member_profile})
+		</if>
+		
 	</insert>
 	<!-- Nickname 중복확인 -->
 	<select id="writeNicknamecheck" parameterType="String" resultType="member">

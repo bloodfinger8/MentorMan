@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -18,25 +19,35 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
+import meetingboard.bean.ReviewDTO;
+import meetingboard.service.MeetingboardService;
 import member.bean.MemberDTO;
 import mentee.bean.MenteeDTO;
 import mentee.service.MenteeService;
+import participation.bean.OrderDTO;
+import participation.bean.OrderHistoryPaging;
+import participation.service.ParticipationService;
 
 @Controller
 @RequestMapping("/mentee")
 public class MenteeController {
 	@Autowired
 	private MenteeService menteeService;
-	
+	@Autowired
+	private ParticipationService participationService;
+	@Autowired
+	private OrderHistoryPaging orderHistoryPaging;
+	@Autowired
+	private MeetingboardService meetingboardService;
 	/**
 	 * @Title : 계정설정 Form
 	 * @Author : kujun95, @Date : 2019. 11. 11.
 	 */
 	@RequestMapping(value = "menteeUserForm", method = RequestMethod.GET)
 	public String menteeWriteForm(Model model, HttpSession session) { //세션으로 값을 뿌려줘야됨
-		model.addAttribute("memberDTO", memberDTO(session));
+		MemberDTO memberDTO = (MemberDTO) session.getAttribute("memDTO");
+		model.addAttribute("memberDTO", memberDTO);
 		model.addAttribute("display", "/mentee/menteeUserForm.jsp");
 		model.addAttribute("display2", "/mentee/menteeUserSetting.jsp");
 		return "/main/index";
@@ -57,7 +68,6 @@ public class MenteeController {
 		try {
 			FileCopyUtils.copy(member_profile.getInputStream(), new FileOutputStream(file));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		map.put("member_profile", fileName);
@@ -155,8 +165,6 @@ public class MenteeController {
 		menteeService.menteePasswordSave(map);
 	}
 	
-	
-	
 	//계정설정에서 비슷한 코드가 들어가서 세션 함수로 만듬
 	public MemberDTO memberDTO(HttpSession session) {
 		MemberDTO memberEmail = (MemberDTO) session.getAttribute("memDTO");
@@ -164,4 +172,68 @@ public class MenteeController {
 		return memberDTO;
 	}
 	
+	/**
+	 * @Title : 내 결제 내역 보여주기
+	 * @Author : yong
+	 * @Date : 2019. 11. 14.
+	 * @Method Name : menteeOrder
+	 */
+	@RequestMapping(value = "menteeOrderHistory", method = RequestMethod.GET)
+	public String menteeOrderHistory(@RequestParam(required = false, defaultValue = "1") String pg, Model model, HttpSession session) {
+		// 1페이지당 5개
+		int endNum = Integer.parseInt(pg) * 5;
+		int startNum = endNum - 4;
+		
+		MemberDTO memDTO = (MemberDTO) session.getAttribute("memDTO");
+		String member_email = memDTO.getMember_email();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("startNum", startNum);
+		map.put("endNum", endNum);
+		map.put("member_email", member_email);
+		
+		List<OrderDTO> orderHistoryList = participationService.getOrderHistoryUsingMemEmail(map);
+		
+		// 페이징 처리
+		int totalOrderHistory = participationService.getTotalHistory(member_email);
+		orderHistoryPaging.setCurrentPage(Integer.parseInt(pg));
+		orderHistoryPaging.setPageBlock(3);
+		orderHistoryPaging.setPageSize(5);
+		orderHistoryPaging.setTotalA(totalOrderHistory);
+		orderHistoryPaging.makePagingHTML();
+		
+		model.addAttribute("orderHistoryPaging", orderHistoryPaging);
+		model.addAttribute("orderHistoryList", orderHistoryList);
+		model.addAttribute("display","/mentee/menteeUserForm.jsp");
+		model.addAttribute("display2","/mentee/menteeOrderHistory.jsp");
+		return "/main/index";
+	}
+	
+	/**
+	 * @Title : 모임 후기 작성 창
+	 * @Author : yong
+	 * @Date : 2019. 11. 15.
+	 * @Method Name : meetingReviewWriteForm
+	 */
+	@RequestMapping(value = "meetingReviewWriteForm", method = RequestMethod.GET)
+	public String meetingReviewWriteForm(@RequestParam String seq, Model model) {
+		int meetingboard_seq = Integer.parseInt(seq);
+		model.addAttribute("meetingboard_seq", meetingboard_seq);
+		model.addAttribute("display","/mentee/menteeUserForm.jsp");
+		model.addAttribute("display2","/meetingboard/meetingReviewWriteForm.jsp");
+		return "/main/index";
+	}
+	
+	/**
+	 * @Title : 모임 후기 작성 완료
+	 * @Author : yong
+	 * @Date : 2019. 11. 15.
+	 * @Method Name : meetingReviewWrite
+	 */
+	@RequestMapping(value = "meetingReviewWrite", method = RequestMethod.POST)
+	public String meetingReviewWrite(@ModelAttribute ReviewDTO reviewDTO, HttpSession session) {
+		MemberDTO memDTO = (MemberDTO) session.getAttribute("memDTO");
+		reviewDTO.setMentee_email(memDTO.getMember_email());
+		meetingboardService.meetingReviewWrite(reviewDTO);
+		return "redirect:/mentee/menteeOrderHistory";
+	}
 }

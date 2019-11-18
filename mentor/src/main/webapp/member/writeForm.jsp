@@ -1,23 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	
 <script src="../js/member.js"></script>
-<link rel="stylesheet"  href="../css/mypg.css" type="text/css" />
-
+<link rel="stylesheet"  href="../css/mypg.css" type="text/css"/>
 <div class="page navbar-fixed devise registrations new" data-name="registrations-new">
 	<div class="page-content" style="margin-bottom: 100px;">
 		<div class="content-wrapper">
 		<h1 align="center">회원가입</h1>
-			<div class="block inset login-block">
+		<div class="membership">
+			<div class="block inset login-block" align="center">
 					<form class="simple_form new_user" name="writeForm" id="writeForm" method="post" enctype="multipart/form-data" action="/mentor/member/write">	
 					<div class="member-img-block">
-						<div class="member-img-circle"><img id="member_prople_img" src="../image/profile.jpg"/></div><br/><br/>
+					<div align="center">
+						<div class="member-img-circle">
+						<img id="member_profile_img"  src="../image/profile.jpg"/></div><br/><br/>
 							<div class="file-container">
 								<div class="cover">
-									<input id="member_prople" name="member_prople"  accept=".jpg, .jpeg, .png" type="file" onchange="previewFile(this);" /> 
-									<label for="member_prople" class="member-img-upbtn">이미지 업로드</label>
+									<input id="member_profile" name="member_profile"  accept=".jpg, .jpeg, .png" type="file" onchange="previewFile(this);" /> 
+									<label for="member_profile" class="member-img-upbtn">이미지 업로드</label>
 							</div>
 						</div>
+						</div>
 					</div>
+				
 					<!-- </form> -->
 					<div class="list form-list no-hairlines no-margin-top">
 						<ul>
@@ -74,17 +79,16 @@
 
 
 					<div class="block-footer term-footer">
-						<input name="" type="hidden" value="0" />
-						<input type="checkbox" value="1" checked="checked" name="" id="user_terms_of_service"/>회원가입을 하면 MENTORMAN의 
-						<a href="" type="external" target="_blank">이용약관</a> 및 <a href="" type="external" target="_blank">개인정보처리방침</a>
-						에 동의하는것으로 간주합니다.<div>
-						</div>
+						<input type="checkbox"  id="member_servicecheck" name="member_servicecheck" data-check="check" checked="checked"/>회원가입을 하면 MENTORMAN의 
+						<a href="" type="external" target="_blank">이용약관</a> 및 <a href="" type="external" target="_blank">개인정보처리방침</a>에 동의하는것으로 간주합니다.<div>
+					</div>
+						<div class="item-input-info-checkbox"></div>
 					</div>
 
-					<input type="submit" onclick="Ifn_write();" value="회원가입" 
-					class="btn button button-big button-fill" data-disable-with="요청중..." />
+					<input type="button" id="writeBtn"  value="회원가입"  class="btn button button-big button-fill" data-disable-with="요청중..." />
 				</form>
 			</div>
+
 
 			<div class="block inset text-align-center">
 				<a class="color-gray" type="external" href="/mentor/member/loginForm"> 이미 계정이 있나요? 로그인 </a>
@@ -92,4 +96,4 @@
 		</div>
 	</div>
 </div>
-
+</div>
