@@ -391,7 +391,7 @@
       <label for="mentor_request_name_card" class="button button-small button-inline">
         이미지 업로드
       </label>
-      <input class=" is-valid file optional" accept=".jpg, .jpeg, .png" onchange="previewFile(this);" type="file" name="mentor_businesscard" id="mentor_request_name_card">
+      <input class="is-valid file optional" accept=".jpg, .jpeg, .png" onchange="previewFile(this);" type="file" name="mentor_businesscard" id="mentor_request_name_card">
       <p><img id="mentor_businesscard_img" src="../image/defaultuser.png" style="width: 100px; height: 100px"></p>
       
       <div id="mentor_businesscard_error"></div>

@@ -2,7 +2,9 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
 	<!-- Root Context: defines shared resources visible to all other web components -->
@@ -22,7 +24,6 @@
 	<context:component-scan base-package="mentee.bean"/>
 	<context:component-scan base-package="mentee.dao"/>
 	
-
 	<!-- 에세이  -->
 	<context:component-scan base-package="essayboard.bean"/>
 	<context:component-scan base-package="essayboard.dao"/>
@@ -43,11 +44,16 @@
 	<context:component-scan base-package="adminboard.service"/>
 	<context:component-scan base-package="adminboard.bean"/>
 
-	<!-- 모임 게시판 관련 부분 -->
+	<!-- 모임 게시판  -->
 	<context:component-scan base-package="meetingboard.bean"/>
 	<context:component-scan base-package="meetingboard.dao"/>
 	<context:component-scan base-package="meetingboard.service"/>
 
+	<!-- 모임 신청 -->
+	<context:component-scan base-package="participation.bean"/>
+	<context:component-scan base-package="participation.dao"/>
+	<context:component-scan base-package="participation.service"/>
+	
 	<!-- 게시판 -->
 	<context:component-scan base-package="menteeboard.service"/>
 	<context:component-scan base-package="menteeboard.dao"/>
@@ -57,6 +63,4 @@
 	<context:component-scan base-package="menteeboardReply.service"/>
 	<context:component-scan base-package="menteeboardReply.dao"/>
 	<context:component-scan base-package="menteeboardReply.bean"/>
-	
-	
 </beans>
