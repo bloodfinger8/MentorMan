@@ -56,4 +56,13 @@ public class ParticipationDAOMybatis implements ParticipationDAO {
 		return sqlSession.selectList("participationSQL.getOrderHistoryUsingOrderId", order_id);
 	}
 
+	@Override
+	public List<OrderDTO> getOrderHistoryUsingMemEmail(Map<String, Object> map) {
+		return sqlSession.selectList("participationSQL.getOrderHistoryUsingMemEmail", map);
+	}
+	
+	@Override
+	public int getTotalHistory(String member_email) {
+		return sqlSession.selectOne("participationSQL.getTotalHistory", member_email);
+	}
 }

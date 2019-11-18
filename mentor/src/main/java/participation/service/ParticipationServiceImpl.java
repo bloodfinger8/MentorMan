@@ -45,5 +45,14 @@ public class ParticipationServiceImpl implements ParticipationService {
 	public List<OrderDTO> getOrderHistoryUsingOrderId(String order_id) {
 		return participationDAO.getOrderHistoryUsingOrderId(order_id);
 	}
+
+	@Override
+	public List<OrderDTO> getOrderHistoryUsingMemEmail(Map<String, Object> map) {
+		return participationDAO.getOrderHistoryUsingMemEmail(map);
+	}
 	
+	@Override
+	public int getTotalHistory(String member_email) {
+		return participationDAO.getTotalHistory(member_email);
+	}
 }

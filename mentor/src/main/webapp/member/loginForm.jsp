@@ -5,8 +5,8 @@
 		<div class="content-wrapper">
 			<h1 align="center">로그인</h1>
 			<div class="block inset social-block">
-				<a class="button button-big button-fill bg-naver-color" type="external" href=""> 네이버 아이디로 로그인</a> 
-				<a class="button button-big button-fill bg-kakao-color col" type="external" href=""> 카카오 아이디로 로그인</a>
+				<a class="button button-big button-fill bg-naver-color" type="external" href="${naverUrl}">네이버 아이디로 로그인</a>
+				<a class="button button-big button-fill bg-kakao-color col" type="external" href="${kakaoUrl}">카카오 아이디로 로그인</a>
 			</div>
 
 			<div class="block inset login-block">
@@ -70,7 +70,6 @@ function deleteCookie(cookieName){
   expireDate.setDate(expireDate.getDate() - 1);
   document.cookie = cookieName + "= " + "; expires=" + expireDate.toGMTString();
 }
-
 //Cookie Get
 function getCookie(cookieName) {
   cookieName = cookieName + '=';

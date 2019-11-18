@@ -24,7 +24,6 @@
 	<context:component-scan base-package="mentee.bean"/>
 	<context:component-scan base-package="mentee.dao"/>
 	
-
 	<!-- 에세이  -->
 	<context:component-scan base-package="essayboard.bean"/>
 	<context:component-scan base-package="essayboard.dao"/>
