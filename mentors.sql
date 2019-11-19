@@ -66,11 +66,12 @@ CREATE TABLE meeting_participation(
 -- 모임신청 시퀀스
 create sequence participation_seq nocache nocycle;
 
--- 모임 주문
+-- 모임주문 테이블 create
 CREATE TABLE meeting_order (
     order_id          VARCHAR2(100),        -- 주문ID
     order_date        DATE DEFAULT SYSDATE, -- 주문일자
     order_price       NUMBER,               -- 총 가격
+    order_flag        NUMBER DEFAULT 1,     -- 주문상태(0 취소, 1 승인)
     mentee_email      VARCHAR2(100),        -- 멘티 email
     mentee_name       VARCHAR2(50),         -- 멘티 이름
     mentee_tel        VARCHAR2(50),         -- 멘티 전화번호
@@ -79,6 +80,21 @@ CREATE TABLE meeting_order (
     CONSTRAINT FK_MEETING_ORDER1 FOREIGN KEY(meetingboard_seq) REFERENCES meetingboard(meetingboard_seq),
     CONSTRAINT FK_MEETING_ORDER2 FOREIGN KEY(mentee_email) REFERENCES mentors_member(member_email)
 );
+
+-- 모임후기 테이블 create
+CREATE TABLE meeting_review (
+    review_seq          NUMBER,       -- 모임후기 seq
+    meetingboard_seq    NUMBER,       -- 모임 seq
+    mentee_email        VARCHAR2(100),-- 멘티 email
+    review_content      VARCHAR2(2000),-- 후기 내용
+    review_date         DATE DEFAULT SYSDATE,
+    CONSTRAINT PK_MEETING_REVIEW  PRIMARY KEY(review_seq),
+    CONSTRAINT FK_MEETING_REVIEW1 FOREIGN KEY(meetingboard_seq) REFERENCES meetingboard(meetingboard_seq),
+    CONSTRAINT FK_MEETING_REVIEW2 FOREIGN KEY(mentee_email) REFERENCES mentors_member(member_email)
+);
+
+-- 모임 후기 sequence
+create sequence review_seq nocache nocycle;
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- job 테이블 insert문
 insert into job values ('job_code_0', '인사/총무/노무');
@@ -245,8 +261,8 @@ create table essayboard(
     essayboard_hit number default 0 , -- 에세이 조회수
     essayboard_scrap number default 0,  -- 에세이 즐겨찾기
     essayboard_scrapFlag number default 0,
-    constraint essay_job foreign key(job_code) references job(job_code), -- 에세이 잡 코드 FK
-    essayboard_logtime date default sysdate
+    essayboard_logtime date default sysdate,
+    constraint essay_job foreign key(job_code) references job(job_code) -- 에세이 잡 코드 FK
 );
 
 -- 에세이 보드 시퀀스 생성
@@ -256,12 +272,12 @@ create sequence essayboard_seq nocache nocycle;
 ---sanggu--------------------------------------------------------------------------------------------------------------------------
 -- 공지사항 테이블
 create table noticeboard(
-noticeboard_seq number not null,
-noticeboard_adminEmail varchar2(200) not null,
-noticeboard_title varchar2(2000) not null,
-noticeboard_content varchar2(4000) not null,
-noticeboard_hit number default 0,
-noticeboard_logtime date default sysdate
+    noticeboard_seq number not null,
+    noticeboard_adminEmail varchar2(200) not null,
+    noticeboard_title varchar2(2000) not null,
+    noticeboard_content varchar2(4000) not null,
+    noticeboard_hit number default 0,
+    noticeboard_logtime date default sysdate
 );
 
 --공지사항 sequence생성
