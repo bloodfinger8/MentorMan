@@ -1,6 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+<%-- 오늘 날짜 --%>
+<c:set var="now" value="<%=new java.util.Date()%>"/>
+<fmt:formatDate var="today" value="${now}" pattern="yyyy/MM/dd"/>
+<fmt:parseDate var="parseDate" value="${meetingboardDTO.meetingboard_day}" pattern="yyyy/MM/dd"/>
+<fmt:formatDate var="meetingday" value="${parseDate}" pattern="MM월 dd일 (E)"/>
+<fmt:formatDate var="meetingdayCompare" value="${parseDate}" pattern="yyyy/MM/dd"/>	
 
 <form name="meetingboardViewForm">
 <input type="hidden" name="seq" id="seq" value="${meetingboardDTO.meetingboard_seq}">
@@ -30,7 +38,7 @@
 						<div class="item-title">&nbsp;일시</div>
 						<div class="item-schedule">
 							<div class="item-after">
-								${meetingboardDTO.meetingboard_day} ${meetingboardDTO.meetingboard_starthour} ~ ${meetingboardDTO.meetingboard_endhour}
+								${meetingday} ${meetingboardDTO.meetingboard_starthour} ~ ${meetingboardDTO.meetingboard_endhour}
 							</div>
 						</div>
 					</div>
@@ -66,15 +74,24 @@
 		<div class="mentor-block block block-strong">
 			<div class="block mentor-info-block">
 				<div class="mentor-image img-circle">
-					<a target="_blank" type="external" href=""> <img width="150" height="150" src="">
+					<a target="_blank" type="external" href=""> 
+					<c:if test="${meetingboardDTO.member_profile == 'profile.jpg'}">
+					<img src="../image/profile.jpg" width="150" height="150">
+					</c:if>
+					<c:if test="${meetingboardDTO.member_profile != 'profile.jpg'}">
+					<img src="../storage/${meetingboardDTO.member_email}/${meetingboardDTO.member_profile}" width="150" height="150">
+					</c:if>
 					</a>
 				</div>
 				<div class="block mentor-info">
 					<div class="name">
-						<span class="mentor-name"> <a target="_blank" type="external" href="">멘토이름</a> <small>멘토</small>
+						<span class="mentor-name"> 
+							<a target="_blank" type="external" href="">
+								${meetingboardDTO.member_name}
+							</a> <small>멘토</small>
 						</span>
 					</div>
-					<div class="job">멘토직장</div>
+					<div class="job">${meetingboardDTO.mentor_company},${meetingboardDTO.mentor_department}</div>
 					<div class="detail-block">
 						<div class="mentoring-info">
 							<div class="mentoring-type-block">
@@ -106,7 +123,7 @@
 
 						<div class="mentoring-info">
 							<div class="title text-decoration-underline">대표 멘토링 분야</div>
-							<div class="mentoring-type-block">!!!!!수정</div>
+							<div class="mentoring-type-block">${meetingboardDTO.mentor_represent}</div>
 						</div>
 					</div>
 				</div>
@@ -114,9 +131,9 @@
 		</div>
 		<div class="block mentor-detail-block">
 			<h4 class="title">멘토 소개</h4>
-			<div>멘토소개가져오기</div>
+			<div>${meetingboardDTO.mentor_info}</div>
 			<h4 class="title">주요 경력</h4>
-			<div>경력사항가져오기</div>
+			<div>${meetingboardDTO.mentor_career}</div>
 		</div>
 		<div class="block-title">프로그램 내용</div>
 		<div class="block block-strong trix-content froala-content">
@@ -145,13 +162,15 @@
 	        </div>
 	      </div>
 		<div class="block button-block">
-		<c:if test="${meetingboardDTO.meetingboard_state == 0}">
-	      	<a class="button button-big button-fill" type="external" href="javascript:void(0)" onclick="callFunction('${memDTO.member_email}')">신청하기</a>
+		<c:if test="${today <= meetingdayCompare}">
+			<c:if test="${meetingboardDTO.meetingboard_state == 0}">
+		      	<a class="button button-big button-fill" type="external" href="javascript:void(0)" onclick="callFunction('${memDTO.member_email}')">신청하기</a>
+		    </c:if>
+		    <c:if test="${meetingboardDTO.meetingboard_state == 1}">
+		      	<div class="button button-big button-fill color-gray">모집완료</div>	  
+		    </c:if>
 	    </c:if>
-	    <c:if test="${meetingboardDTO.meetingboard_state == 1}">
-	      	<div class="button button-big button-fill color-gray">모집완료</div>	  
-	    </c:if>
-	    <c:if test="${meetingboardDTO.meetingboard_state == 2}">
+	    <c:if test="${today > meetingdayCompare}">
 			<div class="button button-big button-fill color-gray">종료</div>	    
 		</c:if>
 	    </div>

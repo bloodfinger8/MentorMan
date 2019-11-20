@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mentorSQL">
+	<insert id="mentorapplyWrite" parameterType="Map">
+		insert into mentor(mentor_seq,
+						mentor_company,
+						mentor_department,
+						mentor_position,
+						job_code,
+						mentor_school,
+						mentor_career,
+						mentoring_code,
+						mentor_represent,
+						mentor_info,
+						mentor_etc,
+						mentor_email,
+						mentor_selectNaming,
+						mentor_businesscard,
+						mentor_logtime) values(mentor_seq.nextval,
+											#{mentor_company},
+											#{mentor_department},
+											#{mentor_position},
+											#{job_code},
+											#{mentor_school},
+											#{mentor_career},
+											#{mentoring_code},
+											#{mentor_represent},
+											#{mentor_info},
+											#{mentor_etc},
+											#{mentor_email},
+											#{mentor_selectNaming},
+											#{mentor_businesscard},
+											sysdate)
+	</insert>
+	<select id="getEmail" parameterType="String" resultType="mentor">
+		select * from mentor where mentor_email = #{member_email}
+	</select>
+	
+	<select id="getMentorList" parameterType="Map" resultType="mentor">
+		select * from(select rownum rn, tt.* from(select mt.mentor_seq, mb.member_name, mb.member_profile,mt.mentor_company, mt.mentor_department, 
+		    j.job_type, mentor_school, mentor_career, mentoring_code, mentor_represent, mentor_info, mentor_etc, mentor_email, 
+		    mentor_selectNaming, mentor_businesscard, mentor_badge, mentor_flag, mentor_logtime from mentor mt, job j, 
+			mentors_member mb where mt.mentor_email = mb.member_email and j.job_code = mt.job_code and mentor_flag = #{mentor_flag} order by mt.mentor_seq desc)tt) 
+		where rn between #{startNum} and #{endNum}
+	</select>
+	<select id="getTotalA" parameterType="int" resultType="int">
+		select count(*) from mentor where mentor_flag = #{mentor_flag}
+	</select>
+	<select id="getMentor_info" parameterType="int" resultType="mentor">
+		select mb.member_name
+        , mb.member_profile
+        , j.job_type
+        , mentor_seq
+        , mentor_email
+        , mentor_company
+        , mentor_department
+        , mentor_represent
+        , mentoring_code 
+		from job j, mentor mt,  mentors_member mb 
+		where j.job_code = mt.job_code and mt.mentor_email = mb.member_email and mentor_seq = #{seq}
+	</select>
+	<select id="getMentoring_code" parameterType="Map" resultType="mentor">
+		select mentoring_type from mentoring where mentoring_code in 
+		<foreach collection="mentoring_code" index="index" item="mentoring_code" open="(" separator="," close=")">
+			#{mentoring_code}
+		</foreach>
+	</select>
+	<insert id="mentorQuestionsSuccess" parameterType="Map">
+		insert into question(question_seq,
+							 mentor_seq,
+							 member_email,
+							 question_title,
+							 question_content,
+							 question_logtime) values(question_seq.nextval, 
+							 							#{mentor_seq}, 
+							 							#{member_email}, 
+							 							#{question_title}, 
+							 							#{question_content}, 
+							 							sysdate)
+	</insert>
+	<select id="getQuestion_flag" parameterType="Map" resultType="mentor">
+		select question_flag, question_seq from question where mentor_seq = #{mentor_seq} and member_email = #{member_email}
+	</select>
+	<select id="questionModifyForm" parameterType="int" resultType="mentor">
+		select * from question where question_seq = #{qsseq}
+	</select>
+	<update id="questionModify" parameterType="Map">
+		update question set question_title = #{question_title}, question_content = #{question_content}, question_logtime = sysdate where question_seq = #{question_seq}
+	</update>
+</mapper>
