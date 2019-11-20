@@ -1,6 +1,39 @@
+var check = null;
+$('#member_nickname').focusout( function(){
+	$.ajax({
+		type: 'post',
+		url: '/mentor/mentee/chackNickname',
+		data: {'member_nickname': $('#member_nickname').val()},
+		dataType: 'text',
+		success: function(data){
+			if(data=='on'){
+				$('#member_nickname_error').text('이미 존재하는 닉네임 입니다.').css('color','red');
+				$('#member_nickname_error').css('font-size','8pt');
+				$('#member_nickname').focus();
+				check = 'on';
+			}else if(data=='ok'){
+				$('#member_nickname_error').text('사용가능한 닉네임 입니다.').css('color','#0042fd');
+				$('#member_nickname_error').css('font-size','8pt');
+				check = 'ok';
+			}
+			if($('#member_nickname').val() == $('#nickname').val()){
+				$('#member_nickname_error').empty();
+				check = 'eq';
+			}
+		},
+		error: function(){
+			alert('에러');
+		}
+	});
+});
+
 $('#menteeUser_Save').on('click', function(){
 	$('#member_name_error').empty();
 	$('#member_nickname_error').empty();
+	if($('#member_nickname').val() == $('#nickname').val()){
+		$('#member_nickname_error').empty();
+		check = true;
+	}
 	if($('#member_name').val() == ''){
 		$('#member_name').focus();
 		$('#member_name_error').text('이름을 입력하세요').css('color','red');
@@ -9,13 +42,18 @@ $('#menteeUser_Save').on('click', function(){
 		$('#member_nickname').focus();
 		$('#member_nickname_error').text('닉네임을 입력하세요').css('color','red');
 		$('#member_nickname_error').css('font-size','8pt');
-	}else{
+	}else if(check == 'on'){
+		$('#member_nickname_error').text('이미 존재하는 닉네임 입니다.').css('color','red');
+		$('#member_nickname_error').css('font-size','8pt');
+		$('#member_nickname').focus();
+	}else {
 		var menteeUserSetting = document.menteeUserSetting
 		menteeUserSetting.setAttribute('action', '/mentor/mentee/mentorUserModify');
 		menteeUserSetting.submit();
-		return;
+		return;		
 	}
 });
+
 //학생 info 입력 버튼
 $('#menteeStudentInsert_btn').on('click', function(){
 	menteeStudent();
@@ -31,7 +69,7 @@ function menteeStudent(){
 	$('#menteeStudent_spec_error').empty();
 	
 	if($('#menteeStudent_major').val()==''){
-		$('#menteeStudent_major_error').text('당신의 정공은 무엇인가요?').css('color','red');
+		$('#menteeStudent_major_error').text('당신의 전공은 무엇인가요?').css('color','red');
 		$('#menteeStudent_major_error').css('font-size','8pt');
 		$('#menteeStudent_major').focus();
 	}else if($('#menteeStudent_state').val()==''){
@@ -98,6 +136,7 @@ function menteeEmployee(){
 
 //패스워드 변경
 $('#menteePassword_btn').on('click', function(){
+	
 	$('#currentPassword_error').empty();
 	$('#member_pwd_error').empty();
 	$('#member_pwd_check_error').empty();
@@ -107,14 +146,18 @@ $('#menteePassword_btn').on('click', function(){
 		$('#currentPassword_error').css('font-size','8pt');
 		$('#currentPassword').focus();
 	}else if($('#member_pwd').val()==''){
-		$('#member_pwd_error').text('새로운 비밀번호를 입력해주세요').css('color','red');
+		$('#member_pwd_error').text('새 비밀번호를 입력해주세요').css('color','red');
 		$('#member_pwd_error').css('font-size','8pt');
 		$('#member_pwd').focus();
 	}else if($('#member_pwd_check').val() != $('#member_pwd').val()){
 		$('#member_pwd_check_error').text('비밀번호가 일치하지 않습니다.').css('color','red');
 		$('#member_pwd_check_error').css('font-size','8pt');
 		$('#member_pwd_check').focus();
-	}else {
+	}else if($('#member_pwd').val().length < 8 || $('#member_pwd').val().length > 15){
+	    $('#member_pwd_error').text('비밀번호는 8자~15자리 이하입니다.').css('color','red');
+	    $('#member_pwd_error').css('font-size','8pt');
+	    $('#member_pwd').focus();
+	} else {
 		$.ajax({
 			type: 'post',
 			url:'/mentor/mentee/menteePasswordCheck',
@@ -143,6 +186,15 @@ $('#menteePassword_btn').on('click', function(){
 				alert('에러');
 			}
 		});
-
 	}
 });
+
+// 모임 작성 후기
+$('#reviewWriteBtn').click(function(){
+	if($('#review_content').val() == '') {
+		$('#review_content').focus();
+	} else {
+		$('#reviewWriteForm').submit();
+	}
+});
+

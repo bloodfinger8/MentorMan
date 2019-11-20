@@ -1,9 +1,12 @@
 package member.service;
+
+import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import member.bean.MemberDTO;
 import member.dao.MemberDAO;
+import mentor.bean.MentorDTO;
 /**
  * @Title : 회원가입 Service.
  * @author : ginkgo1928
@@ -39,6 +42,11 @@ public class MemberServiceImpl implements MemberService {
 	public MemberDTO login(Map<String, String> map) {
 		return memberDAO.login(map);
 	}
+	/* 나의 질문 답변 */
+	@Override
+	public List<MentorDTO> getQandA(Map<String, String> map) {
+		return memberDAO.getQandA(map);
+	}
 	
 	/* 비밀번호 찾기 */
 	@Override
@@ -52,6 +60,32 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public MemberDTO newPwdCommit(Map<String, String> map) {
 		return memberDAO.newPwdCommit(map);
+	}
+	
+	/**
+	 * Q&A페이징
+	 */
+	@Override
+	public int getTotalA(String member_email) {
+		return memberDAO.getTotalA(member_email);
+	}
+	
+	/**
+	 * Q&A 멘토 정도 및 질문 내용
+	 */
+	@Override
+	public MentorDTO getMentor_info(Map<String, String> map) {
+		return memberDAO.getMentor_info(map);
+	}
+
+	@Override
+	public List<MentorDTO> getMentoring_type(Map<String, String[]> arrayMap) {
+		return memberDAO.getMentoring_type(arrayMap);
+	}
+
+	@Override
+	public void questionDelete(int question_seq) {
+		memberDAO.questionDelete(question_seq);
 	}
 }
 

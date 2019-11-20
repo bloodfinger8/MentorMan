@@ -18,13 +18,13 @@ import lombok.Data;
 public class MemberDTO {
 	private String member_name;
 	private String member_nickname;
-	private int member_flag;
 	private String member_pwd;
 	private String member_email;
 	private String member_profile;
-	private String member_seq;
+	private int member_flag;
+	private int member_seq;
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="YYYY-MM-DD")
 	private Date logtime;
-	
+
 }
 
