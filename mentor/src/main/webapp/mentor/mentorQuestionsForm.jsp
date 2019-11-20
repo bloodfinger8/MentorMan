@@ -74,7 +74,7 @@
 		          <li class="item-content item-input">
 		            <div class="item-inner">
 		              <div class="item-input-wrap">
-		                <input class="string required" placeholder="고민 한줄 요약" type="text" name="question_title" id="question_title">
+		                <input class="string required" placeholder="고민 한줄 요약" type="text" name="question_title" id="question_title" value="${questionDTO.question_title }">
 		              </div>
 		              <div id="question_title_error"></div>
 		            </div>
@@ -98,7 +98,7 @@
 		          <li class="item-content item-input">
 		            <div class="item-inner">
 		              <div class="item-input-wrap">
-		                <textarea class="text required" name="question_content" id="question_content"></textarea>
+		                <textarea class="text required" name="question_content" id="question_content">${questionDTO.question_content}</textarea>
 		              </div>
 		              <div id="question_content_error"></div>
 		            </div>
@@ -115,11 +115,16 @@
 			            - 행사 참여/인터뷰/과제 요청
 			          </li>
      				</div>
-
-      					<input type="button" id="save_btn" name="commit" value="임시저장" class="btn button button-big button-fill" data-disable-with="임시저장">
+     				<c:if test="${questionDTO==null}">
+      					<input type="button" id="save_btn" name="submit_btn" value="보내기" class="btn button button-big button-fill">
+  					</c:if>
+     				<c:if test="${questionDTO!=null}">
+      					<input type="button" id="modify_btn" name="submit_btn" value="수정하기" class="btn button button-big button-fill">
+  					</c:if>
   					</div>
-					<input type="hidden" name="mentor_seq" value="${seq}">
-					<input type="hidden" name="pg" value="${pg}">
+					<input type="hidden" id="mentor_seq" name="mentor_seq" value="${seq}">
+					<input type="hidden" id="question_seq" name="question_seq" value="${questionDTO.question_seq}">
+					<input type="hidden" id="pg" name="pg" value="${pg}">
   				</form>
 			</div>
   		</div>

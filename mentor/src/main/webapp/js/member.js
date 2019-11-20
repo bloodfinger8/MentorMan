@@ -288,4 +288,23 @@ $(document).ready(function(){
 		}
 	});
 	
+	//질문 삭제
+	$('#delete_question').on('click', function(){
+		if(confirm('질문을 삭제하시겠습니까?')){
+			$.ajax({
+				type: 'post',
+				url: '/mentor/member/questionDelete',
+				data: {'question_seq': $('#question_seq').val()},
+				success: function(){
+					location.href='/mentor/member/myQandA?pg=1';
+				},
+				error: function(){
+					alert('에러');
+				}
+			});
+		}else {
+			return '';
+		}
+	});
+	
 });

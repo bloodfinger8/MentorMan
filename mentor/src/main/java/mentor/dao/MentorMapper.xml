@@ -71,4 +71,13 @@
 							 							#{question_content}, 
 							 							sysdate)
 	</insert>
+	<select id="getQuestion_flag" parameterType="Map" resultType="mentor">
+		select question_flag, question_seq from question where mentor_seq = #{mentor_seq} and member_email = #{member_email}
+	</select>
+	<select id="questionModifyForm" parameterType="int" resultType="mentor">
+		select * from question where question_seq = #{qsseq}
+	</select>
+	<update id="questionModify" parameterType="Map">
+		update question set question_title = #{question_title}, question_content = #{question_content}, question_logtime = sysdate where question_seq = #{question_seq}
+	</update>
 </mapper>

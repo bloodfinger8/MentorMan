@@ -62,7 +62,7 @@
 							<ul>
 								<li><a type="external" href="">에세이 쓰기</a></li>
 								<li>
-									<a type="external" href="/mentor/member/myQandA">나의 질문/답변 <span class="badge color-red alim">15</span></a>
+									<a type="external" href="/mentor/member/myQandA?pg=1">나의 질문/답변 <span class="badge color-red alim">15</span></a>
 								</li>
 								<li><a type="external" href="">관심콘텐츠</a></li>
 								<li><a type="external" href="">관심멘토</a></li>
