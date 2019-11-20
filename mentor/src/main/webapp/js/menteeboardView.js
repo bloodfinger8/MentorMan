@@ -92,7 +92,7 @@ $(document).ready(function() {
 										'<div class="mentee-image img-circle">'+
 											'<img src="https://www.itdaa.net/rails/active_storage/representations/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBcmZCIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--f0d5c09d42f655ec75e2351b3a921a3266a435e5/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MY21WemFYcGxTU0lOTVRBd2VERXdNQ0VHT2daRlZEb1FZWFYwYjE5dmNtbGxiblJVIiwiZXhwIjpudWxsLCJwdXIiOiJ2YXJpYXRpb24ifX0=--80976855d44dd57bc27b6da84ad9dae42a7e7a2d/profile.jpg">' +
 										'</div>'+
-										'<div class="mentee-name">'+ value.menteeboardReply_nickname +','+value.menteeboardReply_seq+'</div>' +
+										'<div class="mentee-name">'+ value.menteeboardReply_nickname +
 										'<div class="sent-date">'+value.menteeboardReply_logtime+'</div>'+
 									'</div>' +
 									'<div class="modifyReply_hide_'+value.menteeboardReply_seq +'">'+
@@ -195,6 +195,7 @@ $(document).ready(function() {
 				data : $('#menteeboardViewForm').serialize(),
 				dataType : 'json',
 				success : function(data){
+					alert($('#menteeboardViewForm').serialize());
 					$('#inputList').empty();
 					$('#content').val(''); 
 					let $frag = $(document.createDocumentFragment());
@@ -226,6 +227,14 @@ $(document).ready(function() {
 					});
 					$frag.append('<div class="block mentee-detail-block thanks-note-card" id="menteeboardPagingDiv">'+data.menteeboardPaging.pagingHTML+'</div><hr>');
 					$('#inputList').append($frag);
+					
+					//socket에 보내자
+					if(socket) {
+						let socketMsg = "reply," + $('#memNicname').val() +","+$('#nickname').val() +","+$('#menteeboard_seq').val()
+						console.log("msgmsg :: " + socketMsg );
+						socket.send(socketMsg);
+					}
+					
 				},
 				error : function(){
 					alert('실패');
