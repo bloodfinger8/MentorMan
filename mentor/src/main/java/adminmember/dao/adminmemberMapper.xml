@@ -15,6 +15,5 @@
  <!-- 총회원 뽑아ㅋ오기 -->
  <select id="getTotalA" resultType="Integer">
 		select count(*) cnt from mentors_member
-	</select>
- 
+ </select>
  </mapper>
