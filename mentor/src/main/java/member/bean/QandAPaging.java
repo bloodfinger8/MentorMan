@@ -1,4 +1,4 @@
-package mentor.bean;
+package member.bean;
 
 import java.util.Map;
 
@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Data
 @Component
-public class MentorfindPaging {
+public class QandAPaging {
 	private int currentPage;//현재페이지로 이전과 다음
 	private int pageBlock;//[이전][1][2][3][다음] 3개씩 
 	private int pageSize;//1페이지당 5개씩
@@ -28,19 +28,18 @@ public class MentorfindPaging {
 	      
 	      // [이전]
 	      if (startPage > pageBlock)
-	         pagingHTML.append("<li><a rel='prev' data-reload='true' type='external' href='mentorfindForm?pg=" + (startPage - 1) + "'>이전</a></li>");
+	         pagingHTML.append("<li><a rel='prev' data-reload='true' type='external' href='myQandA?pg=" + (startPage - 1) + "'>이전</a></li>");
 
 	      for (int i = startPage; i <= endPage; i++) {
 	         if (i == currentPage)
-	            pagingHTML.append("<li class='active'><a remote='false' href='mentorfindForm?pg=" + i + "'>" + i + "</a></li>");
+	            pagingHTML.append("<li class='active'><a remote='false' href='myQandA?pg=" + i + "'>" + i + "</a></li>");
 	         else
-	            pagingHTML.append("<li><a rel='prev' data-reload='true' type='external' href='mentorfindForm?pg=" + i + "'>" + i + "</a></li>");
+	            pagingHTML.append("<li><a rel='prev' data-reload='true' type='external' href='myQandA?pg=" + i + "'>" + i + "</a></li>");
 	      }
 	      // [다음]
 	      if (endPage < totalP)
-	         pagingHTML.append("<li class='next'><a rel='next' data-reload='true' type='external' href='mentorfindForm?pg=" + (endPage + 1) + "'>다음</a></li>");
+	         pagingHTML.append("<li class='next'><a rel='next' data-reload='true' type='external' href='myQandA?pg=" + (endPage + 1) + "'>다음</a></li>");
 	   
 	      pagingHTML.append("</ul>");
 	}	
-
 }

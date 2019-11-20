@@ -36,4 +36,5 @@ public class MentorDTO {
 	private String question_title;
 	private String question_content;
 	private int question_flag;
+	private int question_seq;
 }

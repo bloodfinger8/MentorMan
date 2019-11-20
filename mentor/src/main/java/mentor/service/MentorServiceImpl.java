@@ -47,4 +47,19 @@ public class MentorServiceImpl implements MentorService{
 		mentorDAO.mentorQuestionsSuccess(map);
 	}
 
+	@Override
+	public MentorDTO getQuestion_flag(Map<String, String> flagCheck_map) {
+		return mentorDAO.getQuestion_flag(flagCheck_map);
+	}
+
+	@Override
+	public MentorDTO questionModifyForm(int qsseq) {
+		return mentorDAO.questionModifyForm(qsseq);
+	}
+
+	@Override
+	public int questionModify(Map<String, String> map) {
+		return mentorDAO.questionModify(map);
+	}
+
 }
