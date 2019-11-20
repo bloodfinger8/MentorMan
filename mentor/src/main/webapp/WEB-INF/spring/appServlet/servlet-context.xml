@@ -7,6 +7,22 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
+	<!-- servlet에서 보듯이 요청과 관련된 객체를 정의합니다.
+	url과 관련된 controller나, @(어노테이션), ViewResolver, Interceptor, MultipartResolver 등의 설정을 해줍니다. -->
+
+
+	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+	<context:component-scan base-package="main.controller"/>
+	<!-- 상구 -->
+	<!-- 메인화면 -->
+	<context:component-scan base-package="adminmain.controller"/>
+	<!-- 게시판관리 -->
+	<context:component-scan base-package="adminboard.controller"/>
+	<!-- 회원관리 -->
+	<context:component-scan base-package="adminmember.controller"/>
+	<!-- 매출 -->
+	<context:component-scan base-package="adminsales.controller"/>
+
 	<!-- 메인 컨트롤 -->
 	<context:component-scan base-package="main.controller"/>
 	<!-- 공지게시판 -->
@@ -20,13 +36,7 @@
 	<!-- 멘티 게시판 답글 -->
 	<context:component-scan base-package="menteeboardReply.controller"/>
 
-
-
 	<context:component-scan base-package="intern.controller"/>
-	
-	<context:component-scan base-package="adminmain.controller"/>
-	<context:component-scan base-package="adminboard.controller"/>
-	<context:component-scan base-package="adminmember.controller"/>
 	<!-- 송현 -->
 	<context:component-scan base-package="member.controller"/>
 	

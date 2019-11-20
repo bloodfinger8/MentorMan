@@ -168,9 +168,8 @@ public class MemberController {
 	// 카카오 로그아웃 추가
 	@RequestMapping(value = "logout", method = RequestMethod.GET, produces="application/json")
 	public ModelAndView logout(HttpSession session) {
-	    JsonNode node =  KakaoApi.kakaoLogout((JsonNode) session.getAttribute("access_token"));
-	    System.out.println("로그아웃 후 반환되는 아이디 : " + node.get("id"));
-		session.invalidate();
+		KakaoApi.kakaoLogout((JsonNode) session.getAttribute("access_token"));
+	  	session.invalidate();
 		return new ModelAndView("redirect:/main/index");
 	}
 

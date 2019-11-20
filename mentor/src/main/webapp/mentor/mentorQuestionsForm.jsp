@@ -22,7 +22,7 @@
 						</span>
 						<a class="button col js-bookmark user_26668" data-params="followed_id=26668" data-disable-with="..." type="external" data-remote="true" rel="nofollow" data-method="post" href="/relationships">
 						팔로우 </a>
-						<a class="button button-small button-fill" type="external" href="/mentor/mentor/mentorQuestionsForm?pg=${pg}&seq=${seq}">
+						<a class="button button-small button-fill" type="external" href="/mentor/mentor/mentorQuestionsForm?pg=${pg}&seq=${seq}&qsseq=${questionDTO.question_seq}">
 						질문하기 </a>
 					</div>
 					<div class="job">
@@ -42,6 +42,13 @@
 								 멘토링 분야
 							</div>
 							<div class="mentoring-type-block">
+							<a type="external" href="/mentors?job_type%5B%5D=18">
+					              <div class="chip chip-outline no-border-radius">
+					                <div class="chip-label">
+					                 	 ${mentorDTO.job_type}
+					                </div>
+					              </div>
+								</a>
 							<c:forEach var="array" items="${list}">
 								<a type="external" href="/mentors?job_type%5B%5D=3">
 								<div class="chip chip-outline no-border-radius">
