@@ -16,3 +16,4 @@ public class AdminmemberDTO {
 	private String member_seq;
 	private String member_logtime;
 }
+

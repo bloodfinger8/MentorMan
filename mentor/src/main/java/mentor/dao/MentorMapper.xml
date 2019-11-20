@@ -49,8 +49,17 @@
 		select count(*) from mentor where mentor_flag = #{mentor_flag}
 	</select>
 	<select id="getMentor_info" parameterType="int" resultType="mentor">
-		select mb.member_name, mb.member_profile, mentor_seq, mentor_email, mentor_company, mentor_department, mentor_represent, mentoring_code 
-		from mentor mt,  mentors_member mb where mt.mentor_email = mb.member_email and mentor_seq = #{seq}
+		select mb.member_name
+        , mb.member_profile
+        , j.job_type
+        , mentor_seq
+        , mentor_email
+        , mentor_company
+        , mentor_department
+        , mentor_represent
+        , mentoring_code 
+		from job j, mentor mt,  mentors_member mb 
+		where j.job_code = mt.job_code and mt.mentor_email = mb.member_email and mentor_seq = #{seq}
 	</select>
 	<select id="getMentoring_code" parameterType="Map" resultType="mentor">
 		select mentoring_type from mentoring where mentoring_code in 
