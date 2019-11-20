@@ -247,6 +247,7 @@ public class MenteeboardController {
 		mav.addObject("menteeboardPaging" , menteeboardPaging);
 		mav.addObject("list" , list);
 		mav.addObject("memEmail" , memberDTO.getMember_email());
+		mav.addObject("memNicname" , memberDTO.getMember_nickname());
 		mav.addObject("heart" , heart);
 		mav.addObject("seq" , Integer.parseInt(seq));
 		mav.addObject("pg" , Integer.parseInt(pg));

@@ -87,6 +87,15 @@ $(document).ready(function() {
 			if($(this).children().last().val() == 0){
 				$("#"+seq).prop("src", "../image/scrapOkImg.png");
 				$(this).children().last().val(1);
+				//스크랩 모달
+				
+				var toastIcon = app.toast.create({
+					  icon: app.theme === 'ios' ? '<i class="f7-icons">star</i>' : '<i class="material-icons">star</i>',
+					  text: 'I\'m with icon',
+					  position: 'center',
+					  closeTimeout: 2000,
+					});
+				toastIcon.open();
 				
 			}else{
 				$("#"+seq).prop("src", "../image/scrapNoImg.png");
@@ -113,6 +122,8 @@ $(document).ready(function() {
 					console.log('에러');
 				}
 			});
+			
+			
 		}
 	});
 	
