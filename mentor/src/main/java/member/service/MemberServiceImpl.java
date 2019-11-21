@@ -51,8 +51,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 	/* 나의 질문 답변 */
 	@Override
-	public List<MentorDTO> getQandA(String member_email) {
-		return memberDAO.getQandA(member_email);
+	public List<MentorDTO> getQandA(Map<String, String> map) {
+		return memberDAO.getQandA(map);
 	}
 	
 	/* 비밀번호 찾기 */
@@ -68,6 +68,34 @@ public class MemberServiceImpl implements MemberService {
 	public MemberDTO newPwdCommit(Map<String, String> map) {
 		return memberDAO.newPwdCommit(map);
 	}
+	
+	/**
+	 * Q&A페이징
+	 */
+	@Override
+	public int getTotalA(String member_email) {
+		return memberDAO.getTotalA(member_email);
+	}
+	
+	/**
+	 * Q&A 멘토 정도 및 질문 내용
+	 */
+	@Override
+	public MentorDTO getMentor_info(Map<String, String> map) {
+		return memberDAO.getMentor_info(map);
+	}
+
+	@Override
+	public List<MentorDTO> getMentoring_type(Map<String, String[]> arrayMap) {
+		return memberDAO.getMentoring_type(arrayMap);
+	}
+
+	@Override
+	public void questionDelete(int question_seq) {
+		memberDAO.questionDelete(question_seq);
+	}
+}
+
 	
 
 	
