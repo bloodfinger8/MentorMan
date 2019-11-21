@@ -5,6 +5,7 @@ import java.util.Map;
 
 import mentee.bean.MenteeDTO;
 import mentor.bean.MentorDTO;
+import mentor.bean.MentorFollowDTO;
 
 public interface MentorService {
 
@@ -27,5 +28,13 @@ public interface MentorService {
 	public MentorDTO questionModifyForm(int qsseq);
 
 	public int questionModify(Map<String, String> map);
+
+	public int getFollowCheck(Map<String, String> followMap);
+
+	public void mentorFollowInsert(MentorFollowDTO mentorFollowDTO);
+
+	public void mentorFollowDelete(MentorFollowDTO mentorFollowDTO);
+
+	public List<MentorDTO> getMentorAttentionList(int mentor_flag);
 
 }

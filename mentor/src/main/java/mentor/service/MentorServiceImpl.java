@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import mentor.bean.MentorDTO;
+import mentor.bean.MentorFollowDTO;
 import mentor.dao.MentorDAO;
 
 @Service
@@ -60,6 +61,26 @@ public class MentorServiceImpl implements MentorService{
 	@Override
 	public int questionModify(Map<String, String> map) {
 		return mentorDAO.questionModify(map);
+	}
+
+	@Override
+	public int getFollowCheck(Map<String, String> followMap) {
+		return mentorDAO.getFollowCheck(followMap);
+	}
+
+	@Override
+	public void mentorFollowInsert(MentorFollowDTO mentorFollowDTO) {
+		mentorDAO.mentorFollowInsert(mentorFollowDTO);
+	}
+
+	@Override
+	public void mentorFollowDelete(MentorFollowDTO mentorFollowDTO) {
+		mentorDAO.mentorFollowDelete(mentorFollowDTO);
+	}
+
+	@Override
+	public List<MentorDTO> getMentorAttentionList(int mentor_flag) {
+		return mentorDAO.getMentorAttentionList(mentor_flag);
 	}
 
 }

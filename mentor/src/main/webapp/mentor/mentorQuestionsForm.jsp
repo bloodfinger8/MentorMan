@@ -20,7 +20,7 @@
 						<span class="mentor-name">
 						${mentorDTO.member_name} <small>멘토</small>
 						</span>
-						<a class="button col js-bookmark user_26668" data-params="followed_id=26668" data-disable-with="..." type="external" data-remote="true" rel="nofollow" data-method="post" href="/relationships">
+						<a class="button col js-bookmark mentor_${mentorDTO.mentor_seq}" id="followA" data-params="followed_id=26668" data-disable-with="..." type="external" data-remote="true" rel="nofollow" data-method="post" href="/relationships">
 						팔로우 </a>
 						<a class="button button-small button-fill" type="external" href="/mentor/mentor/mentorQuestionsForm?pg=${pg}&seq=${seq}&qsseq=${questionDTO.question_seq}">
 						질문하기 </a>
@@ -132,9 +132,67 @@
 					<input type="hidden" id="mentor_seq" name="mentor_seq" value="${seq}">
 					<input type="hidden" id="question_seq" name="question_seq" value="${questionDTO.question_seq}">
 					<input type="hidden" id="pg" name="pg" value="${pg}">
+  					<input type="hidden" id="followVal" name="followVal" value="${follow}">
+  					<input type="hidden" id="followed_email" name="followed_email" value="${mentorDTO.mentor_email}">
   				</form>
 			</div>
   		</div>
 	</div>
 </div>
 <script src="../js/mentor.js"></script>
+<script>
+var seq = $('#mentor_seq').val();
+
+$(function(){
+	//alert($('#followVal').val());
+	//alert($('#followA').attr('class'));
+	
+	if($('#followVal').val() === '1'){
+		$('#followA').addClass('button-fill');
+	}else{
+		$('#followA').removeClass('button-fill');
+	}
+});
+		
+$('.mentor_'+seq).on('click' , function(){
+	var followBtn = $(this);
+	
+	var sendData = {
+			'followed_email' : $('#followed_email').val(),
+			'follow' : $('#followVal').val()
+		};
+	
+	$.ajax({
+		url : '/mentor/mentor/mentorFollow',
+		type : 'POST',
+		data : sendData,
+		success : function(data) {
+			
+			if (data == 1) {
+				followBtn.addClass('button-fill');
+				var toastIcon = app.toast.create({
+					  text: '관심멘토에 등록 되었습니다',
+					  position: 'center',
+					  closeTimeout: 2000,
+					});
+				toastIcon.open();
+			}else{
+				followBtn.removeClass('button-fill');
+				var toastIcon = app.toast.create({
+					  text: '관심멘토에서 삭제 되었습니다',
+					  position: 'center',
+					  closeTimeout: 2000,
+					});
+				toastIcon.open();
+			}
+			$('#followVal').val(data);
+		},
+		error : function(err){
+			console.log("err");
+		}
+		
+	});
+});
+
+
+</script>

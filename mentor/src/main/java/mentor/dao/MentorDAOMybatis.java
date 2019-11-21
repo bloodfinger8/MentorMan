@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import mentor.bean.MentorDTO;
+import mentor.bean.MentorFollowDTO;
 
 @Transactional
 @Repository
@@ -64,5 +65,25 @@ public class MentorDAOMybatis implements MentorDAO {
 	@Override
 	public int questionModify(Map<String, String> map) {
 		return sqlSession.update("mentorSQL.questionModify", map);
+	}
+
+	@Override
+	public int getFollowCheck(Map<String, String> followMap) {
+		return sqlSession.selectOne("mentorSQL.getFollowCheck" , followMap);
+	}
+
+	@Override
+	public void mentorFollowInsert(MentorFollowDTO mentorFollowDTO) {
+		sqlSession.insert("mentorSQL.mentorFollowInsert" , mentorFollowDTO);
+	}
+
+	@Override
+	public void mentorFollowDelete(MentorFollowDTO mentorFollowDTO) {
+		sqlSession.delete("mentorSQL.mentorFollowDelete" , mentorFollowDTO);
+	}
+
+	@Override
+	public List<MentorDTO> getMentorAttentionList(int mentor_flag) {
+		return sqlSession.selectList("mentorSQL.getMentorAttentionList" , mentor_flag);
 	}
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import mentor.bean.MentorDTO;
+import mentor.bean.MentorFollowDTO;
 
 public interface MentorDAO {
 
@@ -26,5 +27,13 @@ public interface MentorDAO {
 	public MentorDTO questionModifyForm(int qsseq);
 
 	public int questionModify(Map<String, String> map);
+
+	public int getFollowCheck(Map<String, String> followMap);
+
+	public void mentorFollowInsert(MentorFollowDTO mentorFollowDTO);
+
+	public void mentorFollowDelete(MentorFollowDTO mentorFollowDTO);
+
+	public List<MentorDTO> getMentorAttentionList(int mentor_flag);
 
 }

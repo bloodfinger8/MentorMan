@@ -30,9 +30,24 @@ $(document).ready(function() {
 					$(".heart").prop('name', data);
 					if (data == 1) {
 						$('#heartImg').prop("src", "../image/redheart.png");
-
+						
+						var toastIcon = app.toast.create({
+							  icon: '<i class="fas fa-heart fa-3x"></i>',
+							  text: '',
+							  position: 'center',
+							  closeTimeout: 2000,
+							});
+						toastIcon.open();
+						
 					} else {
 						$('#heartImg').prop("src", "../image/blackheart.png");
+						var toastIcon = app.toast.create({
+							  icon: '<i class="far fa-heart fa-3x"></i>',
+							  text: '',
+							  position: 'center',
+							  closeTimeout: 2000,
+							});
+						toastIcon.open();
 					}
 					$('#heartVal').val(data);
 				},
