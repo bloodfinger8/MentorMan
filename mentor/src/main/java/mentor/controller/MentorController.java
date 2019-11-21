@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import member.bean.MemberDTO;
 import mentor.bean.MentorDTO;
+import mentor.bean.MentorFollowDTO;
 import mentor.bean.MentorfindPaging;
 import mentor.service.MentorService;
 
@@ -31,6 +33,10 @@ public class MentorController {
 	private MentorService mentorService;
 	@Autowired
 	private MentorfindPaging mentorfindPaging;
+	@Autowired
+	private MemberDTO memberDTO;
+	@Autowired
+	private MentorFollowDTO mentorFollowDTO;
 	
 	/**
 	 * @Title : 멘토 지원하기에 회사명, 부서, 직무
@@ -97,7 +103,8 @@ public class MentorController {
 	 */
 	@RequestMapping(value = "mentorfindForm", method = RequestMethod.GET)
 	public String mentorfindForm(@RequestParam int pg, Model model, HttpSession session) {
-		MemberDTO memberDTO = (MemberDTO) session.getAttribute("memDTO");
+		memberDTO = (MemberDTO) session.getAttribute("memDTO");
+		//승인된 멘토
 		int mentor_flag = 1;
 		int endNum = pg*12;
 		int startNum = endNum-11;
@@ -123,7 +130,7 @@ public class MentorController {
 	
 	@RequestMapping(value = "question_flag", method = RequestMethod.POST)
 	@ResponseBody
-	public String question_flag(@RequestParam String seq, @RequestParam String pg, HttpSession session) {
+	public String question_flag(@RequestParam String seq, @RequestParam(required = false, defaultValue = "1") String pg, HttpSession session) {
 		String reQuestion = "/mentor/mentor/mentorQuestionsForm?pg="+pg+"&seq="+seq;
 		MemberDTO memberDTO = (MemberDTO) session.getAttribute("memDTO");
 		Map<String, String> flagCheck_map = new HashMap<String, String>();
@@ -157,7 +164,18 @@ public class MentorController {
 		Map<String, String[]> map = new HashMap<String, String[]>();
 		map.put("mentoring_code", mentoringArray);
 		List<MentorDTO> list = mentorService.getMentoring_code(map);
+		
+		//로그인 세션
+		memberDTO = (MemberDTO) session.getAttribute("memDTO");
+		Map<String, String> followMap = new HashMap<String, String>();
+		followMap.put("memEmail" , memberDTO.getMember_email());
+		followMap.put("mentorEmail" , mentorDTO.getMentor_email());
+		
+		//팔로우 찾기
+		int follow = mentorService.getFollowCheck(followMap);
+		
 		model.addAttribute("list", list);
+		model.addAttribute("follow" , follow);
 		model.addAttribute("mentorDTO", mentorDTO);
 		model.addAttribute("questionDTO",questionDTO);
 		model.addAttribute("pg",pg);
@@ -195,5 +213,47 @@ public class MentorController {
 			return "success";
 		}
 	}
+	
+	/**
+	 * 
+	 * @Title : 멘토 팔로우 기능 구현
+	 * @Author : yangjaewoo, @Date : 2019. 11. 21.
+	 */
+	@RequestMapping(value = "mentorFollow", method = RequestMethod.POST)
+	@ResponseBody
+	public int mentorFollow(HttpServletRequest httpRequest, HttpSession session) {
+		int follow = Integer.parseInt(httpRequest.getParameter("follow"));
+        String followed_email = httpRequest.getParameter("followed_email");
+        
+        memberDTO = (MemberDTO)session.getAttribute("memDTO");
+        String follower_email = memberDTO.getMember_email();
+        
+        mentorFollowDTO.setFollower_email(follower_email);
+        mentorFollowDTO.setFollowed_email(followed_email);
+       
+        System.out.println("mentorFollowDTO : " + mentorFollowDTO);
+        if(follow >= 1) {
+        	mentorService.mentorFollowDelete(mentorFollowDTO);
+        	follow=0;
+        } else {
+        	mentorService.mentorFollowInsert(mentorFollowDTO);
+        	follow=1;
+        }
+        
+        return follow;
+	}
+	
+	@RequestMapping(value = "mentorAttention", method = RequestMethod.GET)
+	public String mentorAttention(Model model , HttpSession session) {
+		memberDTO = (MemberDTO) session.getAttribute("memDTO");
+		//승인된 멘토 이면서 나를 팔로우한 팔로워 list
+		int mentor_flag = 1;
+		List<MentorDTO> list = mentorService.getMentorAttentionList(mentor_flag);
+		
+		model.addAttribute("list", list);
+		model.addAttribute("display", "/mentor/mentorAttention.jsp");
+		return "/main/index";
+	}
+		
 	
 }

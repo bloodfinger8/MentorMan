@@ -90,8 +90,8 @@ $(document).ready(function() {
 				//스크랩 모달
 				
 				var toastIcon = app.toast.create({
-					  icon: app.theme === 'ios' ? '<i class="f7-icons">star</i>' : '<i class="material-icons">star</i>',
-					  text: 'I\'m with icon',
+					  icon: app.theme === 'ios' ? '<i class="fas fa-bookmark fa-3x"></i>' : '<i class="fas fa-bookmark" style="width: 30px; height: 30px;"></i>',
+					  text: '',
 					  position: 'center',
 					  closeTimeout: 2000,
 					});
