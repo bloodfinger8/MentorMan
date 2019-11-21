@@ -1,19 +1,17 @@
 /*테이블 */
 
 --- yongje -------------------------------------------------------------------------------------------------------------------------
--- job 테이블 create문
-create table job (
-    job_code varchar2(20) primary key,  -- 직무코드(PK)
-    job_type varchar2(100) not null     -- 직무유형
+-- job 테이블 create
+CREATE TABLE job (
+    job_code VARCHAR2(20) PRIMARY KEY,  -- 직무코드(PK)
+    job_type VARCHAR2(100) NOT NULL     -- 직무유형
 );
-
--- mentoring 테이블 create문
-create table mentoring (
-    mentoring_code varchar2(20) primary key,    -- 멘토링코드(PK)
-    mentoring_type varchar2(30) not null        -- 멘토링유형
+-- mentoring 테이블 create
+CREATE TABLE mentoring (
+    mentoring_code VARCHAR2(20) PRIMARY KEY,    -- 멘토링코드(PK)
+    mentoring_type VARCHAR2(30) NOT NULL        -- 멘토링유형
 );
-
--- meetingboard 테이블 create문
+-- 모임 테이블 create
 CREATE TABLE meetingboard (
     meetingboard_seq            NUMBER,         -- 모임번호(PK)
     job_code                    VARCHAR2(20),   -- 직무분야(FK)
@@ -36,19 +34,17 @@ CREATE TABLE meetingboard (
     CONSTRAINT FK_MEETINGBOARD1 FOREIGN KEY(job_code) REFERENCES job(job_code),
     CONSTRAINT FK_MEETINGBOARD2 FOREIGN KEY(mentor_email) REFERENCES mentors_member(member_email)
 );
-select * from mentor;
-
 
 -- meetingboard 시퀀스
 create sequence meetingboard_seq nocache nocycle;
 
--- 안내사항 테이블
-create table guide(
-    guide_content   varchar2(1000),
-    logtime date default sysdate
+-- 안내사항 테이블 create
+CREATE TABLE guide(
+    guide_content   VARCHAR2(1000),
+    logtime         DATE DEFAULT SYSDATE
 );
 
--- 모임신청 create문
+-- 모임신청 테이블 create
 CREATE TABLE meeting_participation(
     participation_seq       NUMBER,         -- 신청 seq
     meetingboard_seq        NUMBER,         -- 모임 seq
@@ -63,6 +59,7 @@ CREATE TABLE meeting_participation(
     CONSTRAINT FK_MEETING_PARTICIPATION2 FOREIGN KEY(mentee_email) REFERENCES mentors_member(member_email),
     CONSTRAINT FK_MEETING_PARTICIPATION3 FOREIGN KEY(mentor_email) REFERENCES mentors_member(member_email)
 );
+
 -- 모임신청 시퀀스
 create sequence participation_seq nocache nocycle;
 
