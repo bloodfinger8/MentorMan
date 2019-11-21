@@ -3,6 +3,7 @@ package mentor.dao;
 import java.util.List;
 import java.util.Map;
 
+import meetingboard.bean.ReviewDTO;
 import mentor.bean.MentorDTO;
 import mentor.bean.MentorFollowDTO;
 
@@ -22,6 +23,13 @@ public interface MentorDAO {
 
 	public void mentorQuestionsSuccess(Map<String, String> map);
 
+
+	public List<MentorDTO> getMentorEssayList(int mentor_seq);
+
+	public List<ReviewDTO> getMentorReviewList(int mentor_seq);
+
+	public MentorDTO getMentorInfomation(int mentor_seq);
+
 	public MentorDTO getQuestion_flag(Map<String, String> flagCheck_map);
 
 	public MentorDTO questionModifyForm(int qsseq);
@@ -35,5 +43,6 @@ public interface MentorDAO {
 	public void mentorFollowDelete(MentorFollowDTO mentorFollowDTO);
 
 	public List<MentorDTO> getMentorAttentionList(int mentor_flag);
+
 
 }

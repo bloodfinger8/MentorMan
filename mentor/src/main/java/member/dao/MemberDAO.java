@@ -8,7 +8,6 @@ import mentor.bean.MentorDTO;
 
 public interface MemberDAO {
 
-
 	public MemberDTO writeNicknamecheck(String member_nickname);
 
 	public MemberDTO writeEmailCheck(String member_email);

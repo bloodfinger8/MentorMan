@@ -107,7 +107,6 @@ public class EssayboardController {
          }
       }
 
-      
       essayboardPaging.setCurrentPage(Integer.parseInt(pg));
       essayboardPaging.setPageBlock(3);
       essayboardPaging.setPageSize(9);
@@ -176,13 +175,12 @@ public class EssayboardController {
       MemberDTO memberDTO = (MemberDTO)session.getAttribute("memDTO");
          
       String email = memberDTO.getMember_email();
-      System.out.println("나오라요 이메일 " + email);
       map.put("mentor_email", email);
       essayboardService.essayboardWrite(map);
       
       ModelAndView modelAndView = new ModelAndView();
       
-      modelAndView.addObject("display", "/essayboard/essayboardList?pg=1");
+      modelAndView.addObject("display", "/essayboard/essayboardList.jsp");
       modelAndView.setViewName("/main/index");
       return modelAndView;
    }
