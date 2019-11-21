@@ -90,7 +90,7 @@
 		  </a>
 		<div class="primary-mentoring-info">
 		  	<div class="title">${mentor.job_type}</div>
-		   	<div class="info">${mentor.mentor_info}</div>
+		   	<div class="info">${mentor.mentor_represent}</div>
 		</div>
 		    <div class="ask-button">
 		        <a class="button button-small button-fill" type="external" href="/mentor/mentor/mentorQuestionsForm?pg=${pg}&seq=${mentor.mentor_seq}"><!-- pg seq 가져가라 -->

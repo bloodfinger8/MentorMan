@@ -18,11 +18,13 @@
 <div class="page navbar-fixed mentee_programs show" style="width: 800px; margin: auto;">
 	<div class="page-content">
 		<div class="block main-block">
+		<c:if test="${today <= meetingdayCompare}">
 		<c:if test="${memDTO.member_email == meetingboardDTO.mentor_email}">
 			<div style="float: right; margin-bottom: 5px;">
 				<button class="button" id="meetingboardModifyFormBtn" style="display: inline-block;">수정</button>
 				<button class="button" id="meetingboardDeleteBtn" style="display: inline-block;">삭제</button>
 			</div>
+		</c:if>
 		</c:if>
 			<div>
 				<img src="../image/job_code/${meetingboardDTO.job_code}.jpg" style="width: 100%; height: 500px;">
@@ -74,7 +76,7 @@
 		<div class="mentor-block block block-strong">
 			<div class="block mentor-info-block">
 				<div class="mentor-image img-circle">
-					<a target="_blank" type="external" href=""> 
+					<a target="_blank" type="external" href="/mentor/mentor/mentorInfoView?mentors=${meetingboardDTO.member_seq}"> 
 					<c:if test="${meetingboardDTO.member_profile == 'profile.jpg'}">
 					<img src="../image/profile.jpg" width="150" height="150">
 					</c:if>
@@ -86,7 +88,7 @@
 				<div class="block mentor-info">
 					<div class="name">
 						<span class="mentor-name"> 
-							<a target="_blank" type="external" href="">
+							<a target="_blank" type="external" href="/mentor/mentor/mentorInfoView?mentors=${meetingboardDTO.member_seq}">
 								${meetingboardDTO.member_name}
 							</a> <small>멘토</small>
 						</span>
@@ -164,7 +166,12 @@
 		<div class="block button-block">
 		<c:if test="${today <= meetingdayCompare}">
 			<c:if test="${meetingboardDTO.meetingboard_state == 0}">
-		      	<a class="button button-big button-fill" type="external" href="javascript:void(0)" onclick="callFunction('${memDTO.member_email}')">신청하기</a>
+				<form id="loginFlagForm" action="/mentor/member/loginForm" method="post">
+		      		<c:if test="${memDTO.member_email == null}">
+						<input type="hidden" name="flag" value="1" id="flag">
+		      		</c:if>
+		      		<a class="button button-big button-fill" type="external" href="javascript:void(0)" onclick="callFunction('${memDTO.member_email}')">신청하기</a>
+		    	</form>
 		    </c:if>
 		    <c:if test="${meetingboardDTO.meetingboard_state == 1}">
 		      	<div class="button button-big button-fill color-gray">모집완료</div>	  

@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import meetingboard.bean.ReviewDTO;
 import mentor.bean.MentorDTO;
 import mentor.dao.MentorDAO;
 
@@ -47,4 +48,18 @@ public class MentorServiceImpl implements MentorService{
 		mentorDAO.mentorQuestionsSuccess(map);
 	}
 
+	@Override
+	public List<MentorDTO> getMentorEssayList(int mentor_seq) {
+		return mentorDAO.getMentorEssayList(mentor_seq);
+	}
+
+	@Override
+	public List<ReviewDTO> getMentorReviewList(int mentor_seq) {
+		return mentorDAO.getMentorReviewList(mentor_seq);	
+	}
+	
+	@Override
+	public MentorDTO getMentorInfomation(int mentor_seq) {
+		return mentorDAO.getMentorInfomation(mentor_seq);
+	}
 }
