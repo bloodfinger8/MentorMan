@@ -225,7 +225,7 @@ public class MentorController {
 		model.addAttribute("display", "/mentor/mentorInfoView.jsp");
 		return "/main/index";
 	}
-  
+	/**
 	 * @Title : 질문 수정
 	 * @Author : kujun95, @Date : 2019. 11. 20.
 	 */
