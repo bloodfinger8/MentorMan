@@ -22,8 +22,7 @@ import mentor.bean.MentorDTO;
 public class MemberServiceImpl implements MemberService {
 	@Autowired 
 	private MemberDAO memberDAO;
-	@Inject
-	private JavaMailSender mailSender;
+	
 	
 	/** @Title : 닉네임 중복확인.
 	 * @author : ginkgo1928 @date : 2019. 11. 5.*/
