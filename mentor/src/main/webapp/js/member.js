@@ -296,7 +296,7 @@ $(document).ready(function(){
 				url: '/mentor/member/questionDelete',
 				data: {'question_seq': $('#question_seq').val()},
 				success: function(){
-					location.href='/mentor/member/myQandA?pg=1';
+					location.href='/mentor/member/myQandA';
 				},
 				error: function(){
 					alert('에러');
@@ -304,6 +304,50 @@ $(document).ready(function(){
 			});
 		}else {
 			return '';
+		}
+	});
+	
+	//답변 보내기
+	$('#answer_btn').on('click', function(){
+		$('#answer_content_error').empty();
+		if($('#answer_content').val()==''){
+			$('#answer_content_error').text('멘티에게 답변을 보내주세요').css('color', 'red');
+			$('#answer_content_error').css('font-size','8pt');
+			$('#answer_content').focus();
+		}else {
+			$.ajax({
+				type: 'post',
+				url: '/mentor/member/answerSuccess',
+				data: $('#mentorAnswer_from').serialize() ,
+				success: function(){
+					location.href='/mentor/member/myQandA';
+				},
+				error: function(){
+					
+				}
+			});
+		}
+	});
+	
+	//답변 수정
+	$('#answerModify_btn').on('click', function(){
+		$('#answer_content_error').empty();
+		if($('#answer_content').val()==''){
+			$('#answer_content_error').text('멘티에게 답변을 보내주세요').css('color', 'red');
+			$('#answer_content_error').css('font-size','8pt');
+			$('#answer_content').focus();
+		}else {
+			$.ajax({
+				type: 'post',
+				url: '/mentor/member/answerModify',
+				data: $('#mentorAnswer_from').serialize() ,
+				success: function(){
+					location.href='/mentor/member/myQandA';
+				},
+				error: function(){
+					
+				}
+			});
 		}
 	});
 	

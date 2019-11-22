@@ -179,51 +179,84 @@ public class MemberController {
 	 * @Author : kujun95, @Date : 2019. 11. 18.
 	 */
 	@RequestMapping(value = "myQandA", method = RequestMethod.GET)
-	public String myQandA(@RequestParam int pg ,Model model, HttpSession session){
-		
+	public String myQandA(@RequestParam(required = false, defaultValue = "1") int pg ,Model model, HttpSession session){
 		MemberDTO memberDTO = (MemberDTO) session.getAttribute("memDTO");
+		
 		int endNum = pg*3;
 		int startNum = endNum-2;
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("startNum", startNum+"");
 		map.put("endNum", endNum+"");
 		map.put("member_email", memberDTO.getMember_email());
-		List<MentorDTO> list = memberService.getQandA(map);
 		int totalA = memberService.getTotalA(memberDTO.getMember_email());
 		QandAPag.setCurrentPage(pg);
 		QandAPag.setPageBlock(3);
 		QandAPag.setPageSize(3);
 		QandAPag.setTotalA(totalA);
 		QandAPag.makePagingHTML();
+		
+		int member_flag = memberService.getMember_flag(memberDTO.getMember_email());
+		
+		if(member_flag == 1) {
+			int mentor_seq = memberService.getMentor_seq(memberDTO.getMember_email());
+			List<MentorDTO> list = memberService.getMemtee_question(mentor_seq);
+			model.addAttribute("mentor_questionList", list);
+		}
+		List<MentorDTO> list = memberService.getQandA(map);
+		if(list != null) {
+			model.addAttribute("all_questionList", list);
+		}
+		model.addAttribute("flag",member_flag);
 		model.addAttribute("pg", pg);
 		model.addAttribute("QandAPag", QandAPag);
-		model.addAttribute("list", list);
 		model.addAttribute("memberDTO", memberDTO);
 		model.addAttribute("display", "/member/myQandA.jsp");
 		return "/main/index";
 	}
 	/**
-	 * 나의 질문
-	 * @Title : 메소드 간단히 설명
+	 * @Title : 나의 질문 답변 확인창
 	 * @Author : kujun95, @Date : 2019. 11. 19.
 	 */
 	@RequestMapping(value = "myQuestionsForm", method = RequestMethod.GET)
 	public String myQuestionsForm(@RequestParam int seq, @RequestParam int pg, @RequestParam int qsseq, Model model, HttpSession session) {
 		MemberDTO memberDTO = (MemberDTO) session.getAttribute("memDTO");
+		//테이블 member의 현재 로그인한 사람의 flag 확인
+		int member_flag = memberService.getMember_flag(memberDTO.getMember_email());
+		//질문한 seq가 자신의 이메일인지 확인
+		String getEmail = memberService.getMember_email(qsseq);
+		
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("member_email", memberDTO.getMember_email());
+		map.put("getEmail", getEmail);
 		map.put("mentor_seq", seq+"");
 		map.put("question_seq", qsseq+"");
+		map.put("member_flag", member_flag+"");
 		MentorDTO mentorDTO = memberService.getMentor_info(map);
-		String[] mentoringArray = mentorDTO.getMentoring_code().split(",");
-		Map<String, String[]> arrayMap = new HashMap<String, String[]>();
-		arrayMap.put("mentoring_code", mentoringArray);
-		List<MentorDTO> list = memberService.getMentoring_type(arrayMap);
 		
+		
+		if(getEmail != mentorDTO.getMember_email()) {
+			if(mentorDTO.getMentoring_code() != null) {
+				//질문 할 경우 상대 멘토의 정보를 가져와야됨
+				String[] mentoringArray = mentorDTO.getMentoring_code().split(",");
+				Map<String, String[]> arrayMap = new HashMap<String, String[]>();
+				arrayMap.put("mentoring_code", mentoringArray);
+				List<MentorDTO> list = memberService.getMentoring_type(arrayMap);
+		
+				model.addAttribute("list", list);
+			}
+		}
+		System.out.println(mentorDTO);
+		MentorDTO auswerDTO = memberService.getMentor_auswer(qsseq);
+		if(auswerDTO != null) {
+			model.addAttribute("auswerDTO", auswerDTO);
+		}
+		
+		model.addAttribute("flag", member_flag);
 		model.addAttribute("seq", seq);
 		model.addAttribute("pg", pg);
 		model.addAttribute("qsseq", qsseq);
-		model.addAttribute("list", list);
+		model.addAttribute("getEmail", getEmail);
+		model.addAttribute("memberDTO", memberDTO);
 		model.addAttribute("mentorDTO", mentorDTO);
 		model.addAttribute("display", "/member/myQuestionsForm.jsp");
 		return "/main/index";
@@ -310,5 +343,21 @@ public class MemberController {
 		memberService.questionDelete(question_seq);
 	}
 	
+	//멘토가 멘티에게 답변 보내기
+	@RequestMapping(value = "answerSuccess", method=RequestMethod.POST)
+	@ResponseBody
+	public void answerSuccess(@RequestParam Map<String, String> map, HttpSession session) {
+		MemberDTO memberDTO = (MemberDTO) session.getAttribute("memDTO"); //멘토 로그인
+		memberService.answerSave(map);
+	}
+	
+	@RequestMapping(value = "answerModify", method=RequestMethod.POST)
+	@ResponseBody
+	public void answerModify(@RequestParam Map<String, String> map, HttpSession session) {
+		MemberDTO memberDTO = (MemberDTO) session.getAttribute("memDTO"); //멘토 로그인
+		memberService.answerModify(map);
+	}
+	
+
 }
 

@@ -50,6 +50,11 @@ public class MentorServiceImpl implements MentorService{
 	}
 
 	@Override
+	public List<MentorDTO> getQuestion_flag(Map<String, String> flagCheck_map) {
+		return mentorDAO.getQuestion_flag(flagCheck_map);
+	}
+  
+  @Override
 	public List<MentorDTO> getMentorEssayList(int mentor_seq) {
 		return mentorDAO.getMentorEssayList(mentor_seq);
 	}
@@ -62,11 +67,6 @@ public class MentorServiceImpl implements MentorService{
 	@Override
 	public MentorDTO getMentorInfomation(int mentor_seq) {
 		return mentorDAO.getMentorInfomation(mentor_seq);
-	}
-
-  @Override
-	public MentorDTO getQuestion_flag(Map<String, String> flagCheck_map) {
-		return mentorDAO.getQuestion_flag(flagCheck_map);
 	}
 
 	@Override
