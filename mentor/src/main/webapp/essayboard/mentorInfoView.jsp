@@ -9,16 +9,21 @@
 				<div class="page-content">
 					<div class="block mentor-info-block">
 						<div class="mentor-image-left img-circle">
-							<img width="150" height="150" src="https://www.itdaa.net/rails/active_storage/representations/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBaFVaIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--061e0d293e7c26ff035c44e62dc362907ab020b0/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MY21WemFYcGxTU0lOTXpBd2VETXdNQ0VHT2daRlZEb1FZWFYwYjE5dmNtbGxiblJVIiwiZXhwIjpudWxsLCJwdXIiOiJ2YXJpYXRpb24ifX0=--335722d0477df6beb4db54fcbab426022c0d08ed/KakaoTalk_20180416_212036888.jpg"/>
-						</div>
+							  <c:if test="${mentorDTO.member_profile != 'profile.jpg'}">
+					            <img width="50" height="50" src="../storage/${mentorDTO.mentor_email}/${mentorDTO.member_profile}">
+					          </c:if>
+					          <c:if test="${mentorDTO.member_profile == 'profile.jpg'}">
+					            <img width="50" height="50" src="../image/profile.jpg">
+					          </c:if>
+          				</div>
 						<div class="block mentor-info mentor-info-box">
 							<div class="name">
 								<span class="mentor-name profile-name">
-								${essayboardDTO.member_name } <small>멘토</small>
+								${mentorDTO.member_name } <small>멘토</small>
 								</span>
 							</div>
 							<div class="job">
-								${essayboardDTO.mentor_company }
+								${mentorDTO.mentor_company } · ${mentorDTO.mentor_department }
 							</div>
 							<div class="detail-block">
 								<div class="mentoring-info">
@@ -50,7 +55,7 @@
 										 대표 멘토링 분야
 									</div>
 									<div class="mentoring-type-block">
-										 ${essayboardDTO.mentor_represent }
+										 ${mentorDTO.mentor_represent }
 									</div>
 								</div>
 								<div class="mentoring-info">
@@ -61,7 +66,7 @@
 										<a type="external" href="/mentors?job_type%5B%5D=7">
 										<div class="chip chip-outline no-border-radius job-tags">
 											<div class="chip-label">
-												 ${essayboardDTO.job_type }
+												 ${mentorDTO.job_type }
 											</div>
 										</div>
 										</a>
@@ -75,7 +80,7 @@
 										<a type="external" href="/mentors?mentoring_type%5B%5D=1">
 										<div class="chip chip-outline no-border-radius job-tags">
 											<div class="chip-label">
-												  ${essayboardDTO.mentoring_type }
+												  ${mentorDTO.mentoring_type }
 											</div>
 										</div>
 										</a>
@@ -99,20 +104,20 @@
 							 멘토 소개
 						</div>
 						<div class="block">
-							${essayboardDTO.mentor_info }
+							${mentorDTO.mentor_info }
 						</div>
 						<div class="block-title">
 							 주요 경력
 						</div>
 						<div class="block">
-							${essayboardDTO.mentor_career }
+							${mentorDTO.mentor_career }
 						</div>
-						<c:if test="${essayboardDTO.mentor_etc != null }">
+						<c:if test="${mentorDTO.mentor_etc != null }">
 						<div class="block-title">
 							 기타 사항
 						</div>
 						<div class="block">
-							${essayboardDTO.mentor_etc}
+							${mentorDTO.mentor_etc}
 						</div>
 						</c:if>
 					</div>
@@ -122,11 +127,11 @@
 								 고맙습니다
 							</div>
 							<div class="count">
-								 (${reTotal })
+								 <%-- (${reTotal }) --%>
 							</div>
 						</div>
 						<div class="row no-gap">
-						<c:forEach var="relist" items="${relist }">
+						<%-- <c:forEach var="relist" items="${relist }">
 							<div id='thanks-notes'>
 								<div class="block mentee-detail-block thanks-note-card">
 									<div class="mentee-info">
@@ -145,7 +150,7 @@
 									</div>
 								</div>
 							</div>
-						</c:forEach>
+						</c:forEach> --%>
 						</div>
 						<div class="text-align-center">
 							<button class="button load-more" id="loadMoreThanks">더 보기</button>
@@ -175,12 +180,14 @@
 											</a>
 										</div>
 										<div class="card-footer">
-											<a class="color-gray js-bookmark" type="external" data-remote="true" rel="nofollow" data-method="post" href="/mentor_posts/6385/bookmarks">
+											<a class="color-gray js-bookmark" type="external" data-remote="true" rel="nofollow" data-method="post" href="/mentor_posts/6385/bookmarks" style="right: 0px;
+    position: unset;
+    margin: 0px 0px;">
 											<i class="far fa-bookmark" aria-hidden="true"></i>
 											${list.essayboard_scrap } </a>
 											<div class="created-at">
 												<small>
-												${list.logtime } </small>
+												${list.essayboard_logtime } </small>
 											</div>
 										</div>
 									</div>
