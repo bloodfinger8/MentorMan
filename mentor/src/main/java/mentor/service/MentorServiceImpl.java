@@ -95,8 +95,9 @@ public class MentorServiceImpl implements MentorService{
 	}
 
 	@Override
-	public List<MentorDTO> getMentorAttentionList(int mentor_flag) {
-		return mentorDAO.getMentorAttentionList(mentor_flag);
+	public List<MentorDTO> getMentorAttentionList(Map<String, Object> map) {
+		return mentorDAO.getMentorAttentionList(map);
 	}
+
 
 }

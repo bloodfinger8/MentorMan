@@ -124,6 +124,10 @@
 					<input type="hidden" id="question_seq" name="question_seq" value="${questionDTO.question_seq}">
 					<input type="hidden" id="pg" name="pg" value="${pg}">
   					<input type="hidden" id="followVal" name="followVal" value="${follow}">
+  					<!-- 소켓 알림으로 사용 -->
+  					<input type="hidden" id="memNicname" name="memNicname" value="${memNicname}">
+  					<input type="hidden" id="member_nickname" name="member_nickname" value="${mentorDTO.member_nickname}">
+  					
   					<input type="hidden" id="followed_email" name="followed_email" value="${mentorDTO.mentor_email}">
   				</form>
 			</div>
@@ -132,58 +136,6 @@
 </div>
 <script src="../js/mentor.js"></script>
 <script>
-var seq = $('#mentor_seq').val();
-
-$(function(){
-	//alert($('#followVal').val());
-	//alert($('#followA').attr('class'));
-	
-	if($('#followVal').val() === '1'){
-		$('#followA').addClass('button-fill');
-	}else{
-		$('#followA').removeClass('button-fill');
-	}
-});
-		
-$('.mentor_'+seq).on('click' , function(){
-	var followBtn = $(this);
-	
-	var sendData = {
-			'followed_email' : $('#followed_email').val(),
-			'follow' : $('#followVal').val()
-		};
-	
-	$.ajax({
-		url : '/mentor/mentor/mentorFollow',
-		type : 'POST',
-		data : sendData,
-		success : function(data) {
-			
-			if (data == 1) {
-				followBtn.addClass('button-fill');
-				var toastIcon = app.toast.create({
-					  text: '관심멘토에 등록 되었습니다',
-					  position: 'center',
-					  closeTimeout: 2000,
-					});
-				toastIcon.open();
-			}else{
-				followBtn.removeClass('button-fill');
-				var toastIcon = app.toast.create({
-					  text: '관심멘토에서 삭제 되었습니다',
-					  position: 'center',
-					  closeTimeout: 2000,
-					});
-				toastIcon.open();
-			}
-			$('#followVal').val(data);
-		},
-		error : function(err){
-			console.log("err");
-		}
-		
-	});
-});
 
 
 </script>

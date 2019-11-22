@@ -71,6 +71,7 @@
 		       , mt.mentor_department
 		       , mt.mentor_represent
 		       , mt.mentoring_code
+		       , mt.mentor_email
 		       , j.job_type
 		       , qs.question_seq
 		       , qs.member_email

@@ -99,7 +99,8 @@ public class MentorDAOMybatis implements MentorDAO {
 	}
 
 	@Override
-	public List<MentorDTO> getMentorAttentionList(int mentor_flag) {
-		return sqlSession.selectList("mentorSQL.getMentorAttentionList" , mentor_flag);
+	public List<MentorDTO> getMentorAttentionList(Map<String, Object> map) {
+		return sqlSession.selectList("getMentorAttentionList" , map);
 	}
+
 }
