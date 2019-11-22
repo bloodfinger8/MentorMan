@@ -243,7 +243,6 @@ public class EssayboardController {
 		
 		
 		ModelAndView modelAndView = new ModelAndView();	
-		
 
 		essayboardPaging.setCurrentPage(Integer.parseInt(pg));
 		essayboardPaging.setPageBlock(3);

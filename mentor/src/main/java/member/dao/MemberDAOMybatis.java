@@ -43,8 +43,7 @@ public class MemberDAOMybatis implements MemberDAO {
 	 * @author : ginkgo1928 @date : 2019. 11. 5.*/
 	@Override
 	public void write(Map<String, String> map) {
-		System.out.println("map:::: " + map);
-		 sqlSession.insert("memberSQL.write",map);
+		sqlSession.insert("memberSQL.write",map);
 	}
 	
 	/** @Title : 로그인 처리
@@ -54,9 +53,12 @@ public class MemberDAOMybatis implements MemberDAO {
 		memberDTO=sqlSession.selectOne("memberSQL.login",map);
 		return  memberDTO;
 	}
+	/**
+	 *  질문 리스트
+	 */
 	@Override
-	public List<MentorDTO> getQandA(String member_email) {
-		return sqlSession.selectList("memberSQL.getQandA", member_email);
+	public List<MentorDTO> getQandA(Map<String, String> map) {
+		return sqlSession.selectList("memberSQL.getQandA", map);
 	}
 	
 	/** @Title : 비밀번호 설정
@@ -74,5 +76,27 @@ public class MemberDAOMybatis implements MemberDAO {
 		return memberDTO;
 	}
 	
+	/**
+	 * Q&A 페이징
+	 */
+	@Override
+	public int getTotalA(String member_email) {
+		return sqlSession.selectOne("memberSQL.getTotalA", member_email);
+	}
+	
+	@Override
+	public MentorDTO getMentor_info(Map<String, String> map) {
+		return sqlSession.selectOne("memberSQL.getMentor_info", map);
+	}
+
+	@Override
+	public List<MentorDTO> getMentoring_type(Map<String, String[]> arrayMap) {
+		return sqlSession.selectList("memberSQL.getMentoring_type", arrayMap);
+	}
+
+	@Override
+	public void questionDelete(int question_seq) {
+		sqlSession.delete("memberSQL.questionDelete",question_seq);
+	}
 
 }

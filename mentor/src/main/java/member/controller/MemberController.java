@@ -27,6 +27,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import kakao.controller.KakaoApi;
 
 import member.bean.MemberDTO;
+import member.bean.QandAPaging;
 import member.service.MemberMailService;
 import member.service.MemberService;
 import mentor.bean.MentorDTO;
@@ -52,7 +53,10 @@ public class MemberController {
 	private MemberDTO memberDTO;
 	@Autowired
 	private MemberMailService mailService; 
-
+	@Autowired
+	private QandAPaging QandAPag;
+	
+	
 	// WriteForm 화면
 	@RequestMapping(value = "writeForm", method = RequestMethod.GET)
 	public String writeForm(Model model) {
@@ -93,7 +97,7 @@ public class MemberController {
 	@RequestMapping(value = "write", method = RequestMethod.POST)
 	public String write(@RequestParam Map<String, String> map, @RequestParam MultipartFile member_profile, Model model) {
 		//회원 이메일 폴더가 자동생성으로 생성된게 아니라 회원이메일 폴더 만들어주고 넣어야 한다.
-		String filePath="C:/Users/yong/Documents/GitHub/MentorMan/mentor/src/main/webapp/storage/"+map.get("member_email");
+		String filePath="C:/github/MentorMan/mentor/src/main/webapp/storage/"+map.get("member_email");
 		String fileName = member_profile.getOriginalFilename();
 		System.out.println("프로필 이미지 파일명: " + fileName);
 		// 폴더만들기
@@ -121,18 +125,19 @@ public class MemberController {
 
 	// LoginForm
 	/**
-	 * @Title : 카카오 로그인 + 네이버 로그인  url 추가
+	 * @Title : 카카오 로그인 + 네이버 로그인  url 추가 + flag 추가 11/19
 	 * @Author : yong
 	 * @Date : 2019. 11. 16.
 	 * @Method Name : loginForm
 	 */
-	@RequestMapping(value = "loginForm", method = RequestMethod.GET)
-	public String loginForm(Model model, HttpSession session) {
+	@RequestMapping(value = "loginForm", method = {RequestMethod.GET, RequestMethod.POST})
+	public String loginForm(Model model, HttpSession session, @RequestParam(required = false, defaultValue = "0") String flag) {
 		// 카카오 url
 		String kakaoUrl = KakaoApi.getAuthorizationUrl(session);
 		// 네이버 url
 		String naverUrl = naverLoginBO.getAuthorizationUrl(session);
 		
+		model.addAttribute("flag", flag);
 		model.addAttribute("kakaoUrl", kakaoUrl);
 		model.addAttribute("naverUrl", naverUrl);
 		model.addAttribute("display", "/member/loginForm.jsp");
@@ -174,12 +179,53 @@ public class MemberController {
 	 * @Author : kujun95, @Date : 2019. 11. 18.
 	 */
 	@RequestMapping(value = "myQandA", method = RequestMethod.GET)
-	public String myQandA(Model model, HttpSession session){
+	public String myQandA(@RequestParam int pg ,Model model, HttpSession session){
+		
 		MemberDTO memberDTO = (MemberDTO) session.getAttribute("memDTO");
-		List<MentorDTO> list = memberService.getQandA(memberDTO.getMember_email());
+		int endNum = pg*3;
+		int startNum = endNum-2;
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("startNum", startNum+"");
+		map.put("endNum", endNum+"");
+		map.put("member_email", memberDTO.getMember_email());
+		List<MentorDTO> list = memberService.getQandA(map);
+		int totalA = memberService.getTotalA(memberDTO.getMember_email());
+		QandAPag.setCurrentPage(pg);
+		QandAPag.setPageBlock(3);
+		QandAPag.setPageSize(3);
+		QandAPag.setTotalA(totalA);
+		QandAPag.makePagingHTML();
+		model.addAttribute("pg", pg);
+		model.addAttribute("QandAPag", QandAPag);
 		model.addAttribute("list", list);
 		model.addAttribute("memberDTO", memberDTO);
 		model.addAttribute("display", "/member/myQandA.jsp");
+		return "/main/index";
+	}
+	/**
+	 * 나의 질문
+	 * @Title : 메소드 간단히 설명
+	 * @Author : kujun95, @Date : 2019. 11. 19.
+	 */
+	@RequestMapping(value = "myQuestionsForm", method = RequestMethod.GET)
+	public String myQuestionsForm(@RequestParam int seq, @RequestParam int pg, @RequestParam int qsseq, Model model, HttpSession session) {
+		MemberDTO memberDTO = (MemberDTO) session.getAttribute("memDTO");
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("member_email", memberDTO.getMember_email());
+		map.put("mentor_seq", seq+"");
+		map.put("question_seq", qsseq+"");
+		MentorDTO mentorDTO = memberService.getMentor_info(map);
+		String[] mentoringArray = mentorDTO.getMentoring_code().split(",");
+		Map<String, String[]> arrayMap = new HashMap<String, String[]>();
+		arrayMap.put("mentoring_code", mentoringArray);
+		List<MentorDTO> list = memberService.getMentoring_type(arrayMap);
+		
+		model.addAttribute("seq", seq);
+		model.addAttribute("pg", pg);
+		model.addAttribute("qsseq", qsseq);
+		model.addAttribute("list", list);
+		model.addAttribute("mentorDTO", mentorDTO);
+		model.addAttribute("display", "/member/myQuestionsForm.jsp");
 		return "/main/index";
 	}
 	
@@ -189,7 +235,6 @@ public class MemberController {
  	public String modifyForm(Model model) {
 		model.addAttribute("display", "/member/modifyForm.jsp");
 		return "/main/index";
- 	
  	}
 	/** @Title : 비밀번호 재설정.
 	 * @author : ginkgo1928  @date : 2019. 11. 12.*/
@@ -254,4 +299,16 @@ public class MemberController {
 		memberService.newPwdCommit(map);	
 	}
 	
+
+	/**
+	 * @Title : 질문 삭제
+	 * @Author : kujun95, @Date : 2019. 11. 20.
+	 */
+	@RequestMapping(value = "questionDelete", method=RequestMethod.POST)
+	@ResponseBody
+	public void questionDelete(@RequestParam int question_seq) {
+		memberService.questionDelete(question_seq);
+	}
+	
 }
+

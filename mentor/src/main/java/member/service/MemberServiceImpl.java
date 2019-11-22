@@ -2,8 +2,13 @@ package member.service;
 
 import java.util.List;
 import java.util.Map;
+
+import javax.inject.Inject;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+
 import member.bean.MemberDTO;
 import member.dao.MemberDAO;
 import mentor.bean.MentorDTO;
@@ -14,8 +19,10 @@ import mentor.bean.MentorDTO;
  */
 @Service(value="memberService")
 public class MemberServiceImpl implements MemberService {
-	
-	@Autowired private MemberDAO memberDAO;
+	@Autowired 
+	private MemberDAO memberDAO;
+	@Inject
+	private JavaMailSender mailSender;
 	
 	/** @Title : 닉네임 중복확인.
 	 * @author : ginkgo1928 @date : 2019. 11. 5.*/
@@ -44,8 +51,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 	/* 나의 질문 답변 */
 	@Override
-	public List<MentorDTO> getQandA(String member_email) {
-		return memberDAO.getQandA(member_email);
+	public List<MentorDTO> getQandA(Map<String, String> map) {
+		return memberDAO.getQandA(map);
 	}
 	
 	/* 비밀번호 찾기 */
@@ -61,11 +68,39 @@ public class MemberServiceImpl implements MemberService {
 	public MemberDTO newPwdCommit(Map<String, String> map) {
 		return memberDAO.newPwdCommit(map);
 	}
+	
+	/**
+	 * Q&A페이징
+	 */
+	@Override
+	public int getTotalA(String member_email) {
+		return memberDAO.getTotalA(member_email);
+	}
+	
+	/**
+	 * Q&A 멘토 정도 및 질문 내용
+	 */
+	@Override
+	public MentorDTO getMentor_info(Map<String, String> map) {
+		return memberDAO.getMentor_info(map);
+	}
+
+	@Override
+	public List<MentorDTO> getMentoring_type(Map<String, String[]> arrayMap) {
+		return memberDAO.getMentoring_type(arrayMap);
+	}
+
+	@Override
+	public void questionDelete(int question_seq) {
+		memberDAO.questionDelete(question_seq);
+	}
 }
 
 	
 
 	
+
+
 	
 
-
+	

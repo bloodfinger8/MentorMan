@@ -25,6 +25,7 @@ import meetingboard.service.MeetingboardService;
 import member.bean.MemberDTO;
 import mentee.bean.MenteeDTO;
 import mentee.service.MenteeService;
+import mentor.bean.MentorDTO;
 import participation.bean.OrderDTO;
 import participation.bean.OrderHistoryPaging;
 import participation.service.ParticipationService;
@@ -46,12 +47,30 @@ public class MenteeController {
 	 */
 	@RequestMapping(value = "menteeUserForm", method = RequestMethod.GET)
 	public String menteeWriteForm(Model model, HttpSession session) { //세션으로 값을 뿌려줘야됨
-		MemberDTO memberDTO = (MemberDTO) session.getAttribute("memDTO");
+		MemberDTO memDTO = (MemberDTO) session.getAttribute("memDTO");
+		MemberDTO memberDTO = menteeService.getSaveMember(memDTO.getMember_email());
 		model.addAttribute("memberDTO", memberDTO);
 		model.addAttribute("display", "/mentee/menteeUserForm.jsp");
 		model.addAttribute("display2", "/mentee/menteeUserSetting.jsp");
 		return "/main/index";
 	}
+	
+	/**
+	 * @Title : 닉네임 중복확인
+	 * @Author : kujun95, @Date : 2019. 11. 18.
+	 */
+	@RequestMapping(value = "chackNickname", method = RequestMethod.POST)
+	@ResponseBody
+	public String chackNickname(@RequestParam String member_nickname) {
+		MemberDTO members = menteeService.getNickname(member_nickname);
+		
+		if(members != null){
+			return "on";
+		}else {
+			return "ok";
+		}
+	}
+	
 	/**
 	 * @Title : 계정설정 프로필 수정
 	 * @Author : kujun95, @Date : 2019. 11. 12.
@@ -192,7 +211,7 @@ public class MenteeController {
 		map.put("member_email", member_email);
 		
 		List<OrderDTO> orderHistoryList = participationService.getOrderHistoryUsingMemEmail(map);
-		
+
 		// 페이징 처리
 		int totalOrderHistory = participationService.getTotalHistory(member_email);
 		orderHistoryPaging.setCurrentPage(Integer.parseInt(pg));
@@ -235,5 +254,49 @@ public class MenteeController {
 		reviewDTO.setMentee_email(memDTO.getMember_email());
 		meetingboardService.meetingReviewWrite(reviewDTO);
 		return "redirect:/mentee/menteeOrderHistory";
+	}
+	
+	/**
+	 * @Title : 모임 후기 수정 창
+	 * @Author : yong
+	 * @Date : 2019. 11. 20.
+	 * @Method Name : meetingReviewModifyForm
+	 */
+	@RequestMapping(value = "meetingReviewModifyForm", method = RequestMethod.GET)
+	public String meetingReviewModifyForm(@RequestParam String seq, @RequestParam String mentors, Model model) {
+		int review_seq = Integer.parseInt(seq);
+		int mentor_seq = Integer.parseInt(mentors);
+		ReviewDTO reviewDTO = meetingboardService.getMeetingReview(review_seq);
+		model.addAttribute("reviewDTO", reviewDTO);
+		model.addAttribute("mentor_seq", mentor_seq);
+		model.addAttribute("display","/meetingboard/meetingReviewModifyForm.jsp");
+		return "/main/index";
+	}
+	
+	/**
+	 * @Title : 모임 후기 수정 완료
+	 * @Author : yong
+	 * @Date : 2019. 11. 20.
+	 * @Method Name : meetingReviewModify
+	 */
+	@RequestMapping(value = "meetingReviewModify", method = RequestMethod.POST)
+	public String meetingReviewModify(@ModelAttribute ReviewDTO reviewDTO, @RequestParam String mentors, Model model) {
+		int mentor_seq = Integer.parseInt(mentors);
+		meetingboardService.meetingReviewModify(reviewDTO);
+		return "redirect:/mentor/mentorInfoView?mentors=" + mentor_seq;
+	}
+	
+	/**
+	 * @Title : 모임 후기 삭제
+	 * @Author : yong
+	 * @Date : 2019. 11. 20.
+	 * @Method Name : meetingReviewDelete
+	 */
+	@RequestMapping(value = "meetingReviewDelete", method = RequestMethod.GET)
+	public String meetingReviewDelete(@RequestParam String seq, @RequestParam String mentors) {
+		int review_seq = Integer.parseInt(seq);
+		int mentor_seq = Integer.parseInt(mentors);
+		meetingboardService.meetingReviewDelete(review_seq);
+		return "redirect:/mentor/mentorInfoView?mentors=" + mentor_seq;
 	}
 }
