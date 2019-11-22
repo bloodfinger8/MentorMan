@@ -167,13 +167,14 @@ public class MentorController {
 		
 		//로그인 세션
 		memberDTO = (MemberDTO) session.getAttribute("memDTO");
+		
 		Map<String, String> followMap = new HashMap<String, String>();
 		followMap.put("memEmail" , memberDTO.getMember_email());
 		followMap.put("mentorEmail" , mentorDTO.getMentor_email());
 		
 		//팔로우 찾기
 		int follow = mentorService.getFollowCheck(followMap);
-		
+		model.addAttribute("memNicname" , memberDTO.getMember_nickname());
 		model.addAttribute("list", list);
 		model.addAttribute("follow" , follow);
 		model.addAttribute("mentorDTO", mentorDTO);

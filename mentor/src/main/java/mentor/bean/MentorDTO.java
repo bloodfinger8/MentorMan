@@ -27,6 +27,7 @@ public class MentorDTO {
 	
 	
 	//---join 멘토 찾기-------------------------
+	private String member_nickname;
 	private String mentoring_type;
 	private String member_name;
 	private String member_profile;

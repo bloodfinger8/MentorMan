@@ -20,7 +20,7 @@
 		    <div class="name">
 		      <span class="mentor-name">${mentorDTO.member_name}<small>멘토</small></span>
 		
-		        <a class="button col js-bookmark user_43427" data-params="followed_id=43427" data-disable-with="..." type="external" data-remote="true" rel="nofollow" data-method="post" href="/relationships">팔로우</a>
+		        <a class="button col js-bookmark mentor_${seq}" id="followA" data-params="followed_id=43427" data-disable-with="..." type="external" data-remote="true" rel="nofollow" data-method="post" href="/relationships">팔로우</a>
 		
 		        <a class="button button-small button-fill" type="external" href="/mentor/member/myQuestionsForm?pg=${pg}&seq=${seq}&qsseq=${qsseq}">질문하기</a></div>
 		
@@ -103,5 +103,14 @@
     </div>
   </div>
 </div>
+<input type="hidden" id="mentor_seq" name="mentor_seq" value="${seq}">
+<input type="hidden" id="followVal" name="followVal" value="${follow}">
+<!-- 소켓 알림으로 사용 -->
+<input type="hidden" id="memNicname" name="memNicname" value="${memNicname}">
+<input type="hidden" id="member_nickname" name="member_nickname" value="${mentorDTO.member_nickname}">
+<!-- 팔로우에 넣을 값 -->
+<input type="hidden" id="followed_email" name="followed_email" value="${mentorDTO.mentor_email}">
+
 <input type="hidden" id="question_seq" value="${qsseq}">
 <script src="../js/member.js"></script>
+<script src="../js/mentor.js"></script>

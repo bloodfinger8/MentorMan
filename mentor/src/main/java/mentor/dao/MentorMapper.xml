@@ -49,7 +49,9 @@
 		select count(*) from mentor where mentor_flag = #{mentor_flag}
 	</select>
 	<select id="getMentor_info" parameterType="int" resultType="mentor">
-		select mb.member_name
+		select 
+		mb.member_name
+		, mb.member_nickname
         , mb.member_profile
         , j.job_type
         , mentor_seq

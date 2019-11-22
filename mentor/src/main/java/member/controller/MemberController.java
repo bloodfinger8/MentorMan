@@ -31,6 +31,7 @@ import member.bean.QandAPaging;
 import member.service.MemberMailService;
 import member.service.MemberService;
 import mentor.bean.MentorDTO;
+import mentor.service.MentorService;
 import naver.controller.NaverLoginBO;
 
 
@@ -55,7 +56,8 @@ public class MemberController {
 	private MemberMailService mailService; 
 	@Autowired
 	private QandAPaging QandAPag;
-	
+	@Autowired
+	private MentorService mentorService;
 	
 	// WriteForm 화면
 	@RequestMapping(value = "writeForm", method = RequestMethod.GET)
@@ -208,7 +210,7 @@ public class MemberController {
 	 */
 	@RequestMapping(value = "myQuestionsForm", method = RequestMethod.GET)
 	public String myQuestionsForm(@RequestParam int seq, @RequestParam int pg, @RequestParam int qsseq, Model model, HttpSession session) {
-		MemberDTO memberDTO = (MemberDTO) session.getAttribute("memDTO");
+		memberDTO = (MemberDTO) session.getAttribute("memDTO");
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("member_email", memberDTO.getMember_email());
 		map.put("mentor_seq", seq+"");
@@ -219,6 +221,14 @@ public class MemberController {
 		arrayMap.put("mentoring_code", mentoringArray);
 		List<MentorDTO> list = memberService.getMentoring_type(arrayMap);
 		
+		Map<String, String> followMap = new HashMap<String, String>();
+		followMap.put("memEmail" , memberDTO.getMember_email());
+		followMap.put("mentorEmail" , mentorDTO.getMentor_email());
+		//팔로우 찾기
+		int follow = mentorService.getFollowCheck(followMap);
+		System.out.println(mentorDTO.getMentor_email());
+		model.addAttribute("follow" , follow);
+		model.addAttribute("memNicname" , memberDTO.getMember_nickname());
 		model.addAttribute("seq", seq);
 		model.addAttribute("pg", pg);
 		model.addAttribute("qsseq", qsseq);
@@ -247,14 +257,17 @@ public class MemberController {
 	@RequestMapping(value = "setmemberpwd", method = RequestMethod.POST)
 	@ResponseBody
 	public String setmemberpwd(@RequestParam String member_name, String member_email, HttpServletRequest request,
-			HttpServletResponse response,Model model) {
+											 HttpServletResponse response,Model model) {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("member_name", member_name);
 		map.put("member_email", member_email);
 		memberDTO = memberService.setmemberpwd(map);
 		if (memberDTO != null) {
 			//인증 코드 생성
+			System.out.println("시작");
 			String auauthKey=mailService.mailSendWithUserKey(member_email, member_name);
+			System.out.println("auauthKey : " + auauthKey);
+			
 			Cookie cookie = new Cookie("Cookie_Email", auauthKey);
 			cookie.setMaxAge(60 * 3);
 			cookie.setPath("/");
