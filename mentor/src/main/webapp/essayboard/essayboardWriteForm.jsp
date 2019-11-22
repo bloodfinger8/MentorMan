@@ -7,7 +7,7 @@
    <div class="page-content">
       <div class="block-title strong-title">에세이 작성</div>
       <div class="block inset">
-         <form method="post" id="essayboardWriteForm" action="/mentor/essayboard/essayboardWrite">
+         <form method="post" id="essayboardWriteForm" action="/essayboard/essayboardWrite">
             <div class="list form-list no-hairlines">
                <ul>
                   <div class="label-title">

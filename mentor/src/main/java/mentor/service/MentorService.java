@@ -3,8 +3,9 @@ package mentor.service;
 import java.util.List;
 import java.util.Map;
 
-import mentee.bean.MenteeDTO;
+import meetingboard.bean.ReviewDTO;
 import mentor.bean.MentorDTO;
+import mentor.bean.MentorFollowDTO;
 
 public interface MentorService {
 
@@ -24,8 +25,23 @@ public interface MentorService {
 
 	public List<MentorDTO> getQuestion_flag(Map<String, String> flagCheck_map);
 
+	public List<MentorDTO> getMentorEssayList(int mentor_seq);
+
+	public List<ReviewDTO> getMentorReviewList(int mentor_seq);
+
+	public MentorDTO getMentorInfomation(int mentor_seq);
+
 	public MentorDTO questionModifyForm(int qsseq);
 
 	public int questionModify(Map<String, String> map);
+
+	public int getFollowCheck(Map<String, String> followMap);
+
+	public void mentorFollowInsert(MentorFollowDTO mentorFollowDTO);
+
+	public void mentorFollowDelete(MentorFollowDTO mentorFollowDTO);
+
+	public List<MentorDTO> getMentorAttentionList(int mentor_flag);
+
 
 }

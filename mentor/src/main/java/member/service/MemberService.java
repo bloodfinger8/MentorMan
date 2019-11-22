@@ -2,6 +2,7 @@ package member.service;
 
 import java.util.List;
 import java.util.Map;
+
 import member.bean.MemberDTO;
 import mentee.bean.MenteeDTO;
 import mentor.bean.MentorDTO;
@@ -43,6 +44,7 @@ public interface MemberService {
 	public void questionDelete(int question_seq);
 
 	public void answerModify(Map<String, String> map);
+
 
 
 	

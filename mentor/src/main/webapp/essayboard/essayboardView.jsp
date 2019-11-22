@@ -6,14 +6,13 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
 
-<div class="page navbar-fixed mentor_posts index" style="border: 1px solid red;">
+<div class="page navbar-fixed mentor_posts index">
 	<div class="page-content">
 		<div class="view view-main">
 			<div class="page navbar-fixed mentor_posts show" data-name="mentor_posts-show">
 				<div class="page-content">
 						
-					<div class="post-block-container" style="border: 1px solid blue;">
-						<div class="hit">조회수(${essayHit })</div>
+					<div class="post-block-container">
 						
 						<div class="mentor-post-detail-block">
 							<h1 class="mentor-post-title" style="display : flex">
@@ -22,20 +21,22 @@
 							<div class="trix-content">
 								${essayboardDTO.essayboard_content }
 							</div>
+							<c:if test="${memSeq == member_seq}">
+							<div style="display: inline-block; padding-top: 30px;">
+								<a id="essay_write_btn" style="width: 100px; float: right;" class="button" type="external" href="/mentor/essayboard/essayboardDelete?seq=${seq }">
+			            			<i class="fas fa-pencil-alt"></i>
+			            			글삭제
+			            		</a>
+								<a id="essay_write_btn" style="width: 100px; float: right;" class="button" type="external" href="/mentor/essayboard/essayboardModifyForm?seq=${seq }&pg=${pg}">
+				            		<i class="fas fa-pencil-alt"></i>
+				            			글수정
+								</a>
+							</div>
+							</c:if>
 							
 							<div class="block button-wrap">
-							<div style="display: inline-block;">
-							<a id="essay_write_btn" style="width: 100px; float: right;" class="button" type="external" href="/mentor/essayboard/essayboardDelete?seq=${seq }">
-		            			<i class="fas fa-pencil-alt"></i>
-		            			글삭제
-		            		</a>
-							<a id="essay_write_btn" style="width: 100px; float: right;" class="button" type="external" href="/mentor/essayboard/essayboardModifyForm?seq=${seq }&pg=${pg}">
-			            		<i class="fas fa-pencil-alt"></i>
-			            			글수정
-							</a>
-						</div>
 								<div class="action-block text-align-center mentor_post_6618">
-									<a class="color-gray" type="external" data-remote="true" rel="nofollow" data-method="post" href="/mentor_posts/6618/bookmarks">
+									<a class="color-gray" type="external" data-remote="true" rel="nofollow" data-method="post" href="/mentor_posts/6618/bookmarks" >
 									<div class="block button button-big button-inline color-gray js-bookmark">
 										<i class="far fa-bookmark" aria-hidden="true"></i>
 										${essayboardDTO.essayboard_scrap }
@@ -51,13 +52,18 @@
 								<div class="mentor-image img-circle">
 									<a type="external" href="/mentors/14134">
 									<!-- 멘토 이미지 -->
-									<img width="100" height="100" src=""/>
+									  <c:if test="${mentorDTO.member_profile != 'profile.jpg'}">
+							            <img width="50" height="50" src="../storage/${mentorDTO.mentor_email}/${mentorDTO.member_profile}">
+							          </c:if>
+							          <c:if test="${mentorDTO.member_profile == 'profile.jpg'}">
+							            <img width="50" height="50" src="../image/profile.jpg">
+							          </c:if>
 									</a>
 								</div>
 								<div class="block mentor-info">
 									<div class="name">
 										<span class="mentor-name">
-										${essayboardDTO.member_name } <small>멘토</small>
+											${mentorapplyDTO.member_name } <small>멘토</small>
 										</span>
 										<a class="button col js-bookmark user_14134" data-params="followed_id=14134" data-disable-with="..." type="external" data-remote="true" rel="nofollow" data-method="post" href="/relationships">
 										팔로우 </a>
@@ -65,7 +71,7 @@
 										질문하기 </a>
 									</div>
 									<div class="job">
-										 현대홈쇼핑 · 고객보호팀
+										 ${mentorDTO.mentor_company } · ${mentorDTO.mentor_department }
 									</div>
 									<div class="detail-block">
 										<div class="mentoring-info">
@@ -73,7 +79,7 @@
 												 대표 멘토링 분야
 											</div>
 											<div class="mentoring-type-block">
-												 ${essayboardDTO.mentor_represent }
+												 ${mentorDTO.mentor_represent }
 											</div>
 										</div>
 										<div class="mentoring-info">
@@ -84,7 +90,7 @@
 												<a type="external" href="/mentors?job_type%5B%5D=7">
 												<div class="chip chip-outline no-border-radius">
 													<div class="chip-label">
-														 ${essayboardDTO.job_type }
+														 ${mentorDTO.job_type }
 													</div>
 												</div>
 												</a>

@@ -6,7 +6,6 @@
 
 	<!-- 회원가입 처리 -->
 	<insert id="write" parameterType="java.util.Map">
-
 		<if test="member_profile == ''">
 			insert into mentors_member(member_seq,member_name,member_nickname,member_email,member_pwd)
 			values(member_seq.nextval, #{member_name},#{member_nickname},#{member_email},#{member_pwd})
@@ -130,7 +129,8 @@
 	<update id="newPwdCommit" parameterType="java.util.Map">
 		update mentors_member set member_pwd=#{member_pwd} where member_name=#{member_name} and member_email=#{member_email}
 	</update>
-	
+
+	<!-- 질문 삭제  -->
 	<delete id="questionDelete" parameterType="Map">
 	begin
 		delete from answer where question_seq = #{question_seq};
@@ -171,7 +171,7 @@
 	<update id="answerModify" parameterType="Map">
 		update answer set answer_content = #{answer_content}, answer_logtime = sysdate where question_seq = #{question_seq}
 	</update>
-	
+  
 </mapper>
 
 	

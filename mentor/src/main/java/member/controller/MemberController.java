@@ -125,18 +125,19 @@ public class MemberController {
 
 	// LoginForm
 	/**
-	 * @Title : 카카오 로그인 + 네이버 로그인  url 추가
+	 * @Title : 카카오 로그인 + 네이버 로그인  url 추가 + flag 추가 11/19
 	 * @Author : yong
 	 * @Date : 2019. 11. 16.
 	 * @Method Name : loginForm
 	 */
-	@RequestMapping(value = "loginForm", method = RequestMethod.GET)
-	public String loginForm(Model model, HttpSession session) {
+	@RequestMapping(value = "loginForm", method = {RequestMethod.GET, RequestMethod.POST})
+	public String loginForm(Model model, HttpSession session, @RequestParam(required = false, defaultValue = "0") String flag) {
 		// 카카오 url
 		String kakaoUrl = KakaoApi.getAuthorizationUrl(session);
 		// 네이버 url
 		String naverUrl = naverLoginBO.getAuthorizationUrl(session);
 		
+		model.addAttribute("flag", flag);
 		model.addAttribute("kakaoUrl", kakaoUrl);
 		model.addAttribute("naverUrl", naverUrl);
 		model.addAttribute("display", "/member/loginForm.jsp");
@@ -156,7 +157,7 @@ public class MemberController {
 		MemberDTO memberDTO = memberService.login(map);
 		
 		if (memberDTO != null) {
-      memberDTO.setMember_pwd("");
+			memberDTO.setMember_pwd("");
 			session.setAttribute("memDTO", memberDTO);
 			session.setMaxInactiveInterval(60*60*24); // 세션 1일 유지
 			return "login_ok";
@@ -331,6 +332,7 @@ public class MemberController {
 		memberService.newPwdCommit(map);	
 	}
 	
+
 	/**
 	 * @Title : 질문 삭제
 	 * @Author : kujun95, @Date : 2019. 11. 20.
