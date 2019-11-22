@@ -273,9 +273,13 @@ public class MentorController {
 	@RequestMapping(value = "mentorAttention", method = RequestMethod.GET)
 	public String mentorAttention(Model model , HttpSession session) {
 		memberDTO = (MemberDTO) session.getAttribute("memDTO");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("memEmail" , memberDTO.getMember_email());
+		map.put("mentor_flag", 1);
 		//승인된 멘토 이면서 나를 팔로우한 팔로워 list
-		int mentor_flag = 1;
-		List<MentorDTO> list = mentorService.getMentorAttentionList(mentor_flag);
+		System.out.println("map :::: " + map);
+		List<MentorDTO> list = mentorService.getMentorAttentionList(map);
 		
 		model.addAttribute("list", list);
 		model.addAttribute("display", "/mentor/mentorAttention.jsp");
