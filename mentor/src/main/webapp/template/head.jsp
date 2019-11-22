@@ -52,7 +52,7 @@
 							<ul>
 								<li><a type="external" href="/mentor/mentor/mentorfindForm?pg=1">멘토찾기</a></li>
 								<li><a type="external" href="/mentor/noticeboard/noticeboardList">공지게시판</a></li>
-								<li><a type="external" href="/mentor/essayboard/essayboardList">에세이</a></li>
+								<li><a type="external" href="/mentor/essayboard/essayboardList?flag=0">에세이</a></li>
 								<li><a type="external" href="/mentor/meetingboard/meetingboardList">모임</a></li>
 								<li><a type="external" href="/mentor/mentor/mentorapplyForm">멘토지원하기</a></li>
 							</ul>
@@ -64,8 +64,8 @@
 								<li>
 									<a type="external" href="/mentor/member/myQandA">나의 질문/답변 <span class="badge color-red alim">15</span></a>
 								</li>
-								<li><a type="external" href="">관심콘텐츠</a></li>
 								<li><a type="external" href="">관심멘토</a></li>
+								<li><a type="external" href="/mentor/essayboard/essayboardAttention">관심에세이</a></li>
 							</ul>
 						</div>
 
