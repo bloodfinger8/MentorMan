@@ -52,8 +52,8 @@ public class MentorDAOMybatis implements MentorDAO {
 	}
 
 	@Override
-	public MentorDTO getQuestion_flag(Map<String, String> flagCheck_map) {
-		return sqlSession.selectOne("mentorSQL.getQuestion_flag", flagCheck_map);
+	public List<MentorDTO> getQuestion_flag(Map<String, String> flagCheck_map) {
+		return sqlSession.selectList("mentorSQL.getQuestion_flag", flagCheck_map);
 	}
 	
 	@Override

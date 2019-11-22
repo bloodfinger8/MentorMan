@@ -48,7 +48,7 @@ public class MentorServiceImpl implements MentorService{
 	}
 
 	@Override
-	public MentorDTO getQuestion_flag(Map<String, String> flagCheck_map) {
+	public List<MentorDTO> getQuestion_flag(Map<String, String> flagCheck_map) {
 		return mentorDAO.getQuestion_flag(flagCheck_map);
 	}
 

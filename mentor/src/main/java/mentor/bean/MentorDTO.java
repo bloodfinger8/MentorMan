@@ -1,6 +1,10 @@
 package mentor.bean;
 
+import java.sql.Date;
+
 import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Data;
 
@@ -37,4 +41,17 @@ public class MentorDTO {
 	private String question_content;
 	private int question_flag;
 	private int question_seq;
+	
+	//---join 질문한 사람 데이터------------------
+	private int member_seq;
+	private int member_flag;
+	private String member_email;
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd")
+	private Date question_logtime;
+	
+	//---join 답변---------------------------
+	private int answer_seq;
+	private String answer_content;
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd")
+	private Date answer_logtime;
 }

@@ -22,7 +22,7 @@ public interface MentorService {
 
 	public void mentorQuestionsSuccess(Map<String, String> map);
 
-	public MentorDTO getQuestion_flag(Map<String, String> flagCheck_map);
+	public List<MentorDTO> getQuestion_flag(Map<String, String> flagCheck_map);
 
 	public MentorDTO questionModifyForm(int qsseq);
 

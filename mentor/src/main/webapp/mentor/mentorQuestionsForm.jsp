@@ -22,8 +22,6 @@
 						</span>
 						<a class="button col js-bookmark user_26668" data-params="followed_id=26668" data-disable-with="..." type="external" data-remote="true" rel="nofollow" data-method="post" href="/relationships">
 						팔로우 </a>
-						<a class="button button-small button-fill" type="external" href="/mentor/mentor/mentorQuestionsForm?pg=${pg}&seq=${seq}&qsseq=${questionDTO.question_seq}">
-						질문하기 </a>
 					</div>
 					<div class="job">
 						${mentorDTO.mentor_company} · ${mentorDTO.mentor_department}
@@ -113,14 +111,7 @@
 		        </ul>
 
        				<div class="block-footer">
-			          <strong>아래 사항에 해당할 경우, 답변이 거절될 수 있습니다.</strong>
-			          <li>
-			            - 멘토링 분야와 무관한 질문
-			          </li>
-			
-			          <li>
-			            - 행사 참여/인터뷰/과제 요청
-			          </li>
+			        
      				</div>
      				<c:if test="${questionDTO==null}">
       					<input type="button" id="save_btn" name="submit_btn" value="보내기" class="btn button button-big button-fill">

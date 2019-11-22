@@ -129,19 +129,18 @@ public class MentorController {
 		Map<String, String> flagCheck_map = new HashMap<String, String>();
 		flagCheck_map.put("member_email", memberDTO.getMember_email());
 		flagCheck_map.put("mentor_seq", seq);
-		System.out.println(seq);
-		MentorDTO questionDTO = mentorService.getQuestion_flag(flagCheck_map);
-		if(questionDTO != null) {
-		int flag = questionDTO.getQuestion_flag();
-		int qsseq = questionDTO.getQuestion_seq();
-			if(flag == 0) {
-				return "/mentor/member/myQuestionsForm?pg="+pg+"&seq="+seq+"&qsseq="+qsseq;
-			}else {
-				return reQuestion;
+		
+		List<MentorDTO> list = mentorService.getQuestion_flag(flagCheck_map);
+		if(list != null) {
+			for (int i = 0; i < list.size(); i++) {
+				if(list.get(i).getQuestion_flag() == 0) {
+					return "/mentor/member/myQuestionsForm?pg="+pg+"&seq="+seq+"&qsseq="+list.get(i).getQuestion_seq();
+				}else {
+					return reQuestion;
+				}
 			}
-		}else {
-			return reQuestion;
 		}
+		return reQuestion;
 	}
 	
 	/**
