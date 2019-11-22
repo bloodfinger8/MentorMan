@@ -43,7 +43,7 @@
 								</div>
 							</div>
 
-							<div class="card-content card-content-padding">
+							<div class="card-content card-content-padding" style="overflow: hidden; text-overflow: ellipsis; height: 200px; ">
 								<input type="hidden" id="seq" name="seq" value="${list.essayboard_seq }">
 							
 							    	<%-- <a class="content-body" type="external" href="/mentor/essayboard/essaymentorBodyView?pg=${pg }&seq=${list.essayboard_seq}" > --%>

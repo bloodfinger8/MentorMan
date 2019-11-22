@@ -49,8 +49,8 @@
                   </div>
                   <li class="item-content item-input">
                      <div class="item-inner">
-                        <input type="text" name="title" id="title" value="${essayboardDTO.essayboard_title }">
-                     	<div class="title_error_div"></div>
+                        <input type="text" name="essayboard_title" id="title" value="${essayboardDTO.essayboard_title }">
+                     	<div class="essayboard_title_error_div"></div>
                      </div>
                   </li>
 
@@ -59,15 +59,15 @@
                      <label class="string required" for="title"></label>
                   </div>
                   <li>
-                     <textarea id="summernote" name="content">${essayboardDTO.essayboard_content }</textarea>
+                     <textarea id="summernote" name="essayboard_content">${essayboardDTO.essayboard_content }</textarea>
+                     <div class="essayboard_content_error_div"></div>
                      <br>
-                     <div class="summernote_error_div"></div>
                   </li>
-                  
-                  
                </ul>
             </div>
+            <input type="hidden" id="seq" name="seq" value="${seq }">
             <div style="margin-top: 50px; margin-bottom: 100px;">
+            
                <input type="button" id="essayboardModifyBtn" value="작성 완료" class="btn button button-big button-fill" style="line-height: 0px;">
             </div>
          </form>

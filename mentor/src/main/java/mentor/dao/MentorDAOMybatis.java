@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import meetingboard.bean.ReviewDTO;
 import mentor.bean.MentorDTO;
 import mentor.bean.MentorFollowDTO;
 
@@ -39,8 +40,8 @@ public class MentorDAOMybatis implements MentorDAO {
 	}
 
 	@Override
-	public MentorDTO getMentor_info(int seq) {
-		return sqlSession.selectOne("mentorSQL.getMentor_info", seq);
+	public MentorDTO getMentor_info(int mentor_seq) {
+		return sqlSession.selectOne("mentorSQL.getMentor_info", mentor_seq);
 	}
 	
 	@Override
@@ -53,9 +54,24 @@ public class MentorDAOMybatis implements MentorDAO {
 	}
 
 	@Override
-	public MentorDTO getQuestion_flag(Map<String, String> flagCheck_map) {
-		return sqlSession.selectOne("mentorSQL.getQuestion_flag", flagCheck_map);
+	public List<MentorDTO> getQuestion_flag(Map<String, String> flagCheck_map) {
+		return sqlSession.selectList("mentorSQL.getQuestion_flag", flagCheck_map);
+  }
+  
+ 	@Override
+	public List<MentorDTO> getMentorEssayList(int mentor_seq) {
+		return sqlSession.selectList("mentorSQL.getMentorEssayList", mentor_seq);
 	}
+
+	@Override
+	public List<ReviewDTO> getMentorReviewList(int mentor_seq) {
+		return sqlSession.selectList("mentorSQL.getMentorReviewList", mentor_seq);
+	}
+
+	@Override
+	public MentorDTO getMentorInfomation(int mentor_seq) {
+		return sqlSession.selectOne("mentorSQL.getMentorInfomation", mentor_seq);
+  }
 	
 	@Override
 	public MentorDTO questionModifyForm(int qsseq) {

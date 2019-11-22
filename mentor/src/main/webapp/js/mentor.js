@@ -1,9 +1,9 @@
-//멘토 지원하기 
+//멘토 지원하기
 $('#mentorapplyForm_btn').on('click',function(){
 	$('#mentor_company_error').empty();
 	$('#mentor_department_error').empty();
 	$('#mentor_position_error').empty();
-	
+
 	if($('#mentor_company').val()==''){
 		$('#mentor_company_error').text('회사명에 내용을 입력해 주세요').css('color', 'red');
 		$('#mentor_company_error').css('font-size','8pt');
@@ -17,7 +17,7 @@ $('#mentorapplyForm_btn').on('click',function(){
 		$('#mentor_position_error').css('font-size','8pt');
 		$('#mentor_position').focus();
 	}else {
-		if($('#email').val()==''){	
+		if($('#email').val()==''){
 			$('#new_mentor_request').submit();
 		}else {
 			alert('이미 지원한 계정입니다. \n관리자의 승인을 기다려주세요');
@@ -43,8 +43,8 @@ $('#mentorapply_btn').on('click',function(){
 	$('#mentor_info_error').empty();
 	$('#mentor_email_error').empty();
 	$('#mentor_businesscard_error').empty();
-	
-	
+
+
 	if($('#mentor_name').val()==''){
 		$('#mentor_name_error').text('이름을 입력해주세요').css('color', 'red');
 		$('#mentor_name_error').css('font-size','8pt');
@@ -103,7 +103,7 @@ $('#mentorapply_backBtn').on('click',function(){
 $('#save_btn').on('click', function(){
 	$('#question_title_error').empty();
 	$('#question_content_error').empty();
-	
+
 	if($('#question_title').val()==''){
 		$('#question_title_error').text('내용을 입력해주세요').css('color', 'red');
 		$('#question_title_error').css('font-size','8pt');
@@ -115,8 +115,9 @@ $('#save_btn').on('click', function(){
 	}else{
 		$('#question_form').submit();
 	}
-	
+
 });
+
 
 function mentor_question_seq(seq, pg){
 	$.ajax({
@@ -175,7 +176,7 @@ $('#modify_btn').on('click', function(){
 // 팔로우 기능- 재우
 $(function(){
 	var seq = $('#mentor_seq').val();
-	
+
 	//내가 팔로우한 멘토인지 확인
 	if($('#followVal').val() === '1'){
 		$('#followA').addClass('button-fill');
@@ -183,21 +184,21 @@ $(function(){
 		$('#followA').removeClass('button-fill');
 	}
 
-		
+
 	$('.mentor_'+seq).on('click' , function(){
 		var followBtn = $(this);
-		
+
 		var sendData = {
 				'followed_email' : $('#followed_email').val(),
 				'follow' : $('#followVal').val()
 			};
-		
+
 		$.ajax({
 			url : '/mentor/mentor/mentorFollow',
 			type : 'POST',
 			data : sendData,
 			success : function(data) {
-				
+
 				if (data == 1) {
 					followBtn.addClass('button-fill');
 					var toastIcon = app.toast.create({
@@ -206,14 +207,14 @@ $(function(){
 						  closeTimeout: 2000,
 						});
 					toastIcon.open();
-					
+
 					//socket에 보내자
 					if(socket) {
 						let socketMsg = "follow," + $('#memNicname').val() +","+$('#member_nickname').val() +","+$('#mentor_seq').val()
 						console.log("msgmsg :: " + socketMsg );
 						socket.send(socketMsg);
 					}
-					
+
 				}else{
 					followBtn.removeClass('button-fill');
 					var toastIcon = app.toast.create({
@@ -228,7 +229,7 @@ $(function(){
 			error : function(err){
 				console.log("err");
 			}
-			
+
 		});
 	});
 });

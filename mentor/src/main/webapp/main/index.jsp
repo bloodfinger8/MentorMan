@@ -27,7 +27,7 @@
          <div class="head">
             <jsp:include page="../template/head.jsp" />
          </div>
-         
+
          <!-- display -->
          <div class="container" id="container">
             <jsp:include page="${display}" />
@@ -38,13 +38,13 @@
    <div id="foot" id="foot">
       <jsp:include page="../template/footer.jsp" />
    </div>
-   
+
    <!-- 웹소켓 작동 -->
    <script type="text/javascript" src="../js/sockjs.js"></script>
    <script type="text/javascript">
    //전역변수 선언-모든 홈페이지에서 사용 할 수 있게 index에 저장
    var socket = null;
-   
+
    $(document).ready(function (){
 	   connectWs();
    });
@@ -53,15 +53,15 @@
    	sock = new SockJS( "<c:url value="/replyEcho"/>" );
    	//sock = new SockJS('/replyEcho');
    	socket = sock;
-   	
+
    	sock.onopen = function() {
            console.log('info: connection opened.');
      };
-       
+
     sock.onmessage = function(evt) {
 	 	var data = evt.data;
 	   	console.log("ReceivMessage : " + data + "\n");
-	   	
+
 	   	// 모달 알림
 	   	var toastTop = app.toast.create({
             text: "알림 : " + data + "\n",
@@ -69,20 +69,20 @@
             closeButton: true,
           });
           toastTop.open();
-          
-        
+
+
     };
-    
+
     sock.onclose = function() {
       	console.log('connect close');
       	/* setTimeout(function(){conntectWs();} , 1000); */
     };
-	
+
     sock.onerror = function (err) {console.log('Errors : ' , err);};
-   	
+
    }
-   
-  
+
+
    </script>
 </body>
 

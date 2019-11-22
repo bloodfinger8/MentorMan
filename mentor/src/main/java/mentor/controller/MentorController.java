@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import meetingboard.bean.ReviewDTO;
 import member.bean.MemberDTO;
 import mentor.bean.MentorDTO;
 import mentor.bean.MentorFollowDTO;
@@ -86,7 +87,6 @@ public class MentorController {
 			try {
 				FileCopyUtils.copy(mentor_businesscard.getInputStream(), new FileOutputStream(file));
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -136,19 +136,18 @@ public class MentorController {
 		Map<String, String> flagCheck_map = new HashMap<String, String>();
 		flagCheck_map.put("member_email", memberDTO.getMember_email());
 		flagCheck_map.put("mentor_seq", seq);
-		System.out.println(seq);
-		MentorDTO questionDTO = mentorService.getQuestion_flag(flagCheck_map);
-		if(questionDTO != null) {
-		int flag = questionDTO.getQuestion_flag();
-		int qsseq = questionDTO.getQuestion_seq();
-			if(flag == 0) {
-				return "/mentor/member/myQuestionsForm?pg="+pg+"&seq="+seq+"&qsseq="+qsseq;
-			}else {
-				return reQuestion;
+		
+		List<MentorDTO> list = mentorService.getQuestion_flag(flagCheck_map);
+		if(list != null) {
+			for (int i = 0; i < list.size(); i++) {
+				if(list.get(i).getQuestion_flag() == 0) {
+					return "/mentor/member/myQuestionsForm?pg="+pg+"&seq="+seq+"&qsseq="+list.get(i).getQuestion_seq();
+				}else {
+					return reQuestion;
+				}
 			}
-		}else {
-			return reQuestion;
 		}
+		return reQuestion;
 	}
 	
 	/**
@@ -199,6 +198,33 @@ public class MentorController {
 		return "/main/index";
 	}
 	
+	/**
+	 * @Title : 멘토 상세 페이지
+	 * @Author : yong
+	 * @Date : 2019. 11. 18.
+	 * @Method Name : mentorInfoView
+	 */
+	@RequestMapping(value = "mentorInfoView", method = RequestMethod.GET)
+	public String mentorInfoView(@RequestParam String mentors, Model model) {
+		int mentor_seq = Integer.parseInt(mentors);
+		MentorDTO mentorDTO = mentorService.getMentorInfomation(mentor_seq);
+		List<MentorDTO> essayList = mentorService.getMentorEssayList(mentor_seq);
+		List<ReviewDTO> reviewList = mentorService.getMentorReviewList(mentor_seq);
+		String[] mentoringArray = mentorDTO.getMentoring_code().split(",");
+		Map<String, String[]> map = new HashMap<String, String[]>();
+		map.put("mentoring_code", mentoringArray);
+		List<MentorDTO> mentoringList = mentorService.getMentoring_code(map);
+				
+		model.addAttribute("mentor_seq", mentor_seq);
+		model.addAttribute("mentoringList", mentoringList);
+		model.addAttribute("mentorDTO", mentorDTO);
+		model.addAttribute("essayList", essayList);
+		model.addAttribute("reviewList", reviewList);
+		model.addAttribute("essayTotal", essayList.size());
+		model.addAttribute("reviewTotal", reviewList.size());
+		model.addAttribute("display", "/mentor/mentorInfoView.jsp");
+		return "/main/index";
+	}
 	/**
 	 * @Title : 질문 수정
 	 * @Author : kujun95, @Date : 2019. 11. 20.

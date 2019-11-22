@@ -64,6 +64,7 @@
 								<li>
 									<a type="external" href="/mentor/member/myQandA?pg=1">나의 질문/답변 <span class="badge color-red alim">15</span></a>
 								</li>
+
 								<li><a type="external" href="/mentor/essayboard/essayboardAttention">관심에세이</a></li>
 								<li><a type="external" href="/mentor/mentor/mentorAttention">관심멘토</a></li>
 							</ul>
