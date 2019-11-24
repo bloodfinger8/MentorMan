@@ -239,7 +239,49 @@ create table menteeemployee_profile(
     menteeemployee_email varchar2(200) not null,    -- 이메일
     foreign key(menteeemployee_email)
     references mentors_member(member_email));
+-- 질문                              
+create table question(
+    question_seq number primary key,            --- 질문 번호
+    mentor_seq number,                          --- 멘토 번호
+    member_email varchar2(100) not null,        --- 멤버 이메일
+    question_title varchar2(200) not null,      --- 질문 제목
+    question_content varchar2(4000) not null,   --- 질문 내용
+    question_flag number default 0,             --- 질문대기/질문완료
+    question_logtime date default sysdate,      --- 질문 시간
+    foreign key(mentor_seq)
+    references mentor(mentor_seq),
+    foreign key(member_email)
+    references mentors_member(member_email)
+);
+create sequence question_seq nocache nocycle;   --- 질문 시퀀스
 
+
+-- 답변
+create table answer(
+    answer_seq number primary key,              --- 답변 번호
+    question_seq number not null,               --- 질문 번호
+    mentor_seq number not null,                 --- 멘토 번호
+    member_email varchar2(100) not null,        --- 멤버 이메일
+    answer_content varchar2(4000) not null,     --- 답변 내용
+    answer_logtime date default sysdate,        --- 답변 시간
+    foreign key(question_seq)
+    references question(question_seq),
+    foreign key(mentor_seq)
+    references mentor(mentor_seq),
+    foreign key(member_email)
+    references mentors_member(member_email)
+);
+
+ALTER TABLE answer DROP CONSTRAINT SYS_C007515;
+
+
+ALTER TABLE answer ADD CONSTRAINT FK_answer FOREIGN KEY (question_seq)
+REFERENCES question(question_seq) ON DELETE CASCADE;
+
+
+create sequence answer_seq nocache nocycle;     --- 답변 시퀀스                              
+                              
+                              
 ----taehyeong--------------------------------------------------------------------------------------------------------------------
 -- 에세이 보드 생성
 create table essayboard(
