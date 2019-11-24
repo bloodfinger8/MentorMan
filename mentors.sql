@@ -244,7 +244,7 @@ create table question(
     question_seq number primary key,            --- 질문 번호
     mentor_seq number,                          --- 멘토 번호
     member_email varchar2(100) not null,        --- 멤버 이메일
-    question_title varchar2(200) not null,      --- 질문 제목
+    question_title varchar2(4000) not null,      --- 질문 제목
     question_content varchar2(4000) not null,   --- 질문 내용
     question_flag number default 0,             --- 질문대기/질문완료
     question_logtime date default sysdate,      --- 질문 시간
