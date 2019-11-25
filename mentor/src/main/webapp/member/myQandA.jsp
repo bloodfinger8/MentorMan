@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <div class="page navbar-fixed questioner_qa_threads index" data-name="questioner_qa_threads-index">
   <div class="page-content">
     <div class="qa-thread-block">
@@ -76,7 +77,7 @@
 						            </c:if>
 						            <c:if test="${flag==1}">
 						              <small>
-						                ${member.question_logtime}
+						              <fmt:formatDate value="${member.question_logtime}" pattern="yyyy년MM월dd일" />
 						              </small>
 						            </c:if>
 					            </div>
@@ -133,7 +134,7 @@
 		        <div class="col-100">
 				  <div class="card questioner-qa-thread-card">
 					  <div class="card-header">
-					      <a type="external" onclick="flag_profile(${flag})"><!-- 멘티 로그인 -->
+					      <a type="external" onclick="location.href='/mentor/mentor/mentorInfoView?mentors=${member.member_seq}'"><!-- 멘티 로그인 -->
 					        <div>
 					          <div class="mentor-image img-circle">
 					                <c:if test="${member.member_profile != 'profile.jpg'}">
@@ -207,13 +208,6 @@
   </div>
 </div>
 <script type="text/javascript">
-function flag_profile(flag){
-	if(flag==0){
-		location.href="멘티 로그인";
-	}else {
-		location.href="멘토 로그인";
-	}
-}
 
 function flag_content(pg,seq,question_seq){
 	location.href="/mentor/member/myQuestionsForm?pg="+pg+"&seq="+seq+"&qsseq="+question_seq;

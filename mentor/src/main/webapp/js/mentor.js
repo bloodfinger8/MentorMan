@@ -20,7 +20,7 @@ $('#mentorapplyForm_btn').on('click',function(){
 		if($('#email').val()==''){	
 			$('#new_mentor_request').submit();
 		}else {
-			alert('이미 지원한 계정입니다. \n관리자의 승인을 기다려주세요');
+			alert('이미 지원한 계정입니다.');
 			location.href='/mentor/main/index';
 		}
 	}

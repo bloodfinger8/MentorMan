@@ -56,7 +56,6 @@ public class MemberController {
 	@Autowired
 	private QandAPaging QandAPag;
 	
-	
 	// WriteForm 화면
 	@RequestMapping(value = "writeForm", method = RequestMethod.GET)
 	public String writeForm(Model model) {
@@ -154,7 +153,7 @@ public class MemberController {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("member_email", member_email);
 		map.put("member_pwd", member_pwd);
-		MemberDTO memberDTO = memberService.login(map);
+		memberDTO = memberService.login(map);
 		
 		if (memberDTO != null) {
 			memberDTO.setMember_pwd("");
@@ -180,7 +179,7 @@ public class MemberController {
 	 */
 	@RequestMapping(value = "myQandA", method = RequestMethod.GET)
 	public String myQandA(@RequestParam(required = false, defaultValue = "1") int pg ,Model model, HttpSession session){
-		MemberDTO memberDTO = (MemberDTO) session.getAttribute("memDTO");
+		memberDTO = (MemberDTO) session.getAttribute("memDTO");
 		
 		int endNum = pg*3;
 		int startNum = endNum-2;
@@ -200,10 +199,12 @@ public class MemberController {
 		if(member_flag == 1) {
 			int mentor_seq = memberService.getMentor_seq(memberDTO.getMember_email());
 			List<MentorDTO> list = memberService.getMemtee_question(mentor_seq);
+			System.out.println("mentor_questionList"+list);
 			model.addAttribute("mentor_questionList", list);
 		}
 		List<MentorDTO> list = memberService.getQandA(map);
 		if(list != null) {
+			System.out.println("all_questionList"+list);
 			model.addAttribute("all_questionList", list);
 		}
 		model.addAttribute("flag",member_flag);
@@ -219,7 +220,7 @@ public class MemberController {
 	 */
 	@RequestMapping(value = "myQuestionsForm", method = RequestMethod.GET)
 	public String myQuestionsForm(@RequestParam int seq, @RequestParam int pg, @RequestParam int qsseq, Model model, HttpSession session) {
-		MemberDTO memberDTO = (MemberDTO) session.getAttribute("memDTO");
+		memberDTO = (MemberDTO) session.getAttribute("memDTO");
 		//테이블 member의 현재 로그인한 사람의 flag 확인
 		int member_flag = memberService.getMember_flag(memberDTO.getMember_email());
 		//질문한 seq가 자신의 이메일인지 확인
@@ -232,7 +233,7 @@ public class MemberController {
 		map.put("question_seq", qsseq+"");
 		map.put("member_flag", member_flag+"");
 		MentorDTO mentorDTO = memberService.getMentor_info(map);
-		
+		System.out.println(mentorDTO);
 		
 		if(getEmail != mentorDTO.getMember_email()) {
 			if(mentorDTO.getMentoring_code() != null) {
@@ -245,7 +246,6 @@ public class MemberController {
 				model.addAttribute("list", list);
 			}
 		}
-		System.out.println(mentorDTO);
 		MentorDTO auswerDTO = memberService.getMentor_auswer(qsseq);
 		if(auswerDTO != null) {
 			model.addAttribute("auswerDTO", auswerDTO);
