@@ -223,13 +223,15 @@ $(document).ready(function(){
 		}else if($('#member_name').val()!='' || $('#member_email').val()!='') {
 			$('.name-setpwd-Div').remove();
 			$('.email-setpwd-Div').remove();
-			
+			$('#rodingImg').removeClass('hideRoding');
 			$.ajax({
 				type:'post',
 				url:'/mentor/member/setmemberpwd',
 				data:'member_name='+$('#member_name').val()+'&member_email='+$('#member_email').val(),
 				dataType:'text',
 				success:function(data){
+					$('#rodingImg').addClass('hideRoding');
+					
 					 if(data=='get_member'){
 						jCont='<div class="msg_emailok">비밀번호 재설정 인증번호를 발송했습니다.</div>';
 						$('.setPwd-Div').css('color', 'blue').css('font-size','9pt').css('text-align', 'left').html(jCont);

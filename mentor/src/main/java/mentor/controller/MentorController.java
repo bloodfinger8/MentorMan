@@ -164,13 +164,14 @@ public class MentorController {
 		
 		//로그인 세션
 		memberDTO = (MemberDTO) session.getAttribute("memDTO");
+		
 		Map<String, String> followMap = new HashMap<String, String>();
 		followMap.put("memEmail" , memberDTO.getMember_email());
 		followMap.put("mentorEmail" , mentorDTO.getMentor_email());
 		
 		//팔로우 찾기
 		int follow = mentorService.getFollowCheck(followMap);
-		
+		model.addAttribute("memNicname" , memberDTO.getMember_nickname());
 		model.addAttribute("list", list);
 		model.addAttribute("follow" , follow);
 		model.addAttribute("mentorDTO", mentorDTO);
@@ -276,9 +277,13 @@ public class MentorController {
 	@RequestMapping(value = "mentorAttention", method = RequestMethod.GET)
 	public String mentorAttention(Model model , HttpSession session) {
 		memberDTO = (MemberDTO) session.getAttribute("memDTO");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("memEmail" , memberDTO.getMember_email());
+		map.put("mentor_flag", 1);
 		//승인된 멘토 이면서 나를 팔로우한 팔로워 list
-		int mentor_flag = 1;
-		List<MentorDTO> list = mentorService.getMentorAttentionList(mentor_flag);
+		System.out.println("map :::: " + map);
+		List<MentorDTO> list = mentorService.getMentorAttentionList(map);
 		
 		model.addAttribute("list", list);
 		model.addAttribute("display", "/mentor/mentorAttention.jsp");

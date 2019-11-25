@@ -66,7 +66,9 @@
 		select count(*) from mentor where mentor_flag = #{mentor_flag}
 	</select>
 	<select id="getMentor_info" parameterType="int" resultType="mentor">
-		select mb.member_name
+		select 
+		mb.member_name
+		, mb.member_nickname
         , mb.member_profile
         , j.job_type
         , mentor_seq
@@ -143,13 +145,13 @@
 		delete from mentorFollow where follower_email = #{follower_email} AND followed_email = #{followed_email}
 	</delete>
 	
-	<select id="getMentorAttentionList" parameterType="Integer" resultType="mentor">
+	<select id="getMentorAttentionList" parameterType="Map" resultType="mentor">
 		select * from
 		    (select rownum rn, tt.* from
 		        (select mt.mentor_seq, mb.member_name, mb.member_profile,mt.mentor_company, mt.mentor_department, 
 				    j.job_type, mentor_school, mentor_career, mentoring_code, mentor_represent, mentor_info, mentor_etc, mentor_email, 
 				    mentor_selectNaming, mentor_businesscard, mentor_badge, mentor_flag, mentor_logtime from mentor mt, job j, mentors_member mb , mentorFollow mf
-		            where mt.mentor_email = mb.member_email and j.job_code = mt.job_code and mf.followed_email = mt.mentor_email and mentor_flag = #{mentor_flag}
+		            where mt.mentor_email = mb.member_email and j.job_code = mt.job_code and mf.followed_email = mt.mentor_email and mentor_flag = #{mentor_flag,jdbcType=INTEGER} and mf.follower_email = #{memEmail,jdbcType=VARCHAR}
 		            order by mt.mentor_seq desc)tt)
 	</select>
 </mapper>

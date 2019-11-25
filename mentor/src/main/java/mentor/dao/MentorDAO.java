@@ -41,7 +41,8 @@ public interface MentorDAO {
 
 	public void mentorFollowDelete(MentorFollowDTO mentorFollowDTO);
 
-	public List<MentorDTO> getMentorAttentionList(int mentor_flag);
+	public List<MentorDTO> getMentorAttentionList(Map<String, Object> map);
+
 
 
 }

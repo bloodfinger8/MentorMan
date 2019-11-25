@@ -22,7 +22,6 @@
 			      <c:if test="${mentorDTO.member_profile == 'profile.jpg'}">
 		          	  <img width="50" height="50" src="../image/profile.jpg">
 			      </c:if>
-			   
 		  </div>
 
 		  <div class="block mentor-info">
@@ -39,23 +38,23 @@
 			    <div class="job">
 			      ${mentorDTO.mentor_company} · ${mentorDTO.mentor_department}
 			    </div>
-			
+
 			      <div class="detail-block">
 			        <div class="mentoring-info">
 			          <div class="title text-decoration-underline">
 			            	대표 멘토링 분야
 			          </div>
-			
+
 			          <div class="mentoring-type-block">
 			            	${mentorDTO.mentor_represent}
 			          </div>
 			        </div>
-			
+
 			        <div class="mentoring-info">
 			          <div class="title">
 			            멘토링 분야
 			          </div>
-			
+
 			          <div class="mentoring-type-block">
 			            <a type="external" href="/mentors?job_type%5B%5D=18">
 			              <div class="chip chip-outline no-border-radius">
@@ -71,8 +70,8 @@
 					                  	 ${mentor.mentoring_type}
 					                 </div>
 					               </div>
-						   	  	</a>     
-					   	  	</c:forEach>   
+						   	  	</a>
+					   	  	</c:forEach>
 						</div>
 			        </div>
 			      </div>
@@ -99,15 +98,15 @@
 				</div>
 				<div class="card-content card-content-padding">
 				  <div class="content-body">
-				
+
 					<div class="detail trix-content">
-						<pre style="white-space: pre-line; font-family: auto; background-color: white;"><c:out value="${auswerDTO.answer_content}"/></pre>	
+						<pre style="white-space: pre-line; font-family: auto; background-color: white;"><c:out value="${auswerDTO.answer_content}"/></pre>
 				    </div>
 				  </div>
 				</div>
 				</c:if>
 			</c:if>
-			
+
 		   <div class="card qa-thread-card question-card">
 			<div class="card-header">
 			  <div class="left">질문</div>
@@ -120,9 +119,9 @@
 			    <div class="title">
 			    	<pre style="white-space: pre-line; font-family: auto; background-color: white;"><c:out value="${mentorDTO.question_title}" /></pre>
 				</div>
-			
+
 				<div class="detail trix-content">
-					<pre style="white-space: pre-line; font-family: auto; background-color: white;"><c:out value="${mentorDTO.question_content}"/></pre>	
+					<pre style="white-space: pre-line; font-family: auto; background-color: white;"><c:out value="${mentorDTO.question_content}"/></pre>
 			    </div>
 			  </div>
 			</div>
@@ -132,12 +131,13 @@
 					<c:if test="${mentorDTO.question_flag == 0}">
 				      <a class="button button-small color-black" type="external" href="/mentor/mentor/mentorQuestionsForm?pg=${pg}&seq=${seq}&qsseq=${qsseq}">수정</a>
 					</c:if>
+
 				      <a class="button button-small color-black" type="external" id="delete_question">삭제</a>
 				</div>
 			</c:if>
 			<c:if test="${seq == mentorDTO.mentor_seq}">
 			    <div class="card-footer action-block">
-				      <a class="button button-small color-black" id="answer_slide" type="external" style="cursor:pointer;">답변</a> 
+				      <a class="button button-small color-black" id="answer_slide" type="external" style="cursor:pointer;">답변</a>
 				</div>
 				<div class="list form-list no-hairlines" id="answer_div" style="margin: 20px 10px; display:none;">
 		        <ul style="margin: 20px 0px;">
@@ -155,7 +155,7 @@
 		            </div>
 		          </li>
 		        </ul>
-		        
+
 		        <c:if test="${auswerDTO.answer_content != null}">
    					<input type="button" id="answerModify_btn" value="수정하기" class="btn button button-big button-fill">
 				</c:if>
@@ -173,8 +173,16 @@
     </div>
   </div>
 </div>
+<input type="hidden" id="followVal" name="followVal" value="${follow}">
+<!-- 소켓 알림으로 사용 -->
+<input type="hidden" id="memNicname" name="memNicname" value="${memNicname}">
+<input type="hidden" id="member_nickname" name="member_nickname" value="${mentorDTO.member_nickname}">
+<!-- 팔로우에 넣을 값 -->
+<input type="hidden" id="followed_email" name="followed_email" value="${mentorDTO.mentor_email}">
 
 <script src="../js/member.js"></script>
+<script src="../js/mentor.js"></script>
+
 <script type="text/javascript">
 //답변 슬라이더
 $("#answer_slide").on('click',function(){
