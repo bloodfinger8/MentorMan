@@ -59,15 +59,26 @@ $(".row > a").on("click",function(event, data){// a태그 클릭시 작동
   });
 
 // 직무유형 버튼 값 처리
-function essayjobType(pg, flag){
+function essayjobType(pg , flag){
 	$('#gap').empty();
 	$('.paging').empty();
+	
+	
+	var page = parseInt(pg);
+	
+	if(typeof pg == "undefined"){
+		page = 1;
+	}
+	var Flag = parseInt(flag);
 	
 	$.ajax({
     	type : 'post',
     	url : '/mentor/essayboard/essayjobType',
-    	data : {'job_code' : jobs, 'pg' : pg, 'flag' : flag},
+    	data : JSON.stringify({job_code : jobs,
+    						   pg : page,
+    						   flag : Flag}),
     	dataType : 'json',
+    	contentType : "application/json; charset=UTF-8",
     	success : function(data){
     		//alert(JSON.stringify(data));
     		let flag = $(document.createDocumentFragment());
