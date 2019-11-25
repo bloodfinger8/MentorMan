@@ -36,7 +36,8 @@
 	    select * 
 		  from(select rownum rn
 		            , tt.* 
-		         from(select mb.member_name member_name
+		         from(select mb.member_name          member_name
+		         		   , mb.member_seq           member_seq
 		                   , mb.member_profile       member_profile
 		                   , j.job_type              job_type
 		                   , mt.mentoring_code       mentoring_code
@@ -67,6 +68,8 @@
 		select   mb.member_name
 		       , mb.member_profile
 		       , mb.member_flag
+		       , mb.member_seq
+		       , mt.mentor_email
 		       , mt.mentor_company
 		       , mt.mentor_department
 		       , mt.mentor_represent

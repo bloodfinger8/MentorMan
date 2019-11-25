@@ -142,8 +142,6 @@ public class MentorController {
 			for (int i = 0; i < list.size(); i++) {
 				if(list.get(i).getQuestion_flag() == 0) {
 					return "/mentor/member/myQuestionsForm?pg="+pg+"&seq="+seq+"&qsseq="+list.get(i).getQuestion_seq();
-				}else {
-					return reQuestion;
 				}
 			}
 		}
@@ -205,7 +203,7 @@ public class MentorController {
 	 * @Method Name : mentorInfoView
 	 */
 	@RequestMapping(value = "mentorInfoView", method = RequestMethod.GET)
-	public String mentorInfoView(@RequestParam String mentors, Model model) {
+	public String mentorInfoView(@RequestParam String mentors, @RequestParam String pg, Model model, HttpSession sesstion) {
 		int mentor_seq = Integer.parseInt(mentors);
 		MentorDTO mentorDTO = mentorService.getMentorInfomation(mentor_seq);
 		List<MentorDTO> essayList = mentorService.getMentorEssayList(mentor_seq);
@@ -214,7 +212,13 @@ public class MentorController {
 		Map<String, String[]> map = new HashMap<String, String[]>();
 		map.put("mentoring_code", mentoringArray);
 		List<MentorDTO> mentoringList = mentorService.getMentoring_code(map);
-				
+		
+		memberDTO = (MemberDTO) sesstion.getAttribute("memDTO");
+		
+		model.addAttribute("pg", pg);
+		if(memberDTO!= null) {
+			model.addAttribute("email_check", memberDTO.getMember_email());
+		}
 		model.addAttribute("mentor_seq", mentor_seq);
 		model.addAttribute("mentoringList", mentoringList);
 		model.addAttribute("mentorDTO", mentorDTO);

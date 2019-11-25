@@ -64,7 +64,7 @@
 			<c:forEach var="mentor" items="${list}" >
 			<div class="col-100 tablet-50 desktop-25">
 				  <div class="card mentor-card">
-				<a id="mentorProfileView" type="external" href="/mentors/50121"><!-- 태형이 url -->
+				<a id="mentorProfileView" type="external" href="/mentor/mentor/mentorInfoView?pg=${pg}&mentors=${mentor.member_seq}"><!-- 태형이 url -->
 					<div style="background-image:url()" class="cover-image"></div>
 					
 				    <div class="mentor-image img-circle">
@@ -93,10 +93,12 @@
 				   	<div class="info">${mentor.mentor_represent}</div>
 				</div>
 				    <div class="ask-button">
-				    <c:if test="${memberDTO != null}">
-				        <a class="question button button-small button-fill" id="mentorQuestions" type="external" onclick="mentor_question_seq(${mentor.mentor_seq},${pg})"><!-- pg seq 가져가라 -->
-					          질문하기
-						</a>
+				   <c:if test="${memberDTO != null}">
+				    	<c:if test="${mentor.mentor_email != memberDTO.member_email}">
+					        <a class="question button button-small button-fill" id="mentorQuestions" type="external" onclick="mentor_question_seq(${mentor.mentor_seq},${pg})"><!-- pg seq 가져가라 -->
+						          질문하기
+							</a>
+						</c:if>
 					</c:if>	
 					<c:if test="${memberDTO == null}">
 				        <a class="button button-small button-fill" type="external" href="/mentor/member/loginForm"><!-- pg seq 가져가라 -->

@@ -75,14 +75,31 @@
 							</c:forEach>
 						</div>
 					</div>
-					<div class="btn-container">
-						<div class="profile-btn">
-							<a class="button col js-bookmark" type="external" data-remote="true" rel="nofollow" data-method="post" href=""> 팔로우 </a>  <%--주소 수정 --%>
+					<!-- [멘토 찾기에서 수정] 로그아웃 상태에서 멘토 프로필 확인 할 때 질문이나 팔로우는 로그인 창으로 보내기  -->
+					<c:if test="${email_check == null}">
+						<div class="btn-container">
+							<div class="profile-btn">
+								<a class="button col js-bookmark" type="external" data-remote="true" rel="nofollow" data-method="post" href="/mentor/member/loginForm"> 팔로우 </a>  <%--주소 수정 --%>
+							</div>
+							<c:if test="${mentorDTO.mentor_email != email_check}">
+							<div class="profile-btn">
+								<a class="button button-fill" type="external" href="/mentor/member/loginForm">질문하기</a>  <%--주소 수정 --%>
+							</div>
+							</c:if>
 						</div>
-						<div class="profile-btn">
-							<a class="button button-fill" type="external" href="">질문하기</a>  <%--주소 수정 --%>
+					</c:if>
+					<c:if test="${email_check != null}">
+						<div class="btn-container">
+							<div class="profile-btn">
+								<a class="button col js-bookmark" type="external" data-remote="true" rel="nofollow" data-method="post" href=""> 팔로우 </a>  <%--주소 수정 --%>
+							</div>
+							<c:if test="${mentorDTO.mentor_email != email_check}">
+							<div class="profile-btn">
+								<a class="button button-fill" type="external" onclick="mentor_question_seq(${mentorDTO.mentor_seq},${pg})">질문하기</a>  <%--주소 수정 --%>
+							</div>
+							</c:if>
 						</div>
-					</div>
+					</c:if>
 				</div>
 			</div>
 		</div>
