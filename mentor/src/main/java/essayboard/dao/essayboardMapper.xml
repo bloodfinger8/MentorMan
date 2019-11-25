@@ -147,20 +147,16 @@
                       mt.mentor_company,
                       mt.mentor_department,
                       mt.mentor_represent,
-                      mt.mentor_flag,
-                      mtr.mentoring_code,
-                      mtr.mentoring_type
+                      mt.mentor_flag
                   FROM
                       essayboard       e,
                       job              j,
                       mentor           mt,
-                      mentoring        mtr,
                       mentors_member   mm
                   WHERE
                       e.job_code = j.job_code
                       AND e.mentor_email = mt.mentor_email
                       AND mt.mentor_email = mm.member_email
-                      AND mt.mentoring_code = mtr.mentoring_code
                   <if test='flag == "0"'>
                   	ORDER BY e.essayboard_logtime DESC 
                   </if>
@@ -169,16 +165,18 @@
                   </if>
                      
                   )tt
-                      where job_code 
-                  IN
-                  	  <foreach collection="job_code" item="job_code" index="index" separator="," open="(" close=")">
-                  	  		#{job_code, jdbcType=VARCHAR}
-                  	  </foreach> )
+	                  WHERE 
+	                  	job_code 
+	                  IN
+	                  <foreach collection="job_code" item="job_code" index="index" separator="," open="(" close=")">
+	                  	  #{job_code, jdbcType=VARCHAR}
+                  	  </foreach>
+                       )
                   <![CDATA[ 
                       where rn >= #{startNum, jdbcType=INTEGER} and rn<= #{endNum, jdbcType=INTEGER}
                   ]]>
-                     
 	</select>
+	
 	
 	<!-- 직무유형에 따른 총 글 수 -->
 	<select id="getEssayDuty" parameterType="Map" resultType="Int">
@@ -225,25 +223,16 @@
 		SELECT 
             mm.member_name,
             mm.member_profile,
-            mt.mentor_email,
-            mt.mentor_company,
-            mt.mentor_department,
-            mt.mentor_represent,
-            mt.mentor_info,
-            mt.mentor_career,
-            mt.mentor_etc,
-            j.job_type,
-            mtr.mentoring_type
+            mt.*,
+            j.job_type
         FROM
             mentor           mt,
             job              j,
-            mentoring        mtr,
             mentors_member   mm
         WHERE
             mt.mentor_email = mm.member_email
-            AND mt.mentoring_code = mtr.mentoring_code
             AND mt.job_code = j.job_code
-            AND mm.member_seq = #{member_seq}
+            AND mm.member_seq = #{member_seq};
 	</select>
 
 	<!-- 에세이 총 글 수 -->

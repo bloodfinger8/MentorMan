@@ -86,7 +86,7 @@
 		    <version>1.18.10</version>
 		    <scope>provided</scope>
 		</dependency>
-		
+		        
 		<!-- Spring WebSocket -->
 		<!-- 2019.11.18 양재우 -->
 		<dependency>
@@ -315,5 +315,3 @@
 	</repositories>
     
 </project>
-
-
