@@ -134,6 +134,32 @@ $(document).ready(function() {
 		} else if (email != 0 && pwd != 0) {
 			$('.login-member-pwd-Div').remove();
 			$('.login-member-email-Div').remove();
+
+				$.ajax({
+					type : 'post',
+					url : '/mentor/member/login',
+					data : {'member_email' : email,'member_pwd' : pwd},
+					dataType : 'text',
+					success : function(data) {
+						if (data == 'login_ok') {
+							location.href = '/mentor/main/index';
+						}else if(data == 'admin_ok'){
+							location.href = '/mentor/admin/adminMain';
+						}
+						else if (data == 'login_fail') {
+							var toastTop = app.toast.create({
+								text : '이메일 또는 비밀번호가 잘못되었습니다.',
+								position : 'top',
+								closeButton : true,
+							});
+							toastTop.open();
+						}
+						},error : function(e) {
+						conlose.log(e);
+					}
+				});
+			}
+		});
 			$('form[name=memberLoginForm]').submit();
 		}
 	});
