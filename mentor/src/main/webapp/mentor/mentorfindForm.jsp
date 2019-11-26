@@ -28,6 +28,7 @@
          <a id="job_code_16" class="button color-gray " type="external" href="job_code_16">공무원/공공/비영리</a>
          <a id="job_code_17" class="button color-gray " type="external" href="job_code_17">생산/품질/제조</a>
          <a id="job_code_18" class="button color-gray " type="external" href="job_code_18">기타 사무</a>
+
   	</div>
    </div>
 
@@ -37,8 +38,8 @@
      멘토
    </div>
     <a class="button color-gray" type="external" href="/mentors?hall_of_fame=true">
-    	<i class="fas fa-trophy"></i> 명예 멘토
-	</a>
+       <i class="fas fa-trophy"></i> 명예 멘토
+   </a>
    </div>
 
 	   <div class="row no-gap" id="mentor_findList">

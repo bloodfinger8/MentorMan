@@ -9,7 +9,7 @@
    <div class="page-content">
       <div class="block-title strong-title">에세이 수정</div>
       <div class="block inset">
-         <form method="post" id="essayboardModifyForm" action="/mentor/essayboard/essayboardModify">
+         <form method="post" id="essayboardModifyForm" action="/mentor/essayboard/essayboardModify" enctype="multipart/form-data">
             <div class="list form-list no-hairlines">
                <ul>
                   <div class="label-title">
@@ -76,12 +76,40 @@
 </div>
 <script src="../js/essayboardModify.js"></script>
 <script>
-$(document).ready(function(){
+$(function(){
 	$("#summernote").summernote({
-	      placeholder: "내용을 입력해주세요",
-	    height: 300,
-	    lang: 'ko-KR'
+	   	placeholder: "내용을 입력하세요",
+	    height: 400,
+	    lang: 'ko-KR',
+	    disableResizeEditor: true,
+	    callbacks: {
+         onImageUpload: function(files, editor, welEditable) {
+           for (var i = files.length - 1; i >= 0; i--) {
+             sendFile(files[i], this);
+           }
+         }
+       }
 	});
 });
+
+function sendFile(file, el) {
+    var form_data = new FormData();
+    form_data.append('file', file);
+    $.ajax({
+      data: form_data,
+      type: 'post',
+      url: '/mentor/essayboard/essayboardImage',
+      cache: false,
+      contentType: false,
+      enctype: 'multipart/form-data',
+      processData: false,
+      success: function(url) {
+        $(el).summernote('editor.insertImage', '../storage/'+url);
+   	  },
+   	  error: function(){
+   		  alert('에러');
+   	  }
+  });
+}
 
 </script>
