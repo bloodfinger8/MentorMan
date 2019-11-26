@@ -56,6 +56,23 @@
 		        )
 	    where rn between #{startNum} and #{endNum}
 	</select>
+	
+	
+	<select id="getMemtee_question" parameterType="int" resultType="mentor">
+		select    mm.member_seq
+        , mm.member_name
+        , mm.member_profile
+        , mm.member_flag
+        , qs.member_email
+        , qs.mentor_seq
+        , qs.question_seq
+        , qs.question_title
+        , qs.question_content 
+        , qs.question_flag
+        , qs.question_logtime
+        from mentors_member mm, question qs 
+        where mm.member_email = qs.member_email and qs.mentor_seq = #{mentor_seq} order by qs.question_logtime DESC
+	</select>
 	<!-- 회원의 Q&A총 수 -->
 	<select id="getTotalA" parameterType="String" resultType="int">
 		select count(*) from question where member_email = #{member_email}
@@ -89,6 +106,7 @@
 		        , mm.member_name
 		        , mm.member_profile
 		        , mm.member_flag
+		        , mt.mentor_email
 		        , qs.member_email
 		        , qs.mentor_seq
 		        , qs.question_seq
@@ -96,26 +114,12 @@
 		        , qs.question_content 
 		        , qs.question_flag
 		        , qs.question_logtime
-		        from mentors_member mm, question qs 
-        where mm.member_email = qs.member_email and qs.mentor_seq = #{mentor_seq} and qs.question_seq = #{question_seq}
+		        from mentors_member mm, question qs, mentor mt
+        where mm.member_email = qs.member_email and mt.mentor_email = #{member_email} and qs.mentor_seq = #{mentor_seq} and qs.question_seq = #{question_seq}
 	</if>
 	</select>
 	
-	<select id="getMemtee_question" parameterType="int" resultType="mentor">
-		select    mm.member_seq
-        , mm.member_name
-        , mm.member_profile
-        , mm.member_flag
-        , qs.member_email
-        , qs.mentor_seq
-        , qs.question_seq
-        , qs.question_title
-        , qs.question_content 
-        , qs.question_flag
-        , qs.question_logtime
-        from mentors_member mm, question qs 
-        where mm.member_email = qs.member_email and qs.mentor_seq = #{mentor_seq}
-	</select>
+	
 
 	
 	<select id="getMentoring_type" parameterType="Map" resultType="mentor">

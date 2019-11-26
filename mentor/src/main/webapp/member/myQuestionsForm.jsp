@@ -56,21 +56,17 @@
 			          </div>
 
 			          <div class="mentoring-type-block">
-			            <a type="external" href="/mentors?job_type%5B%5D=18">
-			              <div class="chip chip-outline no-border-radius">
+			              <div class="chip chip-outline no-border-radius" style="border-radius: 5px;">
 			                <div class="chip-label">
 			                 	 ${mentorDTO.job_type}
 			                </div>
 			              </div>
-						</a>
 							<c:forEach var="mentor" items="${list}">
-					            <a type="external" href="/mentors?mentoring_type%5B%5D=1">
-					               <div class="chip chip-outline no-border-radius">
+					               <div class="chip chip-outline no-border-radius" style="border-radius: 5px;">
 					                 <div class="chip-label">
 					                  	 ${mentor.mentoring_type}
 					                 </div>
 					               </div>
-						   	  	</a>
 					   	  	</c:forEach>
 						</div>
 			        </div>
