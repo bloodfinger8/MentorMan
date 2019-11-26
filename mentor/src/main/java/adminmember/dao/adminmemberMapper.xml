@@ -228,4 +228,4 @@ select count(*) from mentors_member
 where  member_flag= 2
 and	   member_name like '%'||#{adminmenteeKeyword}||'%'
 </select>
-
+</mapper>
