@@ -3,6 +3,7 @@ package mentor.service;
 import java.util.List;
 import java.util.Map;
 
+import essayboard.bean.EssayboardDTO;
 import meetingboard.bean.ReviewDTO;
 import mentor.bean.MentorDTO;
 import mentor.bean.MentorFollowDTO;
@@ -42,6 +43,21 @@ public interface MentorService {
 	public void mentorFollowDelete(MentorFollowDTO mentorFollowDTO);
 
 	public List<MentorDTO> getMentorAttentionList(Map<String, Object> map);
+
+	public int getJobCode(Map<String, Object> map);
+
+	public List<MentorDTO> getJobType(Map<String, Object> map);
+
+	public List<MentorDTO> getMentor(Map<String, Object> map);
+
+	public int getMemberCount(int mentorFlag);	
+
+	public List<MentorDTO> getHonorMentor(Map<String, Object> map);
+
+	public int getAnswer(int mentor_seq);
+
+	public int getQuestion(int mentor_seq);
+
 
 
 

@@ -12,32 +12,6 @@
           질문 및 답변
         </h1>
 
-     <!--    <div class="block-footer">
-          로켓은 질문권을 의미합니다. 최초 3개가 충전되며, 멘토에게 답변을 받고 고맙습니다를 작성하시면 1개씩 자동 충전됩니다.
-        </div>
-
-        <div class="block-footer">
-          <div class="stat-info-block">
-            <div class="chip chip-outline no-border-radius">
-              <div class="chip-label">
-                <span>로켓 <strong class="highlight">3개</strong></span>
-              </div>
-            </div>
-
-            <div class="chip chip-outline no-border-radius">
-              <div class="chip-label">
-                <span>질문수 <strong class="highlight">-개</strong></span>
-              </div>
-            </div>
-
-            <div class="chip chip-outline no-border-radius">
-              <div class="chip-label">
-                <span>질문뱃지 <strong class="highlight">-개</strong></span>
-              </div>
-            </div>
-          </div>
-        </div> -->
-      </div>
       <div class="row">
 	      <c:if test="${mentor_questionList ne '[]'}">
 	      	<c:forEach var="member" items="${mentor_questionList}" >

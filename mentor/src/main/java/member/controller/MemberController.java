@@ -202,12 +202,10 @@ public class MemberController {
 		if(member_flag == 1) {
 			int mentor_seq = memberService.getMentor_seq(memberDTO.getMember_email());
 			List<MentorDTO> list = memberService.getMemtee_question(mentor_seq);
-			System.out.println("mentor_questionList"+list);
 			model.addAttribute("mentor_questionList", list);
 		}
 		List<MentorDTO> list = memberService.getQandA(map);
 		if(list != null) {
-			System.out.println("all_questionList"+list);
 			model.addAttribute("all_questionList", list);
 		}
 		model.addAttribute("flag",member_flag);
