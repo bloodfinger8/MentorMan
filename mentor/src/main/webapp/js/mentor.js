@@ -126,7 +126,7 @@ function mentor_question_seq(seq, pg){
 		data: {'seq': seq,'pg': pg},
 		dataType: 'text',
 		success: function(data){
-			location.href=data;
+			location.href = data;
 		},
 		error: function(){
 			alert('에러');

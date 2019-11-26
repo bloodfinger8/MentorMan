@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import member.bean.CustomUserDetails;
 import member.bean.MemberDTO;
 import mentor.bean.MentorDTO;
 
@@ -98,5 +99,33 @@ public class MemberDAOMybatis implements MemberDAO {
 	public void questionDelete(int question_seq) {
 		sqlSession.delete("memberSQL.questionDelete",question_seq);
 	}
+
+	// 이메일로 회원 정보 가지고 오기.
+	@Override
+	public MemberDTO getMemberByEmail(String member_email) {
+		return sqlSession.selectOne("memberSQL.getMemberByEmail", member_email);
+	}
+	
+	// 이메일로 이메일 인증키 추가하기
+	@Override
+	public void createAuthKey(String member_email, String authKey) {
+		MemberDTO member = new MemberDTO();
+		member.setMember_email(member_email);
+		member.setMemberAuthKey(authKey);
+		sqlSession.update("memberSQL.createAuthKey", member);
+	}
+	
+	// 이메일 인증키로 검사
+	@Override
+	public MemberDTO checkAuthKey(MemberDTO memberDTO) {
+		return sqlSession.selectOne("memberSQL.checkAuthKey", memberDTO);
+	}
+	
+	// 이메일 인증키로 검사 성공시 1로 상태 바꿈
+	@Override
+	public void updateMemberAuthState(MemberDTO memberDTO) {
+		sqlSession.update("memberSQL.updateMemberAuthState", memberDTO);
+	}
+
 
 }

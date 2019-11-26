@@ -3,6 +3,7 @@ package member.dao;
 import java.util.List;
 import java.util.Map;
 
+import member.bean.CustomUserDetails;
 import member.bean.MemberDTO;
 import mentor.bean.MentorDTO;
 
@@ -29,5 +30,13 @@ public interface MemberDAO {
 	public List<MentorDTO> getMentoring_type(Map<String, String[]> arrayMap);
 
 	public void questionDelete(int question_seq);
+
+	public MemberDTO getMemberByEmail(String member_email);
+
+	public void createAuthKey(String string, String authKey);
+
+	public MemberDTO checkAuthKey(MemberDTO memberDTO);
+
+	public void updateMemberAuthState(MemberDTO memberDTO);
 
 }

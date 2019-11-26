@@ -94,7 +94,24 @@
 	<delete id="questionDelete" parameterType="int">
 		delete from question where question_seq = #{question_seq}
 	</delete>
-
+	
+	
+	<!-- 이메일로 회원정보 가지고 오기 -->
+	<select id="getMemberByEmail" parameterType="String" resultType="member">
+		select * from mentors_member where member_email = #{member_email}
+	</select>
+	<!-- 이메일로 인증키 업데이트 하기 -->
+	<update id="createAuthKey" parameterType="member">
+		update mentors_member set memberAuthKey = #{memberAuthKey} where member_email = #{member_email}
+	</update>
+	<!-- 이메일 인증키 확인 -->
+	<select id="checkAuthKey" parameterType="member" resultType="member">
+		select * from mentors_member where member_email = #{member_email} and memberAuthKey = #{memberAuthKey}
+	</select>
+	<!-- 이메일 인증 완료시 상태 업데이트 -->
+	<update id="updateMemberAuthState" parameterType="member">
+		update mentors_member set memberAuthStatus = #{memberAuthStatus} where member_email = #{member_email}
+	</update>
 </mapper>
 
 	
