@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
     
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
@@ -60,7 +61,7 @@
 				<div class="col-100 tablet-50 desktop-33">
   					<div class="card mentor-post-card mentor_post_6589">
   						<div class="card-header">
-    						<a class="color-black" type="external" href="/mentor/essayboard/mentorInfoView?seq=${list.essayboard_seq }&pg=${pg}&mentors=${list.member_seq }">
+    						<a class="color-black" type="external" href="/mentor/mentor/mentorInfoView?mentors=${list.member_seq }">
       					<div>
         						<div class="mentor-image img-circle">
           							  <c:if test="${list.member_profile != 'profile.jpg'}">
@@ -104,7 +105,14 @@
 		        </div>
 
 		        <div class="mentor-post-detail">
-		        	${list.essayboard_content }
+		        	<c:choose>
+						<c:when test="${fn:length(list.essayboard_content) gt 200}">
+							<c:out value='${fn:substring(list.essayboard_content.replaceAll("\\\<.*?\\\>|&nbsp;",""), 0, 190)}'/>...
+						</c:when>
+						<c:otherwise>
+							<c:out value="${list.essayboard_content}"/>
+						</c:otherwise>
+					</c:choose>
 		        </div>
 				</a>  
 			</div>

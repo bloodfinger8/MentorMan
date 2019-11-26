@@ -233,3 +233,14 @@ $(function(){
 		});
 	});
 });
+
+var mentoring = new array();
+$(document).ready(function(event){
+	$('#mentring_row.a').on('click', function(){
+		event.preventDefault();	
+		
+		var txt = $(this).attr("href");
+		
+		alert(txt);
+	});
+});

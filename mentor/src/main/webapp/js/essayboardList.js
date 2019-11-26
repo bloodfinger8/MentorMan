@@ -31,8 +31,6 @@ $(".row > a").on("click",function(event, data){// a태그 클릭시 작동
         } else {
         	$(this).addClass('active');
         }
-		
-		
         
         var txt = $(this).attr("href");// href에 입력된 값을 가져옴 즉 클릭된 a의 job_code를 가져옴
         var dateIndex = jobs.indexOf(txt);
@@ -101,7 +99,7 @@ function essayjobType(pg , flag){
 		<div class="col-100 tablet-50 desktop-33">
 				<div class="card mentor-post-card mentor_post_6589">
 					<div class="card-header">
-					<a class="color-black" type="external" href="/mentor/essayboard/mentorInfoView?seq=${items.essayboard_seq }&mentors=${items.member_seq }">
+					<a class="color-black" type="external" href="/mentor/essayboard/mentorInfoView?mentors=${items.member_seq }">
 					<div>
 						<div class="mentor-image img-circle">
 					            ${profileFlag}

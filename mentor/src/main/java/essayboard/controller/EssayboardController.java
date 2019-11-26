@@ -1,5 +1,8 @@
 package essayboard.controller;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,11 +16,13 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import essayboard.bean.EssayboardDTO;
@@ -145,11 +150,30 @@ public class EssayboardController {
 	@ResponseBody
 	public void essayboardWrite(@RequestParam Map<String, Object> map, HttpSession session) {
 		memberDTO = (MemberDTO)session.getAttribute("memDTO");
-			
 		String email = memberDTO.getMember_email();
 		map.put("mentor_email", email);
 		essayboardService.essayboardWrite(map);
 		
+	}
+	
+	/**
+	 * 
+	 * @Title : 에세이 글 쓰기 이미지 처리
+	 * @Author : 김태형, @Date : 2019. 11. 26.
+	 */
+	@RequestMapping(value = "essayboardImage", method = RequestMethod.POST)
+	@ResponseBody
+	public String noticeboardImage(@RequestParam("file") MultipartFile file) {
+		String filePath = "C:\\Users\\TR\\Documents\\GitHub\\MentorMan\\mentor\\src\\main\\webapp\\storage";
+		String fileName = file.getOriginalFilename();
+		System.out.println(fileName);
+		File files = new File(filePath, fileName);
+		try {
+			FileCopyUtils.copy(file.getInputStream(), new FileOutputStream(files));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return fileName;
 	}
 	
 	/**
@@ -223,7 +247,7 @@ public class EssayboardController {
 //		System.out.println("check = " + check);
 		memberDTO = (MemberDTO)session.getAttribute("memDTO");
 		Map<String, Object> map = new HashMap<String, Object>();
-//		
+		
 		// 페이지 당 9개씩
 		int endNum = pg * 9;
 		int startNum = endNum - 8;
@@ -238,8 +262,10 @@ public class EssayboardController {
 		
 		// 직무 유형 찾기 
 		if(check == "success") {
-			essayDutyTotal = essayboardService.getEssayDuty(map);
+			// 직무유형에 대한  에세이 리스트
 			list = essayboardService.essayjobType(map);			
+			// 직무유형에 대한 에세이 개수 
+			essayDutyTotal = essayboardService.getEssayDuty(map);
 		} 
 		
 		// job_code가 없을 경우 아래 코드를 실행한다.
