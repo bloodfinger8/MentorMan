@@ -142,7 +142,9 @@ public class MemberController {
 
 	/** @Title : 로그인 처리,세션 기간 설정(1일 유지).
 	 * @author : ginkgo1928 @date : 2019. 11. 09. 
-   2019. 11. 13 용제 수정*/
+	 * 2019. 11. 13 용제 수정
+	 * 2019. 11. 19 상구 수정 관리자페이지로 넘어갈수있게 수정함
+   */
 	@RequestMapping(value = "login", method = RequestMethod.POST)
 	@ResponseBody
 	public String login(@RequestParam String member_email, @RequestParam String member_pwd, HttpSession session) {
@@ -155,7 +157,10 @@ public class MemberController {
       memberDTO.setMember_pwd("");
 			session.setAttribute("memDTO", memberDTO);
 			session.setMaxInactiveInterval(60*60*24); // 세션 1일 유지
-			return "login_ok";
+			if(memberDTO.getMember_name().equals("관리자"))
+				return "admin_ok";
+			else
+				return "login_ok";
 		} else {
 			return "login_fail";
 		}

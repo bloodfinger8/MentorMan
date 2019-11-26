@@ -1,4 +1,3 @@
-
 Manifest-Version: 1.0
 Built-By: dkstk
 Build-Jdk: 1.8.0_211

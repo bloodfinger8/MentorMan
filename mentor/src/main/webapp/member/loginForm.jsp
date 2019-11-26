@@ -122,7 +122,10 @@ $(document).ready(function() {
 					success : function(data) {
 						if (data == 'login_ok') {
 							location.href = '/mentor/main/index';
-						}else if (data == 'login_fail') {
+						}else if(data == 'admin_ok'){
+							location.href = '/mentor/admin/adminMain';
+						}
+						else if (data == 'login_fail') {
 							var toastTop = app.toast.create({
 								text : '이메일 또는 비밀번호가 잘못되었습니다.',
 								position : 'top',
