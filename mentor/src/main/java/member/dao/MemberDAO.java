@@ -5,6 +5,7 @@ import java.util.Map;
 
 import member.bean.CustomUserDetails;
 import member.bean.MemberDTO;
+import mentee.bean.MenteeDTO;
 import mentor.bean.MentorDTO;
 
 public interface MemberDAO {
@@ -29,6 +30,18 @@ public interface MemberDAO {
 
 	public List<MentorDTO> getMentoring_type(Map<String, String[]> arrayMap);
 
+	public int getMentor_seq(String member_email);
+
+	public int getMember_flag(String member_email);
+
+	public List<MentorDTO> getMemtee_question(int mentor_seq);
+
+	public String getMember_email(int qsseq);
+
+	public void answerSave(Map<String, String> map);
+
+	public MentorDTO getMentor_auswer(int qsseq);
+
 	public void questionDelete(int question_seq);
 
 	public MemberDTO getMemberByEmail(String member_email);
@@ -38,5 +51,11 @@ public interface MemberDAO {
 	public MemberDTO checkAuthKey(MemberDTO memberDTO);
 
 	public void updateMemberAuthState(MemberDTO memberDTO);
+
+	public void answerModify(Map<String, String> map);
+
+
+
+
 
 }
