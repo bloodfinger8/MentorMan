@@ -57,9 +57,9 @@
 		</property>
 	</bean>
 	
-	<bean id="mailService" class="member.service.MemberMailService">
+	<!-- <bean id="mailService" class="member.service.MemberMailService">
 		<property name="javaMailSender"  ref="javaMailSender" />
-	</bean>
+	</bean> -->
 	
 	<!-- 모임 -->
 	<context:component-scan base-package="meetingboard.controller"/>

@@ -156,7 +156,8 @@ public class MemberController {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("member_email", member_email);
 		map.put("member_pwd", member_pwd);
-		MemberDTO memberDTO = memberService.login(map);
+
+		memberDTO = memberService.login(map);
 
 		if (memberDTO != null) {
 			memberDTO.setMember_pwd("");
@@ -182,8 +183,7 @@ public class MemberController {
 	 */
 	@RequestMapping(value = "myQandA", method = RequestMethod.GET)
 	public String myQandA(@RequestParam(required = false, defaultValue = "1") int pg ,Model model, HttpSession session){
-		MemberDTO memberDTO = (MemberDTO) session.getAttribute("memDTO");
-
+		memberDTO = (MemberDTO) session.getAttribute("memDTO");
 		int endNum = pg*3;
 		int startNum = endNum-2;
 		Map<String, String> map = new HashMap<String, String>();
@@ -235,7 +235,6 @@ public class MemberController {
 		map.put("question_seq", qsseq+"");
 		map.put("member_flag", member_flag+"");
 		MentorDTO mentorDTO = memberService.getMentor_info(map);
-
 		Map<String, String> followMap = new HashMap<String, String>();
 		followMap.put("memEmail" , memberDTO.getMember_email());
 		followMap.put("mentorEmail" , mentorDTO.getMentor_email());
@@ -244,8 +243,6 @@ public class MemberController {
 		System.out.println(mentorDTO.getMentor_email());
 		model.addAttribute("follow" , follow);
 		model.addAttribute("memNicname" , memberDTO.getMember_nickname());
-
-
 		if(getEmail != mentorDTO.getMember_email()) {
 			if(mentorDTO.getMentoring_code() != null) {
 				//질문 할 경우 상대 멘토의 정보를 가져와야됨
@@ -257,7 +254,6 @@ public class MemberController {
 				model.addAttribute("list", list);
 			}
 		}
-		System.out.println(mentorDTO);
 		MentorDTO auswerDTO = memberService.getMentor_auswer(qsseq);
 		if(auswerDTO != null) {
 			model.addAttribute("auswerDTO", auswerDTO);

@@ -220,8 +220,6 @@ public class EssayboardController {
 	public ModelAndView essayjobType(@RequestBody Map<String, Object> jsonData ,
 										  HttpServletResponse response ,
 										  HttpSession session) {
-//		System.out.println("jobs = " + job_code);
-//		System.out.println("flag = " + flag);
 		List<EssayboardDTO> list = null;
 		
 		// job_code

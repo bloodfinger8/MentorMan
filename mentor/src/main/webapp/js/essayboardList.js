@@ -61,7 +61,6 @@ function essayjobType(pg , flag){
 	$('#gap').empty();
 	$('.paging').empty();
 	
-	
 	var page = parseInt(pg);
 	
 	if(typeof pg == "undefined"){
@@ -88,13 +87,9 @@ function essayjobType(pg , flag){
 	    			var scrapFlag = "<img id="+ items.essayboard_seq +" src='../image/scrapNoImg.png' width='13'>"
 	    		} 
     			
-    			if(items.member_profile != 'profile.jpg'){
-    				var profileFlag = '<img width="50" height="50" src="../storage/' + items.mentor_email + '/' + items.member_profile + '">'
-    			} else {
-    				var profileFlag = "<img width='50' height='50' src='../image/profile.jpg'>"
-    			}
     			
-    			let essayboard = `
+    			
+    			let essayboard = 
 	<input type="hidden" id="job_code" value="${items.job_code }">
 		<div class="col-100 tablet-50 desktop-33">
 				<div class="card mentor-post-card mentor_post_6589">

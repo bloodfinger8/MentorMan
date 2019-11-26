@@ -28,27 +28,10 @@
          <a id="job_code_16" class="button color-gray " type="external" href="job_code_16">공무원/공공/비영리</a>
          <a id="job_code_17" class="button color-gray " type="external" href="job_code_17">생산/품질/제조</a>
          <a id="job_code_18" class="button color-gray " type="external" href="job_code_18">기타 사무</a>
-     </div>
+
+  	</div>
    </div>
-	
-   <div class="block job-type-block">
-      <div class="block-title">
-        멘토링 유형
-      </div>
-      <div class="row">
-        <div class="row" id="mentring_row">
-            <a class="button color-gray " type="external" href="mentoring_code_0">직무</a>
-            <a class="button color-gray " type="external" href="mentoring_code_1">진로</a>
-            <a class="button color-gray " type="external" href="mentoring_code_2">스펙</a>
-            <a class="button color-gray " type="external" href="mentoring_code_3">외국어</a>
-            <a class="button color-gray " type="external" href="mentoring_code_4">면접/자소서</a>
-            <a class="button color-gray " type="external" href="mentoring_code_5">회사생활</a>
-            <a class="button color-gray " type="external" href="mentoring_code_6">창업</a>
-            <a class="button color-gray " type="external" href="mentoring_code_7">이직</a>
-            <a class="button color-gray " type="external" href="mentoring_code_8">기타</a>
-        </div>
-      </div>
-   </div>
+
 <div class="mentor-block">
    <div class="block-title strong-title">
    <div class="mentor_div">
@@ -59,64 +42,69 @@
    </a>
    </div>
 
-      <div class="row no-gap">
-      <c:if test="${list ne '[]'}">
-         <c:forEach var="mentor" items="${list}" >
-         <div class="col-100 tablet-50 desktop-25">
-              <div class="card mentor-card">
-            <a id="mentorProfileView" type="external" href="/mentor/mentor/mentorInfoView?pg=${pg}&mentors=${mentor.member_seq}"><!-- 태형이 url -->
-               <div style="background-image:url()" class="cover-image"></div>
-               
-                <div class="mentor-image img-circle">
-                <c:if test="${mentor.member_profile != 'profile.jpg'}">
-                  <img width="50" height="50" src="../storage/${mentor.mentor_email}/${mentor.member_profile}">
-                </c:if>
-                <c:if test="${mentor.member_profile == 'profile.jpg'}">
-                  <img width="50" height="50" src="../image/profile.jpg">
-                </c:if>
-                </div>
-            
-                <div class="mentor-info">
-                  <div class="name">
-                    <span class="mentor-name">${mentor.member_name}</span>
-                    <span class="position">멘토</span>
-                  </div>
-                  
-                  <div class="job">
-                    <div>${mentor.mentor_company}</div>
-                    <div>${mentor.mentor_department }</div>
-                  </div>
-                </div>
-              </a>
-            <div class="primary-mentoring-info">
-                 <div class="title">${mentor.job_type}</div>
-                  <div class="info">${mentor.mentor_represent}</div>
-            </div>
-                <div class="ask-button">
-               <c:if test="${memberDTO != null}">
-                   <c:if test="${mentor.mentor_email != memberDTO.member_email}">
-                       <a class="question button button-small button-fill" id="mentorQuestions" type="external" onclick="mentor_question_seq(${mentor.mentor_seq},${pg})"><!-- pg seq 가져가라 -->
-                            질문하기
-                     </a>
-                  </c:if>
-               </c:if>   
-               <c:if test="${memberDTO == null}">
-                    <a class="button button-small button-fill" type="external" href="/mentor/member/loginForm"><!-- pg seq 가져가라 -->
-                         질문하기
-                  </a>
-               </c:if>   
-               </div>
-            </div>
-         </div>
-         </c:forEach>
-      </c:if>      
-           <div class="col-100 desktop-25"></div>
-           <div class="col-100 desktop-25"></div>
-           <div class="col-100 desktop-25"></div>
-         </div>
-      <div style="float: right;">${mentorfindPaging.pagingHTML}</div>
-    </div>
-  </div>
+	   <div class="row no-gap" id="mentor_findList">
+		<c:if test="${list ne '[]'}">
+			<c:forEach var="mentor" items="${list}" >
+			<div class="col-100 tablet-50 desktop-25">
+				  <div class="card mentor-card">
+				<a id="mentorProfileView" type="external" href="/mentor/mentor/mentorInfoView?pg=${pg}&mentors=${mentor.member_seq}"><!-- 태형이 url -->
+					<div style="background-image:url()" class="cover-image"></div>
+					
+				    <div class="mentor-image img-circle">
+				    <c:if test="${mentor.member_profile != 'profile.jpg'}">
+				      <img width="50" height="50" src="../storage/${mentor.mentor_email}/${mentor.member_profile}">
+				    </c:if>
+				    <c:if test="${mentor.member_profile == 'profile.jpg'}">
+				      <img width="50" height="50" src="../image/profile.jpg">
+				    </c:if>
+				    </div>
+				
+				    <div class="mentor-info">
+				      <div class="name">
+				        <span class="mentor-name">${mentor.member_name}</span>
+				        <span class="position">멘토</span>
+				      </div>
+				      
+				      <div class="job">
+				        <div>${mentor.mentor_company}</div>
+				        <div>${mentor.mentor_department }</div>
+				      </div>
+				    </div>
+				  </a>
+				<div class="primary-mentoring-info">
+				  	<div class="title">${mentor.job_type}</div>
+				   	<div class="info">${mentor.mentor_represent}</div>
+				</div>
+				    <div class="ask-button">
+				   <c:if test="${memberDTO != null}">
+				    	<c:if test="${mentor.mentor_email != memberDTO.member_email}">
+					        <a class="question button button-small button-fill" id="mentorQuestions" type="external" onclick="mentor_question_seq(${mentor.mentor_seq},${pg})"><!-- pg seq 가져가라 -->
+						          질문하기
+							</a>
+						</c:if>
+					</c:if>	
+					<c:if test="${memberDTO == null}">
+				        <a class="button button-small button-fill" type="external" href="/mentor/member/loginForm"><!-- pg seq 가져가라 -->
+					          질문하기
+						</a>
+					</c:if>	
+					</div>
+				</div>
+			</div>
+			</c:forEach>
+		</c:if>		
+	        <div class="col-100 desktop-25"></div>
+	        <div class="col-100 desktop-25"></div>
+	        <div class="col-100 desktop-25"></div>
+	      </div>
+	      <div class="pagination-block">
+          <div class="page-entries-info">
+          </div>
+          <div class="paging" id="paging">
+    		${mentorfindPaging.pagingHTML }
+		  	</div>
+  		  </div>
+  		  </div>
 </div>
 <input type="hidden" id="memNick" value="${memberDTO.member_nickname}">
 <input type="hidden" id="mentorFlag" name="mentorFlag" value="${flag}">
