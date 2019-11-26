@@ -5,6 +5,7 @@
 	<typeAliases>
 		<typeAlias type="mentee.bean.MenteeDTO" alias="mentee"/>
 		<typeAlias type="mentor.bean.MentorDTO" alias="mentor"/>
+		<typeAlias type="mentor.bean.MentorFollowDTO" alias="mentorFollow"/>
 		<typeAlias type="noticeboard.bean.NoticeboardDTO" alias="notice"/>
 		<!-- 관리자 -->
 		<typeAlias type="adminboard.bean.AdminnoticeboardDTO" alias="adminnoticeboard"/>

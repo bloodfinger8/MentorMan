@@ -19,3 +19,4 @@ public class AdminmemberDTO {
 	//mentor join
 	private int mentor_flag;
 }
+

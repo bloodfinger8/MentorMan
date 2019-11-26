@@ -1,19 +1,17 @@
 /*테이블 */
 
 --- yongje -------------------------------------------------------------------------------------------------------------------------
--- job 테이블 create문
-create table job (
-    job_code varchar2(20) primary key,  -- 직무코드(PK)
-    job_type varchar2(100) not null     -- 직무유형
+-- job 테이블 create
+CREATE TABLE job (
+    job_code VARCHAR2(20) PRIMARY KEY,  -- 직무코드(PK)
+    job_type VARCHAR2(100) NOT NULL     -- 직무유형
 );
-
--- mentoring 테이블 create문
-create table mentoring (
-    mentoring_code varchar2(20) primary key,    -- 멘토링코드(PK)
-    mentoring_type varchar2(30) not null        -- 멘토링유형
+-- mentoring 테이블 create
+CREATE TABLE mentoring (
+    mentoring_code VARCHAR2(20) PRIMARY KEY,    -- 멘토링코드(PK)
+    mentoring_type VARCHAR2(30) NOT NULL        -- 멘토링유형
 );
-
--- meetingboard 테이블 create문
+-- 모임 테이블 create
 CREATE TABLE meetingboard (
     meetingboard_seq            NUMBER,         -- 모임번호(PK)
     job_code                    VARCHAR2(20),   -- 직무분야(FK)
@@ -36,19 +34,17 @@ CREATE TABLE meetingboard (
     CONSTRAINT FK_MEETINGBOARD1 FOREIGN KEY(job_code) REFERENCES job(job_code),
     CONSTRAINT FK_MEETINGBOARD2 FOREIGN KEY(mentor_email) REFERENCES mentors_member(member_email)
 );
-select * from mentor;
-
 
 -- meetingboard 시퀀스
 create sequence meetingboard_seq nocache nocycle;
 
--- 안내사항 테이블
-create table guide(
-    guide_content   varchar2(1000),
-    logtime date default sysdate
+-- 안내사항 테이블 create
+CREATE TABLE guide(
+    guide_content   VARCHAR2(1000),
+    logtime         DATE DEFAULT SYSDATE
 );
 
--- 모임신청 create문
+-- 모임신청 테이블 create
 CREATE TABLE meeting_participation(
     participation_seq       NUMBER,         -- 신청 seq
     meetingboard_seq        NUMBER,         -- 모임 seq
@@ -63,6 +59,7 @@ CREATE TABLE meeting_participation(
     CONSTRAINT FK_MEETING_PARTICIPATION2 FOREIGN KEY(mentee_email) REFERENCES mentors_member(member_email),
     CONSTRAINT FK_MEETING_PARTICIPATION3 FOREIGN KEY(mentor_email) REFERENCES mentors_member(member_email)
 );
+
 -- 모임신청 시퀀스
 create sequence participation_seq nocache nocycle;
 
@@ -141,10 +138,12 @@ CREATE TABLE menteeboard(
      menteeboard_logtime DATE DEFAULT SYSDATE
  );
  create SEQUENCE menteeboard_seq nocache nocycle;
+ 
+ CREATE TABLE menteeboardLike (
      menteeboardLike_mb_seq NUMBER NOT NULL,         --좋아요 누른 menteeboard_seq값 저장
      menteeboardLike_mb_email VARCHAR2(40) NOT NULL  --좋아요 누른 menteeboard_email값 저장
 );
-
+select * from menteeboardReply;
  -- 게시글 댓글 테이블
  CREATE TABLE menteeboardReply(
       menteeboardReply_seq NUMBER PRIMARY KEY,            -- 댓글 번호
@@ -168,6 +167,14 @@ CREATE TABLE essayboardScrap(
     essayboardScrap_mem_email VARCHAR2(40) NOT NULL,   -- 로그인 이메일
     essatboardScrap_logtime DATE DEFAULT SYSDATE
 );
+
+--팔로우 
+CREATE TABLE mentorFollow(
+    follower_email VARCHAR2(40) NOT NULL,   -- 로그인 이메일 (팔로우한 사람)
+    followed_email VARCHAR2(40) NOT NULL,   -- (팔로우 당한 사람)
+    mentorFollow_logtime DATE DEFAULT SYSDATE
+);
+
 
  --송현--------------------------------------------------------------------------------------------------------
 create table mentors_member(
@@ -222,7 +229,6 @@ create table menteestudent_profile(
     menteestudent_email varchar2(200) not null,     -- 이메일
     foreign key(menteestudent_email)
     references mentors_member(member_email));
-
 -- 멘티 직장인
 create table menteeemployee_profile(
     menteeemployee_year number not null,            -- 년차
@@ -233,7 +239,49 @@ create table menteeemployee_profile(
     menteeemployee_email varchar2(200) not null,    -- 이메일
     foreign key(menteeemployee_email)
     references mentors_member(member_email));
+-- 질문                              
+create table question(
+    question_seq number primary key,            --- 질문 번호
+    mentor_seq number,                          --- 멘토 번호
+    member_email varchar2(100) not null,        --- 멤버 이메일
+    question_title varchar2(4000) not null,      --- 질문 제목
+    question_content varchar2(4000) not null,   --- 질문 내용
+    question_flag number default 0,             --- 질문대기/질문완료
+    question_logtime date default sysdate,      --- 질문 시간
+    foreign key(mentor_seq)
+    references mentor(mentor_seq),
+    foreign key(member_email)
+    references mentors_member(member_email)
+);
+create sequence question_seq nocache nocycle;   --- 질문 시퀀스
 
+
+-- 답변
+create table answer(
+    answer_seq number primary key,              --- 답변 번호
+    question_seq number not null,               --- 질문 번호
+    mentor_seq number not null,                 --- 멘토 번호
+    member_email varchar2(100) not null,        --- 멤버 이메일
+    answer_content varchar2(4000) not null,     --- 답변 내용
+    answer_logtime date default sysdate,        --- 답변 시간
+    foreign key(question_seq)
+    references question(question_seq),
+    foreign key(mentor_seq)
+    references mentor(mentor_seq),
+    foreign key(member_email)
+    references mentors_member(member_email)
+);
+
+ALTER TABLE answer DROP CONSTRAINT SYS_C007515;
+
+
+ALTER TABLE answer ADD CONSTRAINT FK_answer FOREIGN KEY (question_seq)
+REFERENCES question(question_seq) ON DELETE CASCADE;
+
+
+create sequence answer_seq nocache nocycle;     --- 답변 시퀀스                              
+                              
+                              
 ----taehyeong--------------------------------------------------------------------------------------------------------------------
 -- 에세이 보드 생성
 create table essayboard(
@@ -245,10 +293,9 @@ create table essayboard(
     essayboard_hit number default 0 , -- 에세이 조회수
     essayboard_scrap number default 0,  -- 에세이 즐겨찾기
     essayboard_scrapFlag number default 0,
-    constraint essay_job foreign key(job_code) references job(job_code), -- 에세이 잡 코드 FK
-    essayboard_logtime date default sysdate
+    essayboard_logtime date default sysdate,
+    constraint essay_job foreign key(job_code) references job(job_code) -- 에세이 잡 코드 FK
 );
-
 -- 에세이 보드 시퀀스 생성
 create sequence essayboard_seq nocache nocycle;
 

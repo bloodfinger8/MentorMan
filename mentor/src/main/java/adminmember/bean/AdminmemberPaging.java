@@ -186,39 +186,7 @@ public class AdminmemberPaging {
 		}
 		pagingHTML.append("<span class='page-link' style='cursor: pointer;' onclick='adminmenteeSearch("+(startPage-1)+")'>Next</span>");
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	
 }

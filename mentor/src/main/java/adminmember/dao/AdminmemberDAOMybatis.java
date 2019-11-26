@@ -114,3 +114,4 @@ public class AdminmemberDAOMybatis implements AdminmemberDAO{
 	
 	
 }
+
