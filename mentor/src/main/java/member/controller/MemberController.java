@@ -362,7 +362,6 @@ public class MemberController {
 		memberService.newPwdCommit(map);
 	}
 
-
 	/**
 	 * @Title : 질문 삭제
 	 * @Author : kujun95, @Date : 2019. 11. 20.
@@ -372,9 +371,6 @@ public class MemberController {
 	public void questionDelete(@RequestParam int question_seq) {
 		memberService.questionDelete(question_seq);
 	}
-	
-
-}
 
 	//멘토가 멘티에게 답변 보내기
 	@RequestMapping(value = "answerSuccess", method=RequestMethod.POST)
