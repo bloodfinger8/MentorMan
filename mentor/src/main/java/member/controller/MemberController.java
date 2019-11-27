@@ -13,19 +13,23 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.mail.MessagingException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
-
-import com.fasterxml.jackson.databind.JsonNode;
 
 import kakao.controller.KakaoApi;
 import member.bean.AlarmDTO;
@@ -63,9 +67,9 @@ public class MemberController {
 	private MentorService mentorService;
 	@Autowired
 	private AlarmDTO alarmDTO;
-	
-	
-	
+
+
+
 	// WriteForm 화면
 	@RequestMapping(value = "writeForm", method = RequestMethod.GET)
 	public String writeForm(Model model) {
@@ -100,11 +104,13 @@ public class MemberController {
 	/**
 	 * @Title : 회원가입 완료 & 프로필 이미지 storage 연결.
 	 * @author : ginkgo1928
+	 * @throws MessagingException
+	 * @throws UnsupportedEncodingException
 	 * @date : 2019. 11. 7.
 	 * 2019. 11. 13 용제 수정
 	 */
 	@RequestMapping(value = "write", method = RequestMethod.POST)
-	public String write(@RequestParam Map<String, String> map, @RequestParam MultipartFile member_profile, Model model) {
+	public String write(@RequestParam Map<String, String> map, @RequestParam MultipartFile member_profile, Model model) throws UnsupportedEncodingException, MessagingException {
 		//회원 이메일 폴더가 자동생성으로 생성된게 아니라 회원이메일 폴더 만들어주고 넣어야 한다.
 		String filePath="C:/github/MentorMan/mentor/src/main/webapp/storage/"+map.get("member_email");
 		String fileName = member_profile.getOriginalFilename();
@@ -132,21 +138,36 @@ public class MemberController {
 		return "/main/index";
 	}
 
+	// 이메일 인증 코드 검증
+	@RequestMapping(value = "emailConfirm", method = RequestMethod.GET)
+	public String emailConfirm(@ModelAttribute MemberDTO memberDTO, Model model) {
+		MemberDTO chkMember = memberService.checkAuthKey(memberDTO);
+		if(chkMember == null) { // 이메일+인증키로 맞는 회원이 없음
+			model.addAttribute("member_email", memberDTO.getMember_email());
+			model.addAttribute("display", "/member/write.jsp");
+			return "/main/index";
+		} else {
+			model.addAttribute("member_email", memberDTO.getMember_email());
+			model.addAttribute("display", "/member/emailOk.jsp");
+			return "/main/index";
+		}
+	}
+
 	// LoginForm
 	/**
-	 * @Title : 카카오 로그인 + 네이버 로그인  url 추가 + flag 추가 11/19
+	 * @Title : 카카오 로그인 + 네이버 로그인  url 추가
 	 * @Author : yong
 	 * @Date : 2019. 11. 16.
 	 * @Method Name : loginForm
 	 */
 	@RequestMapping(value = "loginForm", method = {RequestMethod.GET, RequestMethod.POST})
-	public String loginForm(Model model, HttpSession session, @RequestParam(required = false, defaultValue = "0") String flag) {
+	public String loginForm(Model model, HttpSession session, @RequestParam(required = false) String status) {
 		// 카카오 url
 		String kakaoUrl = KakaoApi.getAuthorizationUrl(session);
 		// 네이버 url
 		String naverUrl = naverLoginBO.getAuthorizationUrl(session);
 
-		model.addAttribute("flag", flag);
+		model.addAttribute("status", status);
 		model.addAttribute("kakaoUrl", kakaoUrl);
 		model.addAttribute("naverUrl", naverUrl);
 		model.addAttribute("display", "/member/loginForm.jsp");
@@ -156,32 +177,39 @@ public class MemberController {
 
 	/** @Title : 로그인 처리,세션 기간 설정(1일 유지).
 	 * @author : ginkgo1928 @date : 2019. 11. 09.
-   2019. 11. 13 용제 수정*/
+	 * 2019. 11. 13 용제 수정
+	 * 2019. 11. 19 상구 수정 관리자페이지로 넘어갈수있게 수정함
+   */
+
 	@RequestMapping(value = "login", method = RequestMethod.POST)
 	@ResponseBody
 	public String login(@RequestParam String member_email, @RequestParam String member_pwd, HttpSession session) {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("member_email", member_email);
 		map.put("member_pwd", member_pwd);
-		MemberDTO memberDTO = memberService.login(map);
+
+		memberDTO = memberService.login(map);
 
 		if (memberDTO != null) {
 			memberDTO.setMember_pwd("");
 			session.setAttribute("memDTO", memberDTO);
 			session.setMaxInactiveInterval(60*60*24); // 세션 1일 유지
-			return "login_ok";
+			if(memberDTO.getMember_name().equals("관리자"))
+				return "admin_ok";
+			else
+				return "login_ok";
 		} else {
 			return "login_fail";
 		}
 	}
 	// 로그아웃 처리
 	// 카카오 로그아웃 추가
-	@RequestMapping(value = "logout", method = RequestMethod.GET, produces="application/json")
-	public ModelAndView logout(HttpSession session) {
-		KakaoApi.kakaoLogout((JsonNode) session.getAttribute("access_token"));
-	  	session.invalidate();
-		return new ModelAndView("redirect:/main/index");
-	}
+//	@RequestMapping(value = "logout", method = RequestMethod.GET, produces="application/json")
+//	public ModelAndView logout(HttpSession session) {
+//		KakaoApi.kakaoLogout((JsonNode) session.getAttribute("access_token"));
+//	  	session.invalidate();
+//		return new ModelAndView("redirect:/main/index");
+//	}
 
 	/**
 	 * @Title : 질문 답변
@@ -189,8 +217,7 @@ public class MemberController {
 	 */
 	@RequestMapping(value = "myQandA", method = RequestMethod.GET)
 	public String myQandA(@RequestParam(required = false, defaultValue = "1") int pg ,Model model, HttpSession session){
-		MemberDTO memberDTO = (MemberDTO) session.getAttribute("memDTO");
-
+		memberDTO = (MemberDTO) session.getAttribute("memDTO");
 		int endNum = pg*3;
 		int startNum = endNum-2;
 		Map<String, String> map = new HashMap<String, String>();
@@ -242,7 +269,6 @@ public class MemberController {
 		map.put("question_seq", qsseq+"");
 		map.put("member_flag", member_flag+"");
 		MentorDTO mentorDTO = memberService.getMentor_info(map);
-
 		Map<String, String> followMap = new HashMap<String, String>();
 		followMap.put("memEmail" , memberDTO.getMember_email());
 		followMap.put("mentorEmail" , mentorDTO.getMentor_email());
@@ -251,8 +277,6 @@ public class MemberController {
 		System.out.println(mentorDTO.getMentor_email());
 		model.addAttribute("follow" , follow);
 		model.addAttribute("memNicname" , memberDTO.getMember_nickname());
-
-
 		if(getEmail != mentorDTO.getMember_email()) {
 			if(mentorDTO.getMentoring_code() != null) {
 				//질문 할 경우 상대 멘토의 정보를 가져와야됨
@@ -264,14 +288,13 @@ public class MemberController {
 				model.addAttribute("list", list);
 			}
 		}
-		System.out.println(mentorDTO);
 		MentorDTO auswerDTO = memberService.getMentor_auswer(qsseq);
 		if(auswerDTO != null) {
 			model.addAttribute("auswerDTO", auswerDTO);
 		}
 
 		model.addAttribute("flag", member_flag);
-		
+
 		model.addAttribute("seq", seq);
 		model.addAttribute("pg", pg);
 		model.addAttribute("qsseq", qsseq);
@@ -355,7 +378,6 @@ public class MemberController {
 		memberService.newPwdCommit(map);
 	}
 
-
 	/**
 	 * @Title : 질문 삭제
 	 * @Author : kujun95, @Date : 2019. 11. 20.
@@ -380,42 +402,42 @@ public class MemberController {
 		MemberDTO memberDTO = (MemberDTO) session.getAttribute("memDTO"); //멘토 로그인
 		memberService.answerModify(map);
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @Title : 나의 알림
 	 * @Author : yangjaewoo, @Date : 2019. 11. 25.
 	 */
 	@RequestMapping(value ="myAlarm", method = RequestMethod.GET)
 	public String myAlarm(Model model , HttpSession session) {
-		
+
 		MemberDTO memberDTO = (MemberDTO) session.getAttribute("memDTO");
 		String memEmail = memberDTO.getMember_email();
 		//알림 읽음 표시
 		memberService.checkSubscribe(memEmail);
-		
+
 		List<AlarmDTO> list = memberService.getAlarm(memEmail);
-		
+
 		model.addAttribute("list" , list);
 		model.addAttribute("display","/member/myAlarm.jsp");
 		return "/main/index";
 	}
-	
+
 	@RequestMapping(value ="saveAlarm", method = RequestMethod.POST)
 	@ResponseBody
 	public String saveAlarm(@RequestBody HashMap<String, String> map) {
 		memberService.saveAlarm(map);
 		return "success";
 	}
-	
+
 	@RequestMapping(value ="deleteAlarm", method = RequestMethod.GET)
 	public ModelAndView deleteAlarm(@RequestParam String alarm_seq , HttpSession session) {
 		int seq = Integer.parseInt(alarm_seq);
 		memberService.deleteAlarm(seq);
-		
+
 		MemberDTO memberDTO = (MemberDTO) session.getAttribute("memDTO");
 		String memEmail = memberDTO.getMember_email();
-		
+
 		//삭제한 후 alarm list
 		List<AlarmDTO> list = memberService.getAlarm(memEmail);
 		System.out.println("list ::" + list);
@@ -424,6 +446,6 @@ public class MemberController {
 		mav.setViewName("jsonView");
 		return mav;
 	}
-	
+
 
 }

@@ -31,8 +31,6 @@ $(".row > a").on("click",function(event, data){// a태그 클릭시 작동
         } else {
         	$(this).addClass('active');
         }
-		
-		
         
         var txt = $(this).attr("href");// href에 입력된 값을 가져옴 즉 클릭된 a의 job_code를 가져옴
         var dateIndex = jobs.indexOf(txt);
@@ -59,15 +57,25 @@ $(".row > a").on("click",function(event, data){// a태그 클릭시 작동
   });
 
 // 직무유형 버튼 값 처리
-function essayjobType(pg, flag){
+function essayjobType(pg , flag){
 	$('#gap').empty();
 	$('.paging').empty();
+	
+	var page = parseInt(pg);
+	
+	if(typeof pg == "undefined"){
+		page = 1;
+	}
+	var Flag = parseInt(flag);
 	
 	$.ajax({
     	type : 'post',
     	url : '/mentor/essayboard/essayjobType',
-    	data : {'job_code' : jobs, 'pg' : pg, 'flag' : flag},
+    	data : JSON.stringify({job_code : jobs,
+    						   pg : page,
+    						   flag : Flag}),
     	dataType : 'json',
+    	contentType : "application/json; charset=UTF-8",
     	success : function(data){
     		//alert(JSON.stringify(data));
     		let flag = $(document.createDocumentFragment());
@@ -79,18 +87,14 @@ function essayjobType(pg, flag){
 	    			var scrapFlag = "<img id="+ items.essayboard_seq +" src='../image/scrapNoImg.png' width='13'>"
 	    		} 
     			
-    			if(items.member_profile != 'profile.jpg'){
-    				var profileFlag = '<img width="50" height="50" src="../storage/' + items.mentor_email + '/' + items.member_profile + '">'
-    			} else {
-    				var profileFlag = "<img width='50' height='50' src='../image/profile.jpg'>"
-    			}
     			
-    			let essayboard = `
+    			
+    			let essayboard = 
 	<input type="hidden" id="job_code" value="${items.job_code }">
 		<div class="col-100 tablet-50 desktop-33">
 				<div class="card mentor-post-card mentor_post_6589">
 					<div class="card-header">
-					<a class="color-black" type="external" href="/mentor/essayboard/mentorInfoView?seq=${items.essayboard_seq }&mentors=${items.member_seq }">
+					<a class="color-black" type="external" href="/mentor/essayboard/mentorInfoView?mentors=${items.member_seq }">
 					<div>
 						<div class="mentor-image img-circle">
 					            ${profileFlag}

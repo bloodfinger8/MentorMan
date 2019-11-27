@@ -40,21 +40,17 @@
 								 멘토링 분야
 							</div>
 							<div class="mentoring-type-block">
-							<a type="external" href="/mentors?job_type%5B%5D=18">
-					              <div class="chip chip-outline no-border-radius">
+					              <div class="chip chip-outline no-border-radius" style="border-radius: 5px;">
 					                <div class="chip-label">
 					                 	 ${mentorDTO.job_type}
 					                </div>
 					              </div>
-								</a>
 							<c:forEach var="array" items="${list}">
-								<a type="external" href="/mentors?job_type%5B%5D=3">
-								<div class="chip chip-outline no-border-radius">
+								<div class="chip chip-outline no-border-radius" style="border-radius: 5px;">
 									<div class="chip-label">
 										${array.mentoring_type }
 									</div>
 								</div>
-								</a>
 							</c:forEach>
 							</div>
 						</div>

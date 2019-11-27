@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import essayboard.bean.EssayboardDTO;
 import meetingboard.bean.ReviewDTO;
 import mentor.bean.MentorDTO;
 import mentor.bean.MentorFollowDTO;
@@ -100,7 +101,44 @@ public class MentorDAOMybatis implements MentorDAO {
 
 	@Override
 	public List<MentorDTO> getMentorAttentionList(Map<String, Object> map) {
-		return sqlSession.selectList("getMentorAttentionList" , map);
+		return sqlSession.selectList("mentorSQL.getMentorAttentionList" , map);
+	}
+	
+	
+	@Override
+	public int getJobCode(Map<String, Object> map) {
+		return sqlSession.selectOne("mentorSQL.getJobCode", map);
+	}
+	
+	@Override
+	public List<MentorDTO> getJobType(Map<String, Object> map) {
+		return sqlSession.selectList("mentorSQL.getJobType", map);
+	}
+	
+	
+	@Override
+	public List<MentorDTO> getMentor(Map<String, Object> map) {
+		return sqlSession.selectList("mentorSQL.getMentor", map);
+	}
+	
+	@Override
+	public int getMemberCount(int mentorFlag) {
+		return sqlSession.selectOne("mentorSQL.getMemberCount", mentorFlag);
+	}
+
+	@Override
+	public List<MentorDTO> getHonorMentor(Map<String, Object> map) {
+		return sqlSession.selectList("mentorSQL.getHonorMentor", map);
+	}
+
+	@Override
+	public int getAnswer(int mentor_seq) {
+		return sqlSession.selectOne("mentorSQL.getAnswer",mentor_seq);
+	}
+
+	@Override
+	public int getQuestion(int mentor_seq) {
+		return sqlSession.selectOne("mentorSQL.getQuestion",mentor_seq);
 	}
 
 }

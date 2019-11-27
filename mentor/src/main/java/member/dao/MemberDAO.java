@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import member.bean.AlarmDTO;
+import member.bean.CustomUserDetails;
+
 import member.bean.MemberDTO;
 import mentee.bean.MenteeDTO;
 import mentor.bean.MentorDTO;
@@ -44,6 +46,14 @@ public interface MemberDAO {
 
 	public void questionDelete(int question_seq);
 
+	public MemberDTO getMemberByEmail(String member_email);
+
+	public void createAuthKey(String string, String authKey);
+
+	public MemberDTO checkAuthKey(MemberDTO memberDTO);
+
+	public void updateMemberAuthState(MemberDTO memberDTO);
+
 	public void answerModify(Map<String, String> map);
 
 	public List<AlarmDTO> getAlarm(String memEmail);
@@ -52,6 +62,7 @@ public interface MemberDAO {
 	public void saveAlarm(Map<String, String> map);
 
 	public void deleteAlarm(int seq);
+
 
 
 

@@ -63,7 +63,7 @@
 								<div class="block mentor-info">
 									<div class="name">
 										<span class="mentor-name">
-											${mentorapplyDTO.member_name } <small>멘토</small>
+											${mentorDTO.member_name } <small>멘토</small>
 										</span>
 										<a class="button col js-bookmark user_14134" data-params="followed_id=14134" data-disable-with="..." type="external" data-remote="true" rel="nofollow" data-method="post" href="/relationships">
 										팔로우 </a>
@@ -87,13 +87,18 @@
 												 멘토링 분야
 											</div>
 											<div class="mentoring-type-block">
-												<a type="external" href="/mentors?job_type%5B%5D=7">
+											<div class="chip chip-outline no-border-radius">
+													<div class="chip-label">
+														${mentorDTO.job_type }
+													</div>
+											</div>
+											<c:forEach var="mentoring" items="${mentoringList }">
 												<div class="chip chip-outline no-border-radius">
 													<div class="chip-label">
-														 ${mentorDTO.job_type }
+														 ${mentoring.mentoring_type }
 													</div>
 												</div>
-												</a>
+											</c:forEach>
 											</div>
 										</div>
 									</div>

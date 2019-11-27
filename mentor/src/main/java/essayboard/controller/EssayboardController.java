@@ -1,5 +1,8 @@
 package essayboard.controller;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,11 +16,13 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import essayboard.bean.EssayboardDTO;
@@ -26,6 +31,7 @@ import essayboard.bean.EssayboardScrapDTO;
 import essayboard.service.EssayboardService;
 import member.bean.MemberDTO;
 import mentor.bean.MentorDTO;
+import mentor.service.MentorService;
 
 @Controller
 @RequestMapping("/essayboard")
@@ -42,6 +48,8 @@ public class EssayboardController {
 	private MentorDTO mentorDTO;
 	@Autowired
 	private EssayboardScrapDTO essayboardScrapDTO;
+	@Autowired
+	private MentorService mentorService;
 	
 	/*
 	 * 
@@ -72,7 +80,6 @@ public class EssayboardController {
 		//  신규 에세이 리스트
 		List<EssayboardDTO>list = essayboardService.getNewEssay(map);	
 		
-		System.out.println("list" + list.toString());
 		//로그인 여부에 따라
 		if(memberDTO != null) {
 			String nickname = memberDTO.getMember_nickname();
@@ -143,11 +150,30 @@ public class EssayboardController {
 	@ResponseBody
 	public void essayboardWrite(@RequestParam Map<String, Object> map, HttpSession session) {
 		memberDTO = (MemberDTO)session.getAttribute("memDTO");
-			
 		String email = memberDTO.getMember_email();
 		map.put("mentor_email", email);
 		essayboardService.essayboardWrite(map);
 		
+	}
+	
+	/**
+	 * 
+	 * @Title : 에세이 글 쓰기 이미지 처리
+	 * @Author : 김태형, @Date : 2019. 11. 26.
+	 */
+	@RequestMapping(value = "essayboardImage", method = RequestMethod.POST)
+	@ResponseBody
+	public String noticeboardImage(@RequestParam("file") MultipartFile file) {
+		String filePath = "C:\\Users\\TR\\Documents\\GitHub\\MentorMan\\mentor\\src\\main\\webapp\\storage";
+		String fileName = file.getOriginalFilename();
+		System.out.println(fileName);
+		File files = new File(filePath, fileName);
+		try {
+			FileCopyUtils.copy(file.getInputStream(), new FileOutputStream(files));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return fileName;
 	}
 	
 	/**
@@ -191,31 +217,39 @@ public class EssayboardController {
 	 */
 	@RequestMapping(value = "essayjobType", method = RequestMethod.POST)
 	@ResponseBody
-	public ModelAndView essayjobType(@RequestBody String job_code ,
-									 @RequestParam(required = false, defaultValue = "1") String pg,
-									 @RequestParam(required = false, defaultValue = "0") String flag,
-									 HttpServletResponse response ,
-									 HttpSession session,
-									 Model model) {
-		System.out.println("flag = " + flag);
+	public ModelAndView essayjobType(@RequestBody Map<String, Object> jsonData ,
+										  HttpServletResponse response ,
+										  HttpSession session) {
 		List<EssayboardDTO> list = null;
 		
+		// job_code
+		ArrayList<String> joblist = (ArrayList<String>) jsonData.get("job_code");
+		// 현재 페이지
+		int pg = (Integer) jsonData.get("pg");
+		// 신규에세이, 추천에세이 플래그
+		int flag = (Integer) jsonData.get("flag");
+		
+		// job_code 유무 체크
+		String check = null;
+		
+		for (String jobs : joblist) {
+			System.out.println("list = " + jobs.toString());
+			if(!jobs.equals(null)) {
+				check = "success";
+			}
+		}
+		
+//		System.out.println("check = " + check);
+//		System.out.println("pg = " + pg);
+//		System.out.println("flag = " + flag);
+//		System.out.println("check = " + check);
 		memberDTO = (MemberDTO)session.getAttribute("memDTO");
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		// 페이지 당 9개씩
-		int endNum = Integer.parseInt(pg) * 9;
+		int endNum = pg * 9;
 		int startNum = endNum - 8;
 		
-		String[] jobs = job_code.split("&");
-		
-		List<String> joblist = new ArrayList<String>();
-		
-		for (int i = 0; i < jobs.length; i++) {
-			int start = jobs[i].indexOf("=");
-			int end = jobs[i].length();
-			joblist.add(jobs[i].substring(start+1, end));
-		}
 		map.put("startNum", startNum);
 		map.put("endNum", endNum);
 		map.put("job_code", joblist);
@@ -225,26 +259,25 @@ public class EssayboardController {
 		int essayDutyTotal = 0;
 		
 		// 직무 유형 찾기 
-		if(!joblist.equals(null)) {
-			essayDutyTotal = essayboardService.getEssayDuty(map);
+		if(check == "success") {
+			// 직무유형에 대한  에세이 리스트
 			list = essayboardService.essayjobType(map);			
+			// 직무유형에 대한 에세이 개수 
+			essayDutyTotal = essayboardService.getEssayDuty(map);
 		} 
 		
-		if(list.size() == 0 && flag.equals("0")){
+		// job_code가 없을 경우 아래 코드를 실행한다.
+		if(check == null && flag == 0){
 			list = essayboardService.getNewEssay(map);	
 			essayDutyTotal = essayboardService.getTotalA();
-		} else if(list.size() == 0 && flag.equals("1")) {
+		} else if(check == null && flag == 1) {
 			list = essayboardService.getRecommendEssay(map);
 			essayDutyTotal = essayboardService.getRecommendTotal();
 		}
 		
-		
-		
-		
-		
 		ModelAndView modelAndView = new ModelAndView();	
 
-		essayboardPaging.setCurrentPage(Integer.parseInt(pg));
+		essayboardPaging.setCurrentPage(pg);
 		essayboardPaging.setPageBlock(3);
 		essayboardPaging.setPageSize(9);
 		essayboardPaging.setTotalA(essayDutyTotal);
@@ -325,18 +358,24 @@ public class EssayboardController {
 		
 		System.out.println("ㄴeq " + seq);
 		// 해당 멘토 명함 출력
-		mentorDTO = essayboardService.getMentorBusinessCard(Integer.parseInt(mentors));
+		int mentor_seq = Integer.parseInt(mentors);
+		MentorDTO mentorDTO = mentorService.getMentorInfomation(mentor_seq);
+		String[] mentoringArray = mentorDTO.getMentoring_code().split(",");
+		Map<String, String[]> map = new HashMap<String, String[]>();
+		map.put("mentoring_code", mentoringArray);
+		List<MentorDTO> mentoringList = mentorService.getMentoring_code(map);
+		
 		// 에세이 보드 
 		essayboardDTO = essayboardService.getEssayboardView(Integer.parseInt(seq));
 
-		System.out.println("비교 " + mentors + " 비교2 " + memberDTO.getMember_seq());
 		ModelAndView modelAndView = new ModelAndView();
 		
 		// 로그인 후 멘토 SEQ
 		modelAndView.addObject("memSeq", memberDTO.getMember_seq());
 		// 게시물을 쓴 멘토의 SEQ
-		modelAndView.addObject("member_seq", mentors);
 		modelAndView.addObject("mentorDTO", mentorDTO);
+		modelAndView.addObject("member_seq", mentors);
+		modelAndView.addObject("mentoringList", mentoringList);
 		modelAndView.addObject("essayHit", essayHit);
 		modelAndView.addObject("essayboardDTO", essayboardDTO);
 		modelAndView.addObject("seq", seq);

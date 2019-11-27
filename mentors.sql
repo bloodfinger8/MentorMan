@@ -17,7 +17,7 @@ CREATE TABLE meetingboard (
     job_code                    VARCHAR2(20),   -- 직무분야(FK)
     meetingboard_title          VARCHAR2(500),  -- 제목
     meetingboard_subtitle       VARCHAR2(1000), -- 부제목
-    meetingboard_content        VARCHAR2(4000), -- 내용
+    meetingboard_content        CLOB,           -- 내용
     meetingboard_day            VARCHAR2(50),   -- 일시
     meetingboard_starthour      VARCHAR2(30),   -- 시작시간
     meetingboard_endhour        VARCHAR2(30),   -- 종료시간
@@ -124,7 +124,7 @@ CREATE TABLE menteeboard(
      menteeboard_nickname VARCHAR2(40) NOT NULL,    -- 이름
      menteeboard_email VARCHAR2(40),                -- 이메일
      menteeboard_title VARCHAR2(255) NOT NULL,      -- 제목
-     menteeboard_content VARCHAR2(4000) NOT NULL,   -- 내용
+     menteeboard_content CLOB NOT NULL,   -- 내용
      job_code VARCHAR2(40),                         -- 직무유형
      menteeboard_good NUMBER DEFAULT 0,             -- 좋아요
 
@@ -253,8 +253,8 @@ create table question(
     question_seq number primary key,            --- 질문 번호
     mentor_seq number,                          --- 멘토 번호
     member_email varchar2(100) not null,        --- 멤버 이메일
-    question_title varchar2(4000) not null,      --- 질문 제목
-    question_content varchar2(4000) not null,   --- 질문 내용
+    question_title CLOB not null,      --- 질문 제목
+    question_content CLOB not null,   --- 질문 내용
     question_flag number default 0,             --- 질문대기/질문완료
     question_logtime date default sysdate,      --- 질문 시간
     foreign key(mentor_seq)
@@ -271,7 +271,7 @@ create table answer(
     question_seq number not null,               --- 질문 번호
     mentor_seq number not null,                 --- 멘토 번호
     member_email varchar2(100) not null,        --- 멤버 이메일
-    answer_content varchar2(4000) not null,     --- 답변 내용
+    answer_content CLOB not null,     --- 답변 내용
     answer_logtime date default sysdate,        --- 답변 시간
     foreign key(question_seq)
     references question(question_seq),
@@ -298,7 +298,7 @@ create table essayboard(
     mentor_email varchar2(100) , -- 멘토 이메일
     job_code varchar2(100),
     essayboard_title varchar2(1000) not null, -- 에세이 제목
-    essayboard_content varchar2(4000) not null, -- 에세이 내용
+    essayboard_content CLOB not null, -- 에세이 내용
     essayboard_hit number default 0 , -- 에세이 조회수
     essayboard_scrap number default 0,  -- 에세이 즐겨찾기
     essayboard_scrapFlag number default 0,
@@ -315,7 +315,7 @@ create table noticeboard(
 noticeboard_seq number not null,
 noticeboard_adminEmail varchar2(200) not null,
 noticeboard_title varchar2(2000) not null,
-noticeboard_content varchar2(4000) not null,
+noticeboard_content CLOB not null,
 noticeboard_hit number default 0,
 noticeboard_logtime date default sysdate
 );

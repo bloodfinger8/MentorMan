@@ -6,21 +6,22 @@
     <div class="qa-thread-block-container">
       <div class="block mentor-info-block">
 		  <div class="mentor-image img-circle">
-		      <a type="external" href="/mentors/43427">
-		       <c:if test="${flag==0}">
-	              <c:if test="${mentorDTO.member_profile != 'profile.jpg'}">
-				     <img width="50" height="50" src="../storage/${mentorDTO.mentor_email}/${mentorDTO.member_profile}">
+		      
+		          <c:if test="${memberDTO.member_email == getEmail}">
+		            <a type="external" onclick="location.href='/mentor/mentor/mentorInfoView?mentors=${mentorDTO.member_seq}'">
+		              <c:if test="${mentorDTO.member_profile != 'profile.jpg'}">
+					     <img width="50" height="50" src="../storage/${mentorDTO.mentor_email}/${mentorDTO.member_profile}">
+					  </c:if>
+					</a>
 				  </c:if>
-				  </c:if>
-				   <c:if test="${flag==1}">
-	                <c:if test="${mentorDTO.member_profile != 'profile.jpg'}">
-				       <img width="50" height="50" src="../storage/${mentorDTO.member_email}/${mentorDTO.member_profile}">
-				    </c:if>
+				  <c:if test="${memberDTO.member_email != getEmail}">
+	                  <c:if test="${mentorDTO.member_profile != 'profile.jpg'}">
+				         <img width="50" height="50" src="../storage/${mentorDTO.member_email}/${mentorDTO.member_profile}">
+				      </c:if>
 				  </c:if>
 			      <c:if test="${mentorDTO.member_profile == 'profile.jpg'}">
 		          	  <img width="50" height="50" src="../image/profile.jpg">
 			      </c:if>
-			  </a>
 		  </div>
 
 		  <div class="block mentor-info">
@@ -55,21 +56,17 @@
 			          </div>
 
 			          <div class="mentoring-type-block">
-			            <a type="external" href="/mentors?job_type%5B%5D=18">
-			              <div class="chip chip-outline no-border-radius">
+			              <div class="chip chip-outline no-border-radius" style="border-radius: 5px;">
 			                <div class="chip-label">
 			                 	 ${mentorDTO.job_type}
 			                </div>
 			              </div>
-						</a>
 							<c:forEach var="mentor" items="${list}">
-					            <a type="external" href="/mentors?mentoring_type%5B%5D=1">
-					               <div class="chip chip-outline no-border-radius">
+					               <div class="chip chip-outline no-border-radius" style="border-radius: 5px;">
 					                 <div class="chip-label">
 					                  	 ${mentor.mentoring_type}
 					                 </div>
 					               </div>
-						   	  	</a>
 					   	  	</c:forEach>
 						</div>
 			        </div>
@@ -127,7 +124,10 @@
 			<form id="mentorAnswer_from" method="post">
 			<c:if test="${memberDTO.member_email == getEmail}">
 			    <div class="card-footer action-block">
+					<c:if test="${mentorDTO.question_flag == 0}">
 				      <a class="button button-small color-black" type="external" href="/mentor/mentor/mentorQuestionsForm?pg=${pg}&seq=${seq}&qsseq=${qsseq}">수정</a>
+					</c:if>
+
 				      <a class="button button-small color-black" type="external" id="delete_question">삭제</a>
 				</div>
 			</c:if>

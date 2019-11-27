@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <div class="page navbar-fixed questioner_qa_threads index" data-name="questioner_qa_threads-index">
   <div class="page-content">
     <div class="qa-thread-block">
@@ -11,32 +12,6 @@
           질문 및 답변
         </h1>
 
-     <!--    <div class="block-footer">
-          로켓은 질문권을 의미합니다. 최초 3개가 충전되며, 멘토에게 답변을 받고 고맙습니다를 작성하시면 1개씩 자동 충전됩니다.
-        </div>
-
-        <div class="block-footer">
-          <div class="stat-info-block">
-            <div class="chip chip-outline no-border-radius">
-              <div class="chip-label">
-                <span>로켓 <strong class="highlight">3개</strong></span>
-              </div>
-            </div>
-
-            <div class="chip chip-outline no-border-radius">
-              <div class="chip-label">
-                <span>질문수 <strong class="highlight">-개</strong></span>
-              </div>
-            </div>
-
-            <div class="chip chip-outline no-border-radius">
-              <div class="chip-label">
-                <span>질문뱃지 <strong class="highlight">-개</strong></span>
-              </div>
-            </div>
-          </div>
-        </div> -->
-      </div>
       <div class="row">
 	      <c:if test="${mentor_questionList ne '[]'}">
 	      	<c:forEach var="member" items="${mentor_questionList}" >
@@ -76,7 +51,7 @@
 						            </c:if>
 						            <c:if test="${flag==1}">
 						              <small>
-						                ${member.question_logtime}
+						              <fmt:formatDate value="${member.question_logtime}" pattern="yyyy년MM월dd일" />
 						              </small>
 						            </c:if>
 					            </div>
@@ -133,7 +108,7 @@
 		        <div class="col-100">
 				  <div class="card questioner-qa-thread-card">
 					  <div class="card-header">
-					      <a type="external" onclick="flag_profile(${flag})"><!-- 멘티 로그인 -->
+					      <a type="external" onclick="location.href='/mentor/mentor/mentorInfoView?mentors=${member.member_seq}'"><!-- 멘티 로그인 -->
 					        <div>
 					          <div class="mentor-image img-circle">
 					                <c:if test="${member.member_profile != 'profile.jpg'}">
@@ -207,13 +182,6 @@
   </div>
 </div>
 <script type="text/javascript">
-function flag_profile(flag){
-	if(flag==0){
-		location.href="멘티 로그인";
-	}else {
-		location.href="멘토 로그인";
-	}
-}
 
 function flag_content(pg,seq,question_seq){
 	location.href="/mentor/member/myQuestionsForm?pg="+pg+"&seq="+seq+"&qsseq="+question_seq;

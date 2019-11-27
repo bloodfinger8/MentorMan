@@ -67,7 +67,7 @@ public class EssayboardDAOMybatis implements EssayboardDAO {
 		return sqlSession.selectOne("essaySQL.getMentorBusinessCard", member_seq);
 	}
 	
-	// 에세이 멘토 바디 뷰
+	// 에세이 멘토 뷰
 	@Override
 	public EssayboardDTO getEssayboardView(int seq) {
 		return sqlSession.selectOne("essaySQL.getEssayboardView", seq);
