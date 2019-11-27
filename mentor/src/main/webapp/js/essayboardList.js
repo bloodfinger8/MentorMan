@@ -89,7 +89,7 @@ function essayjobType(pg , flag){
     			
     			
     			
-    			let essayboard = 
+    			let essayboard = `
 	<input type="hidden" id="job_code" value="${items.job_code }">
 		<div class="col-100 tablet-50 desktop-33">
 				<div class="card mentor-post-card mentor_post_6589">
