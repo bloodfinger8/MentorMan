@@ -5,6 +5,13 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,8 +32,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import kakao.controller.KakaoApi;
+import member.bean.AlarmDTO;
 import member.bean.MemberDTO;
 import member.bean.QandAPaging;
 import member.service.MemberMailService;
@@ -59,6 +68,10 @@ public class MemberController {
 	private QandAPaging QandAPag;
 	@Autowired
 	private MentorService mentorService;
+	@Autowired
+	private AlarmDTO alarmDTO;
+
+
 
 	// WriteForm 화면
 	@RequestMapping(value = "writeForm", method = RequestMethod.GET)
@@ -166,7 +179,7 @@ public class MemberController {
 
 
 	/** @Title : 로그인 처리,세션 기간 설정(1일 유지).
-	 * @author : ginkgo1928 @date : 2019. 11. 09. 
+	 * @author : ginkgo1928 @date : 2019. 11. 09.
 	 * 2019. 11. 13 용제 수정
 	 * 2019. 11. 19 상구 수정 관리자페이지로 넘어갈수있게 수정함
    */
@@ -391,6 +404,50 @@ public class MemberController {
 	public void answerModify(@RequestParam Map<String, String> map, HttpSession session) {
 		MemberDTO memberDTO = (MemberDTO) session.getAttribute("memDTO"); //멘토 로그인
 		memberService.answerModify(map);
+	}
+
+	/**
+	 *
+	 * @Title : 나의 알림
+	 * @Author : yangjaewoo, @Date : 2019. 11. 25.
+	 */
+	@RequestMapping(value ="myAlarm", method = RequestMethod.GET)
+	public String myAlarm(Model model , HttpSession session) {
+
+		MemberDTO memberDTO = (MemberDTO) session.getAttribute("memDTO");
+		String memEmail = memberDTO.getMember_email();
+		//알림 읽음 표시
+		memberService.checkSubscribe(memEmail);
+
+		List<AlarmDTO> list = memberService.getAlarm(memEmail);
+
+		model.addAttribute("list" , list);
+		model.addAttribute("display","/member/myAlarm.jsp");
+		return "/main/index";
+	}
+
+	@RequestMapping(value ="saveAlarm", method = RequestMethod.POST)
+	@ResponseBody
+	public String saveAlarm(@RequestBody HashMap<String, String> map) {
+		memberService.saveAlarm(map);
+		return "success";
+	}
+
+	@RequestMapping(value ="deleteAlarm", method = RequestMethod.GET)
+	public ModelAndView deleteAlarm(@RequestParam String alarm_seq , HttpSession session) {
+		int seq = Integer.parseInt(alarm_seq);
+		memberService.deleteAlarm(seq);
+
+		MemberDTO memberDTO = (MemberDTO) session.getAttribute("memDTO");
+		String memEmail = memberDTO.getMember_email();
+
+		//삭제한 후 alarm list
+		List<AlarmDTO> list = memberService.getAlarm(memEmail);
+		System.out.println("list ::" + list);
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("list", list);
+		mav.setViewName("jsonView");
+		return mav;
 	}
 
 

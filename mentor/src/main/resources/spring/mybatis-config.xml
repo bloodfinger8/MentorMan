@@ -26,6 +26,7 @@
 		<typeAlias type="meetingboard.bean.ReviewDTO" alias="review"/>
 
 		<typeAlias type="essayboard.bean.EssayboardScrapDTO" alias="essayboardScrap"/>
-
+		<typeAlias type="member.bean.AlarmDTO" alias="alarm"/>
+		
 	</typeAliases>
 </configuration>

@@ -89,9 +89,11 @@
 				      </div>
   				</div>
 
-  				<div class="card-content card-content-padding"style="overflow: hidden; text-overflow: ellipsis; height: 200px; ">
+  				<div class="card-content card-content-padding" style="overflow: hidden; text-overflow: ellipsis; height: 200px; ">
    				<input type="hidden" id="seq" name="seq" value="${list.essayboard_seq }">
-   
+   				<input type="hidden" id="essayNickname" name="essayNickname" value="${list.mentor_email }">
+   				<input type="hidden" id="essayName" name="essayName" value="${list.member_name }">
+   				<input type="hidden" id="memberSeq" name="memberSeq" value="${list.member_seq }">
 				<!-- 로그인 했을 경우 View로 넘김 -->
 				<c:if test="${memNickname != null }">
     				<a class="content-body" type="external" href="/mentor/essayboard/essayboardView?pg=${pg }&seq=${list.essayboard_seq}&mentors=${list.member_seq }" >
