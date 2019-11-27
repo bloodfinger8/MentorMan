@@ -6,7 +6,7 @@
 	data-name="bookmarks-mentor_posts">
 	<div class="page-content">
 		<div class="qa-thread-block">
-			<div class="block-title strong-title">관심 콘텐츠</div>
+			<div class="block-title strong-title">나의 관심 에세이</div>
 
 			<div class="block block-strong no-hairlines">
 			</div> 

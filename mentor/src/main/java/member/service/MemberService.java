@@ -3,6 +3,7 @@ package member.service;
 import java.util.List;
 import java.util.Map;
 
+import member.bean.AlarmDTO;
 import member.bean.MemberDTO;
 import mentee.bean.MenteeDTO;
 import mentor.bean.MentorDTO;
@@ -45,13 +46,15 @@ public interface MemberService {
 
 	public void answerModify(Map<String, String> map);
 
+	public List<AlarmDTO> getAlarm(String memEmail);
+	public void checkSubscribe(String memEmail);
+	
+	public void saveAlarm(Map<String, String> map);
+
+	public void deleteAlarm(int seq);
 
 
-	
-	
-	
-	
-	
+
 	
 	
 	

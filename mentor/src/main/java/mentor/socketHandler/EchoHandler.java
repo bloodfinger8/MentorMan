@@ -18,7 +18,7 @@ import member.bean.MemberDTO;
  * @author : yangjaewoo
  * @date : 2019. 11. 19.
  */
-public class ReplyEchoHandler extends TextWebSocketHandler {
+public class EchoHandler extends TextWebSocketHandler {
 	List<WebSocketSession> sessions = new ArrayList<WebSocketSession>();
 	Map<String, WebSocketSession> userSessionsMap = new HashMap<String, WebSocketSession>();
 	
@@ -26,13 +26,13 @@ public class ReplyEchoHandler extends TextWebSocketHandler {
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		sessions.add(session);
-		String senderNickname = getNickname(session);
-		userSessionsMap.put(senderNickname , session);
+		String senderEmail = getEmail(session);
+		userSessionsMap.put(senderEmail , session);
 	}
 	//소켓에 메세지를 보냈을때
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-		String senderNickname = getNickname(session);
+//		String senderEmail = getEmail(session);
 		
 		//모든 유저에게 보낸다 - 브로드 캐스팅
 //		for (WebSocketSession sess : sessions) {
@@ -44,25 +44,31 @@ public class ReplyEchoHandler extends TextWebSocketHandler {
 		if(StringUtils.isNotEmpty(msg)) {
 			String[] strs = msg.split(",");
 			
-			if(strs != null && strs.length == 4) {
+			if(strs != null && strs.length == 5) {
 				String cmd = strs[0];
-				String replyWriter = strs[1];
-				String boardWriter = strs[2];
-				String seq = strs[3];
+				String caller = strs[1]; 
+				String receiver = strs[2];
+				String receiverEmail = strs[3];
+				String seq = strs[4];
 				
 				//작성자가 로그인 해서 있다면
-				WebSocketSession boardWriterSession = userSessionsMap.get(boardWriter);
+				WebSocketSession boardWriterSession = userSessionsMap.get(receiverEmail);
+				
 				if("reply".equals(cmd) && boardWriterSession != null) {
-					TextMessage tmpMsg = new TextMessage(replyWriter + "님이 " + 
+					TextMessage tmpMsg = new TextMessage(caller + "님이 " + 
 										"<a type='external' href='/mentor/menteeboard/menteeboardView?seq="+seq+"&pg=1'>" + seq + "</a> 번 게시글에 댓글을 남겼습니다.");
 					boardWriterSession.sendMessage(tmpMsg);
 				
 				}else if("follow".equals(cmd) && boardWriterSession != null) {
-					TextMessage tmpMsg = new TextMessage(replyWriter + "님이 " + boardWriter +
-							 "님을 팔로우를 했습니다.");
+					TextMessage tmpMsg = new TextMessage(caller + "님이 " + receiver +
+							 "님을 팔로우를 시작했습니다.");
 					boardWriterSession.sendMessage(tmpMsg);
+					
 				}else if("scrap".equals(cmd) && boardWriterSession != null) {
-					//구현 해야한다
+					TextMessage tmpMsg = new TextMessage(caller + "님이 " +
+										//변수를 하나더 보낼수 없어서 receiver 변수에 member_seq를 넣어서 썼다.
+										"<a type='external' href='/mentor/essayboard/essayboardView?pg=1&seq="+seq+"&mentors="+ receiver +"'>" + seq + "</a>번 에세이를 스크랩 했습니다.");
+					boardWriterSession.sendMessage(tmpMsg);
 				}
 			}
 			
@@ -76,14 +82,14 @@ public class ReplyEchoHandler extends TextWebSocketHandler {
 	
 	
 	//웹소켓 nickName 가져오기
-	private String getNickname(WebSocketSession session) {
+	private String getEmail(WebSocketSession session) {
 		Map<String, Object> httpSession = session.getAttributes();
 		MemberDTO loginUser = (MemberDTO)httpSession.get("memDTO");
 		
 		if(loginUser == null) {
 			return session.getId();
 		}else {
-			return loginUser.getMember_nickname();
+			return loginUser.getMember_email();
 		}
 	}
 	

@@ -112,10 +112,10 @@
 	</bean>
 	
 	<!-- websocket handler -->
-	<bean id="replyEchoHandler" class="mentor.socketHandler.ReplyEchoHandler" />
+	<bean id="echoHandler" class="mentor.socketHandler.EchoHandler" />
 	
 	<websocket:handlers>
-		<websocket:mapping handler="replyEchoHandler" path="/replyEcho" />
+		<websocket:mapping handler="echoHandler" path="/echo" />
 		<websocket:handshake-interceptors>
 	         <bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
 	      </websocket:handshake-interceptors>

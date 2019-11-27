@@ -61,6 +61,7 @@
 						<div class="list links-list no-hairlines-between">
 							<ul>
 								<li><a type="external" href="">에세이 쓰기</a></li>
+								<li><a type="external" href="/mentor/member/myAlarm">나의 알림<span class="badge color-red alim"></span></a></li>
 								<li>
 									<a type="external" href="/mentor/member/myQandA?pg=1">나의 질문/답변 <span class="badge color-red alim">15</span></a>
 								</li>

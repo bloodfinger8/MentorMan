@@ -167,7 +167,7 @@ CREATE TABLE essayboardScrap(
     essayboardScrap_mem_email VARCHAR2(40) NOT NULL,   -- 로그인 이메일
     essatboardScrap_logtime DATE DEFAULT SYSDATE
 );
-
+select * from essayboardScrap;
 --팔로우 
 CREATE TABLE mentorFollow(
     follower_email VARCHAR2(40) NOT NULL,   -- 로그인 이메일 (팔로우한 사람)
@@ -175,7 +175,16 @@ CREATE TABLE mentorFollow(
     mentorFollow_logtime DATE DEFAULT SYSDATE
 );
 
-
+CREATE TABLE myAlarm(
+    myAlarm_seq NUMBER PRIMARY KEY,
+    myAlarm_receiverEmail VARCHAR2(40) NOT NULL,     -- 알림을 받은사람
+    myAlarm_callerNickname VARCHAR2(40) NOT NULL,    -- 알림을 보낸사람 ex) 댓글쓴사람 , 스크랩 누른사람
+    myAlarm_title VARCHAR2(150) NOT NULL,
+    myAlarm_content VARCHAR2(2000) NOT NULL,
+    myAlarm_subscribeFlag NUMBER DEFAULT 0 NOT NULL, --읽었는지 체크
+    myAlarm_logtime DATE DEFAULT SYSDATE
+);
+create SEQUENCE myAlarm_seq nocache nocycle;
  --송현--------------------------------------------------------------------------------------------------------
 create table mentors_member(
     member_seq number,                                 --회원 시퀀스
