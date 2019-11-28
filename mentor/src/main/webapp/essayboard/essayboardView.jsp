@@ -153,4 +153,9 @@
 			}
 	 	});
 	});
+  
+  $('.fa-bookmark').on('click' , function(){
+	  alert('click');
+  });
+  
   </script>
