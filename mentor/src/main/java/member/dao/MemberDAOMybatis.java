@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-
 import member.bean.AlarmDTO;
-import member.bean.CustomUserDetails;
-
 import member.bean.MemberDTO;
 import mentor.bean.MentorDTO;
 
