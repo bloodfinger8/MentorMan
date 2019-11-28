@@ -11,8 +11,11 @@
 <script src="../js/jquery-3.4.1.min.js"></script>
 <script src="../js/application_layout.js"></script>
 
+
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 <link rel="stylesheet" href="../css/ly.css" type="text/css"/>
+<script src="https://d2ljmlcsal6xzo.cloudfront.net/packs/js/application-a92a237ea64ef641a7be.js"></script>
+
 <link rel="shortcut icon" href="../image/mentorlogo.ico" type="image/x-icon"/>
 
 </head>
