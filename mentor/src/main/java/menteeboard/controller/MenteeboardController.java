@@ -133,7 +133,7 @@ public class MenteeboardController {
 		map.put("nickname", memberDTO.getMember_nickname());
 		map.put("email", memberDTO.getMember_email());
 		map.put("profile" , "");
-		System.out.println("map = " + map);
+		
 		menteeboardService.menteeboardWrite(map);
 	}
 	
