@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import essayboard.bean.EssayboardDTO;
+import essayboard.service.EssayboardService;
 import meetingboard.bean.MeetingboardDTO;
 import meetingboard.service.MeetingboardService;
 import mentor.bean.MentorDTO;
@@ -21,6 +23,8 @@ public class IndexController {
 	private MeetingboardService meetingboardService;
 	@Autowired
 	private MentorService mentorService;
+	@Autowired
+	private EssayboardService essayboardService;
 	
 	@RequestMapping(value = "/main/index", method = RequestMethod.GET)
 	public ModelAndView index() {
@@ -44,13 +48,21 @@ public class IndexController {
 		// 명예멘토 
 		// 넣어야됨
 		
-		// 에세이
+		// 신규에세이
+		Map<String, Object> essayMap = new HashMap<String, Object>();
+		// 3개
+		essayMap.put("endNum", 3);
+		essayMap.put("startNum", 1);
+		List<EssayboardDTO> newEssayList = essayboardService.getNewEssay(essayMap);
 		
+		// 추천에세이
+		List<EssayboardDTO> bestEssayList = essayboardService.getBestEssay(essayMap);
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("meetingboardList", meetingboardList);
 		mav.addObject("mentorList", mentorList);
-		
+		mav.addObject("newEssayList", newEssayList);
+		mav.addObject("bestEssayList", bestEssayList);
 		mav.addObject("display", "/template/container.jsp");
 		mav.setViewName("/main/index");
 		return mav;

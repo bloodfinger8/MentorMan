@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <div class="page navbar-fixed mentors index" data-name="mentors-index">
   <div class="page-content">
     <div class="block job-type-block">

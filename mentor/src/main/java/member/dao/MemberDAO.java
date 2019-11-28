@@ -3,9 +3,7 @@ package member.dao;
 import java.util.List;
 import java.util.Map;
 
-import member.bean.CustomUserDetails;
 import member.bean.MemberDTO;
-import mentee.bean.MenteeDTO;
 import mentor.bean.MentorDTO;
 
 public interface MemberDAO {

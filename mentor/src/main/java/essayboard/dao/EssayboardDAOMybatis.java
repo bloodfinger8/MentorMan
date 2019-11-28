@@ -130,4 +130,9 @@ public class EssayboardDAOMybatis implements EssayboardDAO {
 	public int getRecommendTotal() {
 		return sqlSession.selectOne("essaySQL.getRecommendTotal");
 	}
+
+	@Override
+	public List<EssayboardDTO> getBestEssay(Map<String, Object> essayMap) {
+		return sqlSession.selectList("essaySQL.getBestEssay", essayMap);
+	}
 }
