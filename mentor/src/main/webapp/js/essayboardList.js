@@ -1,6 +1,17 @@
 // 직무유형 버튼 전용 전역변수
 var jobs = new Array();
 
+//메인에서 더보기 링크 처리
+$(document).ready(function(){
+   var essayFlag = $('#recommend_view_essay').val();
+   if(essayFlag != ""){
+      $('.essayName').empty();
+      $('#recommend_essay').attr('class', 'button');
+      $('.essayName').text('추천 에세이');
+      essayjobType(1 , essayFlag);
+   }
+});
+
 // 에세이 직무유형 버튼
 $(".row > a").on("click",function(event, data){// a태그 클릭시 작동
 	// 클릭된 태그의 본래의 기능을 막음 즉, a태그 본래 기능을 막음
@@ -81,6 +92,12 @@ function essayjobType(pg , flag){
     		let flag = $(document.createDocumentFragment());
 
     		$.each(data.list, function(index, items) {
+    			if(items.member_profile != 'profile.jpg'){
+    				var profileFlag = '<img width="50" height="50" src="../storage/' + items.mentor_email + '/' + items.member_profile + '">'
+    			} else {
+    				var profileFlag = "<img width='50' height='50' src='../image/profile.jpg'>"
+    			}
+    			
     			if(items.essayboard_scrapFlag == 1){
 	    			var scrapFlag = "<img id="+ items.essayboard_seq +" src='../image/scrapOkImg.png' width='13'>"
 	    		} else {

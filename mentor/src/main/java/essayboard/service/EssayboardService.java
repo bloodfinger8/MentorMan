@@ -67,6 +67,8 @@ public interface EssayboardService {
 	
 	// 추천 에세이 총 글 수
 	public int getRecommendTotal();
+
+	public List<EssayboardDTO> getBestEssay(Map<String, Object> essayMap);
 	
 	
 }

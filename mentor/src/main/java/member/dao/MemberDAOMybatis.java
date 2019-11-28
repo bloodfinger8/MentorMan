@@ -1,6 +1,5 @@
 package member.dao;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -9,10 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+
 import member.bean.AlarmDTO;
 import member.bean.CustomUserDetails;
+
 import member.bean.MemberDTO;
-import mentee.bean.MenteeDTO;
 import mentor.bean.MentorDTO;
 
 @Repository("memberDAO")
