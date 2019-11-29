@@ -309,7 +309,7 @@
 
 <div class="mentor-block">
 	<div class="block-title strong-title">
-		신규 멘토 <a type="external" href="/mentors">더 보기</a>
+		신규 멘토 <a type="external" href="/mentor/mentor/mentorfindForm?pg=1">더 보기</a>
 	</div>
 
 	<div class="row no-gap">
@@ -574,7 +574,7 @@
 
 <div class="mentor-block">
 	<div class="block-title strong-title">
-		명예 멘토 <a type="external" href="/mentors?hall_of_fame=true">더 보기</a>
+		명예 멘토 <a type="external" href="/mentor/mentor/mentorfindForm?pg=1&bestFlag=1">더 보기</a>
 	</div>
 
 	<div class="row no-gap">

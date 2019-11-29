@@ -58,6 +58,8 @@ public interface MentorService {
 
 	public int getQuestion(int mentor_seq);
 
+	public void mentorInfoModify(Map<String, String> map);
+
 
 
 

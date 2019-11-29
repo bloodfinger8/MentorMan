@@ -101,7 +101,6 @@ public class MemberController {
 		//회원 이메일 폴더가 자동생성으로 생성된게 아니라 회원이메일 폴더 만들어주고 넣어야 한다.
 		String filePath="C:/github/MentorMan/mentor/src/main/webapp/storage/"+map.get("member_email");
 		String fileName = member_profile.getOriginalFilename();
-		System.out.println("프로필 이미지 파일명: " + fileName);
 		// 폴더만들기
 		File filemake = new File(filePath);
 		if(!filemake.exists()) {
@@ -160,7 +159,6 @@ public class MemberController {
 		memberDTO = memberService.login(map);
 
 		if (memberDTO != null) {
-			memberDTO.setMember_pwd("");
 			session.setAttribute("memDTO", memberDTO);
 			session.setMaxInactiveInterval(60*60*24); // 세션 1일 유지
 			return "login_ok";

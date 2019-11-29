@@ -25,7 +25,7 @@
 
 					<a type="external" href="/terms/privacy">개인정보 처리방침</a> <span>&middot;</span>
 
-					<a target="_blank" type="external" href="">고객센터</a></li>
+					<a target="_blank" type="external" href="/mentor/faq/faqIndex">고객센터</a></li>
 			</ul>
 
 			<div class="info">

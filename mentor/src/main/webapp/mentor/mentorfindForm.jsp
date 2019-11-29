@@ -7,7 +7,6 @@
       <div class="block-title">
         직무 유형
       </div>
-
       <div class="row">
          <a id="job_code_0" class="button color-gray " type="external" href="job_code_0">인사/총무/노무</a>
          <a id="job_code_1" class="button color-gray " type="external" href="job_code_1">마케팅/MD</a>
@@ -36,7 +35,7 @@
    <div class="mentor_div">
      멘토
    </div>
-    <a class="button color-gray" type="external" href="/mentors?hall_of_fame=true">
+    <a class="button color-gray" type="external" id="honor_mentor">
     	<i class="fas fa-trophy"></i> 명예 멘토
 	</a>
    </div>
@@ -92,19 +91,17 @@
 			</div>
 			</c:forEach>
 		</c:if>		
-	        <div class="col-100 desktop-25"></div>
-	        <div class="col-100 desktop-25"></div>
-	        <div class="col-100 desktop-25"></div>
-	      </div>
-	      <div class="pagination-block">
-          <div class="page-entries-info">
-          </div>
-          <div class="paging" id="paging">
-    		${mentorfindPaging.pagingHTML }
-		  	</div>
-  		  </div>
+		      <div class="col-100 desktop-25"></div>
+		      <div class="col-100 desktop-25"></div>
+		      <div class="col-100 desktop-25"></div>
+		      </div>
+		      <div class="pagination-block">
+		          <div class="page-entries-info"></div>
+		          <div class="paging" id="paging">${mentorfindPaging.pagingHTML }</div>
+	  		  </div>
   		  </div>
 </div>
 <input type="hidden" id="memNick" value="${memberDTO.member_nickname}">
 <input type="hidden" id="mentorFlag" name="mentorFlag" value="${flag}">
+<input type="hidden" id="bestFlag" value="${param.bestFlag}">
 <script src="../js/mentor.js"></script>
