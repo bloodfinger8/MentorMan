@@ -106,7 +106,6 @@ public class MemberController {
 		//회원 이메일 폴더가 자동생성으로 생성된게 아니라 회원이메일 폴더 만들어주고 넣어야 한다.
 		String filePath="C:/github/MentorMan/mentor/src/main/webapp/storage/"+map.get("member_email");
 		String fileName = member_profile.getOriginalFilename();
-		System.out.println("프로필 이미지 파일명: " + fileName);
 		// 폴더만들기
 		File filemake = new File(filePath);
 		if(!filemake.exists()) {
@@ -165,6 +164,7 @@ public class MemberController {
 		model.addAttribute("display", "/member/loginForm.jsp");
 		return "/main/index";
 	}
+
 
 
 //	/** @Title : 로그인 처리,세션 기간 설정(1일 유지).

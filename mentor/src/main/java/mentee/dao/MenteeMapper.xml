@@ -56,5 +56,8 @@
 	<select id="getNickname" parameterType="String" resultType="member">
 		select * from mentors_member where member_nickname = #{member_nickname}
 	</select>
-
+	
+	<delete id="memberDeleteSuccess" parameterType="int">
+	<!-- 보류 -->
+	</delete>
 </mapper>
