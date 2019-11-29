@@ -115,7 +115,9 @@ public class MentorController {
 		int pg = (Integer) jsonData.get("pg");
 		// 멘토, 명예멘토
 		int flag = (Integer) jsonData.get("flag");
-		
+		System.out.println("joblist = " +  joblist.toString());
+		System.out.println("pg = " +  pg);
+		System.out.println("flag = " + flag);
 		// job_code 유무 체크
 		String check = null;
 		
@@ -126,6 +128,7 @@ public class MentorController {
 			}
 		}
 		
+		System.out.println("check = " + check);
 //		System.out.println("check = " + check);
 //		System.out.println("pg = " + pg);
 //		System.out.println("flag = " + flag);
@@ -162,6 +165,7 @@ public class MentorController {
 			list = mentorService.getMentor(map);
 			jobCodeTotal = mentorService.getMemberCount(mentorFlag);
 		} else if(check == null && flag == 1) {
+			map.put("mentor_badge", 1);
 			list = mentorService.getHonorMentor(map);
 //			jobCodeTotal = mentorService.getRecommendTotal();
 		}

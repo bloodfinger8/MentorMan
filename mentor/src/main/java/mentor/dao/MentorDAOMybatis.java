@@ -125,6 +125,7 @@ public class MentorDAOMybatis implements MentorDAO {
 
 	@Override
 	public List<MentorDTO> getHonorMentor(Map<String, Object> map) {
+		System.out.println("map = " + map.toString());
 		return sqlSession.selectList("mentorSQL.getHonorMentor", map);
 	}
 
