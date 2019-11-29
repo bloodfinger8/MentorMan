@@ -116,4 +116,9 @@ public class EssayboardServiceImpl implements EssayboardService {
 	public int getRecommendTotal() {
 		return essayboardDAO.getRecommendTotal();
 	}
+
+	@Override
+	public List<EssayboardDTO> getBestEssay(Map<String, Object> essayMap) {
+		return essayboardDAO.getBestEssay(essayMap);
+	}
 }

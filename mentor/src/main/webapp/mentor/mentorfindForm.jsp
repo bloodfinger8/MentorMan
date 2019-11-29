@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <div class="page navbar-fixed mentors index" data-name="mentors-index">
   <div class="page-content">
     <div class="block job-type-block">
       <div class="block-title">
         직무 유형
       </div>
-
       <div class="row">
          <a id="job_code_0" class="button color-gray " type="external" href="job_code_0">인사/총무/노무</a>
          <a id="job_code_1" class="button color-gray " type="external" href="job_code_1">마케팅/MD</a>
@@ -104,7 +104,8 @@
     		${mentorfindPaging.pagingHTML }
 		  	</div>
   		  </div>
-  		  </div>
+  		</div>
+  	</div>
 </div>
 <input type="hidden" id="memNick" value="${memberDTO.member_nickname}">
 <input type="hidden" id="mentorFlag" name="mentorFlag" value="${flag}">

@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<link  rel="stylesheet" href="../css/essayboard.css">
+<link rel="stylesheet" href="../css/essayboard.css">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-lite.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-lite.js"></script>
 <div class="page navbar-fixed mentee_programs index">
@@ -53,8 +53,6 @@
                      	<div class="essayboard_title_error_div"></div>
                      </div>
                   </li>
-
-                  
                   <div class="label-title">
                      <label class="string required" for="title"></label>
                   </div>
@@ -67,7 +65,6 @@
             </div>
             <input type="hidden" id="seq" name="seq" value="${seq }">
             <div style="margin-top: 50px; margin-bottom: 100px;">
-            
                <input type="button" id="essayboardModifyBtn" value="작성 완료" class="btn button button-big button-fill" style="line-height: 0px;">
             </div>
          </form>
@@ -111,5 +108,4 @@ function sendFile(file, el) {
    	  }
   });
 }
-
 </script>

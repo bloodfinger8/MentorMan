@@ -319,5 +319,36 @@
                       and ebs.essayboardscrap_mem_email = #{memEmail}
                  order by ebs.essatboardscrap_logtime desc
    </select>
-
+	
+	<select id="getBestEssay" parameterType="java.util.Map" resultType="essay">
+		SELECT * FROM
+      	(SELECT ROWNUM rn, tt.* FROM
+            (SELECT
+              	      e.essayboard_seq,
+                   	  e.essayboard_title,
+                      e.essayboard_content,
+                      e.essayboard_scrap,
+                      e.essayboard_logtime,
+                      mm.member_name,
+                      mm.member_seq,
+                      mm.member_profile,
+                      mt.mentor_company,
+                      mt.mentor_department,
+                      mt.mentor_flag,
+                      mt.mentor_email
+                  FROM
+                      essayboard       e,
+                      mentor           mt,
+                      mentors_member   mm
+                   WHERE
+                          e.mentor_email = mt.mentor_email
+                      AND mt.mentor_email = mm.member_email
+                      AND e.essayboard_scrap > 0
+              ) tt)
+		WHERE
+			 <![CDATA[
+	         	rn >= #{startNum} and rn <= #{endNum}
+			 ]]>
+		order by essayboard_logtime desc
+	</select>
 </mapper>

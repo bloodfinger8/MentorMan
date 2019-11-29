@@ -2,10 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link rel="stylesheet" media="all" href="https://d2ljmlcsal6xzo.cloudfront.net/assets/application-ec82e4fd3581863fb7280ad4cb1183138cef57405f46a2d44eb51efb8a40a133.css" data-turbolinks-track="reload" />
-<!-- 스크랩 이미지 -->
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-
-
 <div class="page navbar-fixed mentor_posts show" data-name="mentor_posts-show">
 	<div class="page-content">
 		<div class="post-block-container">
@@ -28,7 +24,6 @@
 					</a>
 				</div>
 				</c:if>
-				
 				<div class="block button-wrap">
 					<div class="action-block text-align-center mentor_post_6618">
 						<a class="color-gray" type="external" data-remote="true" rel="nofollow" data-method="post" href="/mentor_posts/6618/bookmarks" >
@@ -58,9 +53,9 @@
 							<span class="mentor-name">
 								${mentorDTO.member_name } <small>멘토</small>
 							</span>
-							<a class="button col js-bookmark user_14134" data-params="followed_id=14134" data-disable-with="..." type="external" data-remote="true" rel="nofollow" data-method="post" href="/relationships">
+							<a class="button col js-bookmark" data-disable-with="..." type="external" data-remote="true" rel="nofollow" data-method="post" href="#"><!-- 주소 수정 -->
 							팔로우 </a>
-							<a class="button button-small button-fill" type="external" href="/mentors/14134/questions/new">
+							<a class="button button-small button-fill" type="external" href="#"><!-- 주소 수정 -->
 							질문하기 </a>
 						</div>
 						<div class="job">
@@ -81,9 +76,9 @@
 								</div>
 								<div class="mentoring-type-block">
 								<div class="chip chip-outline no-border-radius">
-										<div class="chip-label">
-											${mentorDTO.job_type }
-										</div>
+									<div class="chip-label">
+										${mentorDTO.job_type }
+									</div>
 								</div>
 								<c:forEach var="mentoring" items="${mentoringList }">
 									<div class="chip chip-outline no-border-radius">

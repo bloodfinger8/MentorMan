@@ -45,8 +45,6 @@ public class EssayboardController {
 	@Autowired
 	private EssayboardDTO essayboardDTO;
 	@Autowired
-	private MentorDTO mentorDTO;
-	@Autowired
 	private EssayboardScrapDTO essayboardScrapDTO;
 	@Autowired
 	private MentorService mentorService;
@@ -122,9 +120,6 @@ public class EssayboardController {
 
 		return modelAndView;
 	}
-	
-	
-	
 	
 	
 	/*
@@ -340,7 +335,7 @@ public class EssayboardController {
 		ModelAndView modelAndView = new ModelAndView();
 		
 		// 로그인 후 멘토 SEQ
-		modelAndView.addObject("memSeq", memberDTO.getMember_seq());
+		//modelAndView.addObject("memSeq", memberDTO.getMember_seq());
 		// 게시물을 쓴 멘토의 SEQ
 		modelAndView.addObject("mentorDTO", mentorDTO);
 		modelAndView.addObject("member_seq", mentors);
@@ -387,9 +382,8 @@ public class EssayboardController {
 		   else {
 			   essayboardService.essayboardScrapDelete(essayboardScrapDTO);
 		   }
-		   
+		   //에세이의 총 스크랩수
 		   int totalScrap = essayboardService.getTotalScrap(essayboardScrap_es_seq);
-		   System.out.println("totalScrap ^^ : " + totalScrap);
 		   
 		   return totalScrap+"";
 	   }
