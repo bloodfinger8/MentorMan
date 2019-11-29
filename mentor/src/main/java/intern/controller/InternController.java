@@ -1,22 +1,10 @@
 package intern.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.commons.httpclient.methods.RequestEntity;
-import org.apache.http.entity.ByteArrayEntity;
-import org.apache.http.message.BasicNameValuePair;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -64,7 +52,7 @@ public class InternController {
 		  
 		 try {
 			 int responseCode = client.executeMethod(method);
-			  System.out.println("responseCode -->"+responseCode);
+			  //System.out.println("responseCode -->"+responseCode);
 	
 			  if (responseCode != HttpStatus.SC_OK) {
 			   
@@ -74,7 +62,7 @@ public class InternController {
 		    
 				  //iso 8859로 리턴 되기 때문에 한번 변환해 준다.
 				  rtnXml=new String(responseBody,"UTF-8");
-				  System.out.println("rtnXml :  " + rtnXml);
+				  //System.out.println("rtnXml :  " + rtnXml);
 			  }
 		 } catch (Exception e) {
 			  
@@ -102,7 +90,7 @@ public class InternController {
 		empWantedEduCd = empWantedEduCd.replace(",", "|");
 		empWantedTypeCd = empWantedTypeCd.replace(",", "|");
 		
-		System.out.println(coClcd + ", " + empWantedCareerCd + ", " + empWantedEduCd + ", " + empWantedTypeCd+" ,pg = " + pageIndex);
+		//System.out.println(coClcd + ", " + empWantedCareerCd + ", " + empWantedEduCd + ", " + empWantedTypeCd+" ,pg = " + pageIndex);
 		
 		String rtnXml="";
 		byte []responseBody = null;
