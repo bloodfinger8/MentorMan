@@ -44,15 +44,19 @@
           			신규 에세이
           		</div>
           		<c:if test="${memFlag == '1' }">
+          		<div>
           		<a id="essay_write_btn" class="button" type="external" href="/mentor/essayboard/essayboardWriteForm">
 	            	<i class="fas fa-pencil-alt"></i>
 	           		 글쓰기
 				</a>
+				</div>
           		</c:if>
+          		<div>
 	          	<a class="button color-gray" id="recommend_essay" type="external" href="#">
 	            	<i class="fas fa-pencil-alt"></i>
 	            	추천 에세이
 				</a>
+				</div>
       		</div>
 			<div class="row no-gap" id="gap">
 			<!-- 멘토 리스트 생성 -->
@@ -61,7 +65,7 @@
 				<div class="col-100 tablet-50 desktop-33">
   					<div class="card mentor-post-card mentor_post_6589">
   						<div class="card-header">
-    						<a class="color-black" type="external" href="/mentor/mentor/mentorInfoView?mentors=${list.member_seq }">
+    						<a class="color-black" type="external" href="/mentor/mentor/mentorInfoView?pg=${pg }&mentors=${list.member_seq }">
       					<div>
         						<div class="mentor-image img-circle">
           							  <c:if test="${list.member_profile != 'profile.jpg'}">
@@ -106,8 +110,8 @@
 
 		        <div class="mentor-post-detail">
 		        	<c:choose>
-						<c:when test="${fn:length(list.essayboard_content) gt 200}">
-							<c:out value='${fn:substring(list.essayboard_content.replaceAll("\\\<.*?\\\>|&nbsp;",""), 0, 190)}'/>...
+						<c:when test="${fn:length(list.essayboard_content) gt 210}">
+							<c:out value='${fn:substring(list.essayboard_content.replaceAll("\\\<.*?\\\>|&nbsp;",""), 0, 200)}'/>...
 						</c:when>
 						<c:otherwise>
 							<c:out value="${list.essayboard_content}"/>
@@ -155,10 +159,11 @@
         <div class="col-100 tablet-50 desktop-33"></div>
       </div>
 		<input type="hidden" id="essayFlag" name="essayFlag" value="${flag }">
+		<input type="hidden" id="recommend_view_essay" value="${essayFlag }">
       <div class="pagination-block">
           <div class="page-entries-info">
           </div>
-          <div class="paging" id="paging">
+          <div class="paging">
     		${boardpaging.pagingHTML }
 		  </div>
   </nav>
@@ -172,3 +177,4 @@
 
   </div>
   <script src="../js/essayboardList.js"></script>
+  

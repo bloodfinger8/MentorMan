@@ -871,7 +871,7 @@
 <div class="mentor-post-block">
 	<div class="block-title strong-title">
 		추천 에세이 <a type="external"
-			href="/mentor_posts?featured_mentor_post=true">더 보기</a>
+			href="/mentor/essayboard/essayboardList?essayFlag=1">더 보기</a>
 	</div>
 
 	<div class="row no-gap">
@@ -1034,7 +1034,7 @@
 </div>
 <div class="mentor-post-block">
 	<div class="block-title strong-title">
-		신규 에세이 <a type="external" href="/mentor_posts">더 보기</a>
+		신규 에세이 <a type="external" href="/mentor/essayboard/essayboardList">더 보기</a>
 	</div>
 
 	<div class="row no-gap">

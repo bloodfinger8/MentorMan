@@ -59,6 +59,7 @@ public class EssayboardController {
 	@RequestMapping(value = "essayboardList", method = RequestMethod.GET)
 	public ModelAndView essayboardForm(@RequestParam(required = false, defaultValue = "1") String pg,
 									   @RequestParam(required = false, defaultValue = "0") String flag,
+									   @RequestParam(required = false) String essayFlag,
 									   HttpSession session,
 									   HttpServletResponse response) {
 		memberDTO = (MemberDTO)session.getAttribute("memDTO");
@@ -101,13 +102,6 @@ public class EssayboardController {
 	        	 }
 	        	 
 	         }
-			
-			//조회수(쿠키 생성) 
-			if(nickname != null) {
-				Cookie cookie = new Cookie("memHit","0");
-				cookie.setMaxAge(60*60*24);
-				response.addCookie(cookie);
-			}
 		}
 
 		essayboardPaging.setCurrentPage(Integer.parseInt(pg));
@@ -117,6 +111,9 @@ public class EssayboardController {
 		essayboardPaging.makePagingHTML();
 		modelAndView.addObject("pg", pg);
 		modelAndView.addObject("boardpaging", essayboardPaging);
+		if(essayFlag != null) {
+			modelAndView.addObject("essayFlag", essayFlag);
+		}
 		modelAndView.addObject("flag", flag);
 		modelAndView.addObject("map", map);
 		modelAndView.addObject("list", list);
@@ -203,9 +200,7 @@ public class EssayboardController {
 	@RequestMapping(value = "essayboardModify", method = RequestMethod.POST)
 	@ResponseBody
 	public void essayboardModify(@RequestParam Map<String, Object> map) {
-		
 		essayboardService.essayboardModify(map);	
-		
 	}
 	
 	
@@ -220,6 +215,7 @@ public class EssayboardController {
 	public ModelAndView essayjobType(@RequestBody Map<String, Object> jsonData ,
 										  HttpServletResponse response ,
 										  HttpSession session) {
+		
 		List<EssayboardDTO> list = null;
 		
 		// job_code
@@ -239,10 +235,6 @@ public class EssayboardController {
 			}
 		}
 		
-//		System.out.println("check = " + check);
-//		System.out.println("pg = " + pg);
-//		System.out.println("flag = " + flag);
-//		System.out.println("check = " + check);
 		memberDTO = (MemberDTO)session.getAttribute("memDTO");
 		Map<String, Object> map = new HashMap<String, Object>();
 		
@@ -304,16 +296,10 @@ public class EssayboardController {
 	        	 }
 	        	 
 	         }
-			
-			//조회수(쿠키 생성) 
-			if(nickname != null) {
-				Cookie cookie = new Cookie("memHit","0");
-				cookie.setMaxAge(60*60*24);
-				response.addCookie(cookie);
-			}
 		}
+		System.out.println("pg = " + pg);
 		System.out.println("listsize = " + list.size());
-		
+		System.out.println("total = " + essayDutyTotal);
 		modelAndView.addObject("pg", pg);
 		modelAndView.addObject("flag", flag);
 		modelAndView.addObject("pageSize", essayboardPaging.getPageSize());
@@ -340,23 +326,6 @@ public class EssayboardController {
 		
 		memberDTO = (MemberDTO)session.getAttribute("memDTO");
 		
-		Cookie[] getCookie = request.getCookies();
-		if(getCookie != null) {
-			for(int i =0; i<getCookie.length; i++){
-				if(getCookie[i].getName().equals("memHit")){
-					//hit + 1
-					essayboardService.essayboardHit(Integer.parseInt(seq));
-					
-					getCookie[i].setMaxAge(0);
-					response.addCookie(getCookie[i]);
-				}
-			}
-		}
-		
-		// 에세이 보드 조회수 출력
-		int essayHit = essayboardService.getessayboardHit(Integer.parseInt(seq));
-		
-		System.out.println("ㄴeq " + seq);
 		// 해당 멘토 명함 출력
 		int mentor_seq = Integer.parseInt(mentors);
 		MentorDTO mentorDTO = mentorService.getMentorInfomation(mentor_seq);
@@ -376,7 +345,6 @@ public class EssayboardController {
 		modelAndView.addObject("mentorDTO", mentorDTO);
 		modelAndView.addObject("member_seq", mentors);
 		modelAndView.addObject("mentoringList", mentoringList);
-		modelAndView.addObject("essayHit", essayHit);
 		modelAndView.addObject("essayboardDTO", essayboardDTO);
 		modelAndView.addObject("seq", seq);
 		modelAndView.addObject("pg", pg);

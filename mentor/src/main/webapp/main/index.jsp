@@ -9,6 +9,7 @@
 <title>Insert title here</title>
 </head>
 <script src="../js/jquery-3.4.1.min.js"></script>
+<script src="../js/jquery.cookie.js"></script>
 <script src="../js/application_layout.js"></script>
 <!-- <script src="https://d2ljmlcsal6xzo.cloudfront.net/packs/js/application-a92a237ea64ef641a7be.js"></script> -->
 <script src="https://d2ljmlcsal6xzo.cloudfront.net/packs/application-978dcbe0c8e9f17a9e95.js"></script>
