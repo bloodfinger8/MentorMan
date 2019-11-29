@@ -289,6 +289,32 @@ REFERENCES question(question_seq) ON DELETE CASCADE;
 
 
 create sequence answer_seq nocache nocycle;     --- 답변 시퀀스                              
+
+                              
+-- 
+create table faq(
+    faq_seq number not null,               ---> 고객센터 질문번호
+    catalog_code VARCHAR2(100),            ---> 고객센터 질문코드
+    faq_title VARCHAR2(1000) not null,     ---> 고객센터 질문제목
+    faq_content clob not null,             ---> 고객센터 질문내용
+    CONSTRAINT FK_FAQ_CATALOG FOREIGN KEY(catalog_code) REFERENCES faq_catalog(catalog_code)
+);
+create sequence faq_seq nocache nocycle;    ---> 고객센터 질문번호seq
+
+create table faq_catalog(
+    catalog_code VARCHAR2(100) primary key, ---> 고객센터 질문코드
+    catalog_type VARCHAR2(100)              ---> 고객센터 질문타입
+);
+
+insert into faq_catalog values ('faq_Catalog_1', '계정');
+insert into faq_catalog values ('faq_Catalog_2', '담아두기/팔로우');
+insert into faq_catalog values ('faq_Catalog_3', '멘토 혜택');
+insert into faq_catalog values ('faq_Catalog_4', '멘토 활동');
+insert into faq_catalog values ('faq_Catalog_5', '질문하기');
+insert into faq_catalog values ('faq_Catalog_6', '답변하기');
+insert into faq_catalog values ('faq_Catalog_7', '오프라인 멘토링');      
+                              
+                              
                               
                               
 ----taehyeong--------------------------------------------------------------------------------------------------------------------
