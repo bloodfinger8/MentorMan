@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <div class="page navbar-fixed mentors index" data-name="mentors-index">
   <div class="page-content">
     <div class="block job-type-block">
@@ -27,6 +28,7 @@
          <a id="job_code_16" class="button color-gray " type="external" href="job_code_16">공무원/공공/비영리</a>
          <a id="job_code_17" class="button color-gray " type="external" href="job_code_17">생산/품질/제조</a>
          <a id="job_code_18" class="button color-gray " type="external" href="job_code_18">기타 사무</a>
+
   	</div>
    </div>
 
@@ -38,6 +40,7 @@
     <a class="button color-gray" type="external" id="honor_mentor">
     	<i class="fas fa-trophy"></i> 명예 멘토
 	</a>
+
    </div>
 
 	   <div class="row no-gap" id="mentor_findList">
@@ -91,15 +94,15 @@
 			</div>
 			</c:forEach>
 		</c:if>		
-		      <div class="col-100 desktop-25"></div>
-		      <div class="col-100 desktop-25"></div>
-		      <div class="col-100 desktop-25"></div>
-		      </div>
-		      <div class="pagination-block">
-		          <div class="page-entries-info"></div>
-		          <div class="paging" id="paging">${mentorfindPaging.pagingHTML }</div>
-	  		  </div>
-  		  </div>
+		<div class="col-100 desktop-25"></div>
+		<div class="col-100 desktop-25"></div>
+		<div class="col-100 desktop-25"></div>
+		</div>
+		<div class="pagination-block">
+			<div class="page-entries-info"></div>
+			<div class="paging" id="paging">${mentorfindPaging.pagingHTML }</div>
+		</div>
+	</div>
 </div>
 <input type="hidden" id="memNick" value="${memberDTO.member_nickname}">
 <input type="hidden" id="mentorFlag" name="mentorFlag" value="${flag}">

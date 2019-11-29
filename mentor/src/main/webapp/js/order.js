@@ -1,30 +1,44 @@
 // 모임 삭제버튼
-function orderRemove(seq) {
-	if(confirm('모임 바구니에서 삭제하시겠습니까?') == true) {
-		$.ajax({
-			type: 'post',
-			url: '/mentor/participation/orderDelete',
-			data: {seq: seq},
-			success: function(){
-				location.href='/mentor/participation/order';
-			},
-			error: function(error){
-				console.log(error);
+function orderRemove(seq) {	
+	var toastWithCallback = app.toast.create({
+		text: '수강을 취소하시겠습니까?',
+		position: 'center',
+		closeButton: true,
+		on: {
+			close: function() {
+				$.ajax({
+					type: 'post',
+					url: '/mentor/participation/orderDelete',
+					data: {seq: seq},
+					success: function(){
+						location.href='/mentor/participation/order';
+					},
+					error: function(error){
+						console.log(error);
+					}
+				});
 			}
-		});
-	} else 
-		return false;
+		}
+	});	
+	toastWithCallback.open();
 }
 
+// 결제하기 버튼
 $('#orderBtn').click(function(){
+	// 모임 리스트
 	var meetingboard_list = new Array();
 	$("input[name=meetingboard_seq]").each(function(index, item){
 		meetingboard_list.push($(item).val());
 	});
-	
+	// 신청 리스트
 	var participation_list = new Array();
 	$("input[name=participation_seq]").each(function(index, item){
 		participation_list.push($(item).val());
+	});
+	// 멘토 리스트
+	var mentor_list = new Array();
+	$("input[name=mentor_email]").each(function(index, item){
+		mentor_list.push($(item).val());
 	});
 	
 	$('#mentee_nameDiv').empty();
@@ -48,15 +62,15 @@ $('#orderBtn').click(function(){
 	    
 	    // IMP.request_pay(param, callback) 호출
 	    IMP.request_pay({ // param
-	      pg: 'kakaopay',
-	      pay_method: 'card',
-	      merchant_uid: 'men_' + new Date().getTime(),
-	      name: '멘토맨 모임 결제',
-	      amount: $('#total').val(),
-	      buyer_email: $('#mentee_email').val(),
-	      buyer_name: $('#mentee_name').val(),
-	      buyer_tel: $('#mentee_tel').val(),
-	      m_redirect_url:'https://www.iamport.kr/demo'	      
+	    	pg: 'kakaopay',
+		    pay_method: 'card',
+		    merchant_uid: 'men_' + new Date().getTime(),
+		    name: '멘토맨 모임 결제',
+		    amount: $('#total').val(),
+		    buyer_email: $('#mentee_email').val(),
+		    buyer_name: $('#mentee_name').val(),
+		    buyer_tel: $('#mentee_tel').val(),
+		    m_redirect_url:'https://www.iamport.kr/demo'	      
 	    }, function(rsp) {
 	    	 if (rsp.success) {
 	                $.ajax({
@@ -78,6 +92,37 @@ $('#orderBtn').click(function(){
 	                	}
 	                });
 	                
+	                // socket에 보내기
+	                if(socket) {
+	                	for(var i in meetingboard_list) {
+	                		// apply, 구매한사람, 멘토이메일, 모임 번호, 신청 번호
+	                		let socketMsg = "apply," + rsp.buyer_name + "," + mentor_list[i] + "," + meetingboard_list[i] + "," + participation_list[i];              		
+	                		console.log("socketMessage : " + socketMsg);
+	                		socket.send(socketMsg);
+	                	}
+	                }
+	                
+	                var AlarmData = {
+	                		"myAlarm_receiverEmail" : mentor_list[i],
+	                		"myAlarm_callerNickname" : rsp.buyer_name,
+	                		"myAlarm_title" : "모임 알림",
+	                		"myAlarm_content" :  rsp.buyer_name + "님이 모임을 신청했습니다. <a type='external' href='/mentor/participation/participationView?mseq="+ meetingboard_list[i] +"&pseq="+ participation_list[i] +"'>신청서 보기</a>"
+	                };
+	                
+	                //모임 결제 알림 DB저장
+	                $.ajax({
+	                	type : 'post',
+	                	url : '/mentor/member/saveAlarm',
+	                	data : JSON.stringify(AlarmData),
+	                	contentType: "application/json; charset=utf-8",
+	                	dataType : 'text',
+	                	success : function(data){
+	                		console.log(data);
+	                	},
+	                	error : function(err){
+	                		console.log(err);
+	                	}
+	                });   
 	            } else {
 	                var msg = '결제에 실패하였습니다.' + '\n';
 	                msg += rsp.error_msg + '\n';

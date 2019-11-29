@@ -12,13 +12,13 @@
 
 <div class="page navbar-fixed mentee_programs index">
 	<div class="page-content">
-		<div class="pogram-block">
+		<div class="program-block">
 			<div class="block-title strong-title">
 				모임
 				<%-- 접속한 유저가 멘토일 때 모임 작성 버튼 --%>
 				<c:if test="${memDTO.member_email != null && memDTO.member_flag == 1}">
 				<button class="button">
-					<a type="external" href="/mentor/meetingboard/meetingboardWriteForm"> 모임 작성 </a>
+					<a type="external" href="/mentor/meetingboard/meetingboardWriteForm"> <i class="fas fa-pencil-alt"></i> 모임 작성 </a>
 				</button>
 				</c:if>
 			</div>
@@ -73,7 +73,7 @@
 											<img src="../image/profile.jpg" width="28" height="28">
 											</c:if>
 											<c:if test="${meetingboardDTO.member_profile != 'profile.jpg'}">
-											<img src="../storage/${meetingboardDTO.member_email}/${meetingboardDTO.member_profile}" width="28" height="28">
+											<img src="../storage/${meetingboardDTO.mentor_email}/${meetingboardDTO.member_profile}" width="28" height="28">
 											</c:if>
 										</div>
 										<div class="mentor-name">

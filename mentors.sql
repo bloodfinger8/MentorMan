@@ -17,7 +17,7 @@ CREATE TABLE meetingboard (
     job_code                    VARCHAR2(20),   -- 직무분야(FK)
     meetingboard_title          VARCHAR2(500),  -- 제목
     meetingboard_subtitle       VARCHAR2(1000), -- 부제목
-    meetingboard_content        VARCHAR2(4000), -- 내용
+    meetingboard_content        CLOB,           -- 내용
     meetingboard_day            VARCHAR2(50),   -- 일시
     meetingboard_starthour      VARCHAR2(30),   -- 시작시간
     meetingboard_endhour        VARCHAR2(30),   -- 종료시간
@@ -124,7 +124,7 @@ CREATE TABLE menteeboard(
      menteeboard_nickname VARCHAR2(40) NOT NULL,    -- 이름
      menteeboard_email VARCHAR2(40),                -- 이메일
      menteeboard_title VARCHAR2(255) NOT NULL,      -- 제목
-     menteeboard_content VARCHAR2(4000) NOT NULL,   -- 내용
+     menteeboard_content CLOB NOT NULL,   -- 내용
      job_code VARCHAR2(40),                         -- 직무유형
      menteeboard_good NUMBER DEFAULT 0,             -- 좋아요
 
@@ -167,7 +167,7 @@ CREATE TABLE essayboardScrap(
     essayboardScrap_mem_email VARCHAR2(40) NOT NULL,   -- 로그인 이메일
     essatboardScrap_logtime DATE DEFAULT SYSDATE
 );
-
+select * from essayboardScrap;
 --팔로우 
 CREATE TABLE mentorFollow(
     follower_email VARCHAR2(40) NOT NULL,   -- 로그인 이메일 (팔로우한 사람)
@@ -175,7 +175,16 @@ CREATE TABLE mentorFollow(
     mentorFollow_logtime DATE DEFAULT SYSDATE
 );
 
-
+CREATE TABLE myAlarm(
+    myAlarm_seq NUMBER PRIMARY KEY,
+    myAlarm_receiverEmail VARCHAR2(40) NOT NULL,     -- 알림을 받은사람
+    myAlarm_callerNickname VARCHAR2(40) NOT NULL,    -- 알림을 보낸사람 ex) 댓글쓴사람 , 스크랩 누른사람
+    myAlarm_title VARCHAR2(150) NOT NULL,
+    myAlarm_content VARCHAR2(2000) NOT NULL,
+    myAlarm_subscribeFlag NUMBER DEFAULT 0 NOT NULL, --읽었는지 체크
+    myAlarm_logtime DATE DEFAULT SYSDATE
+);
+create SEQUENCE myAlarm_seq nocache nocycle;
  --송현--------------------------------------------------------------------------------------------------------
 create table mentors_member(
     member_seq number,                                 --회원 시퀀스
@@ -244,8 +253,8 @@ create table question(
     question_seq number primary key,            --- 질문 번호
     mentor_seq number,                          --- 멘토 번호
     member_email varchar2(100) not null,        --- 멤버 이메일
-    question_title varchar2(4000) not null,      --- 질문 제목
-    question_content varchar2(4000) not null,   --- 질문 내용
+    question_title CLOB not null,      --- 질문 제목
+    question_content CLOB not null,   --- 질문 내용
     question_flag number default 0,             --- 질문대기/질문완료
     question_logtime date default sysdate,      --- 질문 시간
     foreign key(mentor_seq)
@@ -262,7 +271,7 @@ create table answer(
     question_seq number not null,               --- 질문 번호
     mentor_seq number not null,                 --- 멘토 번호
     member_email varchar2(100) not null,        --- 멤버 이메일
-    answer_content varchar2(4000) not null,     --- 답변 내용
+    answer_content CLOB not null,     --- 답변 내용
     answer_logtime date default sysdate,        --- 답변 시간
     foreign key(question_seq)
     references question(question_seq),
@@ -280,7 +289,44 @@ REFERENCES question(question_seq) ON DELETE CASCADE;
 
 
 create sequence answer_seq nocache nocycle;     --- 답변 시퀀스                              
+
                               
+-- 고객센터
+create table faq(
+    faq_seq number not null,               ---> 고객센터 질문번호
+    catalog_code VARCHAR2(100),            ---> 고객센터 질문코드
+    faq_title VARCHAR2(1000) not null,     ---> 고객센터 질문제목
+    faq_content clob not null,             ---> 고객센터 질문내용
+    CONSTRAINT FK_FAQ_CATALOG FOREIGN KEY(catalog_code) REFERENCES faq_catalog(catalog_code)
+);
+create sequence faq_seq nocache nocycle;    ---> 고객센터 질문번호seq
+
+create table faq_catalog(
+    catalog_code VARCHAR2(100) primary key, ---> 고객센터 질문코드
+    catalog_type VARCHAR2(100)              ---> 고객센터 질문타입
+);
+
+insert into faq_catalog values ('faq_Catalog_1', '계정');
+insert into faq_catalog values ('faq_Catalog_2', '담아두기/팔로우');
+insert into faq_catalog values ('faq_Catalog_3', '멘토 혜택');
+insert into faq_catalog values ('faq_Catalog_4', '멘토 활동');
+insert into faq_catalog values ('faq_Catalog_5', '질문하기');
+insert into faq_catalog values ('faq_Catalog_6', '답변하기');
+insert into faq_catalog values ('faq_Catalog_7', '오프라인 멘토링');      
+                              
+-- 문의하기                              
+                   
+create table inquiry(
+    inquiry_seq number not null,                --> 문의 번호
+    inquiry_name varchar2(100) default null,    --> 문의자 이름
+    inquiry_email varchar2(300) not null,       --> 문의자 이메일
+    inquiry_title varchar2(2000) not null,      --> 문의 제목
+    inquiry_content clob not null,              --> 문의 내용
+    inquiry_img VARCHAR2(4000) default null,    --> 문의 이미지
+    inquiry_logtime date default sysdate        --> 문의 날짜
+);
+
+create sequence inquiry_seq nocache nocycle;    --> 문의 번호seq
                               
 ----taehyeong--------------------------------------------------------------------------------------------------------------------
 -- 에세이 보드 생성
@@ -289,7 +335,7 @@ create table essayboard(
     mentor_email varchar2(100) , -- 멘토 이메일
     job_code varchar2(100),
     essayboard_title varchar2(1000) not null, -- 에세이 제목
-    essayboard_content varchar2(4000) not null, -- 에세이 내용
+    essayboard_content CLOB not null, -- 에세이 내용
     essayboard_hit number default 0 , -- 에세이 조회수
     essayboard_scrap number default 0,  -- 에세이 즐겨찾기
     essayboard_scrapFlag number default 0,
@@ -306,7 +352,7 @@ create table noticeboard(
 noticeboard_seq number not null,
 noticeboard_adminEmail varchar2(200) not null,
 noticeboard_title varchar2(2000) not null,
-noticeboard_content varchar2(4000) not null,
+noticeboard_content CLOB not null,
 noticeboard_hit number default 0,
 noticeboard_logtime date default sysdate
 );

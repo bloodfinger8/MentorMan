@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -25,7 +24,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import essayboard.bean.EssayboardDTO;
 import meetingboard.bean.ReviewDTO;
 import member.bean.MemberDTO;
 import mentor.bean.MentorDTO;
@@ -199,7 +197,7 @@ public class MentorController {
 	 * @Author : kujun95, @Date : 2019. 11. 15.
 	 */
 	@RequestMapping(value = "mentorfindForm", method = RequestMethod.GET)
-	public String mentorfindForm(@RequestParam int pg, Model model, HttpSession session) {
+	public String mentorfindForm(@RequestParam(required = false, defaultValue = "1") int pg, Model model, HttpSession session) {
 		memberDTO = (MemberDTO) session.getAttribute("memDTO");
 		//승인된 멘토
 		int mentor_flag = 1;
@@ -270,7 +268,7 @@ public class MentorController {
 		
 		//팔로우 찾기
 		int follow = mentorService.getFollowCheck(followMap);
-		model.addAttribute("memNicname" , memberDTO.getMember_nickname());
+		model.addAttribute("memNickname" , memberDTO.getMember_nickname());
 		model.addAttribute("list", list);
 		model.addAttribute("follow" , follow);
 		model.addAttribute("mentorDTO", mentorDTO);
@@ -302,7 +300,7 @@ public class MentorController {
 	 * @Method Name : mentorInfoView
 	 */
 	@RequestMapping(value = "mentorInfoView", method = RequestMethod.GET)
-	public String mentorInfoView(@RequestParam String mentors, @RequestParam String pg, Model model, HttpSession sesstion) {
+	public String mentorInfoView(@RequestParam String mentors, @RequestParam(required = false, defaultValue = "1") String pg, Model model, HttpSession sesstion) {
 		int mentor_seq = Integer.parseInt(mentors);
 		MentorDTO mentorDTO = mentorService.getMentorInfomation(mentor_seq);
 		List<MentorDTO> essayList = mentorService.getMentorEssayList(mentor_seq);
@@ -311,7 +309,7 @@ public class MentorController {
 		int mentor_answer = mentorService.getAnswer(mentor_seq); // 답변수
 		int mentor_question = mentorService.getQuestion(mentor_seq);// 질문수
 		double questionPercent = (double)mentor_answer/(double)mentor_question;
-		System.out.println(mentor_answer+"-----"+mentor_question);
+		//System.out.println(mentor_answer+"-----"+mentor_question);
 		String[] mentoringArray = mentorDTO.getMentoring_code().split(",");
 		Map<String, String[]> map = new HashMap<String, String[]>();
 		map.put("mentoring_code", mentoringArray);
