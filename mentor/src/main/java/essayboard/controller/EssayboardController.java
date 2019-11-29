@@ -222,7 +222,6 @@ public class EssayboardController {
 		String check = null;
 		
 		for (String jobs : joblist) {
-			System.out.println("list = " + jobs.toString());
 			if(!jobs.equals(null)) {
 				check = "success";
 			}
@@ -290,9 +289,6 @@ public class EssayboardController {
 	        	 
 	         }
 		}
-		System.out.println("pg = " + pg);
-		System.out.println("listsize = " + list.size());
-		System.out.println("total = " + essayDutyTotal);
 		modelAndView.addObject("pg", pg);
 		modelAndView.addObject("flag", flag);
 		modelAndView.addObject("pageSize", essayboardPaging.getPageSize());
