@@ -291,7 +291,7 @@ REFERENCES question(question_seq) ON DELETE CASCADE;
 create sequence answer_seq nocache nocycle;     --- 답변 시퀀스                              
 
                               
--- 
+-- 고객센터
 create table faq(
     faq_seq number not null,               ---> 고객센터 질문번호
     catalog_code VARCHAR2(100),            ---> 고객센터 질문코드
@@ -314,8 +314,19 @@ insert into faq_catalog values ('faq_Catalog_5', '질문하기');
 insert into faq_catalog values ('faq_Catalog_6', '답변하기');
 insert into faq_catalog values ('faq_Catalog_7', '오프라인 멘토링');      
                               
-                              
-                              
+-- 문의하기                              
+                   
+create table inquiry(
+    inquiry_seq number not null,                --> 문의 번호
+    inquiry_name varchar2(100) default null,    --> 문의자 이름
+    inquiry_email varchar2(300) not null,       --> 문의자 이메일
+    inquiry_title varchar2(2000) not null,      --> 문의 제목
+    inquiry_content clob not null,              --> 문의 내용
+    inquiry_img VARCHAR2(4000) default null,    --> 문의 이미지
+    inquiry_logtime date default sysdate        --> 문의 날짜
+);
+
+create sequence inquiry_seq nocache nocycle;    --> 문의 번호seq
                               
 ----taehyeong--------------------------------------------------------------------------------------------------------------------
 -- 에세이 보드 생성
