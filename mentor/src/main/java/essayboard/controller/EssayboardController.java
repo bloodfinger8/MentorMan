@@ -157,7 +157,6 @@ public class EssayboardController {
 	public String noticeboardImage(@RequestParam("file") MultipartFile file) {
 		String filePath = "C:\\Users\\TR\\Documents\\GitHub\\MentorMan\\mentor\\src\\main\\webapp\\storage";
 		String fileName = file.getOriginalFilename();
-		System.out.println(fileName);
 		File files = new File(filePath, fileName);
 		try {
 			FileCopyUtils.copy(file.getInputStream(), new FileOutputStream(files));
