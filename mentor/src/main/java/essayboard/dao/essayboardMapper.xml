@@ -3,11 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
 <mapper namespace="essaySQL">
-	
-	<!-- 에세이 멘토 리스트 출력 -->
-	<!-- <select id="assayboardList" resultType="assay">
-		
-	</select> -->
+
 	<!-- (신규)에세이 리스트 출력 -->
 	<select id="getNewEssay" resultType="essay">
 		SELECT
@@ -189,20 +185,16 @@
                       mm.member_seq,
                       mt.mentor_company,
                       mt.mentor_department,
-                      mt.mentor_represent,
-                      mtr.mentoring_code,
-                      mtr.mentoring_type
+                      mt.mentor_represent
                   FROM
                       essayboard       e,
                       job              j,
                       mentor           mt,
-                      mentoring        mtr,
                       mentors_member   mm
                   WHERE
                       e.job_code = j.job_code
                       AND e.mentor_email = mt.mentor_email
                       AND mt.mentor_email = mm.member_email
-                      AND mt.mentoring_code = mtr.mentoring_code
                   <if test='flag == "0"'>
                   	ORDER BY e.essayboard_logtime DESC 
                   </if>
@@ -267,25 +259,6 @@
 		    essayboard_seq = #{seq} 
 	</select>
 	
-	<!-- 해당 멘토가 작성한 에세이 리스트 출력 -->
-	<!-- <select id="getEssayList" parameterType="Int" resultType="essay">
-		SELECT
-		    essayboard_title,
-		    essayboard_content,
-		    essayboard_scrap,
-		    essayboard_logtime
-		FROM
-		    essayboard e, mentor mt, mentors_member mm
-		WHERE
-		    e.mentor_email = mt.mentor_email
-		AND 
-		    mt.mentor_email = mm.member_email
-		AND 
-		    mm.member_seq = #{member_seq}
-	</select> -->
-	
-	
-	
 	<!-- 에세이 글 삭제 -->
 	<delete id="essayboardDelete" parameterType="Int">
 		DELETE
@@ -293,26 +266,6 @@
 		WHERE
 			essayboard_seq = #{seq}
 	</delete>
-
-	<!-- 에세이 보드 조회수 -->
-	<update id="essayboardHit" parameterType="Int">
-		UPDATE
-			essayboard
-		SET
-			essayboard_hit = essayboard_hit + 1
-		WHERE
-			essayboard_seq = #{seq}
-	</update>
-
-	<!-- 에세이 보드 조회수 출력  -->
-	<select id="getessayboardHit" resultType="Int">
-		SELECT
-			essayboard_hit
-		FROM
-			essayboard
-		WHERE
-			essayboard_seq = #{seq}
-	</select>
 	
 	<!-- 스크랩 조회 / 양재우 -->
 	<select id="getEssayboardScrap" parameterType="essayboardScrap" resultType="Integer">
@@ -367,5 +320,36 @@
                       and ebs.essayboardscrap_mem_email = #{memEmail}
                  order by ebs.essatboardscrap_logtime desc
    </select>
-
+	
+	<select id="getBestEssay" parameterType="java.util.Map" resultType="essay">
+		SELECT * FROM
+      	(SELECT ROWNUM rn, tt.* FROM
+            (SELECT
+              	      e.essayboard_seq,
+                   	  e.essayboard_title,
+                      e.essayboard_content,
+                      e.essayboard_scrap,
+                      e.essayboard_logtime,
+                      mm.member_name,
+                      mm.member_seq,
+                      mm.member_profile,
+                      mt.mentor_company,
+                      mt.mentor_department,
+                      mt.mentor_flag,
+                      mt.mentor_email
+                  FROM
+                      essayboard       e,
+                      mentor           mt,
+                      mentors_member   mm
+                   WHERE
+                          e.mentor_email = mt.mentor_email
+                      AND mt.mentor_email = mm.member_email
+                      AND e.essayboard_scrap > 0
+              ) tt)
+		WHERE
+			 <![CDATA[
+	         	rn >= #{startNum} and rn <= #{endNum}
+			 ]]>
+		order by essayboard_logtime desc
+	</select>
 </mapper>

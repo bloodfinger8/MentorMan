@@ -5,13 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,7 +37,6 @@ import member.service.MemberService;
 import mentor.bean.MentorDTO;
 import mentor.service.MentorService;
 import naver.controller.NaverLoginBO;
-
 
 /**
  * @Title : 회원가입 컨트롤.
@@ -68,10 +61,6 @@ public class MemberController {
 	private QandAPaging QandAPag;
 	@Autowired
 	private MentorService mentorService;
-	@Autowired
-	private AlarmDTO alarmDTO;
-
-
 
 	// WriteForm 화면
 	@RequestMapping(value = "writeForm", method = RequestMethod.GET)
@@ -117,7 +106,6 @@ public class MemberController {
 		//회원 이메일 폴더가 자동생성으로 생성된게 아니라 회원이메일 폴더 만들어주고 넣어야 한다.
 		String filePath="C:/github/MentorMan/mentor/src/main/webapp/storage/"+map.get("member_email");
 		String fileName = member_profile.getOriginalFilename();
-		System.out.println("프로필 이미지 파일명: " + fileName);
 		// 폴더만들기
 		File filemake = new File(filePath);
 		if(!filemake.exists()) {
@@ -164,7 +152,7 @@ public class MemberController {
 	 * @Method Name : loginForm
 	 */
 	@RequestMapping(value = "loginForm", method = {RequestMethod.GET, RequestMethod.POST})
-	public String loginForm(Model model, HttpSession session, @RequestParam(required = false) String status) {
+	public String loginForm(Model model, HttpSession session, @RequestParam(required = false, defaultValue = "false") String status) {
 		// 카카오 url
 		String kakaoUrl = KakaoApi.getAuthorizationUrl(session);
 		// 네이버 url
@@ -178,33 +166,34 @@ public class MemberController {
 	}
 
 
-	/** @Title : 로그인 처리,세션 기간 설정(1일 유지).
-	 * @author : ginkgo1928 @date : 2019. 11. 09.
-	 * 2019. 11. 13 용제 수정
-	 * 2019. 11. 19 상구 수정 관리자페이지로 넘어갈수있게 수정함
-   */
 
-	@RequestMapping(value = "login", method = RequestMethod.POST)
-	@ResponseBody
-	public String login(@RequestParam String member_email, @RequestParam String member_pwd, HttpSession session) {
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("member_email", member_email);
-		map.put("member_pwd", member_pwd);
-
-		memberDTO = memberService.login(map);
-
-		if (memberDTO != null) {
-			memberDTO.setMember_pwd("");
-			session.setAttribute("memDTO", memberDTO);
-			session.setMaxInactiveInterval(60*60*24); // 세션 1일 유지
-			if(memberDTO.getMember_name().equals("관리자"))
-				return "admin_ok";
-			else
-				return "login_ok";
-		} else {
-			return "login_fail";
-		}
-	}
+//	/** @Title : 로그인 처리,세션 기간 설정(1일 유지).
+//	 * @author : ginkgo1928 @date : 2019. 11. 09.
+//	 * 2019. 11. 13 용제 수정
+//	 * 2019. 11. 19 상구 수정 관리자페이지로 넘어갈수있게 수정함
+//   */
+//
+//	@RequestMapping(value = "login", method = RequestMethod.POST)
+//	@ResponseBody
+//	public String login(@RequestParam String member_email, @RequestParam String member_pwd, HttpSession session) {
+//		Map<String, String> map = new HashMap<String, String>();
+//		map.put("member_email", member_email);
+//		map.put("member_pwd", member_pwd);
+//
+//		memberDTO = memberService.login(map);
+//
+//		if (memberDTO != null) {
+//			memberDTO.setMember_pwd("");
+//			session.setAttribute("memDTO", memberDTO);
+//			session.setMaxInactiveInterval(60*60*24); // 세션 1일 유지
+//			if(memberDTO.getMember_name().equals("관리자"))
+//				return "admin_ok";
+//			else
+//				return "login_ok";
+//		} else {
+//			return "login_fail";
+//		}
+//	}
 	// 로그아웃 처리
 	// 카카오 로그아웃 추가
 //	@RequestMapping(value = "logout", method = RequestMethod.GET, produces="application/json")
