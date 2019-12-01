@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import member.bean.AlarmDTO;
-import member.bean.CustomUserDetails;
+//import member.bean.CustomUserDetails;
 
 import member.bean.MemberDTO;
 import mentee.bean.MenteeDTO;
@@ -62,6 +62,8 @@ public interface MemberDAO {
 	public void saveAlarm(Map<String, String> map);
 
 	public void deleteAlarm(int seq);
+
+	public int getCountAlarm(String member_email);
 
 
 

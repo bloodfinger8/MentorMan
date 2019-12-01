@@ -320,6 +320,13 @@ public class MentorController {
 		
 		memberDTO = (MemberDTO) sesstion.getAttribute("memDTO");
 		
+		//follow - 재우
+		Map<String, String> followMap = new HashMap<String, String>();
+		followMap.put("memEmail" , memberDTO.getMember_email());
+		followMap.put("mentorEmail" , mentorDTO.getMentor_email());
+	  	int follow = mentorService.getFollowCheck(followMap);
+		
+	  	model.addAttribute("follow", follow);
 		model.addAttribute("pg", pg);
 		if(memberDTO!= null) {
 			model.addAttribute("email_check", memberDTO.getMember_email());

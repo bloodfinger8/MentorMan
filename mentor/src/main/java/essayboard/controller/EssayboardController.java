@@ -339,7 +339,7 @@ public class EssayboardController {
 									  		HttpServletResponse response) {
 		
 		memberDTO = (MemberDTO)session.getAttribute("memDTO");
-		
+		System.out.println(memberDTO);
 		Cookie[] getCookie = request.getCookies();
 		if(getCookie != null) {
 			for(int i =0; i<getCookie.length; i++){
@@ -367,12 +367,29 @@ public class EssayboardController {
 		
 		// 에세이 보드 
 		essayboardDTO = essayboardService.getEssayboardView(Integer.parseInt(seq));
-
-		ModelAndView modelAndView = new ModelAndView();
 		
+		//scrap flag 업데이트
+		Map<String, Object> scrapMap = new HashMap<String, Object>();
+	   	scrapMap.put("seq", seq);
+	   	scrapMap.put("memEmail" , memberDTO.getMember_email());
+	   	int cnt = essayboardService.getEssayboardScrap(scrapMap);
+	   	 //스크랩을 눌렀다면
+	   	if(cnt == 1) {
+	   		 //flag 1 저장
+	   		essayboardDTO.setEssayboard_scrapFlag(cnt);
+	   	}
+	   	
+	   	Map<String, String> followMap = new HashMap<String, String>();
+		followMap.put("memEmail" , memberDTO.getMember_email());
+		followMap.put("mentorEmail" , mentorDTO.getMentor_email());
+	   	//팔로우 찾기
+	  	int follow = mentorService.getFollowCheck(followMap);
+		
+	   	ModelAndView modelAndView = new ModelAndView();
 		// 로그인 후 멘토 SEQ
 		modelAndView.addObject("memSeq", memberDTO.getMember_seq());
 		// 게시물을 쓴 멘토의 SEQ
+		modelAndView.addObject("follow", follow);
 		modelAndView.addObject("mentorDTO", mentorDTO);
 		modelAndView.addObject("member_seq", mentors);
 		modelAndView.addObject("mentoringList", mentoringList);
@@ -413,6 +430,7 @@ public class EssayboardController {
 		   System.out.println("essayboardScrapDTO ::: " + essayboardScrapDTO);
 		   //스크랩 선택
 		   if(scrapFlag == 1) {
+			   System.out.println("insert");
 			   essayboardService.essayboardScrapInsert(essayboardScrapDTO);
 		   }
 		   //스크랩 취소

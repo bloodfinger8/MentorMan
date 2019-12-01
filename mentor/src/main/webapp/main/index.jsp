@@ -60,7 +60,24 @@
     sock.onmessage = function(evt) {
 	 	var data = evt.data;
 	   	console.log("ReceivMessage : " + data + "\n");
-
+		
+	   	$.ajax({
+			url : '/mentor/member/countAlarm',
+			type : 'POST',
+			dataType: 'text',
+			success : function(data) {
+				if(data == '0'){
+					$('.bell-badge-danger').hide();
+				}else{
+					$('.bell-badge-danger').show();
+					$('.bell-badge-danger').text(data);
+				}
+			},
+			error : function(err){
+				alert('err');
+			}
+	   	});
+	   	
 	   	// 모달 알림
 	   	var toastTop = app.toast.create({
             text: "알림 : " + data + "\n",
@@ -81,6 +98,27 @@
 
    }
 
+   $(function(){
+	   if($('#my_bell').hasClass('myBell')){
+	   $.ajax({
+			url : '/mentor/member/countAlarm',
+			type : 'POST',
+			dataType: 'text',
+			success : function(data) {
+				if(data == '0'){
+					$('.bell-badge-danger').hide();
+				}else{
+					$('.bell-badge-danger').show();
+					$('.bell-badge-danger').text(data);
+				}
+				
+			},
+			error : function(err){
+				alert('bell 값 err');
+			}
+	   	});
+	   }
+   })
 
    </script>
 </body>

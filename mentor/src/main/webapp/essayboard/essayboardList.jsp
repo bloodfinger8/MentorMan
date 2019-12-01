@@ -173,4 +173,4 @@
     </div>
 
   </div>
-  <script src="../js/essayboardList.js"></script>
+ <script src="../js/essayboardList.js"></script>

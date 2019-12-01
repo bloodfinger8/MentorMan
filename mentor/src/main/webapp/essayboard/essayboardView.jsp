@@ -18,7 +18,7 @@
 							<h1 class="mentor-post-title" style="display : flex">
 								${essayboardDTO.essayboard_title} 
 								</h1>
-							<div class="trix-content">
+							<div class="trix-content" >
 								${essayboardDTO.essayboard_content }
 							</div>
 							<c:if test="${memSeq == member_seq}">
@@ -37,9 +37,10 @@
 							<div class="block button-wrap">
 								<div class="action-block text-align-center mentor_post_6618">
 									<a class="color-gray" type="external" data-remote="true" rel="nofollow" data-method="post" href="/mentor_posts/6618/bookmarks" >
-									<div class="block button button-big button-inline color-gray js-bookmark">
+									<div class="block button button-big button-inline color-gray js-bookmark" id="scrapDiv">
 										<i class="far fa-bookmark" aria-hidden="true"></i>
-										${essayboardDTO.essayboard_scrap }
+										<span id="essayScrapDiv" data-seq="${seq}">${essayboardDTO.essayboard_scrap }</span>
+										<input type="hidden" id="scrapFlag" name="scrapFlag" value="${essayboardDTO.essayboard_scrapFlag}">
 									</div>
 									</a>
 								</div>
@@ -53,7 +54,7 @@
 									<a type="external" href="/mentors/14134">
 									<!-- 멘토 이미지 -->
 									  <c:if test="${mentorDTO.member_profile != 'profile.jpg'}">
-							            <img width="50" height="50" src="../storage/${mentorDTO.mentor_email}/${mentorDTO.member_profile}">
+							            <img width="50" height="50" class="mentor-img" data-email="${mentorDTO.mentor_email}" src="../storage/${mentorDTO.mentor_email}/${mentorDTO.member_profile}">
 							          </c:if>
 							          <c:if test="${mentorDTO.member_profile == 'profile.jpg'}">
 							            <img width="50" height="50" src="../image/profile.jpg">
@@ -62,10 +63,10 @@
 								</div>
 								<div class="block mentor-info">
 									<div class="name">
-										<span class="mentor-name">
-											${mentorDTO.member_name } <small>멘토</small>
-										</span>
-										<a class="button col js-bookmark user_14134" data-params="followed_id=14134" data-disable-with="..." type="external" data-remote="true" rel="nofollow" data-method="post" href="/relationships">
+										<div class="mentor-name" data-name="${mentorDTO.member_name }">
+											${mentorDTO.member_name } <span id="menseq" data-menseq="${member_seq}"><small>멘토</small></span>
+										</div>
+										<a class="button col js-bookmark mentor_${mentorDTO.mentor_seq}" id="followA" data-params="followed_id=14134" data-disable-with="..." type="external" data-remote="true" rel="nofollow" data-method="post" href="/relationships">
 										팔로우 </a>
 										<a class="button button-small button-fill" type="external" href="/mentors/14134/questions/new">
 										질문하기 </a>
@@ -110,52 +111,11 @@
            				</div>
 					</div>
 				</div>
-				<script type='text/javascript'>
-					  $(document).on('click', '.js-kakao-share-btn', function(e) {
-					    Kakao.Link.sendCustom({
-					      templateId: 13821,
-					      templateArgs: {
-					        'title': '[취업 멘탈 살롱] 취준 중 멘붕, 나는 이렇게 극복했다',
-					        'description': '취업은 철저하게 멘탈과 인내의 싸움입니다.한 번에 취업이 된다면 좋겠지만 한 시즌에 취업하기란 요즘 같은 세상엔 찾아보기 힘든 사례이기도 합니다.자소서와 면접 등 취업과 관련된 다양',
-					        'image': 'https://d2ljmlcsal6xzo.cloudfront.net/assets/icons/brand_og-ba663d36a81305d2c0ed38e9568b24dcc49ec4d0914eece5c0baa0265815f717.jpg',
-					        'path': '/mentor_posts/6618',
-					      }
-					    });
-					  });
-					  $(document).on('click', '.js-facebook-share-btn', function(e) {
-					    FB.ui({
-					      method: 'share',
-					      href: 'https://www.itdaa.net/mentor_posts/6618',
-					    }, function(response){});
-					  });
-				</script>
 			</div>
 		</div>
 	</div>
 </div>
+<input type="hidden" name="memNickname" id="memNickname" value="${memDTO.member_nickname}" />
+<input type="hidden" id="followVal" name="followVal" value="${follow}">
 
-<script src="path/to/jquery.cookie.js"></script>
-  <script src="path/to/jquery.js"></script>
-  <script src="../js/jquery.cookie.js"></script>
-  <script src="../js/essayboardBodyViewCookie.js">
-  $(document).ready(function(){
-		var hit = $('#essay_hit').val();
-		alert($('#essay_hit').val());
-		$.ajax({
-			type : 'post',
-			url : '/mentor/essayboard/essayboardHit',
-			data : {essay_hit : hit},
-			success : function(){
-				
-			},
-			error : function(){
-				
-			}
-	 	});
-	});
-  
-  $('.fa-bookmark').on('click' , function(){
-	  alert('click');
-  });
-  
-  </script>
+<script src="../js/essayboardView.js"></script>

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import member.bean.AlarmDTO;
-import member.bean.CustomUserDetails;
+//import member.bean.CustomUserDetails;
 import member.bean.MemberDTO;
 import mentee.bean.MenteeDTO;
 import mentor.bean.MentorDTO;
@@ -193,6 +193,11 @@ public class MemberDAOMybatis implements MemberDAO {
 	@Override
 	public void deleteAlarm(int seq) {
 		sqlSession.delete("memberSQL.deleteAlarm" , seq);
+	}
+
+	@Override
+	public int getCountAlarm(String member_email) {
+		return sqlSession.selectOne("memberSQL.getCountAlarm" , member_email);
 	}
 
 

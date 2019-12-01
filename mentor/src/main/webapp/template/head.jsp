@@ -34,7 +34,13 @@
 			</c:if>
 
 			<c:if test="${memDTO.member_email != null}">
-
+			
+			
+			<a class="button button-big" type="external" href="" style="color : rgba(0,0,0,0.84);">
+			<i class="fa fa-bell myBell" id="my_bell" style="font-size:24px; width:36px;"></i>
+			<span class="bell-badge bell-badge-danger"></span>
+			</a>
+						
 			<a type="internal" class="button button-big popover-open me-profile" data-popover=".js-me-popover" href=""> 
 				<c:if test="${memDTO.member_profile == 'profile.jpg'}">
 				<img src="../image/profile.jpg" width="28" height="28">
@@ -85,3 +91,26 @@
 		</div>
 	</div>
 </div>
+
+<style>
+.bell-badge{
+    padding: 3px 5px 2px;
+    position: absolute;
+    top: 22px;
+    right: 6px;
+    display: inline-block;
+    min-width: 10px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #ffffff;
+    line-height: 1;
+    vertical-align: baseline;
+    white-space: nowrap;
+    text-align: center;
+    border-radius: 10px;
+}
+.bell-badge-danger {
+    background-color: #db5565;
+}
+</style>
+
