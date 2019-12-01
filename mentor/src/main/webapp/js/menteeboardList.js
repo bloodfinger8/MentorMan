@@ -26,7 +26,7 @@ $(document).ready(function(){
 							class : value.seq+""
 				}))).append($('<td/>',{
 					align: 'center',
-					text : value.menteeboard_nickname
+					text : value.member_nickname
 				})).append($('<td/>',{
 					align: 'center',
 					text : value.menteeboard_logtime
@@ -111,7 +111,7 @@ $("#job_code").on("change", function(){
 							class : value.seq+""
 				}))).append($('<td/>',{
 					align: 'center',
-					text : value.menteeboard_nickname
+					text : value.member_nickname
 				})).append($('<td/>',{
 					align: 'center',
 					text : value.menteeboard_logtime
@@ -180,7 +180,7 @@ $('#search_image').on('click' , function(){
 								class : value.seq+""
 					}))).append($('<td/>',{
 						align: 'center',
-						text : value.menteeboard_nickname
+						text : value.member_nickname
 					})).append($('<td/>',{
 						align: 'center',
 						text : value.menteeboard_logtime
@@ -193,7 +193,10 @@ $('#search_image').on('click' , function(){
 					})).appendTo($('#inputBody2'));
 				});
 				
-				$('#menteeboardPagingDiv').html(data.menteeboardPaging.pagingHTML);
+				//paging 처리
+				$('#menteeboardPagingDiv').append($('<ul/>', {
+	    			class : 'pagination'
+	    		}).append(data.menteeboardPaging.pagingHTML));
 				
 				//클릭시 뷰로 이동
 				$('#boardTable').on('click' ,'#subjectA' , function(){

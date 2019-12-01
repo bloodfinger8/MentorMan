@@ -192,5 +192,10 @@ public class MemberDAOMybatis implements MemberDAO {
 		sqlSession.delete("memberSQL.deleteAlarm" , seq);
 	}
 
+	@Override
+	public int getCountAlarm(String member_email) {
+		return sqlSession.selectOne("memberSQL.getCountAlarm" , member_email);
+	}
+
 
 }

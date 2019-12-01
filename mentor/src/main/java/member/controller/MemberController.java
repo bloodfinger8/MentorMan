@@ -438,6 +438,16 @@ public class MemberController {
 		mav.setViewName("jsonView");
 		return mav;
 	}
+	
+	
+	@RequestMapping(value ="countAlarm", method = RequestMethod.POST)
+	@ResponseBody
+	public int  countAlarm(HttpSession session) {
+		MemberDTO memberDTO = (MemberDTO) session.getAttribute("memDTO");
+		int count = memberService.getCountAlarm(memberDTO.getMember_email());
+		return count;
+	}
+	
 
 
 }

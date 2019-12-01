@@ -191,7 +191,7 @@ $('#modify_btn').on('click', function(){
 // 팔로우 기능- 재우
 $(function(){
 	var seq = $('#mentor_seq').val();
-
+	
 	//내가 팔로우한 멘토인지 확인
 	if($('#followVal').val() === '1'){
 		$('#followA').addClass('button-fill');
