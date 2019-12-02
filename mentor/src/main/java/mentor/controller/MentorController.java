@@ -254,7 +254,7 @@ public class MentorController {
 	 * @Author : kujun95, @Date : 2019. 11. 15.
 	 */
 	@RequestMapping(value = "mentorQuestionsForm", method = RequestMethod.GET)
-	public String mentorQuestionsForm(@RequestParam(required = false, defaultValue = "1") int seq, @RequestParam(required = false, defaultValue = "1") int pg, @RequestParam(required = false, defaultValue = "1") int qsseq, Model model, HttpSession session) {
+	public String mentorQuestionsForm(@RequestParam(required = false, defaultValue = "1") int seq, @RequestParam(required = false, defaultValue = "1") int pg, @RequestParam(required = false, defaultValue = "0") int qsseq, Model model, HttpSession session) {
 		//멘토정보 가져오기
 		MentorDTO questionDTO =  mentorService.questionModifyForm(qsseq);
 		MentorDTO mentorDTO = mentorService.getMentor_info(seq);
@@ -269,7 +269,7 @@ public class MentorController {
 		Map<String, String> followMap = new HashMap<String, String>();
 		followMap.put("memEmail" , memberDTO.getMember_email());
 		followMap.put("mentorEmail" , mentorDTO.getMentor_email());
-		
+		System.out.println(questionDTO);
 		//팔로우 찾기
 		int follow = mentorService.getFollowCheck(followMap);
 		model.addAttribute("memNickname" , memberDTO.getMember_nickname());

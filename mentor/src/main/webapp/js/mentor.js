@@ -473,9 +473,9 @@ $('#honor_mentor').on('click', function(event){
     }
 	
 	if(flag == 0){
-		$('.mentor_div').text('신규 에세이');
+		$('.mentor_div').text('멘토');
 	} else if (flag == 1) {
-		$('.mentor_div').text('추천 에세이');
+		$('.mentor_div').text('명예 멘토');
 	}
 	
 	essayjobType(1, flag);
