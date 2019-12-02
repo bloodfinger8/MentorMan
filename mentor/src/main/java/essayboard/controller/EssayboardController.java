@@ -157,7 +157,6 @@ public class EssayboardController {
 	public String noticeboardImage(@RequestParam("file") MultipartFile file) {
 		String filePath = "C:\\Users\\TR\\Documents\\GitHub\\MentorMan\\mentor\\src\\main\\webapp\\storage";
 		String fileName = file.getOriginalFilename();
-		System.out.println(fileName);
 		File files = new File(filePath, fileName);
 		try {
 			FileCopyUtils.copy(file.getInputStream(), new FileOutputStream(files));
@@ -223,7 +222,6 @@ public class EssayboardController {
 		String check = null;
 		
 		for (String jobs : joblist) {
-			System.out.println("list = " + jobs.toString());
 			if(!jobs.equals(null)) {
 				check = "success";
 			}
@@ -291,9 +289,6 @@ public class EssayboardController {
 	        	 
 	         }
 		}
-		System.out.println("pg = " + pg);
-		System.out.println("listsize = " + list.size());
-		System.out.println("total = " + essayDutyTotal);
 		modelAndView.addObject("pg", pg);
 		modelAndView.addObject("flag", flag);
 		modelAndView.addObject("pageSize", essayboardPaging.getPageSize());
@@ -354,11 +349,9 @@ public class EssayboardController {
 	 * @Author : TR, @Date : 2019. 11. 8.
 	 */
 	@RequestMapping(value = "essayboardDelete", method = RequestMethod.GET)
-	public String essayboardDelete(@RequestParam String seq, Model model) {
+	@ResponseBody
+	public void essayboardDelete(@RequestParam String seq) {
 		essayboardService.essayboardDelete(Integer.parseInt(seq));
-		
-		model.addAttribute("display", "/essayboard/essayboardList.jsp");
-		return "/main/index";
 	}
 	
 	   @RequestMapping(value = "essayboardScrap", method = RequestMethod.POST)

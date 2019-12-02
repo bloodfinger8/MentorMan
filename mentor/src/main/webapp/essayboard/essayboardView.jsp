@@ -8,11 +8,11 @@
 			<div class="mentor-post-detail-block">
 				<h1 class="mentor-post-title" style="display : flex">
 					${essayboardDTO.essayboard_title} 
-					</h1>
+				</h1>
 				<div class="trix-content">
 					${essayboardDTO.essayboard_content }
 				</div>
-				<c:if test="${memSeq == member_seq}">
+				<c:if test="${memDTO.member_seq == member_seq || memDTO.member_nickname == 'admin'}">
 				<div style="display: inline-block; padding-top: 30px;">
 					<a id="essay_delete_btn" style="width: 100px; float: right;" class="button" type="external" onclick="essayDeleteCheck('${seq}')">
             			<i class="fas fa-pencil-alt"></i>
