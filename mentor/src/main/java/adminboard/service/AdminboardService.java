@@ -6,6 +6,7 @@ import java.util.Map;
 import adminboard.bean.AdminnoticeboardDTO;
 import essayboard.bean.EssayboardDTO;
 import meetingboard.bean.MeetingboardDTO;
+import menteeboard.bean.MenteeboardDTO;
 
 /**
  * 
@@ -35,5 +36,10 @@ public interface AdminboardService {
 	public List<EssayboardDTO> getNewEssay(Map<String, Object> map);
 
 	public int getessayTotalA();
+	
+	//멘티게시판
+	public List<MenteeboardDTO> getMenteeboardList(Map<String, Integer> map);
+
+	public int getMenteeTotalA();
 	
 }

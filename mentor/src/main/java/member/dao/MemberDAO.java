@@ -64,7 +64,13 @@ public interface MemberDAO {
 
 	public int getTotalAlarm(String memEmail);
 
-	public List<AlarmDTO> getUnAlarm(String memEmail);
+	public int mentor_headerNotification(int member_seq);
+
+	public int mentee_headerNotification(int member_seq);
+
+	public void mentor_headerCountModify(List<MentorDTO> list);
+
+	public void mentee_headerCountModify(List<MentorDTO> list);
 
 
 

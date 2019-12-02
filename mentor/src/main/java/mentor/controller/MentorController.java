@@ -115,24 +115,15 @@ public class MentorController {
 		int pg = (Integer) jsonData.get("pg");
 		// 멘토, 명예멘토
 		int flag = (Integer) jsonData.get("flag");
-		System.out.println("joblist = " +  joblist.toString());
-		System.out.println("pg = " +  pg);
-		System.out.println("flag = " + flag);
 		// job_code 유무 체크
 		String check = null;
 		
 		for (String jobs : joblist) {
-			System.out.println("list = " + jobs.toString());
 			if(!jobs.equals(null)) {
 				check = "success";
 			}
 		}
 		
-		System.out.println("check = " + check);
-//		System.out.println("check = " + check);
-//		System.out.println("pg = " + pg);
-//		System.out.println("flag = " + flag);
-//		System.out.println("check = " + check);
 		memberDTO = (MemberDTO)session.getAttribute("memDTO");
 		Map<String, Object> map = new HashMap<String, Object>();
 //		
@@ -178,7 +169,6 @@ public class MentorController {
 		mentorfindPaging.setTotalA(jobCodeTotal);
 		mentorfindPaging.makePagingHTML();
 		
-		System.out.println("listsize = " + list.size());
 		if(memberDTO != null) {
 			modelAndView.addObject("memberDTO", memberDTO);
 		}
@@ -269,7 +259,6 @@ public class MentorController {
 		Map<String, String> followMap = new HashMap<String, String>();
 		followMap.put("memEmail" , memberDTO.getMember_email());
 		followMap.put("mentorEmail" , mentorDTO.getMentor_email());
-		System.out.println(questionDTO);
 		//팔로우 찾기
 		int follow = mentorService.getFollowCheck(followMap);
 		model.addAttribute("memNickname" , memberDTO.getMember_nickname());
@@ -315,7 +304,6 @@ public class MentorController {
 		int mentor_question = mentorService.getQuestion(mentor_seq);// 질문수
 		int mentor_follow = mentorService.getFollow(mentor_seq); //팔로워수
 		double questionPercent = (double)mentor_answer/(double)mentor_question;
-		//System.out.println(mentor_answer+"-----"+mentor_question);
 		String[] mentoringArray = mentorDTO.getMentoring_code().split(",");
 		Map<String, String[]> map = new HashMap<String, String[]>();
 		map.put("mentoring_code", mentoringArray);
@@ -358,7 +346,6 @@ public class MentorController {
 	@RequestMapping(value = "questionModify", method = RequestMethod.POST)
 	@ResponseBody
 	public String questionModify(@RequestParam Map <String, String> map) {
-		System.out.println(map);
 		int success = mentorService.questionModify(map);
 		if(success == 0) {
 			return "error";
@@ -384,7 +371,6 @@ public class MentorController {
         mentorFollowDTO.setFollower_email(follower_email);
         mentorFollowDTO.setFollowed_email(followed_email);
        
-        System.out.println("mentorFollowDTO : " + mentorFollowDTO);
         if(follow >= 1) {
         	mentorService.mentorFollowDelete(mentorFollowDTO);
         	follow=0;
@@ -404,7 +390,6 @@ public class MentorController {
 		map.put("memEmail" , memberDTO.getMember_email());
 		map.put("mentor_flag", 1);
 		//승인된 멘토 이면서 나를 팔로우한 팔로워 list
-		System.out.println("map :::: " + map);
 		List<MentorDTO> list = mentorService.getMentorAttentionList(map);
 		
 		model.addAttribute("list", list);

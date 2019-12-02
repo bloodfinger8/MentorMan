@@ -194,8 +194,8 @@ public class MemberController {
 //			return "login_fail";
 //		}
 //	}
-	// 로그아웃 처리
-	// 카카오 로그아웃 추가
+//	// 로그아웃 처리
+//	// 카카오 로그아웃 추가
 //	@RequestMapping(value = "logout", method = RequestMethod.GET, produces="application/json")
 //	public ModelAndView logout(HttpSession session) {
 //		KakaoApi.kakaoLogout((JsonNode) session.getAttribute("access_token"));
@@ -228,12 +228,14 @@ public class MemberController {
 		if(member_flag == 1) {
 			int mentor_seq = memberService.getMentor_seq(memberDTO.getMember_email());
 			List<MentorDTO> list = memberService.getMemtee_question(mentor_seq);
+			memberService.mentor_headerCountModify(list);
 			model.addAttribute("mentor_questionList", list);
 		}
 		List<MentorDTO> list = memberService.getQandA(map);
 		if(list != null) {
 			model.addAttribute("all_questionList", list);
 		}
+		memberService.mentee_headerCountModify(list);
 		model.addAttribute("flag",member_flag);
 		model.addAttribute("pg", pg);
 		model.addAttribute("QandAPag", QandAPag);
@@ -267,7 +269,6 @@ public class MemberController {
 		followMap.put("mentorEmail" , mentorDTO.getMentor_email());
 
 		int follow = mentorService.getFollowCheck(followMap);
-		System.out.println(mentorDTO.getMentor_email());
 		model.addAttribute("follow" , follow);
 		model.addAttribute("memNicname" , memberDTO.getMember_nickname());
 		if(getEmail != mentorDTO.getMember_email()) {
@@ -324,9 +325,7 @@ public class MemberController {
 		memberDTO = memberService.setmemberpwd(map);
 		if (memberDTO != null) {
 			//인증 코드 생성
-			System.out.println("시작");
 			String auauthKey=mailService.mailSendWithUserKey(member_email, member_name);
-			System.out.println("auauthKey : " + auauthKey);
 
 			Cookie cookie = new Cookie("Cookie_Email", auauthKey);
 			cookie.setMaxAge(60 * 3);
@@ -439,7 +438,6 @@ public class MemberController {
 
 		//삭제한 후 alarm list
 		List<AlarmDTO> list = memberService.getAlarm(memEmail);
-		System.out.println("list ::" + list);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("list", list);
 		mav.setViewName("jsonView");
@@ -456,5 +454,16 @@ public class MemberController {
 	}
 	
 
-
+	@RequestMapping(value = "headerNotification", method = RequestMethod.POST)
+	@ResponseBody
+	public String headerNotification(Model model, HttpSession session) {
+		int check_count = 0;
+		memberDTO = (MemberDTO) session.getAttribute("memDTO");
+		if(memberDTO.getMember_flag() == 1) {
+			check_count = memberService.mentor_headerNotification(memberDTO.getMember_seq());
+		}else {
+			check_count = memberService.mentee_headerNotification(memberDTO.getMember_seq());
+		}
+		return check_count+"";
+	}
 }
