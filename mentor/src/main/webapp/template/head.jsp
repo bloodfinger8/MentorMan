@@ -6,7 +6,7 @@
 	<div class="navbar-inner">
 		<div class="left">
 			<a class="logo" type="external" href="/mentor/main/index">
-				<img src="../image/mentorlogo.jpg" />
+				<img src="../image/logo.png" />
 			</a>
 		</div>
 		<form class="searchbar" id="searchbar-autocomplete" action="/searchs">
