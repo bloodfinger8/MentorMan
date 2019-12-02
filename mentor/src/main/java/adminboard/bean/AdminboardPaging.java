@@ -81,9 +81,27 @@ public class AdminboardPaging {
 			pagingHTML.append("<a class='page-link' href='adminmeetingboardList?pg="+(endPage+1)+"'>Next</a>");
 	}
 	
-
-	
-	
+	public void menteePagingHTML() {
+		pagingHTML = new StringBuffer();
+		
+		int totalP = (totalA+(pageSize-1))/pageSize;// 1
+		
+		int startPage = (currentPage-1)/pageBlock*pageBlock+1; 
+		int endPage = startPage+pageBlock-1; // 
+		if(endPage>totalP)
+			endPage = totalP;
+		
+		if(startPage>pageBlock)
+			pagingHTML.append("<a class='page-link' href='adminmenteeList?pg="+(startPage-1)+"'>Previous</a>");
+		for(int i=startPage; i<=endPage; i++) {
+			if(i==currentPage)
+				pagingHTML.append("<a class='page-link' href='adminmenteeList?pg="+i+"'>"+i+"</a>");
+			else
+				pagingHTML.append("<a class='page-link' href='adminmenteeList?pg="+i+"'>"+i+"</a>");
+		}
+		if(endPage < totalP)
+			pagingHTML.append("<a class='page-link' href='adminmenteeList?pg="+(endPage+1)+"'>Next</a>");
+	}
 	
 	public void makeSearchPagingHTML() {
 		pagingHTML = new StringBuffer();

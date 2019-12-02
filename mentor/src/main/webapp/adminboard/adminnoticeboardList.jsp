@@ -42,7 +42,7 @@
 									<tr>
 										<td><input type="checkbox" class="check"value="${adminnoticeboardDTO.noticeboard_seq }"></td>
 										<td>${adminnoticeboardDTO.noticeboard_seq }</td>
-										<td><a href="/mentor/adminboard/adminnoticeboardView?seq=${adminnoticeboardDTO.noticeboard_seq }&pg=${pg}" style="text-decoration: none;">${adminnoticeboardDTO.noticeboard_title }</a></td>
+										<td><a href="/mentor/adminboard/adminnoticeboardView?seq=${adminnoticeboardDTO.noticeboard_seq }&pg=${pg}">${adminnoticeboardDTO.noticeboard_title }</a></td>
 										<td>관리자</td>
 										<td>${adminnoticeboardDTO.noticeboard_hit }</td>
 										<td>${adminnoticeboardDTO.noticeboard_logtime}</td>

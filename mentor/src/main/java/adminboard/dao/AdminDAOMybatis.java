@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import adminboard.bean.AdminnoticeboardDTO;
 import essayboard.bean.EssayboardDTO;
 import meetingboard.bean.MeetingboardDTO;
+import menteeboard.bean.MenteeboardDTO;
 
 /**
  * 
@@ -76,6 +77,14 @@ public class AdminDAOMybatis implements AdminboardDAO{
 	@Override
 	public int getessayTotalA() {
 		return sqlsession.selectOne("adminboardSQL.getessayTotalA");
+	}
+	@Override
+	public List<MenteeboardDTO> getMenteeboardList(Map<String, Integer> map) {
+		return sqlsession.selectList("adminboardSQL.getMenteeboardList", map);
+	}
+	@Override
+	public int getMenteeTotalA() {
+		return sqlsession.selectOne("adminboardSQL.getMenteeTotalA");
 	}
 	
 	
