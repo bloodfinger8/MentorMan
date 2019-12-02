@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import adminboard.bean.AdminnoticeboardDTO;
+import essayboard.bean.EssayboardDTO;
 import meetingboard.bean.MeetingboardDTO;
 
 /**
@@ -29,5 +30,10 @@ public interface AdminboardService {
 	public void adminmeetingboardDelete(Map<String, String[]> map);
 
 	public void adminnoticeboardWrite(Map<String, String> map);
+	
+	//에세이
+	public List<EssayboardDTO> getNewEssay(Map<String, Object> map);
+
+	public int getessayTotalA();
 	
 }

@@ -54,7 +54,13 @@
 					<div class="menu-list">
 						<div class="list links-list no-hairlines-between">
 							<ul>
+
+								<c:if test="${memDTO.member_nickname == 'admin'}">
+								<li><a type="external" href="/mentor/admin/adminMain">관리자 페이지</a></li>
+								</c:if>
+
 								<li><a type="external" href="/mentor/noticeboard/noticeboardList">공지사항</a></li>
+
 								<li><a type="external" href="/mentor/mentor/mentorfindForm?pg=1">멘토찾기</a></li>
 								<li><a type="external" href="/mentor/essayboard/essayboardList">에세이</a></li>
 								<li><a type="external" href="/mentor/meetingboard/meetingboardList">모임</a></li>
