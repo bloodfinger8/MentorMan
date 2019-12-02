@@ -15,7 +15,8 @@ $(document).ready(function(){
 
 // 에세이 직무유형 버튼
 $(".row > a").on("click",function(event, data){// a태그 클릭시 작동
-	event.preventDefault(); // 클릭된 태그의 본래의 기능을 막음 즉, a태그 본래 기능을 막음
+	// 클릭된 태그의 본래의 기능을 막음 즉, a태그 본래 기능을 막음
+	event.preventDefault();
 	if($('#memNick').val() == ""){
 		location.href="/mentor/member/loginForm";
 	} else {
@@ -49,8 +50,6 @@ $(".row > a").on("click",function(event, data){// a태그 클릭시 작동
         var txt = $(this).attr("href");// href에 입력된 값을 가져옴 즉 클릭된 a의 job_code를 가져옴
         var dateIndex = jobs.indexOf(txt);
         
-        // 버튼 클릭시 배열에 같은 job_code가 있으면 삭제
-        // 없으면 job_code를 넣는다.
         if (dateIndex==-1){ 
             jobs.push(txt);
         }else{ 
@@ -84,8 +83,10 @@ function essayjobType(pg , flag){
     	success : function(data){
     		let flag = $(document.createDocumentFragment());
     		
+    		// 새로고침 값 유지 job_code 배열 쿠키에 저장 
+//    		$.cookie('job_code', jobs);
+//    		$.cookie('flag', data.flag);
     		$.each(data.list, function(index, items) {
-    			
     			// 에세이 보드 (신규, 추천) 플래그
     			if(items.essayboard_scrapFlag == 1){
 	    			var scrapFlag = "<img id="+ items.essayboard_seq +" src='../image/scrapOkImg.png' width='13'>"
@@ -107,7 +108,6 @@ function essayjobType(pg , flag){
     			} else {
     				var subFlag = items.essayboard_content
     			}
-    			
     			let essayboard = `
 				<input type="hidden" id="job_code" value="${items.job_code }">
 				<div class="col-100 tablet-50 desktop-33">
