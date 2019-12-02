@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import adminboard.bean.AdminboardPaging;
 import adminboard.bean.AdminnoticeboardDTO;
 import adminboard.service.AdminboardService;
+import essayboard.bean.EssayboardDTO;
 import meetingboard.bean.MeetingboardDTO;
 
 /** 
@@ -74,7 +74,6 @@ public class AdminBoardController {
 	@RequestMapping(value = "adminnoticeboardWrite", method = RequestMethod.POST)
 	@ResponseBody
 	public void adminnoticeboardWrite(@RequestParam Map<String,String> map) {
-		System.out.println(map);
 		adminboardService.adminnoticeboardWrite(map); 
 	}
 	
@@ -84,13 +83,11 @@ public class AdminBoardController {
 		String filePath = "C:/Users/dkstk/github/MentorMan/mentor/src/main/webapp/storage";
 		String fileName = file.getOriginalFilename();
 		File files = new File(filePath, fileName);
-		System.out.println(fileName);
 		try {
 			FileCopyUtils.copy(file.getInputStream(), new FileOutputStream(files));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println(fileName);
 		return fileName;
 	}
 	
@@ -121,10 +118,42 @@ public class AdminBoardController {
 		return "/admin/adminMain";
 	}
 	
+	/* description : 에세이보드 리스트 */
 	@RequestMapping(value="adminessayList",method = RequestMethod.GET)
-	public String adminessayList(Model model) {
-		model.addAttribute("display", "/adminboard/adminessayList.jsp");
-		return "/admin/adminMain";
+	public ModelAndView adminessayList(@RequestParam(required = false, defaultValue = "1") String pg,
+			   						   @RequestParam(required = false, defaultValue = "0") String flag,
+			   						   HttpSession session,
+			   						   HttpServletResponse response) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		// 페이지 당 9개씩
+		int endNum = Integer.parseInt(pg) * 9;
+		int startNum = endNum - 8;
+		
+		map.put("endNum", endNum);
+		map.put("startNum", startNum);
+		
+		// 총 글 수
+		int totalA = adminboardService.getessayTotalA();
+	
+		map.put("totalA", totalA);
+		
+		ModelAndView modelAndView = new ModelAndView();
+		//  신규 에세이 리스트
+		 List<EssayboardDTO>list = adminboardService.getNewEssay(map);	
+
+
+		adminboardPaging.setCurrentPage(Integer.parseInt(pg));
+		adminboardPaging.setPageBlock(3);
+		adminboardPaging.setPageSize(9);
+		adminboardPaging.setTotalA(totalA);
+		adminboardPaging.essayboardPagingHTML();
+		modelAndView.addObject("pg", pg);
+		modelAndView.addObject("essayboardPaging", adminboardPaging);
+		modelAndView.addObject("list", list);
+		modelAndView.addObject("display", "/adminboard/adminessayList.jsp");
+		modelAndView.setViewName("/admin/adminMain");
+
+		return modelAndView;
 	}
 	
 	/* description : 모임게시판 리스트 11.22수정 */

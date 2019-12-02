@@ -57,6 +57,9 @@ public interface MemberService {
 
 	public void deleteAlarm(int seq);
 
+	public int getCountAlarm(String member_email);
+
+
 
 
 }

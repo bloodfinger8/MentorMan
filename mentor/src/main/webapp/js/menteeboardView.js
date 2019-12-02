@@ -104,9 +104,15 @@ $(document).ready(function() {
 								'<div class="block mentee-detail-block thanks-note-card" hidden="" '+
 									'style="display: block;">'+
 									'<div class="mentee-info">'+
-										'<div class="mentee-image img-circle">'+
-											'<img src="https://www.itdaa.net/rails/active_storage/representations/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBcmZCIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--f0d5c09d42f655ec75e2351b3a921a3266a435e5/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MY21WemFYcGxTU0lOTVRBd2VERXdNQ0VHT2daRlZEb1FZWFYwYjE5dmNtbGxiblJVIiwiZXhwIjpudWxsLCJwdXIiOiJ2YXJpYXRpb24ifX0=--80976855d44dd57bc27b6da84ad9dae42a7e7a2d/profile.jpg">' +
-										'</div>'+
+										'<div class="mentee-image img-circle">';
+										if(value.menteeboardRelpy_profile != 'profile.jpg'){
+											str += '<img width="150" height="150" src="../storage/'+ value.menteeboardReply_email +'/'+value.menteeboardReply_profile+'">';
+										}
+										
+										if(value.menteeboardRelpy_profile == 'profile.jpg'){
+											str +='<img width="150" height="150" src="../image/profile.jpg">';
+										}
+										str += '</div>'+
 										'<div class="mentee-name">'+ value.menteeboardReply_nickname +
 										'<div class="sent-date">'+value.menteeboardReply_logtime+'</div>'+
 									'</div>' +
@@ -167,10 +173,15 @@ $(document).ready(function() {
 						'<div class="block mentee-detail-block thanks-note-card" hidden="" '+
 							'style="display: block;">'+
 							'<div class="mentee-info">'+
-								'<div class="mentee-image img-circle">'+
-									'<img src="https://www.itdaa.net/rails/active_storage/representations/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBcmZCIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--f0d5c09d42f655ec75e2351b3a921a3266a435e5/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MY21WemFYcGxTU0lOTVRBd2VERXdNQ0VHT2daRlZEb1FZWFYwYjE5dmNtbGxiblJVIiwiZXhwIjpudWxsLCJwdXIiOiJ2YXJpYXRpb24ifX0=--80976855d44dd57bc27b6da84ad9dae42a7e7a2d/profile.jpg">' +
-								'</div>'+
-								'<div class="mentee-name">'+ value.menteeboardReply_nickname +','+value.menteeboardReply_seq+'</div>' +
+							'<div class="mentee-image img-circle">';
+								if(value.menteeboardRelpy_profile != 'profile.jpg'){
+									str += '<img width="150" height="150" src="../storage/'+ value.menteeboardReply_email +'/'+value.menteeboardReply_profile+'">';
+								}
+								if(value.menteeboardRelpy_profile == 'profile.jpg'){
+									str +='<img width="150" height="150" src="../image/profile.jpg">';
+								}
+								str +='</div>'+
+								'<div class="mentee-name">'+ value.menteeboardReply_nickname +'</div>' +
 								'<div class="sent-date">'+value.menteeboardReply_logtime+'</div>'+
 							'</div>' +
 							'<div class="modifyReply_hide_'+value.menteeboardReply_seq +'">'+
@@ -221,10 +232,15 @@ $(document).ready(function() {
 						'<div class="block mentee-detail-block thanks-note-card" hidden="" '+
 							'style="display: block;">'+
 							'<div class="mentee-info">'+
-								'<div class="mentee-image img-circle">'+
-									'<img src="https://www.itdaa.net/rails/active_storage/representations/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBcmZCIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--f0d5c09d42f655ec75e2351b3a921a3266a435e5/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MY21WemFYcGxTU0lOTVRBd2VERXdNQ0VHT2daRlZEb1FZWFYwYjE5dmNtbGxiblJVIiwiZXhwIjpudWxsLCJwdXIiOiJ2YXJpYXRpb24ifX0=--80976855d44dd57bc27b6da84ad9dae42a7e7a2d/profile.jpg">' +
-								'</div>'+
-								'<div class="mentee-name">'+ value.menteeboardReply_nickname +','+value.menteeboardReply_seq+'</div>' +
+								'<div class="mentee-image img-circle">';
+								if(value.menteeboardRelpy_profile != 'profile.jpg'){
+									str += '<img width="150" height="150" src="../storage/'+ value.menteeboardReply_email +'/'+value.menteeboardReply_profile+'">';
+								}
+								if(value.menteeboardRelpy_profile == 'profile.jpg'){
+									str +='<img width="150" height="150" src="../image/profile.jpg">';
+								}
+								str +='</div>'+
+								'<div class="mentee-name">'+ value.menteeboardReply_nickname+'</div>' +
 								'<div class="sent-date">'+value.menteeboardReply_logtime+'</div>'+
 							'</div>' +
 							'<div class="modifyReply_hide_'+value.menteeboardReply_seq +'">'+
@@ -279,8 +295,9 @@ $(document).ready(function() {
 					});
 					
 				},
-				error : function(){
-					alert('실패');
+				error : function(err){
+					alert('실패2');
+					console.log(err);
 				}
 			}); 
 		}
