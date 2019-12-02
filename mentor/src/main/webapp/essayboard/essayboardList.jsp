@@ -123,7 +123,6 @@
 						<input type="hidden" id="pg" name="pg" value="${pg}">
 						<!-- 스크랩버튼 클릭 방지에 사용 -->
 						<input type="hidden" id="memNickname" name="memNickname" value="${memNickname}">
-
 						<div class="col-100 tablet-50 desktop-33"></div>
 						<div class="col-100 tablet-50 desktop-33"></div>
 					</div>
