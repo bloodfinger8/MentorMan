@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <div class="col-100 tablet-80" style="margin: auto;">
-	<div class="page navbar-fixed mentor_request-steps show" data-name="mentor-request-steps-show">
+	<div class="page navbar-fixed mentor_request-steps show">
   		<div class="page-content">
 
-    	<div class="block block-strong no-hairlines text-align-center hero-title">
+    	<div class="block no-hairlines text-align-center hero-title">
 	      <h1>멘토 정보</h1>
 	    </div>
 		    <div class="mentor-request-block block">
@@ -146,7 +146,7 @@
 		        </div>
 		        
 		        
-		            <div class="block block-strong no-hairlines text-align-center hero-title">
+		       <div class="block no-hairlines text-align-center hero-title">
 		      <h1>멘토링 분야</h1>
 		    </div>
 		
@@ -318,7 +318,7 @@
 			</div>
 		
 		
-			    <div class="block block-strong no-hairlines text-align-center hero-title">
+			    <div class="block no-hairlines text-align-center hero-title">
 			      <h1>멘토링 정보</h1>
 			
 			    </div>
@@ -365,7 +365,7 @@
 				    </div>
 				
 				
-				    <div class="block block-strong no-hairlines text-align-center hero-title">
+				    <div class="block no-hairlines text-align-center hero-title">
 				      <h1>멘토 확인</h1>
 				    </div>
 				
@@ -384,11 +384,8 @@
 				        - 등록 가능한 파일 형식은 jpg, png, gif 입니다.<br>
 				      </div>
 				    </div>
-				    
 			    </form>
 			</div>
-    
-    
 		    <div class="block">
 				<input type="button" name="mentorapply_btn" id="mentorapply_btn" value="수정하기" class="btn button button-big button-fill" style="height: 100%;">
 			</div>
