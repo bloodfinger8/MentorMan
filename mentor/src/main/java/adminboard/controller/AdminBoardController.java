@@ -26,6 +26,7 @@ import adminboard.bean.AdminnoticeboardDTO;
 import adminboard.service.AdminboardService;
 import essayboard.bean.EssayboardDTO;
 import meetingboard.bean.MeetingboardDTO;
+import menteeboard.bean.MenteeboardDTO;
 
 /** 
  * @Title : 관리자페이지 게시판관리 컨트롤러입니다
@@ -116,18 +117,40 @@ public class AdminBoardController {
 		return "/admin/adminMain";
 	}
 	
-	@RequestMapping(value="admincommuList",method = RequestMethod.GET)
-	public String admincommuList(Model model) {
-		model.addAttribute("display", "/adminboard/admincommuList.jsp");
-		return "/admin/adminMain";
+	/* description : 멘티게시판 */
+	@RequestMapping(value="adminmenteeList",method = RequestMethod.GET)
+	public ModelAndView adminmenteeList(@RequestParam (required=false,defaultValue="1") String pg) {
+		
+		int endNum = Integer.parseInt(pg) * 10; //한페이지당 5개
+		int startNum = endNum - 9;
+		
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("startNum", startNum);
+		map.put("endNum", endNum);
+		
+		List<MenteeboardDTO> list = adminboardService.getMenteeboardList(map);
+
+		
+		int totalA = adminboardService.getMenteeTotalA();
+		adminboardPaging.setCurrentPage(Integer.parseInt(pg));
+		adminboardPaging.setPageBlock(5);
+		adminboardPaging.setPageSize(10);
+		adminboardPaging.setTotalA(totalA);
+		adminboardPaging.menteePagingHTML();
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("list", list);
+		mav.addObject("pg", pg);
+		mav.addObject("menteeboardPaging", adminboardPaging);
+		mav.addObject("display", "/adminboard/adminmenteeList.jsp");
+		mav.setViewName("/admin/adminMain");
+		return mav;
 	}
 	
 	/* description : 에세이보드 리스트 */
 	@RequestMapping(value="adminessayList",method = RequestMethod.GET)
 	public ModelAndView adminessayList(@RequestParam(required = false, defaultValue = "1") String pg,
-			   						   @RequestParam(required = false, defaultValue = "0") String flag,
-			   						   HttpSession session,
-			   						   HttpServletResponse response) {
+			   						   @RequestParam(required = false, defaultValue = "0") String flag) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		// 페이지 당 9개씩
 		int endNum = Integer.parseInt(pg) * 9;

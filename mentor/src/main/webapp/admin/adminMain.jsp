@@ -66,7 +66,7 @@
 									<ul class="nav child_menu" style="display: none;">
 										<li><a href="/mentor/adminboard/adminnoticeboardList">공지사항 게시판</a></li>
 										<li><a href="/mentor/adminboard/adminessayList">에세이</a></li>
-										<li><a href="/mentor/adminboard/admincommuList">멘티게시판</a></li>
+										<li><a href="/mentor/adminboard/adminmenteeList">멘티게시판</a></li>
 										<li><a href="/mentor/adminboard/adminmeetingboardList">모임</a></li>
 									</ul>
 								</li><!-- 게시판관리 끝 -->
