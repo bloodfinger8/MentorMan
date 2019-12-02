@@ -406,7 +406,8 @@ public class MemberController {
 		memberService.checkSubscribe(memEmail);
 
 		List<AlarmDTO> list = memberService.getAlarm(memEmail);
-
+		int getTotalAlarm = memberService.getTotalAlarm(memEmail);
+		model.addAttribute("getTotalAlarm" , getTotalAlarm);
 		model.addAttribute("list" , list);
 		model.addAttribute("display","/member/myAlarm.jsp");
 		return "/main/index";

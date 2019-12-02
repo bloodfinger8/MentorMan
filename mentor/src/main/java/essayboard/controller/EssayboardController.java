@@ -366,11 +366,9 @@ public class EssayboardController {
 	 * @Author : TR, @Date : 2019. 11. 8.
 	 */
 	@RequestMapping(value = "essayboardDelete", method = RequestMethod.GET)
-	public String essayboardDelete(@RequestParam String seq, Model model) {
+	@ResponseBody
+	public void essayboardDelete(@RequestParam String seq) {
 		essayboardService.essayboardDelete(Integer.parseInt(seq));
-
-		model.addAttribute("display", "/essayboard/essayboardList.jsp");
-		return "/main/index";
 	}
 
 	   @RequestMapping(value = "essayboardScrap", method = RequestMethod.POST)
@@ -379,15 +377,12 @@ public class EssayboardController {
 			   					   @RequestParam int scrapFlag,
 			   					   HttpSession session) {
 
-		   System.out.println("essayScrap_es_seq : " + essayboardScrap_es_seq + " , scrapFlag : " + scrapFlag);
 
 		   memberDTO = (MemberDTO)session.getAttribute("memDTO");
 		   essayboardScrapDTO.setEssayboardScrap_es_seq(essayboardScrap_es_seq);
 		   essayboardScrapDTO.setEssayboardScrap_mem_email(memberDTO.getMember_email());
-		   System.out.println("essayboardScrapDTO ::: " + essayboardScrapDTO);
 		   //스크랩 선택
 		   if(scrapFlag == 1) {
-			   System.out.println("insert");
 			   essayboardService.essayboardScrapInsert(essayboardScrapDTO);
 		   }
 		   //스크랩 취소
@@ -416,7 +411,6 @@ public class EssayboardController {
 
 		   List<EssayboardDTO> list = essayboardService.getEssayboardAttention(memEmail);
 
-		   System.out.println("email : "+memEmail+" , list :::::: " + list);
 		   for (EssayboardDTO essayboardDTO : list) {
 	      	 int seq = essayboardDTO.getEssayboard_seq();
 	      	 Map<String, Object> scrapMap = new HashMap<String, Object>();

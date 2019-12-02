@@ -90,7 +90,7 @@
 													<c:out value='${fn:substring(list.essayboard_content.replaceAll("\\\<.*?\\\>|&nbsp;",""), 0, 190)}' />...
 												</c:when>
 												<c:otherwise>
-													<c:out value="${list.essayboard_content}"/>
+													<c:out value='${list.essayboard_content.replaceAll("\\\<.*?\\\>|&nbsp;","")}' />
 												</c:otherwise>
 											</c:choose>
 										</div>

@@ -141,4 +141,9 @@ public class MentorServiceImpl implements MentorService {
 		mentorDAO.mentorInfoModify(map);
 	}
 
+	@Override
+	public int getFollow(int mentor_seq) {
+		return mentorDAO.getFollow(mentor_seq);
+	}
+
 }

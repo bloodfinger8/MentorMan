@@ -291,6 +291,7 @@ public class MentorController {
 	 * @Author : yong
 	 * @Date : 2019. 11. 18.
 	 * @Method Name : mentorInfoView
+	 * 추가 : 양재우
 	 */
 	@RequestMapping(value = "mentorInfoView", method = RequestMethod.GET)
 	public String mentorInfoView(@RequestParam String mentors, @RequestParam(required = false, defaultValue = "1") String pg, Model model, HttpSession sesstion) {
@@ -298,9 +299,10 @@ public class MentorController {
 		MentorDTO mentorDTO = mentorService.getMentorInfomation(mentor_seq);
 		List<MentorDTO> essayList = mentorService.getMentorEssayList(mentor_seq);
 		List<ReviewDTO> reviewList = mentorService.getMentorReviewList(mentor_seq);
-		
+		System.out.println("mentor_seq :: " + mentor_seq);
 		int mentor_answer = mentorService.getAnswer(mentor_seq); // 답변수
 		int mentor_question = mentorService.getQuestion(mentor_seq);// 질문수
+		int mentor_follow = mentorService.getFollow(mentor_seq); //팔로워수
 		double questionPercent = (double)mentor_answer/(double)mentor_question;
 		String[] mentoringArray = mentorDTO.getMentoring_code().split(",");
 		Map<String, String[]> map = new HashMap<String, String[]>();
@@ -326,6 +328,7 @@ public class MentorController {
 			model.addAttribute("questionPercent", questionPercent);
 		}
 		model.addAttribute("mentor_answer",mentor_answer);
+		model.addAttribute("mentor_follow",mentor_follow);
 		model.addAttribute("mentor_seq", mentor_seq);
 		model.addAttribute("mentoringList", mentoringList);
 		model.addAttribute("mentorDTO", mentorDTO);
