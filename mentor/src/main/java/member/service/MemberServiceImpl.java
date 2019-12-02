@@ -242,18 +242,18 @@ public class MemberServiceImpl implements MemberService {
 	public int getTotalAlarm(String memEmail) {
 		return memberDAO.getTotalAlarm(memEmail);
 	}
-	
-	
+
+
 	@Override
 	public int mentor_headerNotification(int member_seq) {
 		return memberDAO.mentor_headerNotification(member_seq);
 	}
-	
+
 	@Override
 	public int mentee_headerNotification(int member_seq) {
 		return memberDAO.mentee_headerNotification(member_seq);
 	}
-	
+
 	@Override
 	public void mentor_headerCountModify(List<MentorDTO> list) {
 		memberDAO.mentor_headerCountModify(list);
@@ -264,4 +264,3 @@ public class MemberServiceImpl implements MemberService {
 		memberDAO.mentee_headerCountModify(list);
 	}
 }
-

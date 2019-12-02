@@ -68,7 +68,6 @@
 			type : 'POST',
 			dataType: 'text',
 			success : function(data) {
-				alert('add하러옴' + data);//0이 나온다
 				if(data == '0'){
 				}else{
 					$('#alarmCountSpan').addClass('bell-badge-danger bell-badge')
