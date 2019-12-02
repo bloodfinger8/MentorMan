@@ -12,12 +12,14 @@ $('#all').click(function(){
 		else
 			$('.check').prop('checked',false);
 });
-
-const toastTop = app.toast.create({
-	text : '항목을 선택하세요',
-	position : 'top',
-	closeTimeout : 2000,
-});
+toastr.options = {
+		  "progressBar": true,
+		  "positionClass": "toast-top-center",
+		  "timeOut": "2000",
+		  "hideEasing": "linear",
+		  "showMethod": "fadeIn",
+		  "hideMethod": "fadeOut"
+};
 
 // 글삭제
 $('.btn_apply_success').click(function(){
@@ -28,7 +30,7 @@ $('.btn_apply_success').click(function(){
 	});
 	console.log(check);
 	if(cnt==0)
-		toastTop.open();
+		toastr.warning("항목을선택하세요");
 	else{
 		if(confirm("정말로 승인하시겠습니까?")){
 			$.ajax({
@@ -38,6 +40,7 @@ $('.btn_apply_success').click(function(){
 				data : 'check='+check,
 				success : function(){
 					location.href="/mentor/adminmember/adminmentorApplyList";
+					toastr.success("멘토승인 완료");
 				}
 			});				
 		}

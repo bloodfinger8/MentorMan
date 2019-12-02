@@ -29,7 +29,7 @@
 			logout-success-url="/main/index"
 			invalidate-session="true" 
 		/>
-	 
+	 									<!-- 로그아웃시 세션을 해제시켜버리기때문에 main이아닌 loginForm으로간다 -->
 		<session-management invalid-session-url="/member/loginForm" session-authentication-error-url="/member/loginForm">
 			<concurrency-control max-sessions="1" expired-url="/member/loginForm" error-if-maximum-exceeded="true"/>
 		</session-management>

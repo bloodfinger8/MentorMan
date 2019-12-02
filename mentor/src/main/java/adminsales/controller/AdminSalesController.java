@@ -1,8 +1,9 @@
 package adminsales.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,11 +28,19 @@ public class AdminSalesController {
 		return "/admin/adminMain";
 	}
 	
-	@RequestMapping(value="adminsalesChart",method=RequestMethod.POST)
+	@RequestMapping(value="daySalesChart",method=RequestMethod.POST)
 	@ResponseBody
-	public JSONArray adminsalesChart() {
-		List<Map<String, String>> list = adminsalesService.getAdminsalesChart();
-		System.out.println(list);
+	public JSONArray daySalesChart() {
+		List<Map<String, String>> list = adminsalesService.getDaysalesChart();
+		
+		JSONArray jsonArray = JSONArray.fromObject(list);
+		return jsonArray;
+	}
+	
+	@RequestMapping(value="monthSalesChart",method=RequestMethod.POST)
+	@ResponseBody
+	public JSONArray monthSalesChart() {
+		List<Map<String, String>> list = adminsalesService.getMonthsalesChart();
 		JSONArray jsonArray = JSONArray.fromObject(list);
 		return jsonArray;
 	}
