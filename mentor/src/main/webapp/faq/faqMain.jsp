@@ -70,7 +70,7 @@
                 <p class="article-count">
                    <span class="notranslate">${catalog_count_7}</span> 항목들
                 </p>
-            </a><!-- /category -->
+            </a>
           </section><!-- /category-list -->
    		<footer class="center">
 			<p>©

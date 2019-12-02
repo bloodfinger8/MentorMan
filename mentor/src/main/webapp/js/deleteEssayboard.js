@@ -5,7 +5,17 @@ function essayDeleteCheck(seq) {
 		closeButton: true,
 		on: {
 			close: function() {
-				location.href='/mentor/essayboard/essayboardDelete?seq='+seq;
+				$.ajax({
+					type : 'get',
+					url : '/mentor/essayboard/essayboardDelete',
+					data : {'seq' : seq},
+					success : function(data){
+						location.href='/mentor/essayboard/essayboardList';
+					},
+					error : function(){
+						
+					}
+				});
 			}
 		}
 	});	
