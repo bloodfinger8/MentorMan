@@ -59,6 +59,8 @@ public interface MemberService {
 
 	public int getCountAlarm(String member_email);
 
+	public int getTotalAlarm(String memEmail);
+
 
 
 
