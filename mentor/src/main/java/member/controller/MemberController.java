@@ -266,7 +266,6 @@ public class MemberController {
 		followMap.put("mentorEmail" , mentorDTO.getMentor_email());
 
 		int follow = mentorService.getFollowCheck(followMap);
-		System.out.println(mentorDTO.getMentor_email());
 		model.addAttribute("follow" , follow);
 		model.addAttribute("memNicname" , memberDTO.getMember_nickname());
 		if(getEmail != mentorDTO.getMember_email()) {
@@ -323,9 +322,7 @@ public class MemberController {
 		memberDTO = memberService.setmemberpwd(map);
 		if (memberDTO != null) {
 			//인증 코드 생성
-			System.out.println("시작");
 			String auauthKey=mailService.mailSendWithUserKey(member_email, member_name);
-			System.out.println("auauthKey : " + auauthKey);
 
 			Cookie cookie = new Cookie("Cookie_Email", auauthKey);
 			cookie.setMaxAge(60 * 3);
@@ -432,7 +429,6 @@ public class MemberController {
 
 		//삭제한 후 alarm list
 		List<AlarmDTO> list = memberService.getAlarm(memEmail);
-		System.out.println("list ::" + list);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("list", list);
 		mav.setViewName("jsonView");
