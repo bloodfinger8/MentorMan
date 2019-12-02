@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import adminboard.bean.AdminnoticeboardDTO;
 import adminboard.dao.AdminboardDAO;
+import essayboard.bean.EssayboardDTO;
 import meetingboard.bean.MeetingboardDTO;
 
 /**
@@ -62,6 +63,16 @@ public class AdminboardServiceImpl implements AdminboardService{
 	public void adminmeetingboardDelete(Map<String, String[]> map) {
 		adminboardDAO.adminmeetingboardDelete(map);
 	}
-	
+
+	//에세이
+	@Override
+	public List<EssayboardDTO> getNewEssay(Map<String, Object> map) {
+		return adminboardDAO.getNewEssay(map);
+	}
+
+	@Override
+	public int getessayTotalA() {
+		return adminboardDAO.getessayTotalA();
+	}
 	
 }

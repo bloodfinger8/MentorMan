@@ -91,7 +91,6 @@ public class EssayboardServiceImpl implements EssayboardService {
 	@Override
 	public void essayboardScrapDelete(EssayboardScrapDTO essayboardScrapDTO) {
 		essayboardDAO.essayboardScrapDelete(essayboardScrapDTO);
-		System.out.println("essayboardScrapDTO.getEssayScrap_es_seq() : " + essayboardScrapDTO.getEssayboardScrap_es_seq());
 		essayboardDAO.essayboardScrapUpdate(essayboardScrapDTO.getEssayboardScrap_es_seq());
 	}
 

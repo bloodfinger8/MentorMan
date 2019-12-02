@@ -247,11 +247,12 @@
 	
 	<!-- 에세이  뷰 -->
 	<select id="getEssayboardView" parameterType="Int" resultType="essay">
-		SELECT 
+		SELECT
 		    essayboard_title,
 		    essayboard_content,
 		    essayboard_scrap,
-		    essayboard_hit
+		    essayboard_hit,
+		    essayboard_scrapFlag
 		FROM 
 		    essayboard
 		WHERE

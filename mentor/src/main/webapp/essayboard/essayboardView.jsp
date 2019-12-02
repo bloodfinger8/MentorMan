@@ -7,7 +7,7 @@
 		<div class="post-block-container">
 			<div class="mentor-post-detail-block">
 				<h1 class="mentor-post-title" style="display : flex">
-					${essayboardDTO.essayboard_title} 
+					${essayboardDTO.essayboard_title}
 					</h1>
 				<div class="trix-content">
 					${essayboardDTO.essayboard_content }
