@@ -51,6 +51,7 @@ $('#menteeUser_Save').on('click', function(){
 $('#menteeStudentInsert_btn').on('click', function(){
 	menteeStudent();
 });
+
 //학생 info 수정 버튼
 $('#menteeStudentModify_btn').on('click', function(){
 	menteeStudent();
@@ -78,6 +79,7 @@ function menteeStudent(){
 			type: 'post',
 			url: '/mentor/mentee/menteeStudentInput',
 			data: $('#menteeStudentProfile').serialize(),
+			cache: false,
 			success: function(data){
 				location.href='/mentor/mentee/menteeStudentProfile';
 			},
@@ -113,10 +115,12 @@ function menteeEmployee(){
 		$('#menteeEmployee_career_error').css('font-size','8pt');
 		$('#menteeEmployee_career').focus();
 	}else {
+		alert('직장인');
 		$.ajax({
 			type: 'post',
 			url: '/mentor/mentee/menteeEmployeeInput',
 			data: $('#menteeEmployee_profile').serialize(),
+			cache: false,
 			success: function(data){
 				location.href='/mentor/mentee/menteeEmployeeProfile';
 			},
@@ -157,6 +161,7 @@ $('#menteePassword_btn').on('click', function(){
 			data: 'currentPassword='+$('#currentPassword').val(),
 			dataType: 'text',
 			success: function(data){
+				alert(data);
 				if(data=="ok"){
 					$.ajax({
 						type: 'post',

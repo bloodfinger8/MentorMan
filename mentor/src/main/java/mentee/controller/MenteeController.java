@@ -142,8 +142,16 @@ public class MenteeController {
 	 */
 	@RequestMapping(value = "menteeStudentInput", method = RequestMethod.POST)
 	@ResponseBody
-	public void menteeStudentInput(@RequestParam Map<String, String> map, Model model) {
-		menteeService.menteeStudentInput(map);
+	public void menteeStudentInput(@RequestParam Map<String, String> map, Model model, HttpSession session) {
+			MemberDTO memberDTO = (MemberDTO) session.getAttribute("memDTO");
+			MenteeDTO mentee = menteeService.getStudentEmail(memberDTO.getMember_email());
+			if(mentee != null) {
+				map.put("mentee_email", mentee.getMenteeStudent_email());
+				menteeService.menteeStudentInput(map);
+			}else {
+				map.put("mentee_email", null);
+				menteeService.menteeStudentInput(map);
+			}
 	}
 	
 	/**
@@ -167,8 +175,16 @@ public class MenteeController {
 	 */
 	@RequestMapping(value = "menteeEmployeeInput", method = RequestMethod.POST)
 	@ResponseBody
-	public void menteeEmployeeInput(@RequestParam Map<String, String> map) {
-		menteeService.menteeEmployeeInput(map);
+	public void menteeEmployeeInput(@RequestParam Map<String, String> map, HttpSession session) {
+		MemberDTO memberDTO = (MemberDTO) session.getAttribute("memDTO");
+		MenteeDTO mentee = menteeService.getEmployeeEmail(memberDTO.getMember_email());
+		if(mentee != null) {
+			map.put("mentee_email", mentee.getMenteeEmployee_email());
+			menteeService.menteeEmployeeInput(map);
+		}else {
+			map.put("mentee_email", null);
+			menteeService.menteeEmployeeInput(map);
+		}
 	}
 	
 	/**
@@ -193,6 +209,7 @@ public class MenteeController {
 		MemberDTO memberEmail = (MemberDTO) session.getAttribute("memDTO");
 		MemberDTO memberDTO = menteeService.menteePasswordCheck(memberEmail.getMember_email());
 		
+		System.out.println(currentPassword+"--------"+memberDTO.getMember_pwd());
 		if(!(memberDTO.getMember_pwd().equals(currentPassword))) {
 			return "no";
 		}else {
