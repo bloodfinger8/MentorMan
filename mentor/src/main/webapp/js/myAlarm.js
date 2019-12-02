@@ -12,6 +12,8 @@ $(function(){
 			success : function(data) {
 				$('#inputAlarmList').empty();
 				
+//				location.reload();
+				
 				$.each(data.list, function(key, value) {
 					var str = `<div class="col-100 tablet-100 desktop-100">
 							<div class="card mentor-post-card mentor_post_6624">

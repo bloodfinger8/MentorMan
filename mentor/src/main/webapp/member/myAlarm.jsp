@@ -25,7 +25,7 @@
 							</div>
 							<div class="card-content-padding">
 								<span class="mentor-post-detail">${list.myAlarm_content} </span>
-								<i class="far fa-trash-alt alarmGarbage" id="${list.myAlarm_seq}" style="float:right;"></i>
+								<i class="far fa-trash-alt alarmGarbage" id="${list.myAlarm_seq}" style="float:right; cursor: pointer;"></i>
 							</div>
 						</div>
 					</div>
