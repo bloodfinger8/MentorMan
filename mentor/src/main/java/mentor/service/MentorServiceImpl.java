@@ -136,4 +136,9 @@ public class MentorServiceImpl implements MentorService {
 		return mentorDAO.getQuestion(mentor_seq);
 	}
 
+	@Override
+	public void mentorInfoModify(Map<String, String> map) {
+		mentorDAO.mentorInfoModify(map);
+	}
+
 }

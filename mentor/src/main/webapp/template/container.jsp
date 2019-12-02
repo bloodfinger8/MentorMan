@@ -207,7 +207,7 @@
 
 	<%-- 명예 멘토 영역 시작 --%>
 	<div class="mentor-block">
-		<div class="block-title strong-title">명예 멘토 <a type="external" href="">더 보기</a>
+		<div class="block-title strong-title">명예 멘토 <a type="external" href="/mentor/mentor/mentorfindForm?pg=1&bestFlag=1">더 보기</a>
 		</div>
 		<div class="row no-gap">
 			<c:forEach var="honorMentor" items="${honorMentorList}">

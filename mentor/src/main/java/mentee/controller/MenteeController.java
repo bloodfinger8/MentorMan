@@ -90,7 +90,6 @@ public class MenteeController {
 				filemake.mkdirs();
 			}
 			File file = new File(filePath, fileName);
-			System.out.println(file);
 			try {
 					FileCopyUtils.copy(member_profile.getInputStream(), new FileOutputStream(file));				
 			} catch (IOException e) {
@@ -107,7 +106,6 @@ public class MenteeController {
 				filemake.mkdirs();
 			}
 			File file = new File(filePath, fileName);
-			System.out.println(file);
 			try {
 					FileCopyUtils.copy(member_profile.getInputStream(), new FileOutputStream(file));				
 			} catch (IOException e) {
@@ -144,8 +142,16 @@ public class MenteeController {
 	 */
 	@RequestMapping(value = "menteeStudentInput", method = RequestMethod.POST)
 	@ResponseBody
-	public void menteeStudentInput(@RequestParam Map<String, String> map, Model model) {
-		menteeService.menteeStudentInput(map);
+	public void menteeStudentInput(@RequestParam Map<String, String> map, Model model, HttpSession session) {
+			MemberDTO memberDTO = (MemberDTO) session.getAttribute("memDTO");
+			MenteeDTO mentee = menteeService.getStudentEmail(memberDTO.getMember_email());
+			if(mentee != null) {
+				map.put("mentee_email", mentee.getMenteeStudent_email());
+				menteeService.menteeStudentInput(map);
+			}else {
+				map.put("mentee_email", null);
+				menteeService.menteeStudentInput(map);
+			}
 	}
 	
 	/**
@@ -169,8 +175,16 @@ public class MenteeController {
 	 */
 	@RequestMapping(value = "menteeEmployeeInput", method = RequestMethod.POST)
 	@ResponseBody
-	public void menteeEmployeeInput(@RequestParam Map<String, String> map) {
-		menteeService.menteeEmployeeInput(map);
+	public void menteeEmployeeInput(@RequestParam Map<String, String> map, HttpSession session) {
+		MemberDTO memberDTO = (MemberDTO) session.getAttribute("memDTO");
+		MenteeDTO mentee = menteeService.getEmployeeEmail(memberDTO.getMember_email());
+		if(mentee != null) {
+			map.put("mentee_email", mentee.getMenteeEmployee_email());
+			menteeService.menteeEmployeeInput(map);
+		}else {
+			map.put("mentee_email", null);
+			menteeService.menteeEmployeeInput(map);
+		}
 	}
 	
 	/**
@@ -178,7 +192,9 @@ public class MenteeController {
 	 * @Author : kujun95, @Date : 2019. 11. 12.
 	 */
 	@RequestMapping(value = "menteePassword", method = RequestMethod.GET)
-	public String menteePassword(Model model) {
+	public String menteePassword(Model model, HttpSession session) {
+		MemberDTO memberDTO = (MemberDTO) session.getAttribute("memDTO");
+		model.addAttribute("memberDTO", memberDTO);
 		model.addAttribute("display", "/mentee/menteeUserForm.jsp");
 		model.addAttribute("display2","/mentee/menteePassword.jsp");
 		return "/main/index";
@@ -193,6 +209,7 @@ public class MenteeController {
 		MemberDTO memberEmail = (MemberDTO) session.getAttribute("memDTO");
 		MemberDTO memberDTO = menteeService.menteePasswordCheck(memberEmail.getMember_email());
 		
+		System.out.println(currentPassword+"--------"+memberDTO.getMember_pwd());
 		if(!(memberDTO.getMember_pwd().equals(currentPassword))) {
 			return "no";
 		}else {
@@ -246,7 +263,7 @@ public class MenteeController {
 		orderHistoryPaging.setPageSize(5);
 		orderHistoryPaging.setTotalA(totalOrderHistory);
 		orderHistoryPaging.makePagingHTML();
-		
+		model.addAttribute("memberDTO", memDTO);
 		model.addAttribute("orderHistoryPaging", orderHistoryPaging);
 		model.addAttribute("orderHistoryList", orderHistoryList);
 		model.addAttribute("display","/mentee/menteeUserForm.jsp");
@@ -325,5 +342,30 @@ public class MenteeController {
 		int mentor_seq = Integer.parseInt(mentors);
 		meetingboardService.meetingReviewDelete(review_seq);
 		return "redirect:/mentor/mentorInfoView?mentors=" + mentor_seq;
+	}
+	
+	@RequestMapping(value = "memberDelete", method = RequestMethod.GET)
+	public String memberDelete(Model model, HttpSession sesstion) {
+		model.addAttribute("display", "/mentee/menteeUserForm.jsp");
+		model.addAttribute("display2","/mentee/memberDelete.jsp");
+		return "/main/index";
+	}
+	@RequestMapping(value = "memberPasswordCheck", method = RequestMethod.POST)
+	@ResponseBody
+	public String memberPasswordCheck(@RequestParam String currentPassword, HttpSession session) {
+		MemberDTO user_info = (MemberDTO) session.getAttribute("memDTO");
+		
+		if(user_info.getMember_pwd().equals(currentPassword)) {
+			return "right";
+		}else {
+			return "wrong";
+		}
+	}
+	
+	@RequestMapping(value = "memberDeleteSuccess", method = RequestMethod.POST)
+	@ResponseBody
+	public void memberDeleteSuccess(HttpSession session) {
+		MemberDTO user_info = (MemberDTO) session.getAttribute("memDTO");
+		menteeService.memberDeleteSuccess(user_info.getMember_seq());
 	}
 }

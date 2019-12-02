@@ -20,7 +20,7 @@
             		</a>
 					<a id="essay_modify_btn" style="width: 100px; float: right;" class="button" type="external" href="/mentor/essayboard/essayboardModifyForm?seq=${seq }&pg=${pg}">
 	            		<i class="fas fa-pencil-alt"></i>
-	            			글수정
+	            		글수정
 					</a>
 				</div>
 				</c:if>
