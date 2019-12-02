@@ -125,7 +125,6 @@ public class MentorDAOMybatis implements MentorDAO {
 
 	@Override
 	public List<MentorDTO> getHonorMentor(Map<String, Object> map) {
-		System.out.println("map = " + map.toString());
 		return sqlSession.selectList("mentorSQL.getHonorMentor", map);
 	}
 
@@ -142,6 +141,11 @@ public class MentorDAOMybatis implements MentorDAO {
 	@Override
 	public void mentorInfoModify(Map<String, String> map) {
 		sqlSession.update("mentorSQL.mentorInfoModify",map);
+	}
+
+	@Override
+	public int getFollow(int mentor_seq) {
+		return sqlSession.selectOne("mentorSQL.getFollow" , mentor_seq);
 	}
 
 }

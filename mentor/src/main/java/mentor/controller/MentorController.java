@@ -115,24 +115,15 @@ public class MentorController {
 		int pg = (Integer) jsonData.get("pg");
 		// 멘토, 명예멘토
 		int flag = (Integer) jsonData.get("flag");
-		System.out.println("joblist = " +  joblist.toString());
-		System.out.println("pg = " +  pg);
-		System.out.println("flag = " + flag);
 		// job_code 유무 체크
 		String check = null;
 		
 		for (String jobs : joblist) {
-			System.out.println("list = " + jobs.toString());
 			if(!jobs.equals(null)) {
 				check = "success";
 			}
 		}
 		
-		System.out.println("check = " + check);
-//		System.out.println("check = " + check);
-//		System.out.println("pg = " + pg);
-//		System.out.println("flag = " + flag);
-//		System.out.println("check = " + check);
 		memberDTO = (MemberDTO)session.getAttribute("memDTO");
 		Map<String, Object> map = new HashMap<String, Object>();
 //		
@@ -178,7 +169,6 @@ public class MentorController {
 		mentorfindPaging.setTotalA(jobCodeTotal);
 		mentorfindPaging.makePagingHTML();
 		
-		System.out.println("listsize = " + list.size());
 		if(memberDTO != null) {
 			modelAndView.addObject("memberDTO", memberDTO);
 		}
@@ -254,7 +244,7 @@ public class MentorController {
 	 * @Author : kujun95, @Date : 2019. 11. 15.
 	 */
 	@RequestMapping(value = "mentorQuestionsForm", method = RequestMethod.GET)
-	public String mentorQuestionsForm(@RequestParam(required = false, defaultValue = "1") int seq, @RequestParam(required = false, defaultValue = "1") int pg, @RequestParam(required = false, defaultValue = "1") int qsseq, Model model, HttpSession session) {
+	public String mentorQuestionsForm(@RequestParam(required = false, defaultValue = "1") int seq, @RequestParam(required = false, defaultValue = "1") int pg, @RequestParam(required = false, defaultValue = "0") int qsseq, Model model, HttpSession session) {
 		//멘토정보 가져오기
 		MentorDTO questionDTO =  mentorService.questionModifyForm(qsseq);
 		MentorDTO mentorDTO = mentorService.getMentor_info(seq);
@@ -269,7 +259,6 @@ public class MentorController {
 		Map<String, String> followMap = new HashMap<String, String>();
 		followMap.put("memEmail" , memberDTO.getMember_email());
 		followMap.put("mentorEmail" , mentorDTO.getMentor_email());
-		
 		//팔로우 찾기
 		int follow = mentorService.getFollowCheck(followMap);
 		model.addAttribute("memNickname" , memberDTO.getMember_nickname());
@@ -302,6 +291,7 @@ public class MentorController {
 	 * @Author : yong
 	 * @Date : 2019. 11. 18.
 	 * @Method Name : mentorInfoView
+	 * 추가 : 양재우
 	 */
 	@RequestMapping(value = "mentorInfoView", method = RequestMethod.GET)
 	public String mentorInfoView(@RequestParam String mentors, @RequestParam(required = false, defaultValue = "1") String pg, Model model, HttpSession sesstion) {
@@ -309,11 +299,11 @@ public class MentorController {
 		MentorDTO mentorDTO = mentorService.getMentorInfomation(mentor_seq);
 		List<MentorDTO> essayList = mentorService.getMentorEssayList(mentor_seq);
 		List<ReviewDTO> reviewList = mentorService.getMentorReviewList(mentor_seq);
-		
+		System.out.println("mentor_seq :: " + mentor_seq);
 		int mentor_answer = mentorService.getAnswer(mentor_seq); // 답변수
 		int mentor_question = mentorService.getQuestion(mentor_seq);// 질문수
+		int mentor_follow = mentorService.getFollow(mentor_seq); //팔로워수
 		double questionPercent = (double)mentor_answer/(double)mentor_question;
-		//System.out.println(mentor_answer+"-----"+mentor_question);
 		String[] mentoringArray = mentorDTO.getMentoring_code().split(",");
 		Map<String, String[]> map = new HashMap<String, String[]>();
 		map.put("mentoring_code", mentoringArray);
@@ -338,6 +328,7 @@ public class MentorController {
 			model.addAttribute("questionPercent", questionPercent);
 		}
 		model.addAttribute("mentor_answer",mentor_answer);
+		model.addAttribute("mentor_follow",mentor_follow);
 		model.addAttribute("mentor_seq", mentor_seq);
 		model.addAttribute("mentoringList", mentoringList);
 		model.addAttribute("mentorDTO", mentorDTO);
@@ -355,7 +346,6 @@ public class MentorController {
 	@RequestMapping(value = "questionModify", method = RequestMethod.POST)
 	@ResponseBody
 	public String questionModify(@RequestParam Map <String, String> map) {
-		System.out.println(map);
 		int success = mentorService.questionModify(map);
 		if(success == 0) {
 			return "error";
@@ -381,7 +371,6 @@ public class MentorController {
         mentorFollowDTO.setFollower_email(follower_email);
         mentorFollowDTO.setFollowed_email(followed_email);
        
-        System.out.println("mentorFollowDTO : " + mentorFollowDTO);
         if(follow >= 1) {
         	mentorService.mentorFollowDelete(mentorFollowDTO);
         	follow=0;
@@ -401,7 +390,6 @@ public class MentorController {
 		map.put("memEmail" , memberDTO.getMember_email());
 		map.put("mentor_flag", 1);
 		//승인된 멘토 이면서 나를 팔로우한 팔로워 list
-		System.out.println("map :::: " + map);
 		List<MentorDTO> list = mentorService.getMentorAttentionList(map);
 		
 		model.addAttribute("list", list);

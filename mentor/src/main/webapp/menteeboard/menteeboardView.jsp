@@ -77,7 +77,7 @@
 										<img width="150" height="150" src="../image/profile.jpg">
 									</c:if> 
 								</div>
-								<div class="mentee-name">${list.menteeboardReply_nickname}</div>
+								<div class="mentee-name">${list.member_nickname}</div>
 								<div class="sent-date">${list.menteeboardReply_logtime}</div>
 							</div>
 							<div class="modifyReply_hide_${list.menteeboardReply_seq}">
