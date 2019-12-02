@@ -228,12 +228,6 @@ $(function(){
 					let receiverEmail = $('#followed_email').val();     //팔로우 당사자 이메일
 					let member_seq = $('#mentor_seq').val(); // seq
 					//alert(memNickname+',' + nickname +',' + receiverEmail +',' + seq);
-					//socket에 보내자
-					if(socket) {
-						let socketMsg = "follow," + memNickname +","+nickname +","+ receiverEmail + "," +member_seq;
-						console.log("msgmsg :: " + socketMsg );
-						socket.send(socketMsg);
-					}
 					
 					var AlarmData = {
 							"myAlarm_receiverEmail" : receiverEmail,
@@ -250,7 +244,12 @@ $(function(){
 						dataType : 'text',
 						success : function(data){
 							//alert(data);
-							
+							//socket에 보내자
+							if(socket) {
+								let socketMsg = "follow," + memNickname +","+nickname +","+ receiverEmail + "," +member_seq;
+								console.log("msgmsg :: " + socketMsg );
+								socket.send(socketMsg);
+							}
 						},
 						error : function(err){
 							console.log(err);

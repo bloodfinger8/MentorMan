@@ -243,6 +243,11 @@ public class MemberServiceImpl implements MemberService {
 		return memberDAO.getTotalAlarm(memEmail);
 	}
 
+	@Override
+	public List<AlarmDTO> getUnAlarm(String memEmail) {
+		return memberDAO.getUnAlarm(memEmail);
+	}
+
 
 }
 

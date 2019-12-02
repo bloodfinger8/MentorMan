@@ -64,6 +64,8 @@ public interface MemberDAO {
 
 	public int getTotalAlarm(String memEmail);
 
+	public List<AlarmDTO> getUnAlarm(String memEmail);
+
 
 
 

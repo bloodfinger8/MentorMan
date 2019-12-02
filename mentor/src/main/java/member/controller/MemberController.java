@@ -261,6 +261,7 @@ public class MemberController {
 		map.put("question_seq", qsseq+"");
 		map.put("member_flag", member_flag+"");
 		MentorDTO mentorDTO = memberService.getMentor_info(map);
+		System.out.println("준혁이 dto : " + mentorDTO);
 		Map<String, String> followMap = new HashMap<String, String>();
 		followMap.put("memEmail" , memberDTO.getMember_email());
 		followMap.put("mentorEmail" , mentorDTO.getMentor_email());
@@ -405,13 +406,18 @@ public class MemberController {
 
 		MemberDTO memberDTO = (MemberDTO) session.getAttribute("memDTO");
 		String memEmail = memberDTO.getMember_email();
+		
+		int newSize = memberService.getCountAlarm(memEmail);
+		
 		//알림 읽음 표시
 		memberService.checkSubscribe(memEmail);
-
+		
 		List<AlarmDTO> list = memberService.getAlarm(memEmail);
+		
 		int getTotalAlarm = memberService.getTotalAlarm(memEmail);
 		model.addAttribute("getTotalAlarm" , getTotalAlarm);
 		model.addAttribute("list" , list);
+		model.addAttribute("newSize", newSize);
 		model.addAttribute("display","/member/myAlarm.jsp");
 		return "/main/index";
 	}

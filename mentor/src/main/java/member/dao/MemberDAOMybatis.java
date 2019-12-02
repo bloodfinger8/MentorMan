@@ -202,5 +202,10 @@ public class MemberDAOMybatis implements MemberDAO {
 		return sqlSession.selectOne("memberSQL.getTotalAlarm" , memEmail );
 	}
 
+	@Override
+	public List<AlarmDTO> getUnAlarm(String memEmail) {
+		return sqlSession.selectList("memberSQL.getUnAlarm" , memEmail );
+	}
+
 
 }

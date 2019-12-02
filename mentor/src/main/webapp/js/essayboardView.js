@@ -16,7 +16,7 @@ $(function(){
 //스크랩 클릭
 $('#scrapDiv').on('click' , function(){
 	var scrapTag = $(this).children().first();
-	
+	alert(scrapTag.attr('tagName'));
 	if(scrapTag.hasClass('far')){
 		scrapTag.addClass('bookmarked fas');
 		scrapTag.removeClass('far');

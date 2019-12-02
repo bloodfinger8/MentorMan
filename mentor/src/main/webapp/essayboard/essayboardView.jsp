@@ -100,3 +100,4 @@
 	</div>
 </div>
 <script src="../js/deleteEssayboard.js"></script>
+<script src="../js/essayboardView.js"></script>

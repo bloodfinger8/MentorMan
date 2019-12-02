@@ -198,10 +198,10 @@
 	</update>
 
   	<select id="getAlarm" parameterType="String" resultType="alarm">
-  		select * from myAlarm where myAlarm_receiverEmail = #{memEmail}
+  		select * from myAlarm where myAlarm_receiverEmail = #{memEmail} 
   							  order by myAlarm_logtime desc
   	</select>
-
+	
   	<update id="checkSubscribe" parameterType="String">
   		update myAlarm set myAlarm_subscribeFlag = 1 where myAlarm_receiverEmail = #{memEmail}
   	</update>
