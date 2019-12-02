@@ -7,12 +7,12 @@
 		<div class="post-block-container">
 			<div class="mentor-post-detail-block">
 				<h1 class="mentor-post-title" style="display : flex">
-					${essayboardDTO.essayboard_title}
-					</h1>
+					${essayboardDTO.essayboard_title} 
+				</h1>
 				<div class="trix-content">
 					${essayboardDTO.essayboard_content }
 				</div>
-				<c:if test="${memSeq == member_seq}">
+				<c:if test="${memDTO.member_seq == member_seq || memDTO.member_nickname == 'admin'}">
 				<div style="display: inline-block; padding-top: 30px;">
 					<a id="essay_delete_btn" style="width: 100px; float: right;" class="button" type="external" onclick="essayDeleteCheck('${seq}')">
             			<i class="fas fa-pencil-alt"></i>
@@ -20,7 +20,7 @@
             		</a>
 					<a id="essay_modify_btn" style="width: 100px; float: right;" class="button" type="external" href="/mentor/essayboard/essayboardModifyForm?seq=${seq }&pg=${pg}">
 	            		<i class="fas fa-pencil-alt"></i>
-	            			글수정
+	            		글수정
 					</a>
 				</div>
 				</c:if>
