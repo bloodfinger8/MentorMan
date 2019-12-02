@@ -3,7 +3,6 @@ package mentor.service;
 import java.util.List;
 import java.util.Map;
 
-import essayboard.bean.EssayboardDTO;
 import meetingboard.bean.ReviewDTO;
 import mentor.bean.MentorDTO;
 import mentor.bean.MentorFollowDTO;
@@ -13,7 +12,7 @@ public interface MentorService {
 	public void mentorapplyWrite(Map<String, String> map);
 
 	public MentorDTO getEmail(String member_email);
-	
+
 	public List<MentorDTO> getMentorList(Map<String, String> map);
 
 	public int getTotalA(int mentor_flag);
@@ -50,7 +49,7 @@ public interface MentorService {
 
 	public List<MentorDTO> getMentor(Map<String, Object> map);
 
-	public int getMemberCount(int mentorFlag);	
+	public int getMemberCount(int mentorFlag);
 
 	public List<MentorDTO> getHonorMentor(Map<String, Object> map);
 
@@ -58,7 +57,6 @@ public interface MentorService {
 
 	public int getQuestion(int mentor_seq);
 
-
-
+	public void mentorInfoModify(Map<String, String> map);
 
 }

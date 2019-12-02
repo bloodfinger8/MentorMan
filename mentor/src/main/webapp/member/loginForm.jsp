@@ -1,74 +1,61 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="sec"
-   uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
-<div class="page navbar-fixed devise sessions new"
-   data-name="sessions-new">
-   <div class="page-content">
-      <div class="content-wrapper">
-         <h1 align="center">로그인</h1>
-         <div class="block inset social-block">
-            <a class="button button-big button-fill bg-naver-color"
-               type="external" href="${naverUrl}">네이버 아이디로 로그인</a> <a
-               class="button button-big button-fill bg-kakao-color col"
-               type="external" href="${kakaoUrl}">카카오 아이디로 로그인</a>
-         </div>
-         <div class="block inset login-block">
-            <input type="hidden" id="flag" value="${flag}">
-            <form class="simple_form new_user" id="memberLoginForm"
-               name="memberLoginForm" action="<c:url value="/member/login"/>"
-               method="post">
-               <div class="signup-or-separator">
-                  <span class="signup-or-separator--text">또는</span>
-                  <hr>
-               </div>
-               <div class="list form-list no-hairlines no-margin-top">
-                  <ul>
-                     <li class="item-content item-input">
-                        <div class="item-inner">
-                           <div class="item-input-wrap">
-                              <input autocapitalize="off" autocomplete="email"
-                                 class="string email required" placeholder="이메일 주소"
-                                 type="email" name="member_email" id="member_email" />
-                              <div class="login-member-email-Div"></div>
-                           </div>
-                        </div>
-                     </li>
-                     <li class="item-content item-input">
-                        <div class="item-inner">
-                           <div class="item-input-wrap">
-                              <input required="required" class="password required"
-                                 placeholder="비밀번호" type="password" name="member_pwd"
-                                 id="member_pwd" />
-                              <div class="login-member-pwd-Div"></div>
-                           </div>
-                        </div>
-                     </li>
-                  </ul>
-               </div>
-               <div class="login-Div"></div>
-               <div class="block-footer forgot-password text-align-right">
-                  <input type="checkbox" id="cheboxid" name="cheboxid" value=""
-                     data-check="check" style="position: absolute; left: 16px;">
-                  <div style="position: absolute; left: 32px;">이메일 저장</div>
-                  <a class="color-gray" type="external" href="../member/setpwdForm">비밀번호를
-                     잊으셨나요? </a>
-               </div>
-               <input name="${_csrf.parameterName}" type="hidden"
-                  value="${_csrf.token}" /> <input type="button" id="loginBtn"
-                  value="로그인"
-                  class="btn button button-big button-fill submit-button"
-                  data-disable-with="요청중..." />
-            </form>
-         </div>
-         <div class="block inset text-align-center">
-            <a class="color-gray" type="external" href="../member/writeForm">
-               계정이 없으세요? 회원가입 </a>
-         </div>
-      </div>
-   </div>
+<div class="page navbar-fixed devise sessions new" data-name="sessions-new">
+	<div class="page-content">
+		<div class="content-wrapper">
+			<h1 align="center">로그인</h1>
+			<div class="block inset social-block">
+				<a class="button button-big button-fill bg-naver-color" type="external" href="${naverUrl}">네이버 아이디로 로그인</a>
+				<a class="button button-big button-fill bg-kakao-color col" type="external" href="${kakaoUrl}">카카오 아이디로 로그인</a>
+			</div>
+			<div class="block inset login-block">
+				<input type="hidden" id="flag" value="${flag}">
+				<form class="simple_form new_user" id="memberLoginForm"
+					name="memberLoginForm" action="<c:url value="/member/login"/>" method="post">
+					<div class="signup-or-separator">
+						<span class="signup-or-separator--text">또는</span>
+						<hr>
+					</div>
+					<div class="list form-list no-hairlines no-margin-top">
+						<ul>
+							<li class="item-content item-input">
+								<div class="item-inner">
+									<div class="item-input-wrap">
+										<input autocapitalize="off" autocomplete="email" class="string email required" placeholder="이메일 주소" type="email" name="member_email" id="member_email" />
+										<div class="login-member-email-Div"></div>
+									</div>
+								</div>
+							</li>
+							<li class="item-content item-input">
+								<div class="item-inner">
+									<div class="item-input-wrap">
+										<input required="required" class="password required" placeholder="비밀번호" type="password" name="member_pwd" id="member_pwd" />
+										<div class="login-member-pwd-Div"></div>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<div class="login-Div"></div>
+					<div class="block-footer forgot-password text-align-right">
+						<input type="checkbox" id="cheboxid" name="cheboxid" value="" data-check="check" style="position: absolute; left: 16px;">
+						<div style="position: absolute; left: 32px;">이메일 저장</div>
+						<a class="color-gray" type="external" href="../member/setpwdForm">비밀번호를 잊으셨나요? </a>
+					</div>
+					<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}" />
+					<input type="button" id="loginBtn" value="로그인"	class="btn button button-big button-fill submit-button" data-disable-with="요청중..." />
+				</form>
+			</div>
+			<div class="block inset text-align-center">
+				<a class="color-gray" type="external" href="../member/writeForm">
+					계정이 없으세요? 회원가입 </a>
+			</div>
+		</div>
+	</div>
+
 </div>
 <script type="text/javascript">
 /* Email 저장을 눌렀을 JavaScript 쿠키 세팅*/
@@ -79,7 +66,7 @@ function setCookie(cookieName, value, exdays){
   var cookieValue = escape(value) + ((exdays==null) ? "" : "; expires=" + exdate.toGMTString());
   document.cookie = cookieName + "=" + cookieValue;
 }
-//Cookie Delete 
+//Cookie Delete
 function deleteCookie(cookieName){
   var expireDate = new Date();
   expireDate.setDate(expireDate.getDate() - 1);
@@ -124,7 +111,6 @@ $(document).ready(function() {
       var jCont = '';
       var email = $('#member_email').val();
       var pwd = $('#member_pwd').val();
-      
       if (email.length == 0) {
          jCont = '<div class="msg_error">이메일을 입력해주세요.</div>';
          $('.login-member-email-Div').css('color', 'tomato').css('font-size','9pt').html(jCont);
@@ -173,6 +159,16 @@ if('${ERRORMSG}' == '1') {
            text: '이미 로그인 중입니다.',
             position: 'top',
             closeButton: true
+
+       });
+       toastTop.open();
+ 	});
+} else if('${status}' != 'true') {
+ 	document.addEventListener("DOMContentLoaded", function(event) {
+    	var toastTop = app.toast.create({
+        	text: '먼저 로그인 해주세요.',
+         	position: 'top',
+         	closeButton: true
        });
        toastTop.open();
     });

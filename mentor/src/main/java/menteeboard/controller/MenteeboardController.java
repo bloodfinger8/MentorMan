@@ -127,13 +127,8 @@ public class MenteeboardController {
 	@ResponseBody
 	public void boardWrite(@RequestParam Map<String, String> map,
 							HttpSession session) {
-		
 		memberDTO = (MemberDTO)session.getAttribute("memDTO"); 
-		
-		map.put("nickname", memberDTO.getMember_nickname());
 		map.put("email", memberDTO.getMember_email());
-		map.put("profile" , "");
-		System.out.println("map = " + map);
 		menteeboardService.menteeboardWrite(map);
 	}
 	
@@ -247,7 +242,7 @@ public class MenteeboardController {
 		mav.addObject("menteeboardPaging" , menteeboardPaging);
 		mav.addObject("list" , list);
 		mav.addObject("memEmail" , memberDTO.getMember_email());
-		mav.addObject("memNicname" , memberDTO.getMember_nickname());
+		mav.addObject("memNickname" , memberDTO.getMember_nickname());
 		mav.addObject("heart" , heart);
 		mav.addObject("seq" , Integer.parseInt(seq));
 		mav.addObject("pg" , Integer.parseInt(pg));

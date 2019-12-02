@@ -38,13 +38,6 @@ public interface EssayboardService {
 	
 	// 에세이 글 삭제
 	public void essayboardDelete(int seq);
-
-	// 에세이 보드 조회수
-	public void essayboardHit(int seq);
-	
-	// 에세이 보드 조회수 출력
-	public int getessayboardHit(int seq);
-	
 	
     /**
      * 
@@ -67,6 +60,8 @@ public interface EssayboardService {
 	
 	// 추천 에세이 총 글 수
 	public int getRecommendTotal();
+
+	public List<EssayboardDTO> getBestEssay(Map<String, Object> essayMap);
 	
 	
 }

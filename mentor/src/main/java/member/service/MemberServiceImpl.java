@@ -12,11 +12,10 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import member.bean.AlarmDTO;
 import member.bean.MemberDTO;
 import member.dao.MemberDAO;
-
 import member.handler.MailHandler;
-import mentee.bean.MenteeDTO;
 import mentor.bean.MentorDTO;
 /**
  * @Title : 회원가입 Service.
@@ -215,4 +214,30 @@ public class MemberServiceImpl implements MemberService {
 		memberDAO.answerModify(map);
 	}
 
+	@Override
+	public List<AlarmDTO> getAlarm(String memEmail) {
+		return memberDAO.getAlarm(memEmail);
+	}
+	@Override
+	public void checkSubscribe(String memEmail) {
+		memberDAO.checkSubscribe(memEmail);
+	}
+
+	@Override
+	public void saveAlarm(Map<String, String> map) {
+		memberDAO.saveAlarm(map);
+	}
+
+	@Override
+	public void deleteAlarm(int seq) {
+		memberDAO.deleteAlarm(seq);
+	}
+
+	@Override
+	public int getCountAlarm(String member_email) {
+		return memberDAO.getCountAlarm(member_email);
+	}
+
+
 }
+

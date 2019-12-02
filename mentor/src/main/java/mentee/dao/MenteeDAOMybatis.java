@@ -68,5 +68,9 @@ public class MenteeDAOMybatis implements MenteeDAO {
 	public MemberDTO getNickname(String member_nickname) {
 		return sqlSession.selectOne("menteeSQL.getNickname", member_nickname);
 	}
-
+	
+	@Override
+	public void memberDeleteSuccess(int member_seq) {
+		sqlSession.delete("menteeSQL.memberDeleteSuccess", member_seq);
+	}
 }

@@ -104,9 +104,15 @@ $(document).ready(function() {
 								'<div class="block mentee-detail-block thanks-note-card" hidden="" '+
 									'style="display: block;">'+
 									'<div class="mentee-info">'+
-										'<div class="mentee-image img-circle">'+
-											'<img src="https://www.itdaa.net/rails/active_storage/representations/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBcmZCIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--f0d5c09d42f655ec75e2351b3a921a3266a435e5/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MY21WemFYcGxTU0lOTVRBd2VERXdNQ0VHT2daRlZEb1FZWFYwYjE5dmNtbGxiblJVIiwiZXhwIjpudWxsLCJwdXIiOiJ2YXJpYXRpb24ifX0=--80976855d44dd57bc27b6da84ad9dae42a7e7a2d/profile.jpg">' +
-										'</div>'+
+										'<div class="mentee-image img-circle">';
+										if(value.menteeboardRelpy_profile != 'profile.jpg'){
+											str += '<img width="150" height="150" src="../storage/'+ value.menteeboardReply_email +'/'+value.menteeboardReply_profile+'">';
+										}
+										
+										if(value.menteeboardRelpy_profile == 'profile.jpg'){
+											str +='<img width="150" height="150" src="../image/profile.jpg">';
+										}
+										str += '</div>'+
 										'<div class="mentee-name">'+ value.menteeboardReply_nickname +
 										'<div class="sent-date">'+value.menteeboardReply_logtime+'</div>'+
 									'</div>' +
@@ -167,10 +173,15 @@ $(document).ready(function() {
 						'<div class="block mentee-detail-block thanks-note-card" hidden="" '+
 							'style="display: block;">'+
 							'<div class="mentee-info">'+
-								'<div class="mentee-image img-circle">'+
-									'<img src="https://www.itdaa.net/rails/active_storage/representations/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBcmZCIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--f0d5c09d42f655ec75e2351b3a921a3266a435e5/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MY21WemFYcGxTU0lOTVRBd2VERXdNQ0VHT2daRlZEb1FZWFYwYjE5dmNtbGxiblJVIiwiZXhwIjpudWxsLCJwdXIiOiJ2YXJpYXRpb24ifX0=--80976855d44dd57bc27b6da84ad9dae42a7e7a2d/profile.jpg">' +
-								'</div>'+
-								'<div class="mentee-name">'+ value.menteeboardReply_nickname +','+value.menteeboardReply_seq+'</div>' +
+							'<div class="mentee-image img-circle">';
+								if(value.menteeboardRelpy_profile != 'profile.jpg'){
+									str += '<img width="150" height="150" src="../storage/'+ value.menteeboardReply_email +'/'+value.menteeboardReply_profile+'">';
+								}
+								if(value.menteeboardRelpy_profile == 'profile.jpg'){
+									str +='<img width="150" height="150" src="../image/profile.jpg">';
+								}
+								str +='</div>'+
+								'<div class="mentee-name">'+ value.menteeboardReply_nickname +'</div>' +
 								'<div class="sent-date">'+value.menteeboardReply_logtime+'</div>'+
 							'</div>' +
 							'<div class="modifyReply_hide_'+value.menteeboardReply_seq +'">'+
@@ -221,10 +232,15 @@ $(document).ready(function() {
 						'<div class="block mentee-detail-block thanks-note-card" hidden="" '+
 							'style="display: block;">'+
 							'<div class="mentee-info">'+
-								'<div class="mentee-image img-circle">'+
-									'<img src="https://www.itdaa.net/rails/active_storage/representations/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBcmZCIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--f0d5c09d42f655ec75e2351b3a921a3266a435e5/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MY21WemFYcGxTU0lOTVRBd2VERXdNQ0VHT2daRlZEb1FZWFYwYjE5dmNtbGxiblJVIiwiZXhwIjpudWxsLCJwdXIiOiJ2YXJpYXRpb24ifX0=--80976855d44dd57bc27b6da84ad9dae42a7e7a2d/profile.jpg">' +
-								'</div>'+
-								'<div class="mentee-name">'+ value.menteeboardReply_nickname +','+value.menteeboardReply_seq+'</div>' +
+								'<div class="mentee-image img-circle">';
+								if(value.menteeboardRelpy_profile != 'profile.jpg'){
+									str += '<img width="150" height="150" src="../storage/'+ value.menteeboardReply_email +'/'+value.menteeboardReply_profile+'">';
+								}
+								if(value.menteeboardRelpy_profile == 'profile.jpg'){
+									str +='<img width="150" height="150" src="../image/profile.jpg">';
+								}
+								str +='</div>'+
+								'<div class="mentee-name">'+ value.menteeboardReply_nickname+'</div>' +
 								'<div class="sent-date">'+value.menteeboardReply_logtime+'</div>'+
 							'</div>' +
 							'<div class="modifyReply_hide_'+value.menteeboardReply_seq +'">'+
@@ -243,16 +259,45 @@ $(document).ready(function() {
 					$frag.append('<div class="block mentee-detail-block thanks-note-card" id="menteeboardPagingDiv">'+data.menteeboardPaging.pagingHTML+'</div><hr>');
 					$('#inputList').append($frag);
 					
+					
+					let memNickname = $('#memNickname').val();
+					let nickname = $('#nickname').val();
+					let receiverEmail = $('#email').val();
+					let menteeboard_seq = $('#menteeboard_seq').val();
 					//socket에 보내자
 					if(socket) {
-						let socketMsg = "reply," + $('#memNicname').val() +","+$('#nickname').val() +","+$('#menteeboard_seq').val()
-						console.log("msgmsg :: " + socketMsg );
+						let socketMsg = "reply," + memNickname +","+ nickname +","+ receiverEmail +","+ menteeboard_seq;
+						console.log("msgmsg : " + socketMsg);
 						socket.send(socketMsg);
 					}
 					
+					
+					var AlarmData = {
+							"myAlarm_receiverEmail" : receiverEmail,
+							"myAlarm_callerNickname" : memNickname,
+							"myAlarm_title" : "댓글 알림",
+							"myAlarm_content" :  memNickname + "님이 <a type='external' href='/mentor/menteeboard/menteeboardView?seq="+menteeboard_seq+"&pg=1'>" + menteeboard_seq + "</a> 번 게시글에 댓글을 남겼습니다."
+					};
+					//알림 저장
+					$.ajax({
+						type : 'post',
+						url : '/mentor/member/saveAlarm',
+						data : JSON.stringify(AlarmData),
+						contentType: "application/json; charset=utf-8",
+						dataType : 'text',
+						success : function(data){
+							//alert(data);
+							
+						},
+						error : function(err){
+							console.log(err);
+						}
+					});
+					
 				},
-				error : function(){
-					alert('실패');
+				error : function(err){
+					alert('실패2');
+					console.log(err);
 				}
 			}); 
 		}

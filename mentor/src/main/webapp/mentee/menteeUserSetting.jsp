@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div class="col-100 tablet-80" style="margin: auto;">
-<div class="block block-strong no-hairlines hero-title">
+<div class="block no-hairlines hero-title">
 	<h1 class="title">내 정보</h1>
 </div>
 <div class="block inset">
@@ -90,6 +90,7 @@
 </div>
 </div>
 <input type="hidden" id="nickname" value="${memberDTO.member_nickname}"> 
+<script type="text/javascript" src="../js/mentee.js"></script>
 <script>
 
 $(document).ready(

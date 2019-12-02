@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<link  rel="stylesheet" href="../css/essayboard.css">
+<link rel="stylesheet" href="../css/essayboard.css">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-lite.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-lite.js"></script>
+
 <div class="page navbar-fixed mentee_programs index">
    <div class="page-content">
       <div class="block-title strong-title">에세이 작성</div>
@@ -106,5 +107,4 @@ function sendFile(file, el) {
    	  }
   });
 }
-
 </script>

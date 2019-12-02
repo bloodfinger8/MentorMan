@@ -1,6 +1,5 @@
 package member.dao;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -9,9 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import member.bean.CustomUserDetails;
+import member.bean.AlarmDTO;
 import member.bean.MemberDTO;
-import mentee.bean.MenteeDTO;
 import mentor.bean.MentorDTO;
 
 @Repository("memberDAO")
@@ -174,5 +172,30 @@ public class MemberDAOMybatis implements MemberDAO {
 	public void answerModify(Map<String, String> map) {
 		sqlSession.update("memberSQL.answerModify", map);
 	}
+
+	@Override
+	public List<AlarmDTO> getAlarm(String memEmail) {
+		return sqlSession.selectList("memberSQL.getAlarm" , memEmail);
+	}
+	@Override
+	public void checkSubscribe(String memEmail) {
+		sqlSession.update("memberSQL.checkSubscribe" , memEmail);
+	}
+
+	@Override
+	public void saveAlarm(Map<String, String> map) {
+		sqlSession.insert("memberSQL.saveAlarm" , map);
+	}
+
+	@Override
+	public void deleteAlarm(int seq) {
+		sqlSession.delete("memberSQL.deleteAlarm" , seq);
+	}
+
+	@Override
+	public int getCountAlarm(String member_email) {
+		return sqlSession.selectOne("memberSQL.getCountAlarm" , member_email);
+	}
+
 
 }

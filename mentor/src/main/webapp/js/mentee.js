@@ -239,3 +239,49 @@ function paymentCancel(seq, order_id, price, pseq) {
 	});	
 	toastWithCallback.open();
 }
+
+$('#menteeUser_Withdrawal').on('click', function(){
+	location.href='/mentor/mentee/memberDelete';
+});
+
+$('#delete_btn').on('click', function(){
+	$('#currentPassword_error').empty();
+	if($('#currentPassword').val()==''){
+		$('#currentPassword_error').text('현재 패스워드를 입력해주세요').css('color','red');
+		$('#currentPassword_error').css('font-size','8pt');
+		$('#currentPassword').focus();
+	}else {
+		$.ajax({
+			type: 'post',
+			url: '/mentor/mentee/memberPasswordCheck',
+			data: {'currentPassword': $('#currentPassword').val()},
+			dataType: 'text',
+			success: function(data){
+				if(data =='right'){
+					if(confirm('정말 회원을 탈퇴하시겠습니까?')){
+						$.ajax({
+							type: 'post',
+							url: '/mentor/mentee/memberDeleteSuccess',
+							success: function(){
+								location.href='/mentor/main/index';
+							},
+							error: function(){
+								alert('에러');
+							}
+						});
+					}else {
+						return '';
+					}
+				}else {
+					$('#currentPassword_error').text('패스워드를 일치하지 않습니다.').css('color','red');
+					$('#currentPassword_error').css('font-size','8pt');
+					$('#currentPassword').focus();
+				}
+				
+			},
+			error: function(){
+				alert('error');
+			}
+		});
+	}
+});
