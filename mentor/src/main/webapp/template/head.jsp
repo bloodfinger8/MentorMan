@@ -35,9 +35,9 @@
 			<c:if test="${memDTO.member_email != null}">
 
 
-			<a class="button button-big" type="external" href="" style="color : rgba(0,0,0,0.84);">
+			<a class="button button-big" type="external" href="/mentor/member/myAlarm" style="color : rgba(0,0,0,0.84);">
 			<i class="fa fa-bell myBell" id="my_bell" style="font-size:24px; width:36px;"></i>
-			<span class="bell-badge bell-badge-danger"></span>
+			<span id="alarmCountSpan" class=""></span>
 			</a>
 
 			<a type="internal" class="button button-big popover-open me-profile" data-popover=".js-me-popover" href="">
@@ -92,7 +92,7 @@
 				</div>
 			</div>
 			</c:if>
-		</div>
+	</div>
 	</div>
 </div>
 

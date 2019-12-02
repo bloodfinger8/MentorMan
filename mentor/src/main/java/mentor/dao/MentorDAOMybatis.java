@@ -144,4 +144,9 @@ public class MentorDAOMybatis implements MentorDAO {
 		sqlSession.update("mentorSQL.mentorInfoModify",map);
 	}
 
+	@Override
+	public int getFollow(int mentor_seq) {
+		return sqlSession.selectOne("mentorSQL.getFollow" , mentor_seq);
+	}
+
 }

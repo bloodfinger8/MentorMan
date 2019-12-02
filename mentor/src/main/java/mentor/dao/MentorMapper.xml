@@ -240,4 +240,12 @@
 					</if>
 						where mentor_email = #{mentor_email}
 	</update>
+	
+	<select id="getFollow" parameterType="Integer" resultType="Integer" >
+		select count(*) 
+	    from mentorFollow mf ,mentors_member mm, mentor mt
+	    where mf.followed_email = mt.mentor_email
+	    and mt.mentor_email = mm.member_email
+	    and mm.member_seq = #{mentor_seq}
+	</select>
 </mapper>

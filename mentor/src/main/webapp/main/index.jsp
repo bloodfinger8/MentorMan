@@ -68,11 +68,11 @@
 			type : 'POST',
 			dataType: 'text',
 			success : function(data) {
+				alert('add하러옴' + data);//0이 나온다
 				if(data == '0'){
-					$('.bell-badge-danger').hide();
 				}else{
-					$('.bell-badge-danger').show();
-					$('.bell-badge-danger').text(data);
+					$('#alarmCountSpan').addClass('bell-badge-danger bell-badge')
+					$('#alarmCountSpan').text(data);
 				}
 			},
 			error : function(err){
@@ -108,10 +108,9 @@
 			dataType: 'text',
 			success : function(data) {
 				if(data == '0'){
-					$('.bell-badge-danger').hide();
 				}else{
-					$('.bell-badge-danger').show();
-					$('.bell-badge-danger').text(data);
+					$('#alarmCountSpan').addClass('bell-badge-danger bell-badge')
+					$('#alarmCountSpan').text(data);
 				}
 
 			},
