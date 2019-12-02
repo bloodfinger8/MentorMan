@@ -5,7 +5,7 @@
 	<div class="footer-inner">
 		<div class="footer-item">
 			<div class="logo">
-				<img src="../image/mentorlogo.jpg" />
+				<img src="../image/logo.png" />
 			</div>
 			<ul>
 				<li>
