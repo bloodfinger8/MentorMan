@@ -373,6 +373,13 @@ function essayjobType(pg , flag){
     				var badgeFlag = ''
     			}
     			
+    			if(items.mentor_represent.length > 50){
+    				var subContent = items.mentor_represent.replace(/<.*?>|&nbsp;/gi, "")
+    				var subFlag = subContent.substring(0, 40) + "..."
+    			} else {
+    				var subFlag = items.mentor_represent
+    			}
+    			
 //    			if(items.list != null){
     				let mentorFindForm = `
     					<div class="col-100 tablet-50 desktop-25">
@@ -399,7 +406,7 @@ function essayjobType(pg , flag){
     						  </a>
     						<div class="primary-mentoring-info">
     						  	<div class="title">${items.job_type}</div>
-    						   	<div class="info">${items.mentor_represent}</div>
+    						   	<div class="info">${subFlag}</div>
     						</div>
     						    <div class="ask-button">
     						    	${questionFlag}
