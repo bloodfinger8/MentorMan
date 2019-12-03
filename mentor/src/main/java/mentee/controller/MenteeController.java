@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
@@ -40,6 +41,8 @@ public class MenteeController {
 	private OrderHistoryPaging orderHistoryPaging;
 	@Autowired
 	private MeetingboardService meetingboardService;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	/**
 	 * @Title : 계정설정 Form
 	 * @Author : kujun95, @Date : 2019. 11. 11.
@@ -210,10 +213,16 @@ public class MenteeController {
 		MemberDTO memberDTO = menteeService.menteePasswordCheck(memberEmail.getMember_email());
 		
 		System.out.println(currentPassword+"--------"+memberDTO.getMember_pwd());
-		if(!(memberDTO.getMember_pwd().equals(currentPassword))) {
-			return "no";
-		}else {
+		
+//		if(!(memberDTO.getMember_pwd().equals(currentPassword))) {
+//			return "no";
+//		}else {
+//			return "ok";
+//		}
+		if(passwordEncoder.matches(currentPassword, memberDTO.getMember_pwd())) {
 			return "ok";
+		} else {
+			return "no";
 		}
 	}
 	/**
@@ -225,6 +234,8 @@ public class MenteeController {
 	public void menteePasswordSave(@RequestParam Map<String, String> map ,HttpSession session) {
 		MemberDTO memberEmail = (MemberDTO) session.getAttribute("memDTO");
 		map.put("member_email", memberEmail.getMember_email());
+		String encPassword = passwordEncoder.encode(map.get("member_pwd"));
+		map.replace("member_pwd", encPassword);
 		menteeService.menteePasswordSave(map);
 	}
 	
@@ -368,4 +379,5 @@ public class MenteeController {
 		MemberDTO user_info = (MemberDTO) session.getAttribute("memDTO");
 		menteeService.memberDeleteSuccess(user_info.getMember_seq());
 	}
+
 }

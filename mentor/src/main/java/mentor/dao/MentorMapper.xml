@@ -89,7 +89,7 @@
 	
 	<!-- 멘토 에세이 리스트 -->
 	<select id="getMentorEssayList" parameterType="int" resultType="mentor">
-		select e.essayboard_title, e.essayboard_content, e.essayboard_scrap, e.essayboard_logtime
+		select e.essayboard_title, e.essayboard_content, e.essayboard_scrap, e.essayboard_logtime, e.essayboard_seq, mm.member_seq
 		from essayboard e, mentor mt, mentors_member mm
 		where e.mentor_email = mt.mentor_email and mm.member_email = e.mentor_email and mm.member_seq = ${mentor_seq}
 		order by essayboard_logtime desc
@@ -247,5 +247,13 @@
 	    where mf.followed_email = mt.mentor_email
 	    and mt.mentor_email = mm.member_email
 	    and mm.member_seq = #{mentor_seq}
+	</select>
+	
+	<select id="mentee_student" parameterType="String" resultType="int">
+		select count(*) from menteestudent_profile where menteestudent_email = #{member_email}
+	</select>
+	
+	<select id="mentee_employee" parameterType="String" resultType="int">
+		select count(*) from menteeemployee_profile where menteeemployee_email = #{member_email}
 	</select>
 </mapper>

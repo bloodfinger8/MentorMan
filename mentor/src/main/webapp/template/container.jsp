@@ -72,7 +72,16 @@
 						</div>
 						<div class="card-content card-content-padding">
 							<h3 class="title">${meetingboardDTO.meetingboard_title}</h3>
-							<div class="description" style="height: 80px;">${meetingboardDTO.meetingboard_subtitle}</div>
+							<div class="description" style="height: 80px;">
+							<c:choose>
+								<c:when test="${fn:length(meetingboardDTO.meetingboard_subtitle) gt 55}">
+									<c:out value="${fn:substring(meetingboardDTO.meetingboard_subtitle, 0, 54)}"/>...
+								</c:when>
+								<c:otherwise>
+									<c:out value="${meetingboardDTO.meetingboard_subtitle}"/>
+								</c:otherwise>
+							</c:choose>
+							</div>
 							<div class="list">
 								<ul>
 									<li>
@@ -181,18 +190,25 @@
 								<div class="info">${mentor.mentor_represent}</div>
 							</div>
 							<div class="ask-button">
-							<c:if test="${memDTO != null}">
-						    	<c:if test="${mentor.mentor_email != memberDTO.member_email}">
-								<a class="question button button-small button-fill" id="mentorQuestions" type="external" onclick="mentor_question_seq(${mentor.mentor_seq},${pg})"><!-- pg seq 가져가라 -->
-								질문하기
-								</a>
-								</c:if>
-							</c:if>	
-							<c:if test="${memDTO == null}">
-						        <a class="button button-small button-fill" type="external" href="/mentor/member/loginForm">
-							         질문하기
-								</a>
-							</c:if>	
+								<c:if test="${memDTO != null}">
+									<c:if test="${menteeInfo_count == 0}">
+								   		<a class="question button button-small button-fill" id="mentorQuestions" type="external" href="/mentor/mentor/userInfoCheck"><!-- pg seq 가져가라 -->
+									          질문하기
+										</a>
+								    </c:if>
+								    <c:if test="${menteeInfo_count > 0}">
+								    	<c:if test="${mentor.mentor_email != memberDTO.member_email}">
+									        <a class="question button button-small button-fill" id="mentorQuestions" type="external" onclick="mentor_question_seq(${mentor.mentor_seq},${pg})"><!-- pg seq 가져가라 -->
+										          질문하기
+											</a>
+										</c:if>
+								 	</c:if>
+								</c:if>	
+								<c:if test="${memDTO == null}">
+							        <a class="button button-small button-fill" type="external" href="/mentor/member/loginForm">
+								         질문하기
+									</a>
+								</c:if>	
 							</div>
 						</div>
 					</div>
@@ -241,9 +257,18 @@
 					<div class="ask-button">
 				   	<c:if test="${memDTO != null}">
 				    	<c:if test="${honorMentor.mentor_email != memberDTO.member_email}">
-					        <a class="question button button-small button-fill" id="mentorQuestions" type="external" onclick="mentor_question_seq(${honorMentor.mentor_seq},${pg})">
-						          질문하기
-							</a>
+					        <c:if test="${menteeInfo_count == 0}">
+								 <a class="question button button-small button-fill" id="mentorQuestions" type="external" href="/mentor/mentor/userInfoCheck"><!-- pg seq 가져가라 -->
+								  질문하기
+							 	 </a>
+						    </c:if>
+							<c:if test="${menteeInfo_count > 0}">
+							   <c:if test="${mentor.mentor_email != memberDTO.member_email}">
+								   <a class="question button button-small button-fill" id="mentorQuestions" type="external" onclick="mentor_question_seq(${mentor.mentor_seq},${pg})"><!-- pg seq 가져가라 -->
+								     질문하기
+								   </a>
+							   </c:if>
+							</c:if>
 						</c:if>
 					</c:if>	
 					<c:if test="${memDTO == null}">
@@ -325,7 +350,7 @@
 										<c:out value='${fn:substring(list.essayboard_content.replaceAll("\\\<.*?\\\>|&nbsp;",""), 0, 190)}' />...
 									</c:when>
 									<c:otherwise>
-										<c:out value="${list.essayboard_content}"/>
+										<c:out value='${list.essayboard_content.replaceAll("\\\<.*?\\\>|&nbsp;","")}' />
 									</c:otherwise>
 								</c:choose>
 							</div>
@@ -401,7 +426,7 @@
 										<c:out value='${fn:substring(list.essayboard_content.replaceAll("\\\<.*?\\\>|&nbsp;",""), 0, 190)}' />...
 									</c:when>
 									<c:otherwise>
-										<c:out value="${list.essayboard_content}" />
+										<c:out value='${list.essayboard_content.replaceAll("\\\<.*?\\\>|&nbsp;","")}' />
 									</c:otherwise>
 								</c:choose>
 								</div>

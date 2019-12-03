@@ -9,21 +9,19 @@
 <meta charset="UTF-8">
 <title>멘토맨</title>
 <script src="../js/jquery-3.4.1.min.js"></script>
+
 <script src="../js/application_layout.js"></script>  
 <script src="https://d2ljmlcsal6xzo.cloudfront.net/packs/application-978dcbe0c8e9f17a9e95.js"></script>
-<!-- 아이콘 관련 -->
-<script src="https://d2ljmlcsal6xzo.cloudfront.net/packs/js/application-a92a237ea64ef641a7be.js"></script>
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 
+<!-- 아이콘 관련 -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 <link rel="shortcut icon" href="../image/mentorlogo.ico" type="image/x-icon"/>
-<link rel="stylesheet" href="../css/all.css" type="text/css">
 <link rel="stylesheet" href="../css/ly.css" type="text/css" />
-<link rel="stylesheet" href="../css/famil.css"  type="text/css"/>
+<link rel="stylesheet" href="../css/footer.css" type="text/css"/>
 
 </head>
 
 <body class="color-theme-pink">
-
    <div id="app" class="framework7-root">
       <div class="view view-main">
          <!-- head -->
@@ -70,7 +68,6 @@
 			type : 'POST',
 			dataType: 'text',
 			success : function(data) {
-				alert('add하러옴' + data);//0이 나온다
 				if(data == '0'){
 				}else{
 					$('#alarmCountSpan').addClass('bell-badge-danger bell-badge')
@@ -122,7 +119,7 @@
 	   	});
 	   }
    })
-
    </script>
+   <script type="text/javascript" src="../js/footer.js"></script>
 </body>
 </html>

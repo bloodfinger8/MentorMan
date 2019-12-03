@@ -86,7 +86,12 @@
 									<a class="button button-fill col js-bookmark mentor_${mentorDTO.mentor_seq}" id="followA" type="external" data-follow="${follow}" data-disable-with="..." type="external" data-remote="true" rel="nofollow" data-method="post" href="/relationships"> 팔로우 </a>  <%--주소 수정 --%>
 								</div>
 								<div class="profile-btn">
-									<a class="button button-fill" type="external" onclick="mentor_question_seq(${mentorDTO.mentor_seq},${pg})">질문하기</a>  <%--주소 수정 --%>
+								 <c:if test="${menteeInfo_count == 0}">
+									<a class="button button-fill" type="external"  href="/mentor/mentor/userInfoCheck">질문하기</a>
+								 </c:if>
+								 <c:if test="${menteeInfo_count > 0}">
+									<a class="button button-fill" type="external" onclick="mentor_question_seq(${mentorDTO.mentor_seq},${pg})">질문하기</a>
+								 </c:if>
 								</div>
 							</c:if>
 						</div>
@@ -166,7 +171,7 @@
 					<div class="col-100 tablet-100 desktop-100">
 						<div class="card mentor-post-card shadow-card" hidden>
 							<div class="card-content card-content-padding profile-card">
-								<a class="content-body" type="external" href="/mentor/essayboard/essayboardView?"> 		<%--주소 수정 --%>
+								<a class="content-body" type="external" href="/mentor/essayboard/essayboardView?seq=${essayList.essayboard_seq}&mentors=${essayList.member_seq}"> 		<%--주소 수정 --%>
 									<div class="mentor-post-title">
 										${essayList.essayboard_title}
 									</div>
@@ -286,7 +291,6 @@
 			$('#followA').removeClass('button-fill');
 		}
 		
-		//$('.mentor_'+seq).on('click' , function(){
 		$('#followA').on('click' , function(){
 			
 			var followBtn = $(this);
@@ -323,12 +327,6 @@
 					let receiverEmail = $('#menMail').data('email');     //팔로우 당사자 이메일
 					let member_seq = '1'; // seq
 					//alert(memNickname+',' + nickname +',' + receiverEmail +',' + member_seq);
-					//socket에 보내자
-					if(socket) {
-						let socketMsg = "follow," + memNickname +","+nickname +","+ receiverEmail + "," +member_seq;
-						console.log("msgmsg :: " + socketMsg );
-						socket.send(socketMsg);
-					}
 					
 					var AlarmData = {
 							"myAlarm_receiverEmail" : receiverEmail,
@@ -344,11 +342,16 @@
 						contentType: "application/json; charset=utf-8",
 						dataType : 'text',
 						success : function(data){
-							//alert(data);
-							
+							//socket에 보내자
+							if(socket) {
+								let socketMsg = "follow," + memNickname +","+nickname +","+ receiverEmail + "," +member_seq;
+								console.log("msgmsg :: " + socketMsg );
+								socket.send(socketMsg);
+							}
 						},
 						error : function(err){
 							console.log(err);
+							alert('err');
 						}
 					}); 
 					

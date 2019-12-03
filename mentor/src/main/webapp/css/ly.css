@@ -10319,7 +10319,7 @@ footer.footer .logo img {
 
 @media all and (min-width: 1025px) {
     footer.footer .logo img {
-        width:85px
+        width: 140px
     }
 }
 
@@ -10618,8 +10618,9 @@ footer.footer .info {
 }
 
 .navbar .navbar-inner .logo img {
-    width: 80px;
-    margin-left: 15px
+    width: 160px;
+    margin-left: 8px;
+    margin-top: 10px;
 }
 
 .navbar .navbar-inner .button {
@@ -11486,7 +11487,7 @@ th,td {
 
 @media all and (min-width: 1025px) {
     .intros .hello-content.default-content {
-        width:1200px;
+        width: 1200px;
         top: -70%;
         position: relative;
         margin: 0 auto;
@@ -12229,7 +12230,7 @@ th,td {
 
 @media all and (min-width: 1025px) {
     .mentee_participations {
-        width:580px;
+        width: 580px;
         margin: 0 auto
     }
 
@@ -13209,9 +13210,10 @@ th,td {
     color: #6d6d72
 }
 
+/* 2019년 12월 02일 김태형 */
 .open_mentorings.show .open-mentoring-block-container .question-title {
     margin-top: 8px;
-    margin-bottom: 1.5em;
+    margin-bottom: 0.5em;
     width: 90%;
     font-size: 28px;
     line-height: 1.3
