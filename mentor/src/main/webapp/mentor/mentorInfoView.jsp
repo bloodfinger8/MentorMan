@@ -283,7 +283,6 @@
 			$('#followA').removeClass('button-fill');
 		}
 		
-		//$('.mentor_'+seq).on('click' , function(){
 		$('#followA').on('click' , function(){
 			
 			var followBtn = $(this);
@@ -320,12 +319,6 @@
 					let receiverEmail = $('#menMail').data('email');     //팔로우 당사자 이메일
 					let member_seq = '1'; // seq
 					//alert(memNickname+',' + nickname +',' + receiverEmail +',' + member_seq);
-					//socket에 보내자
-					if(socket) {
-						let socketMsg = "follow," + memNickname +","+nickname +","+ receiverEmail + "," +member_seq;
-						console.log("msgmsg :: " + socketMsg );
-						socket.send(socketMsg);
-					}
 					
 					var AlarmData = {
 							"myAlarm_receiverEmail" : receiverEmail,
@@ -341,11 +334,16 @@
 						contentType: "application/json; charset=utf-8",
 						dataType : 'text',
 						success : function(data){
-							//alert(data);
-							
+							//socket에 보내자
+							if(socket) {
+								let socketMsg = "follow," + memNickname +","+nickname +","+ receiverEmail + "," +member_seq;
+								console.log("msgmsg :: " + socketMsg );
+								socket.send(socketMsg);
+							}
 						},
 						error : function(err){
 							console.log(err);
+							alert('err');
 						}
 					}); 
 					
