@@ -379,4 +379,5 @@ public class MenteeController {
 		MemberDTO user_info = (MemberDTO) session.getAttribute("memDTO");
 		menteeService.memberDeleteSuccess(user_info.getMember_seq());
 	}
+
 }
