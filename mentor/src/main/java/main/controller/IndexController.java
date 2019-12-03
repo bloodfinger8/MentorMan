@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,10 +17,12 @@ import essayboard.bean.EssayboardDTO;
 import essayboard.service.EssayboardService;
 import meetingboard.bean.MeetingboardDTO;
 import meetingboard.service.MeetingboardService;
+import member.bean.MemberDTO;
 import mentor.bean.MentorDTO;
 import mentor.service.MentorService;
 
 @Controller
+@RequestMapping("/main")
 public class IndexController {
 	
 	@Autowired
@@ -28,7 +32,7 @@ public class IndexController {
 	@Autowired
 	private EssayboardService essayboardService;
 	
-	@RequestMapping(value = "/main/index", method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = "index", method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView index() {
 		// 모임
 		Map<String, Integer> meetingMap = new HashMap<String, Integer>();
@@ -72,4 +76,5 @@ public class IndexController {
 		mav.setViewName("/main/index");
 		return mav;
 	}
+	
 }
