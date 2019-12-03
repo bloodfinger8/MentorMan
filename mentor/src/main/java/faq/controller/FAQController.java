@@ -93,7 +93,7 @@ public class FAQController {
 			@Override
 			public void prepare(MimeMessage mimeMessage) throws Exception {
 				MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true,"UTF-8");
-				helper.setTo("kujun95@gmail.com");// 받는 사람
+				helper.setTo("dkstkdrn123@gmail.com");// 받는 사람
 				helper.setFrom(map.get("faqToContact_email"));// 보내는 사람
 				helper.setSubject(map.get("faqToContact_title"));
 				helper.setText(map.get("faqToContact_content"), true);
@@ -103,7 +103,7 @@ public class FAQController {
 			};
 		};
 		
-//		mailSender.send(preparator);
+		mailSender.send(preparator);
 		
 		
 		model.addAttribute("display", "/faq/faqMain.jsp");
