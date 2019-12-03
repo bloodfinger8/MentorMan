@@ -351,7 +351,6 @@ function essayjobType(pg , flag){
     	success : function(data){
     		//alert(JSON.stringify(data));
     		let flag = $(document.createDocumentFragment());
-
     		$.each(data.list, function(index, items) {
     			if(items.member_profile != 'profile.jpg'){
     				var profileFlag = '<img width="50" height="50" src="../storage/' + items.mentor_email + '/' + items.member_profile + '">'
@@ -360,11 +359,20 @@ function essayjobType(pg , flag){
     			}
     			
     			if(data.memberDTO != null){
-    				var questionFlag = '<a class="question button button-small button-fill" id="mentorQuestions" type="external" onclick="mentor_question_seq(' + items.mentor_seq +',' + data.pg + ')">질문하기</a>'
+    				if(data.menteeInfo_count == 0){
+    					var questionFlag = '<a class="question button button-small button-fill" id="mentorQuestions" type="external" href="/mentor/mentor/userInfoCheck">질문하기</a>'
+    				}else {
+    					var questionFlag = '<a class="question button button-small button-fill" id="mentorQuestions" type="external" onclick="mentor_question_seq(' + items.mentor_seq +',' + data.pg + ')">질문하기</a>'
+    				}
     			} else {
     				var questionFlag = '<a class="button button-small button-fill" type="external" href="/mentor/member/loginForm">질문하기</a>'
     			}
     			
+    			if(items.mentor_badge == 1){
+    				var badgeFlag = '<i class="fas fa-trophy highlight"></i>'
+    			} else {
+    				var badgeFlag = ''
+    			}
     			
 //    			if(items.list != null){
     				let mentorFindForm = `
@@ -381,6 +389,7 @@ function essayjobType(pg , flag){
     						      <div class="name">
     						        <span class="mentor-name">${items.member_name}</span>
     						        <span class="position">멘토</span>
+    						        ${badgeFlag}
     						      </div>
     						      
     						      <div class="job">
@@ -476,6 +485,7 @@ $('#honor_mentor').on('click', function(event){
 		$('.mentor_div').text('멘토');
 	} else if (flag == 1) {
 		$('.mentor_div').text('명예 멘토');
+		
 	}
 	
 	essayjobType(1, flag);
