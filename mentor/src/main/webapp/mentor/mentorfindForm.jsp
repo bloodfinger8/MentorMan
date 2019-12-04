@@ -88,17 +88,25 @@
 				</div>
 				    <div class="ask-button">
 				   <c:if test="${memberDTO != null}">
-				    	<c:if test="${mentor.mentor_email != memberDTO.member_email}">
-					        <a class="question button button-small button-fill" id="mentorQuestions" type="external" onclick="mentor_question_seq(${mentor.mentor_seq},${pg})"><!-- pg seq 가져가라 -->
+					    <c:if test="${menteeInfo_count == 0}">
+					   		<a class="question button button-small button-fill" id="mentorQuestions" type="external" href="/mentor/mentor/userInfoCheck"><!-- pg seq 가져가라 -->
 						          질문하기
 							</a>
-						</c:if>
-					</c:if>	
+					    </c:if>
+					    <c:if test="${menteeInfo_count > 0}">
+					    	<c:if test="${mentor.mentor_email != memberDTO.member_email}">
+						        <a class="question button button-small button-fill" id="mentorQuestions" type="external" onclick="mentor_question_seq(${mentor.mentor_seq},${pg})"><!-- pg seq 가져가라 -->
+							          질문하기
+								</a>
+							</c:if>
+						 </c:if>
+					</c:if>
 					<c:if test="${memberDTO == null}">
 				        <a class="button button-small button-fill" type="external" href="/mentor/member/loginForm"><!-- pg seq 가져가라 -->
 					          질문하기
 						</a>
-					</c:if>	
+					</c:if>
+					
 					</div>
 				</div>
 			</div>
