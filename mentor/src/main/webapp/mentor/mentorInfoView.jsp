@@ -87,7 +87,12 @@
 									<a class="button button-fill col js-bookmark mentor_${mentorDTO.mentor_seq}" id="followA" type="external" data-follow="${follow}" data-disable-with="..." type="external" data-remote="true" rel="nofollow" data-method="post" href="/relationships"> 팔로우 </a>  <%--주소 수정 --%>
 								</div>
 								<div class="profile-btn">
-									<a class="button button-fill" type="external" onclick="mentor_question_seq(${mentorDTO.mentor_seq},${pg})">질문하기</a>  <%--주소 수정 --%>
+								 <c:if test="${menteeInfo_count == 0}">
+									<a class="button button-fill" type="external"  href="/mentor/mentor/userInfoCheck">질문하기</a>
+								 </c:if>
+								 <c:if test="${menteeInfo_count > 0}">
+									<a class="button button-fill" type="external" onclick="mentor_question_seq(${mentorDTO.mentor_seq},${pg})">질문하기</a>
+								 </c:if>
 								</div>
 							</c:if>
 						</div>
@@ -111,9 +116,10 @@
 				<div class="block-title strong-title">고맙습니다</div>
 				<div class="count">(${reviewTotal})</div>
 			</div>
-			<div class="row no-gap">
+			<div class="no-gap">
 				<div id='thanks-notes'>
 					<c:forEach var="review" items="${reviewList}">
+					<c:if test="${review.review_flag eq 0}">
 					<fmt:formatDate var="review_date" value="${review.review_date}" pattern="yyyy년 MM월 dd일"/>
 						<div class="block mentee-detail-block thanks-note-card">
 							<div class="mentee-info">
@@ -137,6 +143,13 @@
 								</div>
 							</c:if>
 						</div>
+						</c:if>
+						<c:if test="${review.review_flag eq 1}">
+							<div class="no-gap">
+								<i class="fas fa-exclamation-circle" style="color:red;"></i> 관리자에의해 삭제된 댓글입니다.
+							</div>
+							<br/>
+						</c:if>
 					</c:forEach>
 				</div>
 			</div>

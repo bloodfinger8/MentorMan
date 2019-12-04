@@ -62,7 +62,11 @@ public interface MentorService {
 
 	public int getFollow(int mentor_seq);
 
+
 	public List<MemberDTO> getFollowerList(String mentor_email);
+
+
+	public int getMenteeInfo_count(String member_email);
 
 
 }

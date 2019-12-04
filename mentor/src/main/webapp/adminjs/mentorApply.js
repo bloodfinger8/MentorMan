@@ -1,4 +1,4 @@
-/** 
+/**
  * @Title : 멘토신청 게시판 js파일입니다
  * @author : 안상구
  * @date : 2019. 11. 20.
@@ -12,16 +12,41 @@ $('#all').click(function(){
 		else
 			$('.check').prop('checked',false);
 });
-toastr.options = {
-		  "progressBar": true,
-		  "positionClass": "toast-top-center",
-		  "timeOut": "2000",
-		  "hideEasing": "linear",
-		  "showMethod": "fadeIn",
-		  "hideMethod": "fadeOut"
-};
 
-// 글삭제
+function toastr_wran(){
+	toastr.options = {
+			"progressBar": true,
+			"positionClass": "toast-top-center",
+			"timeOut": "2000",
+			"hideEasing": "linear",
+			"showMethod": "fadeIn",
+			"hideMethod": "fadeOut"
+	};
+	toastr.warning("항목을선택하세요");
+}
+
+function success_info(){
+	toastr.options = {
+			"positionClass": "toast-top-center",
+			/*"timeOut": "2000",*/
+			"hideEasing": "linear",
+			"showMethod": "fadeIn",
+			"hideMethod": "fadeOut"
+			}
+	toastr.info("승인하시겠습니까?<br /><br /><button type=button class=mentorSuccess >Yes</button>");
+}
+function reject_info(){
+	toastr.options = {
+			"positionClass": "toast-top-center",
+			/*"timeOut": "2000",*/
+			"hideEasing": "linear",
+			"showMethod": "fadeIn",
+			"hideMethod": "fadeOut"
+	}
+	toastr.info("거절하시겠습니까?<br /><br /><button type=button class=mentorReject >Yes</button>");
+}
+
+// 멘토승인
 $('.btn_apply_success').click(function(){
 	var cnt = $('.check:checked').length;
 	var check = Array();
@@ -29,28 +54,29 @@ $('.btn_apply_success').click(function(){
 		check[idx] = $(this).val();
 	});
 	if(cnt==0)
-		toastr.warning("항목을선택하세요");
-	else{
-		if(confirm("정말로 승인하시겠습니까?")){
-			$.ajax({
-				type : 'post',
-				url : '/mentor/adminmember/adminmentorSuccess',
-				/*contentType : "application/x-www-form-urlencoded; charset=UTF-8",*/
-				data : 'check='+check,
-				success : function(){
-					
-					
-					
-					
-					
-					location.href="/mentor/adminmember/adminmentorApplyList";
-					toastr.success("멘토승인 완료");
-				}
-			});				
-		}
-	}
+		toastr_wran();
+	else
+		mentorSuccess(check);
+
 });
 
+function mentorSuccess(check){
+	success_info();
+	$('.mentorSuccess').click(function(){
+	$.ajax({
+		type : 'post',
+		url : '/mentor/adminmember/adminmentorSuccess',
+		/*contentType : "application/x-www-form-urlencoded; charset=UTF-8",*/
+		data : 'check='+check,
+		success : function(){
+			location.href="/mentor/adminmember/adminmentorApplyList";
+		}
+	});
+	});
+}
+
+
+//멘토승인거절
 $('.btn_apply_reject').click(function(){
 	var cnt = $('.check:checked').length;
 	var check = Array();
@@ -58,18 +84,23 @@ $('.btn_apply_reject').click(function(){
 		check[idx] = $(this).val();
 	});
 	if(cnt==0)
-		alert("항목을 선택하세요.");
-	else{
-		if(confirm("정말로 거절하시겠습니까?")){
-			$.ajax({
-				type : 'post',
-				url : '/mentor/adminmember/adminmentorReject',
-				contentType : "application/x-www-form-urlencoded; charset=UTF-8",
-				data : 'check='+check,
-				success : function(){
-					location.href="/mentor/adminmember/adminmentorApplyList";
-				}
-			});				
-		}
-	}
+		toastr_wran();
+	else
+		mentorReject(check);
 });
+
+
+function mentorReject(check){
+	reject_info();
+	$('.mentorReject').click(function(){
+		$.ajax({
+			type : 'post',
+			url : '/mentor/adminmember/adminmentorReject',
+			contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+			data : 'check='+check,
+			success : function(){
+				location.href="/mentor/adminmember/adminmentorApplyList";
+			}
+		});
+	});
+}
