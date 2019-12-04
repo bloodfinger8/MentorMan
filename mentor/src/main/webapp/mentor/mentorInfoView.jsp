@@ -87,7 +87,14 @@
 								</div>
 								<div class="profile-btn">
 								 <c:if test="${menteeInfo_count == 0}">
-									<a class="button button-fill" type="external"  href="/mentor/mentor/userInfoCheck">질문하기</a>
+									
+								 
+								 	<c:if test="${memDTO.member_flag != 1}">
+								   		<a class="button button-fill" type="external"  href="/mentor/mentor/userInfoCheck">질문하기</a>
+									</c:if>
+									<c:if test="${memDTO.member_flag == 1}">
+								   		<a class="button button-fill" type="external" onclick="mentor_question_seq(${mentorDTO.mentor_seq},${pg})">질문하기</a>
+									</c:if>
 								 </c:if>
 								 <c:if test="${menteeInfo_count > 0}">
 									<a class="button button-fill" type="external" onclick="mentor_question_seq(${mentorDTO.mentor_seq},${pg})">질문하기</a>

@@ -72,7 +72,6 @@ public class IndexController {
 			int menteeInfo_count = mentorService.getMenteeInfo_count(memberDTO.getMember_email());
 			mav.addObject("menteeInfo_count", menteeInfo_count);
 		}
-		
 		mav.addObject("meetingboardList", meetingboardList);
 		mav.addObject("mentorList", mentorList);
 		mav.addObject("honorMentorList", honorMentorList);

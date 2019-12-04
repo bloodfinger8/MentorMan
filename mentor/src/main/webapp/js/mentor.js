@@ -359,7 +359,11 @@ function essayjobType(pg , flag){
     			
     			if(data.memberDTO != null){
     				if(data.menteeInfo_count == 0){
-    					var questionFlag = '<a class="question button button-small button-fill" id="mentorQuestions" type="external" href="/mentor/mentor/userInfoCheck">질문하기</a>'
+    					if(data.memberDTO.member_flag != 1){
+    						var questionFlag = '<a class="question button button-small button-fill" id="mentorQuestions" type="external" href="/mentor/mentor/userInfoCheck">질문하기</a>'    						
+    					}else {
+    						var questionFlag = '<a class="question button button-small button-fill" id="mentorQuestions" type="external" onclick="mentor_question_seq(' + items.mentor_seq +',' + data.pg + ')">질문하기</a>'
+    					}
     				}else {
     					var questionFlag = '<a class="question button button-small button-fill" id="mentorQuestions" type="external" onclick="mentor_question_seq(' + items.mentor_seq +',' + data.pg + ')">질문하기</a>'
     				}
