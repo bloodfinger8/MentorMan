@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<link rel="stylesheet" href="../css/faq.css">
 
 <div class="page navbar-fixed mentors show" data-name="mentors-show">
 	<div class="page-content">
@@ -35,7 +36,7 @@
 									<span>답변수 <strong class="highlight">${mentor_answer}</strong></span>
 								</div>
 							</div>
-							<div class="chip chip-outline no-border-radius mentor-index">
+							<div class="chip chip-outline no-border-radius mentor-index" id="followView">
 								<div class="chip-label">
 									<span>팔로워 <strong class="highlight">${mentor_follow }</strong></span>
 								</div>
@@ -122,9 +123,10 @@
 				<div class="block-title strong-title">고맙습니다</div>
 				<div class="count">(${reviewTotal})</div>
 			</div>
-			<div class="row no-gap">
+			<div class="no-gap">
 				<div id='thanks-notes'>
 					<c:forEach var="review" items="${reviewList}">
+					<c:if test="${review.review_flag eq 0}">
 					<fmt:formatDate var="review_date" value="${review.review_date}" pattern="yyyy년 MM월 dd일"/>
 						<div class="block mentee-detail-block thanks-note-card">
 							<div class="mentee-info">
@@ -148,6 +150,13 @@
 								</div>
 							</c:if>
 						</div>
+						</c:if>
+						<c:if test="${review.review_flag eq 1}">
+							<div class="no-gap">
+								<i class="fas fa-exclamation-circle" style="color:red;"></i> 관리자에의해 삭제된 댓글입니다.
+							</div>
+							<br/>
+						</c:if>
 					</c:forEach>
 				</div>
 			</div>
@@ -188,11 +197,10 @@
 								</a>
 							</div>
 							<div class="card-footer">
-								<a class="color-gray js-bookmark" type="external" data-remote="true" rel="nofollow" data-method="post"
+								<a class="color-gray js-bookmark infoScrap" type="external" data-remote="true" rel="nofollow" data-method="post"
 									href="" style="right: 0px; position: unset; margin: 0px 0px;">   <%--주소 수정 --%>
-								<i class="far fa-bookmark" aria-hidden="true"></i>
-									${essayList.essayboard_scrap}
 								</a>
+								
 								<div class="created-at">
 									<small> ${essayboard_date}</small>
 								</div>
@@ -210,6 +218,33 @@
 		</c:if>
 	</div>
 </div>
+
+
+<!-- 팔로우뷰 모달 -->
+<div id="my-dialog">
+	    <section id="contentArea" class="container-fluid" style="width : 400px; height:464px;">
+			<div class="page-content" >
+				<div class="faqToContact_right_div" style="float: right;"><input type="button" id="faqForm_backBtn" class="button color-gray" value="X"></div>
+				<div class="block-title strong-title" style="margin-top: 8px;margin-bottom: 28px;">팔로워</div>
+				<c:forEach var="followerList" items="${followerList}">
+					<div class="block inset">
+						<div class="mentor-image-left img-circle">
+						<c:if test="${followerList.member_profile != 'profile.jpg'}">
+						<img width="40" height="40" src="../storage/${followerList.member_email}/${followerList.member_profile}">
+						</c:if>
+						<c:if test="${followerList.member_profile == 'profile.jpg'}">
+							<img width="40" height="40" src="../image/profile.jpg">
+						</c:if>
+						&nbsp; ${followerList.member_nickname}
+						</div>
+					</div>
+				</c:forEach>
+			</div>
+		</section>
+	</div>
+<div id="dialog-background"></div>
+
+
 
 <script src="../js/mentor.js"></script>
 <script>
@@ -377,7 +412,12 @@
 			} 
 		}); 
 		
-	}	
+	}
+	
+	//팔로워 보여주기
+	$(document).on('click' , '#followView,#faqForm_backBtn' , function(){
+		$("#my-dialog,#dialog-background").toggle();
+	});
 	
 	
 </script>
