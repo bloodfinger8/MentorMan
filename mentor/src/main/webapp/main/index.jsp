@@ -86,8 +86,6 @@
             closeButton: true,
           });
           toastTop.open();
-
-
     };
 
     sock.onclose = function() {
