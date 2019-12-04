@@ -103,7 +103,7 @@ public class FAQController {
 			};
 		};
 		
-//		mailSender.send(preparator);
+		mailSender.send(preparator);
 		
 		
 		model.addAttribute("display", "/faq/faqMain.jsp");

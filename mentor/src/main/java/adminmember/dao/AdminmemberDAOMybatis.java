@@ -128,6 +128,11 @@ public class AdminmemberDAOMybatis implements AdminmemberDAO{
 	public int getSearchmenteeTotalA(Map<String, Object> map) {
 		return sqlSession.selectOne("adminmemberSQL.getSearchmenteeTotalA",map);
 	}
+
+	@Override
+	public void setMentorUpdateAlarm(int check) {
+		sqlSession.insert("adminmemberSQL.setMentorUpdateAlarm", check);
+	}
 	
 }
 

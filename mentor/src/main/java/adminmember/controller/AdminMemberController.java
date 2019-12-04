@@ -19,6 +19,7 @@ import adminmember.bean.AdminmentorBoardListDTO;
 import adminmember.bean.AdminmentorDTO;
 import adminmember.bean.AdminmentorSalesListDTO;
 import adminmember.service.AdminmemberService;
+import sun.security.util.Length;
 
 
 /** 
@@ -220,6 +221,12 @@ public class AdminMemberController {
 		Map<String, String[]> map = new HashMap<String, String[]>();
 		map.put("check", check);
 		adminmemberService.adminmentorSuccess(map);
+		
+		//adminmemberService.setMentorUpdateAlarm(map);
+		for(int i=0; i<map.get("check").length; i++) {
+			System.out.println(map.get("check")[i]);
+			adminmemberService.setMentorUpdateAlarm(Integer.parseInt(map.get("check")[i]));
+		}
 	}
 	
 	/* description : 멘토승인 거절 */

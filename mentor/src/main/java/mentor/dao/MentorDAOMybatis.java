@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import meetingboard.bean.ReviewDTO;
+import member.bean.MemberDTO;
 import mentor.bean.MentorDTO;
 import mentor.bean.MentorFollowDTO;
 
@@ -146,6 +147,11 @@ public class MentorDAOMybatis implements MentorDAO {
 	@Override
 	public int getFollow(int mentor_seq) {
 		return sqlSession.selectOne("mentorSQL.getFollow" , mentor_seq);
+	}
+
+	@Override
+	public List<MemberDTO> getFollowerList(String mentor_email) {
+		return sqlSession.selectList("mentorSQL.getFollowerList", mentor_email);
 	}
 
 }

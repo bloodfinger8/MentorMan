@@ -316,6 +316,10 @@ public class MentorController {
 		followMap.put("memEmail" , memberDTO.getMember_email());
 		followMap.put("mentorEmail" , mentorDTO.getMentor_email());
 	  	int follow = mentorService.getFollowCheck(followMap);
+	  	
+	  	//follow Modal - 재우
+	  	List<MemberDTO> followerList = mentorService.getFollowerList(mentorDTO.getMentor_email());
+	  	
 		
 	  	model.addAttribute("follow", follow);
 		model.addAttribute("pg", pg);
@@ -327,6 +331,7 @@ public class MentorController {
 		}else {
 			model.addAttribute("questionPercent", questionPercent);
 		}
+		model.addAttribute("followerList" , followerList);
 		model.addAttribute("mentor_answer",mentor_answer);
 		model.addAttribute("mentor_follow",mentor_follow);
 		model.addAttribute("mentor_seq", mentor_seq);
@@ -436,6 +441,10 @@ public class MentorController {
 		session.invalidate();
 		return "redirect:/main/index";
 	}
+	
+	
+	
+	
 		
 	
 }

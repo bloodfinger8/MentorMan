@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import meetingboard.bean.ReviewDTO;
+import member.bean.MemberDTO;
 import mentor.bean.MentorDTO;
 import mentor.bean.MentorFollowDTO;
 import mentor.dao.MentorDAO;
@@ -144,6 +145,11 @@ public class MentorServiceImpl implements MentorService {
 	@Override
 	public int getFollow(int mentor_seq) {
 		return mentorDAO.getFollow(mentor_seq);
+	}
+
+	@Override
+	public List<MemberDTO> getFollowerList(String mentor_email) {
+		return mentorDAO.getFollowerList(mentor_email);
 	}
 
 }

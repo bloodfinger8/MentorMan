@@ -248,4 +248,14 @@
 	    and mt.mentor_email = mm.member_email
 	    and mm.member_seq = #{mentor_seq}
 	</select>
+	
+	<select id="getFollowerList" parameterType="String" resultType="member">
+	    select mma.member_profile,mma.member_nickname ,mma.member_email
+	    from mentors_member mma
+		where mma.member_email IN(select mf.follower_email
+	    from mentorFollow mf ,mentors_member mm, mentor mt
+	    where mf.followed_email = mt.mentor_email
+	    and mt.mentor_email = mm.member_email
+        and mf.followed_email = #{mentor_email})
+	</select>
 </mapper>

@@ -53,5 +53,7 @@ public interface AdminmemberDAO {
 
 	public int getSearchmentorApplyTotalA(Map<String, Object> map);
 
+	public void setMentorUpdateAlarm(int check);
+
 }
 

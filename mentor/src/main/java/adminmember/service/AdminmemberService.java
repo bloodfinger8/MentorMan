@@ -52,5 +52,8 @@ public interface AdminmemberService {
 	public List<AdminmentorBoardListDTO> getMentorBoard();
 
 	public void honorMentor(Map<String, String[]> map);
+
+	public void setMentorUpdateAlarm(int check);
+
 }
 

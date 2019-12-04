@@ -28,7 +28,6 @@ $('.btn_apply_success').click(function(){
 	$('.check:checked').each(function(idx){
 		check[idx] = $(this).val();
 	});
-	console.log(check);
 	if(cnt==0)
 		toastr.warning("항목을선택하세요");
 	else{
@@ -39,6 +38,11 @@ $('.btn_apply_success').click(function(){
 				/*contentType : "application/x-www-form-urlencoded; charset=UTF-8",*/
 				data : 'check='+check,
 				success : function(){
+					
+					
+					
+					
+					
 					location.href="/mentor/adminmember/adminmentorApplyList";
 					toastr.success("멘토승인 완료");
 				}
