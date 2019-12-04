@@ -329,19 +329,9 @@ public class MentorController {
 	  	//follow Modal - 재우
 	  	List<MemberDTO> followerList = mentorService.getFollowerList(mentorDTO.getMentor_email());
 
-
 	  	model.addAttribute("follow", follow);
 		model.addAttribute("pg", pg);
 		if(memberDTO!= null) {
-
-		if(memberDTO!=null) {
-			followMap.put("memEmail" , memberDTO.getMember_email());
-			followMap.put("mentorEmail" , mentorDTO.getMentor_email());
-			int follow = mentorService.getFollowCheck(followMap);
-			model.addAttribute("follow", follow);
-			int menteeInfo_count = mentorService.getMenteeInfo_count(memberDTO.getMember_email());
-			model.addAttribute("menteeInfo_count", menteeInfo_count);
-
 			model.addAttribute("email_check", memberDTO.getMember_email());
 		}
 		if(Double.isNaN(questionPercent)) {

@@ -257,6 +257,7 @@
 	    where mf.followed_email = mt.mentor_email
 	    and mt.mentor_email = mm.member_email
         and mf.followed_email = #{mentor_email})
+    </select>
 
 	<select id="mentee_student" parameterType="String" resultType="int">
 		select count(*) from menteestudent_profile where menteestudent_email = #{member_email}
@@ -264,6 +265,6 @@
 
 	<select id="mentee_employee" parameterType="String" resultType="int">
 		select count(*) from menteeemployee_profile where menteeemployee_email = #{member_email}
-
 	</select>
+	
 </mapper>
