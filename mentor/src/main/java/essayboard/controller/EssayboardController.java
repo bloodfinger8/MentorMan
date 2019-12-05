@@ -285,7 +285,6 @@ public class EssayboardController {
 	        		 //flag 1 저장
 	        		 essayboardDTO.setEssayboard_scrapFlag(cnt);
 	        	 }
-
 	         }
 		}
 		modelAndView.addObject("pg", pg);
