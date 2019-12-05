@@ -130,3 +130,304 @@ $('#orderBtn').click(function(){
 	    
 	}
 });
+
+//기간 설정
+function setPeriod(obj, type) {
+	$("#startDate").val('');
+	$("#endDate").val('');
+	
+	// 기간 부분 조건에 따라 Setting
+	var now = new Date();
+
+	var year= now.getFullYear();
+	var mon = (now.getMonth() + 1) > 9 ? ''+(now.getMonth() + 1) : '0'+(now.getMonth() + 1);
+	var day = now.getDate() > 9 ? '' + now.getDate() : '0' + now.getDate();
+
+	var now_date = year + '/' + mon + '/' + day;
+	var hidden_now_date = year + '-' + mon + '-' + day;
+
+	if(type != "") {
+		var start_date = setStartDate(type);
+		var a_date = start_date.split("|");
+
+		$("#endDate").val(now_date);
+		$("#startDate").val(a_date[0]);
+	}
+}
+
+//시작 기간 얻기
+function setStartDate(type) {
+	var time_val = "";
+	var now = new Date();
+	if(type == "1week") {
+		var time_val = now.getTime() - (7 * 24 * 60 * 60 * 1000);
+	} else if(type == "1month") {
+		var time_val = now.getTime() - (30 * 24 * 60 * 60 * 1000);
+	} else if(type == "3month") {
+		var time_val = now.getTime() - (91 * 24 * 60 * 60 * 1000);
+	}
+
+	if(time_val != "") {
+		now.setTime(time_val);
+	}
+
+	var year= now.getFullYear();
+	var mon = (now.getMonth() + 1) > 9 ? ''+(now.getMonth() + 1) : '0'+(now.getMonth() + 1);
+	var day = now.getDate() > 9 ? '' + now.getDate() : '0' + now.getDate();
+
+	return year + '/' + mon + '/' + day + "|" + year + '-' + mon + '-' + day;
+}
+
+// 조회 버튼
+$("#orderSearchBtn").click(function(){
+	var startDate = $("#startDate").val();
+	var endDate = $("#endDate").val();
+	var option = $("#condition option:selected").val();
+	
+	var startDateVal = startDate.replace(/\//gi, "");
+	var endDateVal = endDate.replace(/\//gi, "");
+	
+	if(startDate == '' && endDate != '') {
+		var toastTop = app.toast.create({
+	           text: '시작일을 입력하세요',
+	           position: 'center',
+	           closeTimeout: 2000
+	       });
+	       toastTop.open();
+	       $("#startDate").focus();
+	} else if(endDate == '' && startDate != '') {
+		var toastTop = app.toast.create({
+	           text: '종료일을 입력하세요',
+	           position: 'center',
+	           closeTimeout: 2000
+	       });
+	       toastTop.open();
+	       $("#endDate").focus();
+	} else if(startDateVal > endDateVal) {
+		
+		var toastTop = app.toast.create({
+	           text: '종료일이 잘못되었습니다',
+	           position: 'center',
+	           closeTimeout: 2000
+	       });
+	       toastTop.open();
+	       $("#endDate").focus();
+	} else {
+		//alert(startDateVal+'시작'+endDateVal+'끝'+option+'조건');
+		
+		$.ajax({
+			type: 'post',
+			url: '/mentor/mentee/orderHistorySearch',
+			data: {'startDate' : startDateVal, 'endDate' : endDateVal, 'option' : option, 'pg' : '1'},
+			dataType: 'json',
+			success: function(data){
+				//alert(data.orderHistorySearchList);
+				//alert(data.totalSearchHistory);
+				
+				$('#historyTable > tbody').empty();
+				$('.pagination-block').empty();
+				
+				$.each(data.orderHistorySearchList, function(index, items){
+					var today = new Date();
+					
+					var parseDate = items.meetingboard_day;
+					var yyyy = parseDate.substr(0,4);
+					var mm = parseDate.substr(5,2);
+					var dd = parseDate.substr(8,2);
+					
+					var meetingday = new Date(yyyy, mm-1, dd);
+					var nowDays = today.getTime() / (1000*60*60*24);
+					var oldDays = meetingday.getTime() / (1000*60*60*24) + 1;
+					
+					var orderDate = items.order_date;
+					
+					var price = items.meetingboard_price.toLocaleString();
+					
+					var order_state = '';
+					
+					if(items.order_flag == 0) {
+						order_state = '(주문취소)';
+					} else if(items.order_flag == 1) {
+						if(today >= meetingday) {
+							if(items.review_seq == null) {
+								order_state = `<div class="btn-set btn-parents">
+													<button type="button" class="button" onclick="location.href='/mentor/mentee/meetingReviewWriteForm?seq=${items.meetingboard_seq}'" style="font-size: 11px;">수강후기</button>
+												</div>`;
+							} else {
+								order_state = `<div class="btn-set btn-parents">
+													<span>(작성완료)</span>
+												</div>`;
+							}
+						} else {
+							order_state = `<div class="btn-set btn-parents">
+												<span>(수강전)</span>
+											</div>`;
+						}
+					}
+					
+					var order_cancel = '';
+					
+					if(items.order_flag == 1) {
+						if((oldDays - nowDays) >= 2) {
+							order_cancel = `<div class="btn-set btn-parents">
+												<button type="button" class="button" onclick="paymentCancel('${items.meetingboard_seq}','${items.order_id}','${items.meetingboard_price}','${items.participation_seq}')" style="font-size: 11px;">수강취소</button>
+											</div>`;
+						} else if((oldDays - nowDays) < 2) {
+							order_cancel = `<div class="btn-set btn-parents">
+												<span></span>
+											</div>`;
+						}
+					}
+					
+					let orderHistory = `
+						<tr>
+							<td>
+								<a type="external" href="/mentor/meetingboard/meetingboardView?seq=${items.meetingboard_seq}" target="_blank">
+									${items.meetingboard_title}
+								</a>
+							</td>
+							<td>
+								${orderDate}
+							</td>
+							<td>
+								<a type="external" href="/mentor/participation/paymentComplete?order_id=${items.order_id}" style="color: black;">
+									${items.order_id}
+								</a>
+							</td>
+							<td>
+								${price}원
+							</td>
+							<td>
+								${order_state}
+							</td>
+							<td>
+								${order_cancel}
+							</td>
+						</tr>
+					`;
+					
+					$('#historyTable > tbody').append(orderHistory);
+				});
+				
+				$('.pagination-block').append(data.orderHistoryPaging.pagingHTML);
+			},
+			error: function(err){
+				console.log(err);
+			}
+		});
+	}
+	
+	
+});
+
+// 주문내역 페이징
+function orderHistoryPaging(page){
+	var pg = page;
+	var startDate = $("#startDate").val();
+	var endDate = $("#endDate").val();
+	var option = $("#condition option:selected").val();
+	
+	var startDateVal = startDate.replace("/", "");
+	var endDateVal = endDate.replace("/", "");
+	
+	$.ajax({
+		type: 'post',
+		url: '/mentor/mentee/orderHistorySearch',
+		data: {'startDate' : startDateVal, 'endDate' : endDateVal, 'option' : option, 'pg' : pg},
+		dataType: 'json',
+		success: function(data){
+			//alert(data.orderHistorySearchList);
+			//alert(data.totalSearchHistory);
+			
+			$('#historyTable > tbody').empty();
+			$('.pagination-block').empty();
+			
+			$.each(data.orderHistorySearchList, function(index, items){
+				var today = new Date();
+				
+				var parseDate = items.meetingboard_day;
+				var yyyy = parseDate.substr(0,4);
+				var mm = parseDate.substr(5,2);
+				var dd = parseDate.substr(8,2);
+				
+				var meetingday = new Date(yyyy, mm-1, dd);
+				var nowDays = today.getTime() / (1000*60*60*24);
+				var oldDays = meetingday.getTime() / (1000*60*60*24) + 1;
+				
+				var orderDate = items.order_date;
+				
+				var price = items.meetingboard_price.toLocaleString();
+				
+				var order_state = '';
+				
+				if(items.order_flag == 0) {
+					order_state = '(주문취소)';
+				} else if(items.order_flag == 1) {
+					if(today >= meetingday) {
+						if(items.review_seq == null) {
+							order_state = `<div class="btn-set btn-parents">
+												<button type="button" class="button" onclick="location.href='/mentor/mentee/meetingReviewWriteForm?seq=${items.meetingboard_seq}'" style="font-size: 11px;">수강후기</button>
+											</div>`;
+						} else {
+							order_state = `<div class="btn-set btn-parents">
+												<span>(작성완료)</span>
+											</div>`;
+						}
+					} else {
+						order_state = `<div class="btn-set btn-parents">
+											<span>(수강전)</span>
+										</div>`;
+					}
+				}
+				
+				var order_cancel = '';
+				
+				if(items.order_flag == 1) {
+					if((oldDays - nowDays) >= 2) {
+						order_cancel = `<div class="btn-set btn-parents">
+											<button type="button" class="button" onclick="paymentCancel('${items.meetingboard_seq}','${items.order_id}','${items.meetingboard_price}','${items.participation_seq}')" style="font-size: 11px;">수강취소</button>
+										</div>`;
+					} else if((oldDays - nowDays) < 2) {
+						order_cancel = `<div class="btn-set btn-parents">
+											<span></span>
+										</div>`;
+					}
+				}
+				
+				let orderHistory = `
+					<tr>
+						<td>
+							<a type="external" href="/mentor/meetingboard/meetingboardView?seq=${items.meetingboard_seq}" target="_blank">
+								${items.meetingboard_title}
+							</a>
+						</td>
+						<td>
+							${orderDate}
+						</td>
+						<td>
+							<a type="external" href="/mentor/participation/paymentComplete?order_id=${items.order_id}" style="color: black;">
+								${items.order_id}
+							</a>
+						</td>
+						<td>
+							${price}원
+						</td>
+						<td>
+							${order_state}
+						</td>
+						<td>
+							${order_cancel}
+						</td>
+					</tr>
+				`;
+				
+				$('#historyTable > tbody').append(orderHistory);
+			});
+			
+			$('.pagination-block').append(data.orderHistoryPaging.pagingHTML);
+		},
+		error: function(err){
+			console.log(err);
+		}
+	});
+}

@@ -239,9 +239,8 @@ public class AdminMemberController {
 		map.put("check", check);
 		adminmemberService.adminmentorSuccess(map);
 		
-		//adminmemberService.setMentorUpdateAlarm(map);
+		//성공 알림 저장 - jaewoo
 		for(int i=0; i<map.get("check").length; i++) {
-			System.out.println(map.get("check")[i]);
 			adminmemberService.setMentorUpdateAlarm(Integer.parseInt(map.get("check")[i]));
 		}
 	}
@@ -252,7 +251,14 @@ public class AdminMemberController {
 	public void adminmentorReject(@RequestParam String[] check) {
 		Map<String, String[]> map = new HashMap<String, String[]>();
 		map.put("check", check);
+		
+		//실패 알림 저장 - jaewoo
+		for(int i=0; i<map.get("check").length; i++) {
+			adminmemberService.setMenteeUpdateAlarm(Integer.parseInt(map.get("check")[i]));
+		}
+		
 		adminmemberService.adminmentorReject(map);
+		
 	}
 	/* description : 명예멘토 리스트 */
 	@RequestMapping(value="adminmentorSales",method = RequestMethod.GET)

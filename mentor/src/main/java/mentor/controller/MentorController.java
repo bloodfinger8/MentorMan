@@ -421,6 +421,7 @@ public class MentorController {
 		memberDTO = (MemberDTO) session.getAttribute("memDTO");
 		MentorDTO mentorDTO = mentorService.getEmail(memberDTO.getMember_email());
 		model.addAttribute("mentorDTO", mentorDTO);
+		model.addAttribute("memberDTO", memberDTO);		
 		model.addAttribute("display", "/mentee/menteeUserForm.jsp");
 		model.addAttribute("display2", "/mentor/mentorInfoForm.jsp");
 		return "/main/index";

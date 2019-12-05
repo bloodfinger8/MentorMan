@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import meetingboard.bean.ReviewDTO;
 import meetingboard.service.MeetingboardService;
@@ -83,7 +85,7 @@ public class MenteeController {
 	 * @Author : kujun95, @Date : 2019. 11. 12.
 	 */
 	@RequestMapping(value = "mentorUserModify", method = RequestMethod.POST)
-	public String mentorUserModify(@RequestParam Map<String, String> map, @RequestParam("member_profile") MultipartFile member_profile, Model model, HttpSession session) {
+	public String mentorUserModify(@RequestParam Map<String, String> map, @RequestParam("member_profile") MultipartFile member_profile, Model model, HttpSession session, HttpServletRequest request) {
 		if(member_profile.getOriginalFilename()!="") {
 			MemberDTO memberDTO = (MemberDTO) session.getAttribute("memDTO");
 			String filePath = "C:/github/MentorMan/mentor/src/main/webapp/storage/"+memberDTO.getMember_email();
@@ -116,6 +118,13 @@ public class MenteeController {
 			}
 			map.put("member_profile", fileName);
 			menteeService.mentorUserModify(map);
+			
+			//세션을 새로 생성
+			memberDTO.setMember_nickname(map.get("member_nickname"));
+			memberDTO.setMember_profile(fileName);
+			HttpSession session2 = request.getSession();
+			session2.setAttribute("memDTO", memberDTO);
+			
 		}
 		
 		
@@ -152,6 +161,8 @@ public class MenteeController {
 				map.put("mentee_email", mentee.getMenteeStudent_email());
 				menteeService.menteeStudentInput(map);
 			}else {
+				memberDTO.setMember_flag(2);
+				session.setAttribute("memDTO", memberDTO);
 				map.put("mentee_email", null);
 				menteeService.menteeStudentInput(map);
 			}
@@ -185,6 +196,8 @@ public class MenteeController {
 			map.put("mentee_email", mentee.getMenteeEmployee_email());
 			menteeService.menteeEmployeeInput(map);
 		}else {
+			memberDTO.setMember_flag(2);
+			session.setAttribute("memDTO", memberDTO);
 			map.put("mentee_email", null);
 			menteeService.menteeEmployeeInput(map);
 		}
@@ -212,13 +225,6 @@ public class MenteeController {
 		MemberDTO memberEmail = (MemberDTO) session.getAttribute("memDTO");
 		MemberDTO memberDTO = menteeService.menteePasswordCheck(memberEmail.getMember_email());
 		
-		System.out.println(currentPassword+"--------"+memberDTO.getMember_pwd());
-		
-//		if(!(memberDTO.getMember_pwd().equals(currentPassword))) {
-//			return "no";
-//		}else {
-//			return "ok";
-//		}
 		if(passwordEncoder.matches(currentPassword, memberDTO.getMember_pwd())) {
 			return "ok";
 		} else {
@@ -281,6 +287,37 @@ public class MenteeController {
 		model.addAttribute("display2","/mentee/menteeOrderHistory.jsp");
 		return "/main/index";
 	}
+	
+	@RequestMapping(value = "orderHistorySearch", method = RequestMethod.POST)
+	public ModelAndView orderHistorySearch(@RequestParam Map<String, Object> map, HttpSession session) {
+		// 1페이지당 5개
+		int pg =  Integer.parseInt((String) map.get("pg"));
+		int endNum = pg * 5;
+		int startNum = endNum - 4;
+		
+		MemberDTO memDTO = (MemberDTO) session.getAttribute("memDTO");
+		String member_email = memDTO.getMember_email();
+		map.put("startNum", startNum);
+		map.put("endNum", endNum);
+		map.put("member_email", member_email);
+		
+		List<OrderDTO> orderHistorySearchList = participationService.getOrderHistorySearch(map);
+		
+		// 페이징 처리
+		int totalSearchHistory = participationService.getSearchHistory(map);
+		orderHistoryPaging.setCurrentPage(pg);
+		orderHistoryPaging.setPageBlock(3);
+		orderHistoryPaging.setPageSize(5);
+		orderHistoryPaging.setTotalA(totalSearchHistory);
+		orderHistoryPaging.makeSearchPagingHTML();
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("totalSearchHistory", totalSearchHistory);
+		mav.addObject("orderHistorySearchList", orderHistorySearchList);
+		mav.addObject("orderHistoryPaging", orderHistoryPaging);
+		mav.setViewName("jsonView");
+		return mav;
+	}	
 	
 	/**
 	 * @Title : 모임 후기 작성 창

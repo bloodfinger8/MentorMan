@@ -14,8 +14,7 @@
 		<div class="block-footer">질문을 남길 때 멘토님에게 함께 전달되는 필수 정보입니다.</div>
 	</div>
 	<div class="block inset">
-		<form class="simple_form new_employee_profile" id="menteeEmployee_profile" novalidate="novalidate"
-			action="/settings/employee_profile" accept-charset="UTF-8" method="post">
+		<form class="simple_form new_employee_profile" id="menteeEmployee_profile" novalidate="novalidate" accept-charset="UTF-8" method="post">
 			<div class="list form-list no-hairlines">
 				<ul>
 					<div class="label-title">
@@ -101,7 +100,6 @@
 		</form>
 	</div>
 </div>
-<script type="text/javascript" src="../js/mentee.js"></script>
 <script>
 $(function() {
 	$('#menteeProfile').attr('class', 'list-button color-gray item-link active').css('font-weight', 'bold');
