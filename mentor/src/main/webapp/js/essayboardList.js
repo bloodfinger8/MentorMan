@@ -11,42 +11,6 @@ $(document).ready(function(){
 		$('.essayName').text('추천 에세이');
 		essayjobType(1 , essayFlag);
 	}
-	
-	var js = new Array();
-	var id = $(".row > a")
-	var str = $.cookie('job_code');
-	var flag = $('#essayFlag').val;
-	var bool = 0;
-	
-	js = str.split(",");
-	jobs.splice(0, jobs.length);
-	
-	$.each(js , function(index, i){
-		$.each(id , function(index, k){
-			if(i == $(k).attr("id")){
-				$('#'+ i +'').addClass('active');
-				jobs.push(i);
-			}
-			
-		});
-	});
-	var essayFlag = $('#recommend_view_essay').val();
-	
-	// 쿠키가 있을경우 삭제
-	if($.cookie('job_code') != null){
-		$.removeCookie("job_code");
-		bool = 1;
-	}
-	if(flag == 1){
-		$('.essayName').empty();
-		$('#recommend_essay').attr('class', 'button');
-		$('.essayName').text('추천 에세이');
-    }
-	if(bool == 1){
-		
-		var pg = $('#pg').val();
-		essayjobType(pg, flag);
-	}
 });
 
 // 에세이 직무유형 버튼
@@ -119,8 +83,6 @@ function essayjobType(pg , flag){
     	contentType : "application/json; charset=UTF-8",
     	success : function(data){
     		let flag = $(document.createDocumentFragment());
-    		
-    		$.cookie()
     		
     		$.each(data.list, function(index, items) {
     			
