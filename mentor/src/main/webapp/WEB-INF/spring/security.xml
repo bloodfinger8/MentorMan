@@ -15,6 +15,7 @@
 		<intercept-url pattern="/essayboard/essayboardView/**" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')"/>
 		<intercept-url pattern="/mentor/mentorInfoView/**" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')"/>
 		<intercept-url pattern="/mentor/mentorQuestionsForm/**" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')"/>
+		<intercept-url pattern="/menteeboard/menteeboardView/**" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')"/>
 		<intercept-url pattern="/**" access="permitAll"/>
 		
 		<form-login

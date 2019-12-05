@@ -145,6 +145,12 @@ public class AdminmemberDAOMybatis implements AdminmemberDAO{
 	public void setMentorUpdateAlarm(int check) {
 		sqlSession.insert("adminmemberSQL.setMentorUpdateAlarm", check);
 	}
+
+
+	@Override
+	public void setMenteeUpdateAlarm(int check) {
+		sqlSession.insert("adminmemberSQL.setMenteeUpdateAlarm", check);
+	}
 	
 }
 
