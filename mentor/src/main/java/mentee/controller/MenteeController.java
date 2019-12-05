@@ -50,10 +50,7 @@ public class MenteeController {
 	 * @Author : kujun95, @Date : 2019. 11. 11.
 	 */
 	@RequestMapping(value = "menteeUserForm", method = RequestMethod.GET)
-	public String menteeWriteForm(Model model, HttpSession session) { //세션으로 값을 뿌려줘야됨
-		MemberDTO memDTO = (MemberDTO) session.getAttribute("memDTO");
-		MemberDTO memberDTO = menteeService.getSaveMember(memDTO.getMember_email());
-		model.addAttribute("memberDTO", memberDTO);
+	public String menteeWriteForm(Model model) { //세션으로 값을 뿌려줘야됨
 		model.addAttribute("display", "/mentee/menteeUserForm.jsp");
 		model.addAttribute("display2", "/mentee/menteeUserSetting.jsp");
 		return "/main/index";
@@ -131,8 +128,10 @@ public class MenteeController {
 			
 			//세션을 새로 생성
 			memberDTO.setMember_nickname(map.get("member_nickname"));
+
 			memberDTO.setMember_name(map.get("member_name"));
 			session.setAttribute("memDTO", memberDTO);
+
 		}
 
 
@@ -410,8 +409,8 @@ public class MenteeController {
 	@ResponseBody
 	public String memberPasswordCheck(@RequestParam String currentPassword, HttpSession session) {
 		MemberDTO user_info = (MemberDTO) session.getAttribute("memDTO");
-
-		if(user_info.getMember_pwd().equals(currentPassword)) {
+		
+		if(passwordEncoder.matches(currentPassword, user_info.getMember_pwd())) {
 			return "right";
 		}else {
 			return "wrong";
@@ -420,9 +419,11 @@ public class MenteeController {
 
 	@RequestMapping(value = "memberDeleteSuccess", method = RequestMethod.POST)
 	@ResponseBody
-	public void memberDeleteSuccess(HttpSession session) {
+	public ModelAndView memberDeleteSuccess(HttpSession session) {
 		MemberDTO user_info = (MemberDTO) session.getAttribute("memDTO");
 		menteeService.memberDeleteSuccess(user_info.getMember_seq());
+		session.invalidate();
+		return new ModelAndView("redirect:/main/index"); 
 	}
 
 }
