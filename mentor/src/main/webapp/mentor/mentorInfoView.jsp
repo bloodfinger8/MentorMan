@@ -87,19 +87,14 @@
 									<a class="button button-fill col js-bookmark mentor_${mentorDTO.mentor_seq}" id="followA" type="external" data-follow="${follow}" data-disable-with="..." type="external" data-remote="true" rel="nofollow" data-method="post" href="/relationships"> 팔로우 </a>  <%--주소 수정 --%>
 								</div>
 								<div class="profile-btn">
-								 <c:if test="${menteeInfo_count == 0}">
-									
-								 
-								 	<c:if test="${memDTO.member_flag != 1}">
+								<c:if test="${memDTO != null}">
+								 	<c:if test="${memDTO.member_flag == 0}">
 								   		<a class="button button-fill" type="external"  href="/mentor/mentor/userInfoCheck">질문하기</a>
 									</c:if>
-									<c:if test="${memDTO.member_flag == 1}">
+									<c:if test="${memDTO.member_flag > 0}">
 								   		<a class="button button-fill" type="external" onclick="mentor_question_seq(${mentorDTO.mentor_seq},${pg})">질문하기</a>
 									</c:if>
-								 </c:if>
-								 <c:if test="${menteeInfo_count > 0}">
-									<a class="button button-fill" type="external" onclick="mentor_question_seq(${mentorDTO.mentor_seq},${pg})">질문하기</a>
-								 </c:if>
+								 </c:if>	
 								</div>
 							</c:if>
 						</div>
