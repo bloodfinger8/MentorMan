@@ -356,6 +356,10 @@
 					</div>
 					<div class="card-content card-content-padding" style="overflow: hidden; text-overflow: ellipsis; height: 200px;">
 						<input type="hidden" id="seq" name="seq" value="${list.essayboard_seq }">
+						<input type="hidden" id="essayNickname" name="essayNickname" value="${list.mentor_email }">
+				   		<input type="hidden" id="essayName" name="essayName" value="${list.member_name }">
+				   		<input type="hidden" id="memberSeq" name="memberSeq" value="${list.member_seq }">
+						
 						<a class="content-body" type="external" href="/mentor/essayboard/essayboardView?pg=${pg }&seq=${list.essayboard_seq}&mentors=${list.member_seq }">
 							<div class="mentor-post-title">${list.essayboard_title}
 							</div>
@@ -377,7 +381,8 @@
 							<!-- <i class="far fa-bookmark" aria-hidden="false"></i> -->
 							<c:if test="${list.essayboard_scrapFlag == 1}">
 								<img id="${list.essayboard_seq}" src="../image/scrapOkImg.png" width="13">
-							</c:if> <c:if test="${list.essayboard_scrapFlag == 0}">
+							</c:if> 
+							<c:if test="${list.essayboard_scrapFlag == 0}">
 								<img id="${list.essayboard_seq}" src="../image/scrapNoImg.png" width="13">
 							</c:if> 
 							<span id="ScrapDiv_${list.essayboard_seq}">${list.essayboard_scrap}</span>
@@ -396,7 +401,7 @@
 	<%-- 추천 에세이 끝 --%>
 
 	<%-- 신규 에세이 시작 --%>
-	<div class="mentor-post-block">
+	<%-- <div class="mentor-post-block">
 		<div class="block-title strong-title">
 			신규 에세이 <a type="external" href="/mentor/essayboard/essayboardList">더 보기</a>
 		</div>
@@ -417,12 +422,8 @@
 										</c:if>
 									</div>
 									<div class="mentor-info">
-										<div>
-											<strong class="mentor-name">${list.member_name }</strong> <small>멘토</small>
-										</div>
-										<div class="job">
-											<small> ${list.mentor_company } · ${list.mentor_department } </small>
-										</div>
+										<div><strong class="mentor-name">${list.member_name }</strong><small>멘토</small></div>
+										<div class="job"><small> ${list.mentor_company } · ${list.mentor_department }</small></div>
 									</div>
 								</div>
 							</a>
@@ -432,7 +433,11 @@
 						</div>
 
 						<div class="card-content card-content-padding" style="overflow: hidden; text-overflow: ellipsis; height: 200px;">
-							<input type="hidden" id="seq" name="seq" value="${list.essayboard_seq }">
+						<input type="hidden" id="seq" name="seq" value="${list.essayboard_seq }">
+						<input type="hidden" id="essayNickname" name="essayNickname" value="${list.mentor_email }">
+				   		<input type="hidden" id="essayName" name="essayName" value="${list.member_name }">
+				   		<input type="hidden" id="memberSeq" name="memberSeq" value="${list.member_seq }">
+							
 							<a class="content-body" type="external" href="/mentor/essayboard/essayboardView?pg=${pg }&seq=${list.essayboard_seq}&mentors=${list.member_seq }">
 								<div class="mentor-post-title">${list.essayboard_title }</div>
 								<div class="mentor-post-detail">
@@ -467,8 +472,10 @@
 			<div class="col-100 tablet-50 desktop-33"></div>
 			<input type="hidden" id="memNickname" name="memNickname" value="${memDTO.member_name}">
 		</div>
-	</div>
+	</div> --%>
 	<%-- 신규 에세이 끝 --%>
+	<input type="hidden" id="essayFlag" name="essayFlag" value="${flag}">
+	<input type="hidden" id="memNickname" name="memNickname" value="${memDTO.member_name}">
 	</div>
 </div>
 <script src="../js/mentor.js"></script>
