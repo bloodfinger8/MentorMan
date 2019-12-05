@@ -84,8 +84,10 @@ public class MenteeController {
 	 * @Author : kujun95, @Date : 2019. 11. 12.
 	 */
 	@RequestMapping(value = "mentorUserModify", method = RequestMethod.POST)
-	public String mentorUserModify(@RequestParam Map<String, String> map, @RequestParam("member_profile") MultipartFile member_profile, Model model, HttpSession session, HttpServletRequest request) {
+	public String mentorUserModify(@RequestParam Map<String, String> map, @RequestParam("member_profile") MultipartFile member_profile, Model model, HttpSession session) {
+		//이미지 변경시
 		if(member_profile.getOriginalFilename()!="") {
+			
 			MemberDTO memberDTO = (MemberDTO) session.getAttribute("memDTO");
 			String filePath = "C:/github/MentorMan/mentor/src/main/webapp/storage/"+memberDTO.getMember_email();
 			String fileName = member_profile.getOriginalFilename();
@@ -101,6 +103,14 @@ public class MenteeController {
 			}
 			map.put("member_profile", fileName);
 			menteeService.mentorUserModify(map);
+			
+			//세션을 새로 생성(이미지 업로드)
+			memberDTO.setMember_name(map.get("member_name"));
+			memberDTO.setMember_nickname(map.get("member_nickname"));
+			memberDTO.setMember_profile(fileName);
+			
+			session.setAttribute("memDTO", memberDTO);
+			
 		}else {
 			MemberDTO memberDTO = (MemberDTO) session.getAttribute("memDTO");
 			String filePath = "C:/github/MentorMan/mentor/src/main/webapp/storage/"+memberDTO.getMember_email();
@@ -120,8 +130,8 @@ public class MenteeController {
 			
 			//세션을 새로 생성
 			memberDTO.setMember_nickname(map.get("member_nickname"));
-			HttpSession session2 = request.getSession();
-			session2.setAttribute("memDTO", memberDTO);
+			memberDTO.setMember_name(map.get("member_name"));
+			session.setAttribute("memDTO", memberDTO);
 		}
 		
 		

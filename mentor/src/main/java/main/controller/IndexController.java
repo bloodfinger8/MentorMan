@@ -91,6 +91,19 @@ public class IndexController {
 	        		 essayboardDTO.setEssayboard_scrapFlag(cnt);
 	        	 }
 	         }
+	         //신규에세이
+	         for (EssayboardDTO essayboardDTO : newEssayList) {
+	        	 int seq = essayboardDTO.getEssayboard_seq();
+	        	 Map<String, Object> scrapMap = new HashMap<String, Object>();
+	        	 scrapMap.put("seq", seq);
+	        	 scrapMap.put("memEmail" , memberDTO.getMember_email());
+	        	 int cnt = essayboardService.getEssayboardScrap(scrapMap);
+	        	 //스크랩을 눌렀다면
+	        	 if(cnt == 1) {
+	        		 //flag 1 저장
+	        		 essayboardDTO.setEssayboard_scrapFlag(cnt);
+	        	 }
+	         }
 		}
 
 
