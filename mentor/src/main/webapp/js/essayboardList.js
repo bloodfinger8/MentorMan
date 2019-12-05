@@ -203,7 +203,7 @@ function essayjobType(pg , flag){
     		  }
     		}
     		if(endPage < totalP) {
-    		  atag += '<li class="next"><a id="paging" href="#" onclick="essayPaging('+(endPage+1)+'); return false;">다음</a></li>';
+    		  atag += '<li class="next"><a id="paging" href="#" onclick="essayPaging('+(endPage+1)+', '+ data.flag +'); return false;">다음</a></li>';
     		}
     		
     		$('.paging').append($('<ul/>', {

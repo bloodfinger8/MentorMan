@@ -8,7 +8,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -24,7 +23,6 @@ import mentor.service.MentorService;
 @Controller
 @RequestMapping("/main")
 public class IndexController {
-
 	@Autowired
 	private MeetingboardService meetingboardService;
 	@Autowired
@@ -67,11 +65,7 @@ public class IndexController {
 		// 추천에세이
 		List<EssayboardDTO> bestEssayList = essayboardService.getBestEssay(essayMap);
 		ModelAndView mav = new ModelAndView();
-		//회원 멘티 정보를 입력하지 않은 회원 체크
-		if(memberDTO != null) {
-			int menteeInfo_count = mentorService.getMenteeInfo_count(memberDTO.getMember_email());
-			mav.addObject("menteeInfo_count", menteeInfo_count);
-		}
+		
 
 		if(memberDTO != null) {
 			String nickname = memberDTO.getMember_nickname();
@@ -105,7 +99,6 @@ public class IndexController {
 	        	 }
 	         }
 		}
-
 
 		mav.addObject("meetingboardList", meetingboardList);
 		mav.addObject("mentorList", mentorList);

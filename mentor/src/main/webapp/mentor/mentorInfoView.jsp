@@ -38,7 +38,7 @@
 							</div>
 							<div class="chip chip-outline no-border-radius mentor-index" id="followView">
 								<div class="chip-label">
-									<span>팔로워 <strong class="highlight">${mentor_follow }</strong></span>
+									<span>팔로워 <strong class="highlight">${mentor_follow}</strong></span>
 								</div>
 							</div>
 						</div>
@@ -71,11 +71,11 @@
 					<c:if test="${email_check == null}">
 						<div class="btn-container">
 							<div class="profile-btn">
-								<a class="button col js-bookmark" type="external" data-remote="true" rel="nofollow" data-method="post" href="/mentor/member/loginForm"> 팔로우 </a>  <%--주소 수정 --%>
+								<a class="button col js-bookmark" type="external" data-remote="true" rel="nofollow" data-method="post" href="/mentor/member/loginForm"> 팔로우 </a>
 							</div>
 							<c:if test="${mentorDTO.mentor_email != email_check}">
 							<div class="profile-btn">
-								<a class="button button-fill" type="external" href="/mentor/member/loginForm">질문하기</a>  <%--주소 수정 --%>
+								<a class="button button-fill" type="external" href="/mentor/member/loginForm">질문하기</a>
 							</div>
 							</c:if>
 						</div>
@@ -84,22 +84,17 @@
 						<div class="btn-container">
 							<c:if test="${mentorDTO.mentor_email != email_check}">
 								<div class="profile-btn" id="menMail" data-email="${mentorDTO.mentor_email }">
-									<a class="button button-fill col js-bookmark mentor_${mentorDTO.mentor_seq}" id="followA" type="external" data-follow="${follow}" data-disable-with="..." type="external" data-remote="true" rel="nofollow" data-method="post" href="/relationships"> 팔로우 </a>  <%--주소 수정 --%>
+									<a class="button button-fill col js-bookmark mentor_${mentorDTO.mentor_seq}" id="followA" type="external" data-follow="${follow}" data-disable-with="..." type="external" data-remote="true" rel="nofollow" data-method="post" href="/relationships"> 팔로우 </a>
 								</div>
 								<div class="profile-btn">
-								 <c:if test="${menteeInfo_count == 0}">
-									
-								 
-								 	<c:if test="${memDTO.member_flag != 1}">
+								<c:if test="${memDTO != null}">
+								 	<c:if test="${memDTO.member_flag == 0}">
 								   		<a class="button button-fill" type="external"  href="/mentor/mentor/userInfoCheck">질문하기</a>
 									</c:if>
-									<c:if test="${memDTO.member_flag == 1}">
+									<c:if test="${memDTO.member_flag > 0}">
 								   		<a class="button button-fill" type="external" onclick="mentor_question_seq(${mentorDTO.mentor_seq},${pg})">질문하기</a>
 									</c:if>
-								 </c:if>
-								 <c:if test="${menteeInfo_count > 0}">
-									<a class="button button-fill" type="external" onclick="mentor_question_seq(${mentorDTO.mentor_seq},${pg})">질문하기</a>
-								 </c:if>
+								 </c:if>	
 								</div>
 							</c:if>
 						</div>
@@ -126,8 +121,8 @@
 			<div class="no-gap">
 				<div id='thanks-notes'>
 					<c:forEach var="review" items="${reviewList}">
-					<c:if test="${review.review_flag eq 0}">
 					<fmt:formatDate var="review_date" value="${review.review_date}" pattern="yyyy년 MM월 dd일"/>
+					<c:if test="${review.review_flag eq 0}">
 						<div class="block mentee-detail-block thanks-note-card">
 							<div class="mentee-info">
 								<div class="mentee-image img-circle">
@@ -153,9 +148,19 @@
 						</c:if>
 						<c:if test="${review.review_flag eq 1}">
 							<div class="no-gap">
-								<i class="fas fa-exclamation-circle" style="color:red;"></i> 관리자에의해 삭제된 댓글입니다.
-							</div>
-							<br/>
+							 <div id="thanks-notes">
+								<div class="block mentee-detail-block thanks-note-card" hidden="" style="display: block;">
+									<div class="mentee-info">
+										<div class="mentee-image img-circle">
+											<img width="150" height="150" src="../image/profile.jpg">
+										</div>
+										<div class="mentee-name">관리자</div>
+										<div class="sent-date">${review_date}</div>
+									</div>
+									<div class="thanks-note-body"><i class="fas fa-exclamation-circle" style="color:red;"></i>&nbsp;관리자에 의해 삭제된 후기입니다.</div>
+								</div>
+							</div> 
+						</div>
 						</c:if>
 					</c:forEach>
 				</div>
@@ -243,8 +248,6 @@
 		</section>
 	</div>
 <div id="dialog-background"></div>
-
-
 
 <script src="../js/mentor.js"></script>
 <script>
@@ -388,11 +391,8 @@
 							alert('err');
 						}
 					}); 
-					
-					 
-					
-					
-				}else{
+
+				} else{
 					followBtn.removeClass('button-fill');
 					var toastIcon = app.toast.create({
 						  text: '관심멘토에서 삭제 되었습니다',
@@ -403,8 +403,6 @@
 				}
 				
 				$('#followA').data('follow',data);
-				
-				
 				
 			},
 			error : function(){
@@ -418,6 +416,4 @@
 	$(document).on('click' , '#followView,#faqForm_backBtn' , function(){
 		$("#my-dialog,#dialog-background").toggle();
 	});
-	
-	
 </script>

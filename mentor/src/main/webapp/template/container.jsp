@@ -192,25 +192,16 @@
 							<div class="ask-button">
 								<c:if test="${memDTO != null}">
 									<c:if test="${mentor.mentor_email != memDTO.member_email}">
-										<c:if test="${menteeInfo_count == 0}">
-											<c:if test="${memDTO.member_flag != 1}">
-										   		<a class="question button button-small button-fill" id="mentorQuestions" type="external" href="/mentor/mentor/userInfoCheck">
-											          질문하기
-												</a>
-											</c:if>
-											<c:if test="${memDTO.member_flag == 1}">
-										   		 <a class="question button button-small button-fill" id="mentorQuestions" type="external" onclick="mentor_question_seq(${mentor.mentor_seq},${pg})"><!-- pg seq 가져가라 -->
-											          질문하기
-												</a>
-											</c:if>
-									    </c:if>
-									    <c:if test="${menteeInfo_count > 0}">
-									    	<c:if test="${mentor.mentor_email != memberDTO.member_email}">
-										        <a class="question button button-small button-fill" id="mentorQuestions" type="external" onclick="mentor_question_seq(${mentor.mentor_seq},${pg})"><!-- pg seq 가져가라 -->
-											          질문하기
-												</a>
-											</c:if>
-									 	</c:if>
+										<c:if test="${memDTO.member_flag == 0}">
+									   		<a class="question button button-small button-fill" id="mentorQuestions" type="external" href="/mentor/mentor/userInfoCheck">
+										          질문하기
+											</a>
+										</c:if>
+										<c:if test="${memDTO.member_flag == 1 or memDTO.member_flag == 2}">
+									   		<a class="question button button-small button-fill" id="mentorQuestions" type="external" onclick="mentor_question_seq(${mentor.mentor_seq},${pg})"><!-- pg seq 가져가라 -->
+										          질문하기
+											</a>
+										</c:if>
 									</c:if>
 								</c:if>
 								<c:if test="${memDTO == null}">
@@ -266,23 +257,15 @@
 					<div class="ask-button">
 				   	<c:if test="${memDTO != null}">
 				    	<c:if test="${honorMentor.mentor_email != memDTO.member_email}">
-					        <c:if test="${menteeInfo_count == 0}">
-								<c:if test="${memDTO.member_flag != 1}">
-							   		<a class="question button button-small button-fill" id="mentorQuestions" type="external" href="/mentor/mentor/userInfoCheck">
-								          질문하기
-									</a>
-								</c:if>
-								<c:if test="${memDTO.member_flag == 1}">
-							   		 <a class="question button button-small button-fill" id="mentorQuestions" type="external" onclick="mentor_question_seq(${honorMentor.mentor_seq},${pg})"><!-- pg seq 가져가라 -->
-								          질문하기
-									</a>
-								</c:if>
-						    </c:if>
-						    
-							<c:if test="${menteeInfo_count > 0}">
-							   <a class="question button button-small button-fill" id="mentorQuestions" type="external" onclick="mentor_question_seq(${honorMentor.mentor_seq},${pg})"><!-- pg seq 가져가라 -->
-							     질문하기
-							   </a>
+					        <c:if test="${memDTO.member_flag == 0}">
+						   		<a class="question button button-small button-fill" id="mentorQuestions" type="external" href="/mentor/mentor/userInfoCheck">
+							          질문하기
+								</a>
+							</c:if>
+							<c:if test="${memDTO.member_flag == 1 or memDTO.member_flag == 2}">
+						   		 <a class="question button button-small button-fill" id="mentorQuestions" type="external" onclick="mentor_question_seq(${mentor.mentor_seq},${pg})"><!-- pg seq 가져가라 -->
+							          질문하기
+								</a>
 							</c:if>
 						</c:if>
 					</c:if>	
