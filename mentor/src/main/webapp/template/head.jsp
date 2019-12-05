@@ -64,7 +64,6 @@
 								<li><a type="external" href="/mentor/mentor/mentorfindForm?pg=1">멘토찾기</a></li>
 								<li><a type="external" href="/mentor/essayboard/essayboardList">에세이</a></li>
 								<li><a type="external" href="/mentor/meetingboard/meetingboardList">모임</a></li>
-								<li><a type="external" href="/mentor/mentor/mentorapplyForm">멘토지원하기</a></li>
 							</ul>
 						</div>
 						<hr style="background-color: #c8c7cc;">

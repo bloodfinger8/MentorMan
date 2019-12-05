@@ -8,32 +8,33 @@
 					<div class="list no-hairlines no-hairlines-between">
 						<ul>
 							<li>
-								<a class="list-button color-gray item-link" id="menteeUserSetting" 
+								<a class="list-button color-gray item-link" id="menteeUserSetting"
 									type="external" href="/mentor/mentee/menteeUserForm">내 정보</a>
 							</li>
 							<c:if test="${memberDTO.member_flag == 1}">
 								<li>
-									<a class="list-button color-gray item-link" id="mentorProfile" 
+									<a class="list-button color-gray item-link" id="mentorProfile"
 										type="external" href="/mentor/mentor/mentorInfoForm">멘토 정보</a>
 								</li>
 							</c:if>
 							<c:if test="${memberDTO.member_flag == 0 or memberDTO.member_flag == 2}">
 								<li>
-									<a class="list-button color-gray item-link" id="menteeProfile" 
+									<a class="list-button color-gray item-link" id="menteeProfile"
 										type="external" href="/mentor/mentee/menteeStudentProfile">멘티 정보</a>
 								</li>
 							</c:if>
 							<li>
-								<a class="list-button color-gray item-link" id="menteeOrderHistory" 
+								<a class="list-button color-gray item-link" id="menteeOrderHistory"
 									type="external"	href="/mentor/mentee/menteeOrderHistory">결제 내역</a>
 							</li>
 							<li>
-								<a class="list-button color-gray item-link" id="menteePassword" 
+								<a class="list-button color-gray item-link" id="menteePassword"
 									type="external"	href="/mentor/mentee/menteePassword">비밀번호 설정</a>
 							</li>
 						</ul>
 					</div>
 				</div>
+			</div>
 			<div class="col-100 tablet-80">
 				<jsp:include page="${display2}" />
 			</div>
