@@ -384,7 +384,7 @@
 	<%-- 추천 에세이 끝 --%>
 
 	<%-- 신규 에세이 시작 --%>
-	<%-- <div class="mentor-post-block">
+	<div class="mentor-post-block">
 		<div class="block-title strong-title">
 			신규 에세이 <a type="external" href="/mentor/essayboard/essayboardList">더 보기</a>
 		</div>
@@ -455,7 +455,7 @@
 			<div class="col-100 tablet-50 desktop-33"></div>
 			<input type="hidden" id="memNickname" name="memNickname" value="${memDTO.member_name}">
 		</div>
-	</div> --%>
+	</div>
 	<%-- 신규 에세이 끝 --%>
 	<input type="hidden" id="essayFlag" name="essayFlag" value="${flag}">
 	<input type="hidden" id="memNickname" name="memNickname" value="${memDTO.member_name}">
