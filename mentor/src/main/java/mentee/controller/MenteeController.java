@@ -121,8 +121,10 @@ public class MenteeController {
 			
 			//세션을 새로 생성
 			memberDTO.setMember_nickname(map.get("member_nickname"));
+			memberDTO.setMember_profile(fileName);
 			HttpSession session2 = request.getSession();
 			session2.setAttribute("memDTO", memberDTO);
+			
 		}
 		
 		
