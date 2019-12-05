@@ -65,11 +65,7 @@ public class IndexController {
 		// 추천에세이
 		List<EssayboardDTO> bestEssayList = essayboardService.getBestEssay(essayMap);
 		ModelAndView mav = new ModelAndView();
-		//회원 멘티 정보를 입력하지 않은 회원 체크
-		if(memberDTO != null) {
-			int menteeInfo_count = mentorService.getMenteeInfo_count(memberDTO.getMember_email());
-			mav.addObject("menteeInfo_count", menteeInfo_count);
-		}
+		
 
 		if(memberDTO != null) {
 			String nickname = memberDTO.getMember_nickname();

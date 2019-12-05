@@ -121,8 +121,10 @@ public class MenteeController {
 			
 			//세션을 새로 생성
 			memberDTO.setMember_nickname(map.get("member_nickname"));
+			memberDTO.setMember_profile(fileName);
 			HttpSession session2 = request.getSession();
 			session2.setAttribute("memDTO", memberDTO);
+			
 		}
 		
 		
@@ -159,6 +161,8 @@ public class MenteeController {
 				map.put("mentee_email", mentee.getMenteeStudent_email());
 				menteeService.menteeStudentInput(map);
 			}else {
+				memberDTO.setMember_flag(2);
+				session.setAttribute("memDTO", memberDTO);
 				map.put("mentee_email", null);
 				menteeService.menteeStudentInput(map);
 			}
@@ -192,6 +196,8 @@ public class MenteeController {
 			map.put("mentee_email", mentee.getMenteeEmployee_email());
 			menteeService.menteeEmployeeInput(map);
 		}else {
+			memberDTO.setMember_flag(2);
+			session.setAttribute("memDTO", memberDTO);
 			map.put("mentee_email", null);
 			menteeService.menteeEmployeeInput(map);
 		}

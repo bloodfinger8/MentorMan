@@ -34,9 +34,9 @@
 						</li>
 					</ul>
 				</div>
-			</div>
-			<div class="col-100 tablet-80">
-				<jsp:include page="${display2}" />
+				<div class="col-100 tablet-80">
+					<jsp:include page="${display2}" />
+				</div>
 			</div>
 		</div>
 	</div>
