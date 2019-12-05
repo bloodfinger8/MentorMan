@@ -218,13 +218,6 @@ public class MenteeController {
 		MemberDTO memberEmail = (MemberDTO) session.getAttribute("memDTO");
 		MemberDTO memberDTO = menteeService.menteePasswordCheck(memberEmail.getMember_email());
 		
-		System.out.println(currentPassword+"--------"+memberDTO.getMember_pwd());
-		
-//		if(!(memberDTO.getMember_pwd().equals(currentPassword))) {
-//			return "no";
-//		}else {
-//			return "ok";
-//		}
 		if(passwordEncoder.matches(currentPassword, memberDTO.getMember_pwd())) {
 			return "ok";
 		} else {

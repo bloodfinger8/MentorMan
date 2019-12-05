@@ -160,7 +160,6 @@ $('#menteePassword_btn').on('click', function(){
 			data: 'currentPassword='+$('#currentPassword').val(),
 			dataType: 'text',
 			success: function(data){
-				alert(data);
 				if(data=="ok"){
 					$.ajax({
 						type: 'post',
