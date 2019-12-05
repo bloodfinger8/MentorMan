@@ -59,5 +59,7 @@ public interface AdminmemberDAO {
 
 	public List<AdminmentorDTO> mentorClassfication(Map<String, Integer> map);
 
+	public void setMenteeUpdateAlarm(int check);
+
 
 }

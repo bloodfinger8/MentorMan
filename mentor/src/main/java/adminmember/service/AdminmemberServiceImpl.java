@@ -144,6 +144,11 @@ public class AdminmemberServiceImpl implements AdminmemberService{
 	public void setMentorUpdateAlarm(int check) {
 		adminmemberDAO.setMentorUpdateAlarm(check);
 	}
+
+	@Override
+	public void setMenteeUpdateAlarm(int check) {
+		adminmemberDAO.setMenteeUpdateAlarm(check);
+	}
 	
 	
 }

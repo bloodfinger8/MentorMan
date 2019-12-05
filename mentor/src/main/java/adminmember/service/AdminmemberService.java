@@ -60,4 +60,6 @@ public interface AdminmemberService {
 
 	public void setMentorUpdateAlarm(int check);
 
+	public void setMenteeUpdateAlarm(int check);
+
 }
