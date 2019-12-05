@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<link rel="stylesheet" media="all" href="https://d2ljmlcsal6xzo.cloudfront.net/assets/application-ec82e4fd3581863fb7280ad4cb1183138cef57405f46a2d44eb51efb8a40a133.css" data-turbolinks-track="reload" />
+
 <div class="page navbar-fixed mentor_posts show" data-name="mentor_posts-show">
 	<div class="page-content">
 		<div class="post-block-container">
@@ -56,8 +56,16 @@
 							</div>
 							<a class="button col js-bookmark mentor2" id="followA" data-disable-with="..." type="external" data-remote="true" rel="nofollow" data-method="post" href="#"><!-- 주소 수정 -->
 							팔로우 </a>
-							<a class="button button-small button-fill" type="external" href="#"><!-- 주소 수정 -->
-							질문하기 </a>
+							<c:if test="${memDTO.member_flag == 0}">
+							    <a class="question button button-small button-fill" id="mentorQuestions" type="external" href="/mentor/mentor/userInfoCheck">
+							        질문하기
+							    </a>
+							</c:if>
+							<c:if test="${memDTO.member_flag == 1 or memDTO.member_flag == 2}">
+							    <a class="question button button-small button-fill" id="mentorQuestions" type="external" onclick="mentor_question_seq(${mentorDTO.mentor_seq},${pg})"><!-- pg seq 가져가라 -->
+							        질문하기
+							    </a>
+							</c:if>
 						</div>
 						<div class="job">
 							 ${mentorDTO.mentor_company } · ${mentorDTO.mentor_department }
@@ -104,4 +112,5 @@
 <input type="hidden" id="followVal" name="followVal" value="${follow}">
 
 <script src="../js/deleteEssayboard.js"></script>
+<script src="../js/mentor.js"></script>
 <script src="../js/essayboardView.js"></script>
