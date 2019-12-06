@@ -4,8 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +22,10 @@ import adminmember.bean.AdminmentorBoardListDTO;
 import adminmember.bean.AdminmentorDTO;
 import adminmember.bean.AdminmentorSalesListDTO;
 import adminmember.service.AdminmemberService;
+import meetingboard.bean.ReviewDTO;
+import member.bean.MemberDTO;
+import mentor.bean.MentorDTO;
+import mentor.service.MentorService;
 
 
 /** 
@@ -51,10 +58,10 @@ public class AdminMemberController {
 		map.put("startNum", startNum);
 		map.put("endNum", endNum);
 		map.put("state", state);
-		if(state == 0)
+		if(state == 0) {
 			list = adminmemberService.getAdminmemberList(map);
+		}
 		else if(state == 1) {
-			System.out.println(state);
 			list = adminmemberService.memberClassfication(map);
 		}
 		else if(state == 2) {
@@ -82,7 +89,8 @@ public class AdminMemberController {
 	@ResponseBody
 	public ModelAndView adminmemberSearch(ModelAndView mav,
 									@RequestParam (required=false,defaultValue="1") String pg,
-									@RequestParam String adminmemberKeyword) {
+									@RequestParam String adminmemberKeyword,
+									@RequestParam (required=false,defaultValue="0")int state) {
 		int endNum = Integer.parseInt(pg)*10;
 		int startNum = endNum-9;
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -100,11 +108,21 @@ public class AdminMemberController {
 		
 		mav.addObject("adminmemberKeyword",adminmemberKeyword);
 		mav.addObject("list", list);
+		mav.addObject("state", state);
 		mav.addObject("pg", pg);
 		mav.addObject("adminmemberPaging", adminmemberPaging);
 		mav.addObject("display", "/adminmember/adminmemberList.jsp");
-		mav.setViewName("/admin/adminMain");
+		mav.setViewName("/admin/adminMain"); 
 		return mav;
+	}
+	
+	/* description : 멤버삭제 */
+	@RequestMapping(value="deleteMember",method = RequestMethod.POST)
+	@ResponseBody
+	public void deleteMember(@RequestParam String[] check) {
+		Map<String, String[]> map = new HashMap<String, String[]>();
+		System.out.println(check[0]);
+		adminmemberService.deleteMember(map);
 	}
 /*----멘토--------------------------------------------------------------------------------------------------*/
 	/* description : 멘토리스트 화면페이지 */
@@ -230,6 +248,18 @@ public class AdminMemberController {
 		return mav;
 	}
 	
+	@RequestMapping(value = "adminmentorView", method = RequestMethod.GET)
+	public ModelAndView adminmentorView(@RequestParam String seq) {
+		int mentor_seq = Integer.parseInt(seq);
+		AdminmentorDTO  adminmentorDTO = adminmemberService.adminmentorView(mentor_seq);
+		ModelAndView mav = new ModelAndView();
+		
+		mav.addObject("adminmentorDTO",adminmentorDTO);
+		mav.addObject("display", "/adminmember/adminmentorView.jsp");
+		mav.setViewName("/admin/adminMain");
+		return mav;
+	}
+	
 	/* description : 멘토 승인 */
 	@RequestMapping(value="adminmentorSuccess",method = RequestMethod.POST)
 	@ResponseBody
@@ -237,6 +267,7 @@ public class AdminMemberController {
 		Map<String, String[]> map = new HashMap<String, String[]>();
 		map.put("check", check);
 		adminmemberService.adminmentorSuccess(map);
+		adminmemberService.adminflagMentor(map);
 	}
 	
 	/* description : 멘토승인 거절 */
@@ -284,7 +315,7 @@ public class AdminMemberController {
 		
 		//페이징 처리
 		int totalA = adminmemberService.getMenteeTotalA();
-		
+
 		adminmemberPaging.setCurrentPage(Integer.parseInt(pg));
 		adminmemberPaging.setPageBlock(3);
 		adminmemberPaging.setPageSize(10);
