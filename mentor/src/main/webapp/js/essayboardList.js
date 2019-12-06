@@ -203,7 +203,7 @@ function essayjobType(pg , flag){
     		  }
     		}
     		if(endPage < totalP) {
-    		  atag += '<li class="next"><a id="paging" href="#" onclick="essayPaging('+(endPage+1)+'); return false;">다음</a></li>';
+    		  atag += '<li class="next"><a id="paging" href="#" onclick="essayPaging('+(endPage+1)+', '+ data.flag +'); return false;">다음</a></li>';
     		}
     		
     		$('.paging').append($('<ul/>', {
@@ -286,7 +286,6 @@ function essayjobType(pg , flag){
     									
     								},
     								error : function(err){
-    									alert('err');
     									console.log(err);
     								}
     							});
@@ -359,6 +358,7 @@ $(document).ready(function() {
 			var essayboardEmail = $(this).closest('div').prev().children().first().next().val();
 			var essayName = $(this).closest('div').prev().children().first().next().next().val();
 			var memberSeq = $(this).closest('div').prev().children().first().next().next().next().val();
+			alert(seq + " , "+ essayboardEmail+","+ essayName +","+memberSeq)
 			
 			if($(this).children().last().val() == 0){
 				$("#"+seq).prop("src", "../image/scrapOkImg.png");

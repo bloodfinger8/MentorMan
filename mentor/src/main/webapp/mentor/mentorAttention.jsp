@@ -2,8 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<div class="page navbar-fixed me-relationships index"
-	data-name="relationships-index">
+<div class="page navbar-fixed me-relationships index" data-name="relationships-index">
 	<div class="page-content">
 		<div class="block top-block">
 			<h1 class="title">나의 관심 멘토</h1>
@@ -13,7 +12,7 @@
 			<c:forEach var="mentor" items="${list}" >
 				<div class="col-100 tablet-50">
 					<div class="card mentor-card">
-						<a type="external" href="/mentors/52826">
+						<a type="external" href="/mentor/mentor/mentorInfoView?mentors=${mentor.member_seq}">
 							<div style="background-image: url()" class="cover-image"></div>
 	
 							<div class="mentor-image img-circle">
@@ -44,9 +43,16 @@
 						</div>
 	
 						<div class="ask-button">
-							<a class="question button button-small button-fill" id="mentorQuestions" type="external" onclick="mentor_question_seq(${mentor.mentor_seq})"><!-- pg seq 가져가라 -->
-					          질문하기
-							</a>
+					   		<c:if test="${memDTO.member_flag == 0}">
+						   		<a class="question button button-small button-fill" id="mentorQuestions" type="external" href="/mentor/mentor/userInfoCheck">
+							          질문하기
+								</a>
+							</c:if>
+							<c:if test="${memDTO.member_flag == 1 or memDTO.member_flag == 2}">
+						   		 <a class="question button button-small button-fill" id="mentorQuestions" type="external" onclick="mentor_question_seq(${mentor.mentor_seq},${pg})"><!-- pg seq 가져가라 -->
+							          질문하기
+								</a>
+							</c:if>
 						</div>
 					</div>
 				</div>

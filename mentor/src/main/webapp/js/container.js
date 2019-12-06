@@ -10,6 +10,7 @@ $(document).ready(function(){
 });
 
 
+
 // 메인 화면 에세이 관련 
 // 스크랩 버튼을 누를시
 $(document).ready(function() {
@@ -28,7 +29,7 @@ $(document).ready(function() {
 			var memberSeq = $(this).closest('div').prev().children().first().next().next().next().val();
 			
 			if($(this).children().last().val() == 0){
-				$("#"+seq).prop("src", "../image/scrapOkImg.png");
+				$("."+seq).prop("src", "../image/scrapOkImg.png");
 				$(this).children().last().val(1);
 				
 				var toastIcon = app.toast.create({
@@ -40,7 +41,7 @@ $(document).ready(function() {
 				toastIcon.open();
 				
 			} else {
-				$("#"+seq).prop("src", "../image/scrapNoImg.png");
+				$("."+seq).prop("src", "../image/scrapNoImg.png");
 				$(this).children().last().val(0);
 			}
 			var scrapFlag = $(this).children().last().val()
@@ -57,8 +58,8 @@ $(document).ready(function() {
 				data : sendData,
 				dataType : 'text',
 				success : function(data) {
-					$('#ScrapDiv_'+seq).empty();
-					$('#ScrapDiv_'+seq).html(data);
+					$('.ScrapDiv_'+seq).empty();
+					$('.ScrapDiv_'+seq).html(data);
 					//스크랩 할때 알림을 보낸다
 				if(scrapFlag == 1){
 						let memNickname = $('#memNickname').val(); //스크랩을 누른사람
@@ -67,11 +68,6 @@ $(document).ready(function() {
 						let essayboard_seq = seq; //에세이 seq
 						//alert(memNickname+',' + nickname +',' + receiverEmail +',' + seq);
 						
-						if(socket){
-							let socketMsg = "scrap," + memNickname +","+ memberSeq +","+ receiverEmail +","+ essayboard_seq;
-							console.log("msgmsg : " + socketMsg);
-							socket.send(socketMsg);
-						}
 						var AlarmData = {
 								"myAlarm_receiverEmail" : receiverEmail,
 								"myAlarm_callerNickname" : memNickname,
@@ -86,7 +82,11 @@ $(document).ready(function() {
 							contentType: "application/json; charset=utf-8",
 							dataType : 'text',
 							success : function(data){
-								//alert(data);
+								if(socket){
+									let socketMsg = "scrap," + memNickname +","+ memberSeq +","+ receiverEmail +","+ essayboard_seq;
+									console.log("msgmsg : " + socketMsg);
+									socket.send(socketMsg);
+								}
 							},
 							error : function(err){
 								console.log(err);

@@ -1,5 +1,5 @@
 
-
+//정보 수정
 $('#menteeUser_Save').on('click', function(){
 	$('#member_name_error').empty();
 	$('#member_nickname_error').empty();
@@ -160,7 +160,6 @@ $('#menteePassword_btn').on('click', function(){
 			data: 'currentPassword='+$('#currentPassword').val(),
 			dataType: 'text',
 			success: function(data){
-				alert(data);
 				if(data=="ok"){
 					$.ajax({
 						type: 'post',
@@ -262,20 +261,27 @@ $('#delete_btn').on('click', function(){
 			dataType: 'text',
 			success: function(data){
 				if(data =='right'){
-					if(confirm('정말 회원을 탈퇴하시겠습니까?')){
-						$.ajax({
-							type: 'post',
-							url: '/mentor/mentee/memberDeleteSuccess',
-							success: function(){
-								location.href='/mentor/main/index';
-							},
-							error: function(){
-								alert('에러');
-							}
-						});
-					}else {
-						return '';
-					}
+				   var toastWithCallback = app.toast.create({
+				      text: '정말로 삭제하시겠습니까?',
+				      position: 'center',
+				      closeButton: true,
+				      on: {
+				         close: function() {
+				            $.ajax({
+				               type : 'post',
+				               url : '/mentor/mentee/memberDeleteSuccess',
+				               success : function(data){
+				                  location.href='/mentor/main/index';
+				               },
+				               error : function(){
+				                  
+				               }
+				            });
+				         }
+				      }
+				   });   
+				   toastWithCallback.open();
+					
 				}else {
 					$('#currentPassword_error').text('패스워드를 일치하지 않습니다.').css('color','red');
 					$('#currentPassword_error').css('font-size','8pt');
