@@ -263,7 +263,7 @@
 								</a>
 							</c:if>
 							<c:if test="${memDTO.member_flag == 1 or memDTO.member_flag == 2}">
-						   		 <a class="question button button-small button-fill" id="mentorQuestions" type="external" onclick="mentor_question_seq(${mentor.mentor_seq},${pg})"><!-- pg seq 가져가라 -->
+						   		 <a class="question button button-small button-fill" id="mentorQuestions" type="external" onclick="mentor_question_seq(${honorMentor.mentor_seq},${pg})"><!-- pg seq 가져가라 -->
 							          질문하기
 								</a>
 							</c:if>
@@ -363,12 +363,12 @@
 							data-method="post" href="" style="right: 0px; position: unset; margin: 0px 0px;"> 
 							<!-- <i class="far fa-bookmark" aria-hidden="false"></i> -->
 							<c:if test="${list.essayboard_scrapFlag == 1}">
-								<img id="${list.essayboard_seq}" src="../image/scrapOkImg.png" width="13">
+								<img class="${list.essayboard_seq}" src="../image/scrapOkImg.png" width="13">
 							</c:if> 
 							<c:if test="${list.essayboard_scrapFlag == 0}">
-								<img id="${list.essayboard_seq}" src="../image/scrapNoImg.png" width="13">
+								<img class="${list.essayboard_seq}" src="../image/scrapNoImg.png" width="13">
 							</c:if> 
-							<span id="ScrapDiv_${list.essayboard_seq}">${list.essayboard_scrap}</span>
+							<span class="ScrapDiv_${list.essayboard_seq}">${list.essayboard_scrap}</span>
 							<!-- 스크랩 끌고와야 함 --> 
 							<input type="hidden" id="scrapFlag"	name="scrapFlag" value="${list.essayboard_scrapFlag}">
 						</a>
@@ -384,7 +384,7 @@
 	<%-- 추천 에세이 끝 --%>
 
 	<%-- 신규 에세이 시작 --%>
-	<%-- <div class="mentor-post-block">
+	<div class="mentor-post-block">
 		<div class="block-title strong-title">
 			신규 에세이 <a type="external" href="/mentor/essayboard/essayboardList">더 보기</a>
 		</div>
@@ -439,11 +439,12 @@
 							<a class="color-gray js-bookmark" id="scrap" type="externalScrap" data-remote="true" rel="nofollow"
 								data-method="post" href="" style="right: 0px; position: unset; margin: 0px 0px;"> <!-- <i class="far fa-bookmark" aria-hidden="false"></i> -->
 								<c:if test="${list.essayboard_scrapFlag == 1}">
-									<img id="${list.essayboard_seq}" src="../image/scrapOkImg.png" width="13">
-								</c:if> <c:if test="${list.essayboard_scrapFlag == 0}">
-									<img id="${list.essayboard_seq}" src="../image/scrapNoImg.png" width="13">
+									<img class="${list.essayboard_seq}" src="../image/scrapOkImg.png" width="13">
 								</c:if> 
-								<span id="ScrapDiv_${list.essayboard_seq}">${list.essayboard_scrap}</span>
+								<c:if test="${list.essayboard_scrapFlag == 0}">
+									<img class="${list.essayboard_seq}" src="../image/scrapNoImg.png" width="13">
+								</c:if> 
+								<span class="ScrapDiv_${list.essayboard_seq}">${list.essayboard_scrap}</span>
 							 	<input type="hidden" id="scrapFlag"	name="scrapFlag" value="${list.essayboard_scrapFlag}">
 							</a>
 							<div class="created-at"></div>
@@ -455,7 +456,7 @@
 			<div class="col-100 tablet-50 desktop-33"></div>
 			<input type="hidden" id="memNickname" name="memNickname" value="${memDTO.member_name}">
 		</div>
-	</div> --%>
+	</div>
 	<%-- 신규 에세이 끝 --%>
 	<input type="hidden" id="essayFlag" name="essayFlag" value="${flag}">
 	<input type="hidden" id="memNickname" name="memNickname" value="${memDTO.member_name}">
