@@ -125,7 +125,7 @@ public class AdminMemberController {
 	@ResponseBody
 	public void deleteMember(@RequestParam String[] check) {
 		Map<String, String[]> map = new HashMap<String, String[]>();
-		System.out.println(check[0]);
+		map.put("check", check);
 		adminmemberService.deleteMember(map);
 	}
 /*----멘토--------------------------------------------------------------------------------------------------*/
