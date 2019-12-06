@@ -56,6 +56,7 @@ $(".row > a").on("click",function(event, data){// a태그 클릭시 작동
     }
 	
     essayjobType(page, flag);
+
 });
 
 // 직무유형 버튼 값 처리
