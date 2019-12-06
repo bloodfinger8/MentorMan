@@ -17,46 +17,46 @@ $(document).ready(function(){
 $(".row > a").on("click",function(event, data){// a태그 클릭시 작동
 	event.preventDefault(); // 클릭된 태그의 본래의 기능을 막음 즉, a태그 본래 기능을 막음
 	
-		$('#gap').empty();
-		$('.paging').empty();
-		$('.essayName').empty();
-		$('#replace').val(jobs);
-		
-		var page;
-		
-		var flag = $('#essayFlag').val();
-		
-		if(flag == 0){
-			$('.essayName').text('신규 에세이');
-		} else if (flag == 1) {
-			$('.essayName').text('추천 에세이');
-		}
-		
-		// data(페이지 값)이 있으면 page에 값 부여
-		if(data != null){
-			 page = data.pg;				
-		}
-		
-		// 직무유형 버튼 on off 색상 변경
-		if($(this).hasClass("button color-gray active")){
-        	$(this).removeClass('active');
-        } else {
-        	$(this).addClass('active');
-        }
-		
-        var txt = $(this).attr("href");// href에 입력된 값을 가져옴 즉 클릭된 a의 job_code를 가져옴
-        var dateIndex = jobs.indexOf(txt);
-        
-        // 버튼 클릭시 배열에 같은 job_code가 있으면 삭제
-        // 없으면 job_code를 넣는다.
-        if (dateIndex==-1){ 
-            jobs.push(txt);
-        }else{ 
-            jobs.splice(dateIndex, 1);
-        }
-		
-        essayjobType(page, flag);
+	$('#gap').empty();
+	$('.paging').empty();
+	$('.essayName').empty();
+	$('#replace').val(jobs);
 	
+	var page;
+	
+	var flag = $('#essayFlag').val();
+	
+	if(flag == 0){
+		$('.essayName').text('신규 에세이');
+	} else if (flag == 1) {
+		$('.essayName').text('추천 에세이');
+	}
+	
+	// data(페이지 값)이 있으면 page에 값 부여
+	if(data != null){
+		 page = data.pg;				
+	}
+	
+	// 직무유형 버튼 on off 색상 변경
+	if($(this).hasClass("button color-gray active")){
+    	$(this).removeClass('active');
+    } else {
+    	$(this).addClass('active');
+    }
+	
+    var txt = $(this).attr("href");// href에 입력된 값을 가져옴 즉 클릭된 a의 job_code를 가져옴
+    var dateIndex = jobs.indexOf(txt);
+    
+    // 버튼 클릭시 배열에 같은 job_code가 있으면 삭제
+    // 없으면 job_code를 넣는다.
+    if (dateIndex==-1){ 
+        jobs.push(txt);
+    }else{ 
+        jobs.splice(dateIndex, 1);
+    }
+	
+    essayjobType(page, flag);
+
 });
 
 // 직무유형 버튼 값 처리
