@@ -128,10 +128,8 @@ public class MenteeController {
 			
 			//세션을 새로 생성
 			memberDTO.setMember_nickname(map.get("member_nickname"));
-
 			memberDTO.setMember_name(map.get("member_name"));
 			session.setAttribute("memDTO", memberDTO);
-
 		}
 
 
