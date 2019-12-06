@@ -46,6 +46,7 @@ public class KakaoController {
         MemberDTO memDTO = new MemberDTO();
         memDTO.setMember_email(email);
         memDTO.setMember_nickname(nickName);
+        memDTO.setMember_flag(0);
         if(image == null) {
         	memDTO.setMember_profile("profile.jpg");
         } else {
