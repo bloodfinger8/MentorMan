@@ -32,9 +32,9 @@ import com.amazonaws.services.s3.model.S3ObjectInputStream;
 
 public class S3Util {
 	
-	private static final String accessKey = "AKIAJ455UR232QTMIYIQ";
-	private static final String secretKey = "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";
-	private static final String bucketName = "mentors-bucket";
+	private static final String accessKey = "";
+	private static final String secretKey = "";
+	private static final String bucketName = "";
 	private AmazonS3 s3Client;
 	//private Regions regions = Regions.AP_NORTHEAST_2;
     
