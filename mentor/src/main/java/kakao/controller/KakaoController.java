@@ -25,6 +25,7 @@ public class KakaoController {
 		JsonNode accessToken = node.get("access_token");
 		// 사용자 정보
 		JsonNode userInfo = KakaoApi.getKakaoUserInfo(accessToken);
+		
 		String id = null;
 		String email = null;
 		String nickName = null;
