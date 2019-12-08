@@ -22,7 +22,12 @@
 					<div class="col-sm-12">
 						<div class="wrap">
         					<div class="box1">
-        						<img src="../image/${adminmentorDTO.member_profile }" width="100" height="100" style="border-radius: 50%;">
+        					<c:if test="${adminmentorDTO.member_profile != 'profile.jpg'}">
+								<img src="../storage/${adminmentorDTO.mentor_email}/${adminmentorDTO.member_profile}" width="100" height="100" style="border-radius: 50%;">
+							</c:if>
+							<c:if test="${adminmentorDTO.member_profile == 'profile.jpg'}">
+								<img src="../image/profile.jpg" width="100" height="100" style="border-radius: 50%;">
+							</c:if>
         					</div>
         					<div class="box2">
             					<div class="child1">
