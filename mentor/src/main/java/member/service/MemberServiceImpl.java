@@ -31,7 +31,6 @@ public class MemberServiceImpl implements MemberService {
 
 	/**
 	 * @Title : 닉네임 중복확인.
-	 * @author : ginkgo1928 @date : 2019. 11. 5.
 	 */
 	@Override
 	public MemberDTO writeNicknamecheck(String member_nickname) {
@@ -40,7 +39,6 @@ public class MemberServiceImpl implements MemberService {
 
 	/**
 	 * @Title : 이메일 중복확인
-	 * @author : ginkgo1928 @date : 2019. 11. 5.
 	 */
 	@Override
 	public MemberDTO writeEmailCheck(String member_email) {
@@ -126,17 +124,14 @@ public class MemberServiceImpl implements MemberService {
 	/* 비밀번호 찾기 */
 	@Override
 	public MemberDTO setmemberpwd(Map<String, String> map) {
-		return memberDAO.setsetmemberpwd(map);
+		return memberDAO.setmemberpwd(map);
 	}
 
-	/**
-	 * @Title : 이메일 인증을 하고 새로운 비밀번호로 변경
-	 * @author : ginkgo1928
-	 * @date : 2019. 11. 13.
-	 */
 	@Override
-	public MemberDTO newPwdCommit(Map<String, String> map) {
-		return memberDAO.newPwdCommit(map);
+	public void newPwdCommit(Map<String, String> map) {
+		String encPassword = passwordEncoder.encode(map.get("member_pwd"));
+		map.replace("member_pwd", encPassword);
+		memberDAO.newPwdCommit(map);
 	}
 
 	/**
