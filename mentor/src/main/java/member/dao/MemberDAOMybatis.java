@@ -45,15 +45,14 @@ public class MemberDAOMybatis implements MemberDAO {
 	}
 
 	@Override
-	public MemberDTO setsetmemberpwd(Map<String, String> map) {
-		memberDTO = sqlSession.selectOne("memberSQL.setsetmemberpwd", map);
+	public MemberDTO setmemberpwd(Map<String, String> map) {
+		memberDTO = sqlSession.selectOne("memberSQL.setmemberpwd", map);
 		return memberDTO;
 	}
 
 	@Override
-	public MemberDTO newPwdCommit(Map<String, String> map) {
+	public void newPwdCommit(Map<String, String> map) {
 		sqlSession.update("memberSQL.newPwdCommit", map);
-		return memberDTO;
 	}
 
 	/**
