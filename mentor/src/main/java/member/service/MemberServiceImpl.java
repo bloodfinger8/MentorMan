@@ -11,13 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import member.bean.AlarmDTO;
 import member.bean.MemberDTO;
 import member.dao.MemberDAO;
 import member.handler.MailHandler;
-import member.storageIO.UploadService;
 import mentor.bean.MentorDTO;
 
 
@@ -25,8 +23,7 @@ import mentor.bean.MentorDTO;
 public class MemberServiceImpl implements MemberService {
 	@Autowired
 	private MemberDAO memberDAO;
-	@Autowired
-	private UploadService uploadService;
+	
 	@Inject
 	private JavaMailSender mailSender;
 	@Inject
@@ -34,7 +31,6 @@ public class MemberServiceImpl implements MemberService {
 
 	/**
 	 * @Title : 닉네임 중복확인.
-	 * @author : ginkgo1928 @date : 2019. 11. 5.
 	 */
 	@Override
 	public MemberDTO writeNicknamecheck(String member_nickname) {
@@ -43,7 +39,6 @@ public class MemberServiceImpl implements MemberService {
 
 	/**
 	 * @Title : 이메일 중복확인
-	 * @author : ginkgo1928 @date : 2019. 11. 5.
 	 */
 	@Override
 	public MemberDTO writeEmailCheck(String member_email) {
@@ -129,17 +124,14 @@ public class MemberServiceImpl implements MemberService {
 	/* 비밀번호 찾기 */
 	@Override
 	public MemberDTO setmemberpwd(Map<String, String> map) {
-		return memberDAO.setsetmemberpwd(map);
+		return memberDAO.setmemberpwd(map);
 	}
 
-	/**
-	 * @Title : 이메일 인증을 하고 새로운 비밀번호로 변경
-	 * @author : ginkgo1928
-	 * @date : 2019. 11. 13.
-	 */
 	@Override
-	public MemberDTO newPwdCommit(Map<String, String> map) {
-		return memberDAO.newPwdCommit(map);
+	public void newPwdCommit(Map<String, String> map) {
+		String encPassword = passwordEncoder.encode(map.get("member_pwd"));
+		map.replace("member_pwd", encPassword);
+		memberDAO.newPwdCommit(map);
 	}
 
 	/**

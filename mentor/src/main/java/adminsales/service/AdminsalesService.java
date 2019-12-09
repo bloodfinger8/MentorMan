@@ -14,5 +14,9 @@ public interface AdminsalesService {
 
 	public List<Map<String, String>> mentorSalesChart();
 
-	public List<AdminmentorSalesListDTO> getMentorSales();
+	public List<AdminmentorSalesListDTO> getMentorSales(Map<String, Integer> map);
+
+	public int getMentorSalesTotalA();
+
+	public List<AdminmentorSalesListDTO> getMentorView(String member_name);
 }
