@@ -9,7 +9,7 @@
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<div class="x_panel" style="height: 600px; overflow: auto;">
 			<div class="x_title">
-				<h2>NO.&emsp;${reviewDTO.review_seq }</h2>
+				<h2>NO.${reviewDTO.review_seq } &emsp; 모임번호: ${reviewDTO.meetingboard_seq }</h2>
 				<ul class="nav navbar-right panel_toolbox">
 					<li><a class="collapse-link"> <i class="fa fa-chevron-up"></i>
 					</a></li>
