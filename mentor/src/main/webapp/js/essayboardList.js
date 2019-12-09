@@ -102,7 +102,7 @@ function essayjobType(pg , flag){
     				var subContent = items.essayboard_content.replace(/<.*?>|&nbsp;/gi, "")
     				var subFlag = subContent.substring(0, 200) + "..."
     			} else {
-    				var subFlag = items.essayboard_content
+    				var subFlag = items.essayboard_content.replace(/<.*?>|&nbsp;/gi, "")
     			}
     			
     			let essayboard = `
