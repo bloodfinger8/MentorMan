@@ -9,7 +9,7 @@
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<div class="x_panel" style="height: 600px; overflow: auto;">
 			<div class="x_title">
-				<h2>NO.&emsp;${menteeboardReplyDTO.menteeboardReply_seq }</h2>
+				<h2>NO.${menteeboardReplyDTO.menteeboardReply_seq } &emsp; 작성한 게시판: ${menteeboardReplyDTO.menteeboardReply_mb_seq}</h2>
 				<ul class="nav navbar-right panel_toolbox">
 					<li><a class="collapse-link"> <i class="fa fa-chevron-up"></i>
 					</a></li>
