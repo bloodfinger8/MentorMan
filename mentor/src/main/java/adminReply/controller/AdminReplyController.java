@@ -102,7 +102,6 @@ public class AdminReplyController {
 
 
 		List<MenteeboardReplyDTO> list= adminreplyService.getAdminmenteeReply(map);
-
 		//페이징 처리
 		int totalA = adminreplyService.getMenteeReplyTotalA();
 		
