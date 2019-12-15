@@ -31,5 +31,8 @@ hs_err_pid*
 /mentor/target/
 /mentor/bin
 
+# OS X
+.DS_Store
+
 #s3 key 관련
 /mentor/src/main/java/member/storageIO/S3Util.java
