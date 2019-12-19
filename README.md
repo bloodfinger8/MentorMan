@@ -10,5 +10,17 @@
     <td>Front-End</td>
     <td>Html, Css , JavaScript , jQuery , Ajax , JSP, JSTL , BootStrap , Font Awesome</td>
   </tr>
+  <tr>
+    <td>Back-End</td>
+    <td>Java 1.8, Spring , myBatis , Spring Security</td>
+  </tr>
+  <tr>
+    <td>OPen API</td>
+    <td>IMPORT REST API, Kakao  map , Kakao Login , Naver Login API, datePicker.js , 워크넷 채용정보 API, SOCK.JS, HighcChart , SummerNote Editor, Daum 우편변호 API</td>
+  </tr>
+  <tr>
+    <td>Tool</td>
+    <td>STS , VSCode , SQL Developer , Tomcat 8.5 , Oracle 11g  , AWS(EC2, S3, RDS) , Github</td>
+  </tr>
   
 </table>
