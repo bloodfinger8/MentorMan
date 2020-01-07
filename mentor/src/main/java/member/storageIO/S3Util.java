@@ -32,7 +32,7 @@ import com.amazonaws.services.s3.model.S3ObjectInputStream;
 
 public class S3Util {
 	
-	private static final String accessKey = "1123123";
+	private static final String accessKey = "ds";
 	private static final String secretKey = "";
 	private static final String bucketName = "";
 	private AmazonS3 s3Client;
