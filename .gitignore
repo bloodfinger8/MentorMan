@@ -36,3 +36,4 @@ hs_err_pid*
 
 #s3 key 관련
 /mentor/src/main/java/member/storageIO/S3Util.java
+mentor/src/main/java/member/storageIO/S3Util.java
