@@ -156,7 +156,7 @@ $(document).ready(function() {
 	$(document).on("click", "#regist", function(){
 		if($('#content').val() == ''){
 			var toastTop = app.toast.create({
-	            text: '댓글을 입력하세요2.',
+	            text: '댓글을 입력하세요.',
 	            position: 'top',
 	            closeButton: true,
 	          });
